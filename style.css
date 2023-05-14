@@ -1,7 +1,163 @@
+:root {
+    --clr-dark: #2A3647;
+    --clr-active: #091931;
+    --clr-nav: #CDCDCD;
+    --clr-white: #FFFFFF;
+    --clr-light: #F6F7F8;
+    --clr-blue: #29ABE2;
+    --clr-placeholder: #D1D1D1;
+}
+
 html {
     scroll-behavior: smooth;
 }
 
 body {
     margin: 0;
+    font-family: 'Inter';
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+button, input, a, h1, h2, h3 {
+    all: unset;
+}
+
+button, a {
+    cursor: pointer;
+}
+
+a {
+    color: var(--clr-blue);
+}
+
+input::placeholder {
+    color: var(--clr-placeholder);
+}
+
+.d-none {
+    display: none !important;
+}
+
+button.active {
+    color: var(--clr-white);
+}
+
+.btn-primary:active {
+    background-color: var(--clr-active);
+}
+
+button.bg-dark {
+    font-weight: 700;
+}
+
+.btn {
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+.btn-secondary {
+    background-color: var(--clr-white);
+    color: var(--clr-dark);
+    border: 1px solid var(--clr-dark);
+}
+
+.btn-primary {
+    background-color: var(--clr-dark);
+    color: var(--clr-white);
+}
+
+.bg-light {
+    background-color: var(--clr-light);
+}
+
+.bg-dark {
+    background-color: var(--clr-dark);
+}
+
+.bg-active {
+    background-color: var(--clr-active);
+}
+
+.bg-inactive-nav {
+    color: var(--clr-inactive-nav);
+}
+
+.bg-white {
+    background-color: var(--clr-white);
+}
+
+.txt-white {
+    color: var(--clr-white);
+}
+
+.txt-dark {
+    color: var(--clr-dark);
+}
+
+.txt-blue {
+    color: var(--clr-blue);
+}
+
+.txt-normal {
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 25.2px;
+}
+
+.txt-small {
+    font-size: 16px;
+}
+
+.txt-700 {
+    font-weight: 700;
+}
+
+.txt-500 {
+  
+    font-weight: 500;
+}
+
+.txt-400 {
+    font-weight: 400;
+}
+
+h1 {
+    font-size: 61px;
+    font-weight: 700;
+    line-height: 120%;
+    position: relative;
+}
+
+h1.txt-blue {
+    font-size: 64px;
+}
+
+.radius-10 {
+    border-radius: 10px;
+}
+
+.radius-20 {
+    border-radius: 20px;
+}
+
+.radius-30 {
+    border-radius: 30px;
+}
+
+.radius-circle {
+    border: 9999px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 30px;
+    background-color: var(--clr-white);
+    box-shadow: 0px 0px 14px 3px rgba(0 0 0 / 4%);
 }
