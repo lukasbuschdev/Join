@@ -1,7 +1,3 @@
-const logIn = () => {
-    event.preventDefault();
-}
-
 const init = () => {
     includeTemplates();
 }

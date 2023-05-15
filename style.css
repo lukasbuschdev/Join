@@ -84,18 +84,18 @@ button.bg-dark {
 .btn-secondary {
     background-color: var(--clr-white);
     color: var(--clr-dark);
-    box-shadow: 0 4px 4px 0 rgba(0 0 0 / 0%), 0 0 0 1px var(--clr-dark);
+    box-shadow: 0 4px 4px 0 rgba(0 0 0 / 0%), inset 0 0 0 1px var(--clr-dark);
     padding: 18px 15px;
     background-clip: padding-box;
 }
 
 .btn-secondary:hover {
-    box-shadow: 0 4px 4px 0 rgba(0 0 0 / 25%), 0 0 0 2px var(--clr-blue);
+    box-shadow: 0 4px 4px 0 rgba(0 0 0 / 25%), inset 0 0 0 2px var(--clr-blue);
     color: var(--clr-blue);
 }
 
 .btn-secondary:active {
-    box-shadow: 0 4px 4px 0 rgba(0 0 0 / 25%), 0 0 0 1px var(--clr-active);
+    box-shadow: 0 4px 4px 0 rgba(0 0 0 / 25%), inset 0 0 0 1px var(--clr-active);
     color: var(--clr-active);
 }
 
@@ -151,7 +151,6 @@ button.bg-dark {
 }
 
 .txt-500 {
-  
     font-weight: 500;
 }
 
