@@ -34,3 +34,13 @@ const debounce = (cb, delay = 1000) => {
     }, delay);
   };
 };
+
+const includeTemplates = () => {
+  $$('[include-template]').forEach(
+    async templateContainer => {
+      const url = templateContainer.getAttribute('include-template');
+      const template = await ((await fetch(url)).text());
+      templateContainer.innerHTML = template;
+    }
+  );
+}

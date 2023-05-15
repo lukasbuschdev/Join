@@ -1,9 +1,3 @@
-body {
-    display: grid;
-    place-items: center;
-    min-height: 100vh;
-}
-
 #logo {
     position: absolute;
     inset: 0;
@@ -13,6 +7,9 @@ body {
 }
 
 @keyframes background-opacity {
+    99% {
+        z-index: 1;
+    }
     to {
         background-color: transparent;
         z-index: -1;
@@ -48,13 +45,16 @@ body {
 }
 
 .card {
-    width: 652px;
+    position: relative;
+    min-width: 652px;
+    width: fit-content;
     margin: auto;
     padding: 35px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 35px;
+    margin-top: 26vh;
 }
 
 .header-container {
@@ -88,13 +88,6 @@ form input {
     cursor: pointer;
 }
 
-form input[type="email"]::after {
-    content: url(../assets/img/icons/mail.svg);
-    width: 20px;
-    height: 18px;
-    display: block;
-}
-
 .login-options {
     display: flex;
     justify-content: center;
@@ -108,12 +101,30 @@ form input[type="email"]::after {
 }
 
 .remember-me input {
-    background: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%);
-    border: 1px solid #000000;
+    --bg: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%);
+    position: relative;
+    background-image: url(../assets/img/icons/checkbox-unchecked.svg), var(--bg);
+    background-size: contain;
     border-radius: 3px;
     width: 16px;
     height: 16px;
     padding: unset;
+}
+
+.remember-me input:checked {
+    border: unset;
+    background-image: url(../assets/img/icons/checkbox-checked.svg), var(--bg);
+}
+
+.remember-me input:checked::before {
+    background-color: inherit;
+    position: absolute;
+    top: -2.5px;
+    left: 3px;
+    content: url(../assets/img/icons/checkbox-check.svg);
+    width: 13.5px;
+    height: 12.5px;
+    display: block;
 }
 
 .btn-container {
@@ -131,3 +142,18 @@ form input[type="email"]::after {
     padding: 4px 16px;
 }
 
+.back-arrow {
+    width: 37px;
+    height: 37px;
+    position: absolute;
+    top: 35px;
+    left: 31px;
+}
+
+.back-arrow img {
+    height: 24px;
+}
+
+.card p {
+    width: 656px;
+}

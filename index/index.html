@@ -15,40 +15,10 @@
     <script src="../js/script.js"></script>
     <script src="./index.js"></script>
 </head>
-<body class="bg-light">
+<body class="bg-light" onload="init()">
     <div id="logo">
         <img src="../assets/img/icons/logo.svg" alt="">
     </div>
-    <div id="sign-up">
-        <span class="txt-normal">Not a Join user?</span>
-        <button class="btn btn-primary txt-small txt-700">Sign up</button>
-    </div>
-    <div class="card">
-        <div class="header-container">
-            <h1>Log in</h1>
-            <img src="../assets/img/icons/blue_line_bottom.svg" alt="">
-        </div>
-        <form>
-            <div class="inp-container  radius-10">
-                <input type="email" name="" id="" class="txt-normal" placeholder="Email">
-                <img src="../assets/img/icons/mail.svg" alt="">
-            </div>
-            <div class="inp-container  radius-10">
-                <input type="password" name="" id="" class="txt-normal" placeholder="Password">
-                <img src="../assets/img/icons/password.svg" alt="">
-            </div>
-            <div class="login-options">
-                <div class="remember-me">
-                    <input type="checkbox" name="remember-me">
-                    <span class="txt-small">Remember me</span>
-                </div>
-                <a href="#" class="txt-blue txt-small">Forgot my password</a>
-            </div>
-            <div class="btn-container">
-                <button type="submit" class="btn btn-primary btn-check txt-700" id="login" onclick="logIn()">Log in</button>
-                <button class="btn btn-secondary txt-700" id="guest-login">Guest Log in</button>
-            </div>
-        </form>
-    </div>
+    <div include-template="../assets/templates/login_template.html"></div>
 </body>
 </html>

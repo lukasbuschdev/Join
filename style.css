@@ -10,6 +10,7 @@
 
 html {
     scroll-behavior: smooth;
+    user-select: none;
 }
 
 body {
@@ -158,6 +159,10 @@ button.bg-dark {
     font-weight: 400;
 }
 
+.txt-center {
+    text-align: center;
+}
+
 h1 {
     font-size: 61px;
     font-weight: 700;
@@ -183,6 +188,11 @@ h1.txt-blue {
 
 .radius-circle {
     border: 9999px;
+}
+
+.grid-center {
+    display: grid;
+    place-items: center;
 }
 
 .card {
