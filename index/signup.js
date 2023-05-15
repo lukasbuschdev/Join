@@ -2,7 +2,10 @@ const validName = nameInput => nameInput !== '';
 
 const validEmail = emailInput => {
     const emailInputArray = [...emailInput];
-    return emailInputArray.indexOf('@') < emailInputArray.findLastIndex(character => character == '.');
+    const emailRegex = 
+ new RegExp(/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/, "gm");
+    // return emailInputArray.indexOf('@') < emailInputArray.findLastIndex(character => character == '.');
+    return emailRegex.test(emailInput);
 }
 
 const validPasswords = ([ { value: password }, { value: confirmPassword } ]) => password !== false && password == confirmPassword;
