@@ -4,6 +4,49 @@ body {
     min-height: 100vh;
 }
 
+#logo {
+    position: absolute;
+    inset: 0;
+    animation: background-opacity 500ms 200ms ease-in-out forwards;
+    background-color: var(--clr-light);
+    z-index: 1;
+}
+
+@keyframes background-opacity {
+    to {
+        background-color: transparent;
+        z-index: -1;
+    }
+}
+
+#logo img {
+    position: absolute;
+    top: 80px;
+    left: 77px;
+    width: 100px;
+    object-fit: contain;
+    animation: logo-zoom 500ms 200ms ease-in-out;
+}
+
+@keyframes logo-zoom {
+    from {
+        width: 274px;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+    }
+}
+
+#sign-up {
+    position: absolute;
+    display: flex;
+    gap: 35px;
+    align-items: center;
+    height: 51px;
+    top: 67px;
+    right: 114px;
+}
+
 .card {
     width: 652px;
     margin: auto;
@@ -31,10 +74,18 @@ form {
     gap: 50px;
 }
 
-form input {
+form .inp-container {
     width: 422px;
     padding: 13px 21px;
     border: 1px solid var(--clr-placeholder);
+    display: flex;
+    justify-content: space-between;
+}
+
+form input {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
 }
 
 form input[type="email"]::after {
@@ -45,8 +96,8 @@ form input[type="email"]::after {
 }
 
 .login-options {
-    margin: auto;
     display: flex;
+    justify-content: center;
     gap: 35px;
 }
 
@@ -69,4 +120,14 @@ form input[type="email"]::after {
     display: flex;
     gap: 35px;
     margin: auto;
+    height: 51px;
 }
+
+#login {
+    width: 145px;
+}
+
+#guest-login {
+    padding: 4px 16px;
+}
+

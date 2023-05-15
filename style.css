@@ -47,28 +47,60 @@ button.active {
     color: var(--clr-white);
 }
 
-.btn-primary:active {
-    background-color: var(--clr-active);
-}
 
 button.bg-dark {
     font-weight: 700;
 }
 
 .btn {
-    padding: 10px 15px;
     border-radius: 8px;
+    transition: 100ms ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 21px;
 }
 
-.btn-secondary {
-    background-color: var(--clr-white);
-    color: var(--clr-dark);
-    border: 1px solid var(--clr-dark);
+.btn:hover {
+    box-shadow: 0 4px 4px 0 rgba(0 0 0 / 25%);
 }
 
 .btn-primary {
     background-color: var(--clr-dark);
     color: var(--clr-white);
+    padding: 18px 15px;
+}
+
+.btn-primary:hover {
+    background-color: var(--clr-blue);
+}
+
+.btn-primary:active {
+    background-color: var(--clr-active);
+}
+
+.btn-secondary {
+    background-color: var(--clr-white);
+    color: var(--clr-dark);
+    box-shadow: 0 4px 4px 0 rgba(0 0 0 / 0%), 0 0 0 1px var(--clr-dark);
+    padding: 18px 15px;
+    background-clip: padding-box;
+}
+
+.btn-secondary:hover {
+    box-shadow: 0 4px 4px 0 rgba(0 0 0 / 25%), 0 0 0 2px var(--clr-blue);
+    color: var(--clr-blue);
+}
+
+.btn-secondary:active {
+    box-shadow: 0 4px 4px 0 rgba(0 0 0 / 25%), 0 0 0 1px var(--clr-active);
+    color: var(--clr-active);
+}
+
+.btn-check img {
+    width: 16px;
+    height: 12px;
 }
 
 .bg-light {
