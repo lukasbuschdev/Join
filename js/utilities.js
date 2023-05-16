@@ -44,3 +44,7 @@ const includeTemplates = () => {
     }
   );
 }
+
+const goToPage = (page) => {
+  location.href = `../${page}/${page}.html`;
+} 

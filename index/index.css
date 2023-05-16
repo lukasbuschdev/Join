@@ -2,12 +2,34 @@ body {
     min-height: 100vh;
 }
 
+#content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+#content[include-template="../assets/templates/login_template.html"] {
+    justify-content: space-around;
+}
+
 #logo {
     position: absolute;
     inset: 0;
     animation: background-opacity 500ms 200ms ease-in-out forwards;
     background-color: var(--clr-light);
     z-index: 1;
+    display: grid;
+    grid-template-areas: 'a';
+}
+
+#logo img {
+    grid-area: a;
+}
+
+#logo img:last-of-type {
+    opacity: 0;
 }
 
 @keyframes background-opacity {
@@ -21,12 +43,12 @@ body {
 }
 
 #logo img {
+    --translation: logo-zoom 500ms 200ms ease-in-out;
     position: absolute;
     top: 80px;
     left: 77px;
-    width: 100px;
     object-fit: contain;
-    animation: logo-zoom 500ms 200ms ease-in-out;
+    animation: var(--translation);
 }
 
 @keyframes logo-zoom {
@@ -50,9 +72,8 @@ body {
 
 .card {
     position: relative;
-    min-width: 652px;
-    width: fit-content;
-    padding: 35px 0;
+    width: 652px;
+    padding: 35px 22.5px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -77,17 +98,28 @@ form {
 }
 
 form .inp-container {
-    width: 422px;
+    max-width: 422px;
+    width: 100%;
     padding: 13px 21px;
     border: 1px solid var(--clr-placeholder);
     display: flex;
     justify-content: space-between;
 }
 
+form .inp-container > div,
+form .inp-container > button {
+    width: 35px;
+}
+
 form input {
     width: 100%;
     height: 100%;
     cursor: pointer;
+}
+
+#eye {
+    height: 25px;
+    object-fit: contain;
 }
 
 .login-options {
@@ -134,15 +166,15 @@ form input {
     display: flex;
     gap: 35px;
     margin: auto;
+}
+
+.btn-container button {
     height: 51px;
+    padding: 4px 16px;
 }
 
 #login {
     width: 145px;
-}
-
-#guest-login {
-    padding: 4px 16px;
 }
 
 .back-arrow {
@@ -159,11 +191,64 @@ form input {
 
 .card p {
     width: 656px;
+    max-width: 100%;
 }
 
 @media (max-width: 800px) {
+
+    #content {
+        justify-content: unset;
+    }
+    
+    #logo {
+        background-color: var(--clr-dark);
+    }
+
+    #logo img {
+        top: 37px;
+        left: 38px;
+        width: 64px;
+    }
+
+    #logo img:first-of-type {
+        animation: var(--translation), logo-fade 500ms 200ms ease-in-out forwards;
+    }
+    
+    #logo img:last-of-type {
+        animation: var(--translation), logo-fade 500ms 200ms ease-in-out reverse forwards;
+    }
+
+    @keyframes logo-fade {
+        to {
+            opacity: 1;
+        }
+    }
+
+    .card {
+        width: calc(100vw - 56px);
+        margin-top: 15vh;
+    }
+
     .login-options,
     .btn-container {
+        height: unset;
         flex-direction: column;
+    }
+    
+    .login-options {
+        align-items: unset;
+        flex-direction: column-reverse;
+    }
+
+    #sign-up {
+        position: unset;
+        width: 100%;
+        justify-content: center;
+        margin: auto;
+    }
+
+    .btn-container {
+        width: 180px;
+        gap: 21px;
     }
 }

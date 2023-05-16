@@ -13,6 +13,9 @@
 
     <script src="../js/utilities.js"></script>
     <script src="../js/script.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/account.class.js"></script>
+    <script src="../js/user.class.js"></script>
 
     <script src="./index.js"></script>
 
@@ -20,10 +23,11 @@
     <script src="./signup.js" defer></script>
     <script src="./forgot_password.js" defer></script>
 </head>
-<body class="bg-light grid-center" onload="init()">
-    <div id="logo" class="test">
-        <img src="../assets/img/icons/logo.svg" alt="">
+<body class="bg-light" onload="init()">
+    <div id="logo">
+        <img src="../assets/img/icons/logo.svg" alt="" width="100">
+        <img src="../assets/img/icons/logo_white.svg" alt="" width="100">
     </div>
-    <div include-template="../assets/templates/login_template.html"></div>
+    <div id="content" include-template="../assets/templates/login_template.html"></div>
 </body>
 </html>
