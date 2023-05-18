@@ -1,5 +1,8 @@
-const init = () => {
-    includeTemplates();
+const init = async () => {
+    await includeTemplates();
+    if (document.title == 'Join - Login') {
+        rememberLogin();
+    }
 }
 
 const goToLogin = async () => {
@@ -18,4 +21,18 @@ const goToForgotPw = () => {
     document.title = 'Join - Forgot password';
     $('[include-template]').setAttribute('include-template', '../assets/templates/forgot_password_template.html');
     includeTemplates();
+}
+
+const goToVerifyAccount = () => {
+    document.title = 'Join - Verify your Account';
+    $('[include-template]').setAttribute('include-template', '../assets/templates/verify_account_template.html');
+    includeTemplates();
+}
+
+const togglePasswordVisibility = () => {
+    event.preventDefault();
+    const passwordInput = $('#password input');
+    const eye = $('#eye');
+    passwordInput.type == 'password' ? passwordInput.type = 'text' : passwordInput.type = 'password';
+    eye.src.includes('show.png') ? eye.src = '../assets/img/icons/hide.png' : eye.src = '../assets/img/icons/show.png';
 }

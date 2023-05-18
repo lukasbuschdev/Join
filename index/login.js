@@ -33,6 +33,8 @@ const rememberLogin = () => {
     if (LOCAL_getItem('remember-me') !== null) {
         const { email, password } = LOCAL_getItem('remember-me');
         LOCAL_setItem('user', { email, password });
+        $('#email').value = email;
+        $('#password').value = password;
+        $('#remember-me').checked = true;
     }
-    goToPage('summary');
 }

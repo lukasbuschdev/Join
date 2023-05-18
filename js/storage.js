@@ -31,4 +31,8 @@ const LOCAL_getItem = (key) => {
     return JSON.parse(localStorage.getItem(key)); 
 }
 
+const LOCAL_removeItem = (key) => {
+    localStorage.removeItem(key);
+}
+
 // 1684211863626

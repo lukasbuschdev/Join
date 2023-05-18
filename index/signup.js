@@ -1,65 +1,70 @@
-const validName = nameInput => nameInput !== '';
+const validName = (nameInput) => nameInput !== '';
 
-const validEmail = emailInput => {
+const validEmail = (emailInput) => {
     const emailRegex = new RegExp(/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/, "gm");
     return emailRegex.test(emailInput);
 }
 
-const validPasswords = ([ { value: password }, { value: confirmPassword } ]) => password !== '' && password == confirmPassword;
-
-const validateInputs = () => {
-    const nameInput = $('input[type="text"]').value;
-    const emailInput = $('input[type="email"]').value;
-    const passwordInputs = $$('input[type="password"]');
-
-    if (!validName(nameInput)) {
-        log('Not a valid name!');
-        return false;
-    }
-
-    if (!validEmail(emailInput)) {
-        log('Not a valid email!');
-        return false;
-    }
-
-    else if (!validPasswords(passwordInputs)) {
-        log('Passwords not matching!');
-        return false;
-    }
-    return true;
+const validPassword = (passwordInput) => {
+    const passwordRegex = new RegExp(/(?=.*?[0-9])(?=.*?[a-z])(?=.*?[A-Z]).+/, "g"); // at least one lowercase and one uppercase letter and one digit
+    return passwordInput.length >= 8 && passwordRegex.test(passwordInput);
 }
 
-const validatePasswordInputs = () => {
-    const passwordInputs = $$('input[type="password"]');
+const validateInputs = async () => {
+    const name = $('#name input').value;
+    const email = $('#email input').value;
+    const password = $('#password input').value;
+
+    const nameValidity = validName(name);
+    const emailValidity = validEmail(email);
+    const emailRegistered = await REMOTE_getItem(email);
+    const passwordValidity = validPassword(password);
+
+    if (nameValidity == true && emailValidity == true && passwordValidity == true && emailRegistered == false) {
+        clearErrors();
+        return true;
+    }
+    throwErrors(nameValidity, emailValidity, emailRegistered, passwordValidity);
+    return false;
 }
 
-const signupInit = () => {
-    const name = $('input[type="text"]').value;
-    const email = $('input[type="email"]').value;
-    const password = $('input[type="password"]').value;
+const throwErrors = (nameValidity, emailValidity, emailRegistered, passwordValidity) => {
+    clearErrors();
+    if (!nameValidity) {
+        $('#name .error').classList.add('active');
+    }
+    if (!emailValidity) {
+        $$('#email .error')[0].classList.add('active');
+    }
+    if (emailRegistered !== false) {
+        $$('#email .error')[1].classList.add('active');
+    }
+    if (!passwordValidity) {
+        $('#password .error').classList.add('active');
+    }
+}
+
+const clearErrors = () => {
+    $$('#name .error, #email .error, #password .error').forEach(
+        field => field.classList.remove('active')
+    );
+}
+
+const signupInit = async () => {
     event.preventDefault();
-    if (!validateInputs(name, email, password)) return;
-    checkAccount(name, email, password);
-}
 
-const checkAccount = async (key) => {
-    if (await getItem(key)) {
-        log('email adress already in use!');
-        return;
-    } else {
-        createAccount();
-    }
+    const name = $('#name input').value;
+    const email = $('#email input').value;
+    const password = $('#password input').value;
+
+    if (await validateInputs(name, email, password) == false) return;
+    createAccount(name, email, password);
 }
 
 const createAccount = (name, email, password) => {
-    const newAccount = new Account(name, email, password);
-    REMOTE_setItem(newAccount.email, newAccount);
+    // const newAccount = new Account(name, email, password);
+    // REMOTE_setItem(newAccount.email, newAccount);
+    log('creating account...')
+    goToVerifyAccount();
 }
 
-const togglePasswordVisibility = () => {
-    event.preventDefault();
-    const passwordInput = $('#password');
-    const eye = $('#eye');
-    passwordInput.type == 'password' ? passwordInput.type = 'text' : passwordInput.type = 'password';
-    eye.src.includes('show.png') ? eye.src = '../assets/img/icons/hide.png' : eye.src = '../assets/img/icons/show.png';
-}

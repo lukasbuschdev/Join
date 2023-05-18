@@ -2,6 +2,7 @@
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = json_decode(file_get_contents('php://input'), true);
+    
     $emailAdress = $user['recipient'];
     $message = $user['message'];
     $token = $user['token'];

@@ -5,9 +5,12 @@
     --clr-white: #FFFFFF;
     --clr-light: #F6F7F8;
     --clr-blue: #29ABE2;
+    --clr-orange: #FF3D00;
     --clr-placeholder: #D1D1D1;
     --txt-normal: 21px;
     --txt-small: 16px;
+
+    --load-animation-duration: 600ms ease-out;
 }
 
 html {
@@ -175,6 +178,7 @@ h1 {
     font-weight: 700;
     line-height: 120%;
     position: relative;
+    animation: load var(--load-animation-duration);
 }
 
 h1.txt-blue {
@@ -211,6 +215,8 @@ h1.txt-blue {
     box-shadow: 0px 0px 14px 3px rgba(0 0 0 / 4%);
 }
 
+/* MEDIA QUERIES */
+
 @media (max-width: 800px) {
     h1 {
         font-size: 40px;
@@ -218,5 +224,14 @@ h1.txt-blue {
 
     .btn {
         font-size: var(--txt-small);
+    }
+}
+
+/* ANIMATIONS */
+
+@keyframes load {
+    0%, 20% {
+        opacity: 0;
+        translate: 0 -20%;
     }
 }

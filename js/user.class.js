@@ -1,7 +1,6 @@
 class User extends Account {
     constructor(name, email, password){
         super(name, email, password);
-        this.test = 'test';
     }
 
     setPicture = (picture) => {
@@ -13,13 +12,12 @@ class User extends Account {
     }
 
     sendVerificationCode = async () => {
-        const messageTemplate = await (await fetch('../php/mail_template.html')).text();
+        const code = generateVerificationCode();
+        const message = mailTemplate(this.name, code);
         const payload = {
             recipient: this.email,
-            message: messageTemplate,
-            token: "asdkjgbljkh123e91zaoisudg82"
+            message: message
         };
-        log(payload);
         const response = await fetch(`../php/mailto.php`, {
             method: 'POST',
             body: JSON.stringify(payload)

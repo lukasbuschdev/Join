@@ -85,21 +85,30 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 24px;
+    margin: 0 50px;
 }
 
 .header-container img {
+    animation: load-blue-bar var(--load-animation-duration);
     width: 150px;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    align-items: center;
+    gap: 30px;
+}
+
+form .inp-wrapper {
+    /* display: flex;
+    flex-direction: column;
+    gap: 10px; */
+    max-width: 422px;
+    width: 100%;
 }
 
 form .inp-container {
-    max-width: 422px;
-    width: 100%;
     padding: 13px 21px;
     border: 1px solid var(--clr-placeholder);
     display: flex;
@@ -111,10 +120,42 @@ form .inp-container > button {
     width: 35px;
 }
 
+form .inp-container.inp-code {
+    border: unset;
+    padding: unset;
+    gap: 5px;
+}
+
+form .inp-container.inp-code input {
+    aspect-ratio: 1;
+    border: 1px solid var(--clr-placeholder);
+}
+
 form input {
     width: 100%;
     height: 100%;
     cursor: pointer;
+}
+
+form .error {
+    width: 100%;
+    padding: 0 21px;
+    font-size: 16px;
+    color: var(--clr-orange);
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: 100ms;
+}
+
+form .error.active {
+    margin-top: 10px;
+    grid-template-rows: 1fr;
+    opacity: 1;
+}
+
+form .error > span {
+    overflow: hidden;
 }
 
 #eye {
@@ -173,10 +214,6 @@ form input {
     padding: 4px 16px;
 }
 
-#login {
-    width: 145px;
-}
-
 .back-arrow {
     width: 37px;
     height: 37px;
@@ -190,9 +227,13 @@ form input {
 }
 
 .card p {
-    width: 656px;
-    max-width: 100%;
+    max-width: 656px;
+    width: 100%;
 }
+
+/* SIGNUP */
+
+/* MEDIA QUERIES */
 
 @media (max-width: 800px) {
 
@@ -238,6 +279,7 @@ form input {
     .login-options {
         align-items: unset;
         flex-direction: column-reverse;
+        margin-right: auto;
     }
 
     #sign-up {
@@ -250,5 +292,13 @@ form input {
     .btn-container {
         width: 180px;
         gap: 21px;
+    }
+}
+
+/* KEYFRAMES */
+
+@keyframes load-blue-bar {
+    0%, 20% {
+        scale: 50% 100%;
     }
 }

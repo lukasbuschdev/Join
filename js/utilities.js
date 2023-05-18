@@ -8,6 +8,7 @@ const hide = (selector) => $(selector).classList.add("d-none");
 
 const toggleActiveBtn = (buttons) => {
   buttons.forEach((button) =>
+
     button.classList.toggle("active", button == event.currentTarget)
   );
 };
@@ -35,7 +36,7 @@ const debounce = (cb, delay = 1000) => {
   };
 };
 
-const includeTemplates = () => {
+const includeTemplates = async () => {
   $$('[include-template]').forEach(
     async templateContainer => {
       const url = templateContainer.getAttribute('include-template');
@@ -43,8 +44,20 @@ const includeTemplates = () => {
       templateContainer.innerHTML = template;
     }
   );
+  return new Promise(resolve => {
+    setTimeout(resolve, 100);
+  })
 }
 
 const goToPage = (page) => {
-  location.href = `../${page}/${page}.html`;
-} 
+  location.href = page;
+}
+
+const generateVerificationCode = () => {
+  const charSet = 'abcdefghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let code = '';
+  for (let i = 0; i < 6; i++) {
+    code += charSet[(Math.floor(Math.random() * charSet.length))];
+  }
+  return code;
+}
