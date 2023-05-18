@@ -1,40 +1,27 @@
 const logIn = async () => {
     event.preventDefault();
-    const email = $('input[type="email"]').value;
-    const password = $('input[type="password"]').value;
+    const email = $('#email input').value;
+    const password = $('#password input').value;
 
-    const account = await REMOTE_getItem(email);
-    if (account) {
-        if (account.password == password) {
-            logInUser(account);
-        } else {
-            log('wrong password!');
-        }
-    } else {
-        log('email not found!')
+    const accountData = await REMOTE_getItem(email);
+    const user = new User(accountData.name, accountData.email, accountData.password);
+    if (!user) {
+        $('#email .error').classList.add('active');
+        return;
     }
+    if (user.password !== password) {
+        $('#password .error').classList.add('active');
+        return;
+    }
+    user.logIn();
 }
 
-const logInUser = ({ name, email, password }) => {
-    const rememberLoginCredentials = $('input[type="checkbox"]').checked;
-    if (rememberLoginCredentials) {
-        LOCAL_setItem('remember-me', { email, password });
-    } else {
-        if (LOCAL_getItem('remember-me') !== null) {
-            LOCAL_removeItem('remember-me');
-            log('forgot login Credentials')
-        }
-    }
-    log(`Welcome back, ${name}!`);
-    goToPage('summary');
-}
-
-const rememberLogin = () => {
+const rememberLoginDetails = () => {
     if (LOCAL_getItem('remember-me') !== null) {
         const { email, password } = LOCAL_getItem('remember-me');
-        LOCAL_setItem('user', { email, password });
-        $('#email').value = email;
-        $('#password').value = password;
+        // LOCAL_setItem('user', { email, password });
+        $('#email input').value = email;
+        $('#password input').value = password;
         $('#remember-me').checked = true;
     }
 }

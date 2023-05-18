@@ -1,6 +1,7 @@
 class User extends Account {
     constructor(name, email, password){
         super(name, email, password);
+        this.loggedIn = false;
     }
 
     setPicture = (picture) => {
@@ -24,5 +25,22 @@ class User extends Account {
         });
         const data = await response.text();
         log(data);
+    }
+
+    logIn = () => {
+        this.rememberMe();
+        location.href = `../summary/summary.html?uid=${this.id}`;
+    }
+    
+    rememberMe = () => {
+        const rememberLogin = $('#remember-me').checked;
+        if (rememberLogin) {
+            LOCAL_setItem('remember-me', { email: this.email, password: this.password });
+        } else {
+            if (LOCAL_getItem('remember-me') !== null) {
+                LOCAL_removeItem('remember-me');
+                log('forgot login Credentials');
+            }
+        }
     }
 }

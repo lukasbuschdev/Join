@@ -1,7 +1,7 @@
 const init = async () => {
     await includeTemplates();
     if (document.title == 'Join - Login') {
-        rememberLogin();
+        rememberLoginDetails();
     }
 }
 

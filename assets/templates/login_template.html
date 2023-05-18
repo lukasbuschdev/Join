@@ -5,18 +5,28 @@
     </div>
 
     <form novalidate>
-        <div class="inp-container  radius-10">
-            <input type="email" name="" id="email" class="txt-normal" placeholder="Email">
-            <div class="grid-center">
-                <img src="../assets/img/icons/mail.svg" alt="">
+        <div class="inp-wrapper" id="email">
+            <div class="inp-container radius-10">
+                <input type="email" name="" id="email" class="txt-normal" placeholder="Email">
+                <div class="grid-center">
+                    <img src="../assets/img/icons/mail.svg" alt="">
+                </div>
+            </div>
+            <div class="error">
+                <div>Email not found!</div>
             </div>
         </div>
 
-        <div class="inp-container  radius-10">
-            <input type="password" name="" id="password" class="txt-normal" placeholder="Password">
-            <button class="grid-center" onclick="togglePasswordVisibility()">
-                <img src="../assets/img/icons/hide.png" id="eye">
-            </button>
+        <div class="inp-wrapper" id="password">
+            <div class="inp-container radius-10">
+                <input type="password" name="" id="password" class="txt-normal" placeholder="Password">
+                <button class="grid-center" onclick="togglePasswordVisibility()">
+                    <img src="../assets/img/icons/hide.png" id="eye">
+                </button>
+            </div>
+            <div class="error">
+                <div>Wrong Password!</div>
+            </div>
         </div>
 
         <div class="login-options">
