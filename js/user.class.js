@@ -1,41 +1,49 @@
 class User extends Account {
-    constructor(name, email, password){
-        super(name, email, password);
-        this.loggedIn = false;
+    constructor(userData){
+        super(userData);
+        this.loggedIn = 0;
     }
 
     setPicture = (picture) => {
-        this.picture = picture;
+        this.userData.picture = picture;
     }
 
-    changePassword = () => {
-
+    changePassword = (newPassword) => {
+        this.userData.password = newPassword;
     }
 
-    sendVerificationCode = async () => {
-        const code = generateVerificationCode();
-        const message = mailTemplate(this.name, code);
-        const payload = {
-            recipient: this.email,
-            message: message
-        };
+    initVerification = async () => {
+        this.generateVerificationCode();
+        // this.#sendVerificationCode();
+        LOCAL_setItem('user', this.userData);
+        await REMOTE_setItem('verification', this.verifyCode)
+        goTo(`./verify_account.html`)
+    }
+
+    #sendVerificationCode = async () => {
+        const recipient = this.userData.email
+        const message = verificationEmailTemplate(this.userData, this.verifyCode);
+        const payload = { recipient, message };
         const response = await fetch(`../php/mailto.php`, {
             method: 'POST',
             body: JSON.stringify(payload)
         });
-        const data = await response.text();
-        log(data);
     }
 
-    logIn = () => {
-        this.rememberMe();
-        location.href = `../summary/summary.html?uid=${this.id}`;
+    verify = async () => {
+        this.logIn()
+    }
+
+    logIn = async () => {
+        this.loggedIn = 1;
+        await this.#update();
+        location.href = `../summary/summary.html?uid=${this.userData.id}`;
     }
     
     rememberMe = () => {
-        const rememberLogin = $('#remember-me').checked;
+        const rememberLogin = $('#remember-me').checked || false;
         if (rememberLogin) {
-            LOCAL_setItem('remember-me', { email: this.email, password: this.password });
+            LOCAL_setItem('remember-me', { email: this.userData.email, password: this.userData.password });
         } else {
             if (LOCAL_getItem('remember-me') !== null) {
                 LOCAL_removeItem('remember-me');
@@ -43,4 +51,19 @@ class User extends Account {
             }
         }
     }
+
+    #update = async () => {
+        return REMOTE_setItem('users', this.userData);
+    }
+
+    generateVerificationCode = () => {
+        const charSet = 'abcdefghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let code = '';
+        for (let i = 0; i < 6; i++) {
+          code += charSet[(Math.floor(Math.random() * charSet.length))];
+        }
+        this.verifyCode = { id: this.userData.id, code, expires: Date.now() + 5 * 1000 * 60 };
+      }
+
+    codeExpired = () => this.verifyCode.expires < Date.now(); 
 }

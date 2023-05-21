@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join - Verify Account</title>
+    <link rel="icon" href="../assets/img/icons/logo.svg">
+
+    <link rel="stylesheet" href="../fonts/fonts.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./index.css">
+
+    <script src="../js/utilities.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/mail_templates.js"></script>
+    <script src="../js/account.class.js"></script>
+    <script src="../js/user.class.js"></script>
+
+    <script src="./index.js"></script>
+
+    <script src="./verify_account.js" defer></script>
+</head>
+<body class="bg-light" onload="">
+    <div id="logo">
+        <img src="../assets/img/icons/logo.svg" alt="" width="100">
+        <img src="../assets/img/icons/logo_white.svg" alt="" width="100">
+    </div>
+    <div id="content">
+        
+        <div class="card">
+            <div class="header-container">
+                <h1 class="txt-center">Verify your Account</h1>
+                <img src="../assets/img/icons/blue_line_bottom.svg" alt="">
+            </div>
+            <form novalidate>
+                <p class="txt-normal txt-center">Please check your inbox and enter the verification code below or click the link in the email</p>
+                <div class="inp-wrapper">
+                    <div class="inp-container inp-code radius-10">
+                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" onkeydown="incrementCodeInputField()">
+                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" onkeydown="incrementCodeInputField()">
+                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" onkeydown="incrementCodeInputField()">
+                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" onkeydown="incrementCodeInputField()">
+                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" onkeydown="incrementCodeInputField()">
+                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" onkeydown="incrementCodeInputField()">
+                    </div>
+                    <div class="error txt-center">
+                        <span>Wrong Code!</span>
+                    </div>
+                    <div class="error txt-center">
+                        <span>Code expired!</span>
+                    </div>
+                </div>
+                <div class="btn-container">
+                    <button type="submit" class="btn btn-primary btn-check txt-700" id="login" onclick="processVerification()">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -101,9 +101,7 @@ form {
 }
 
 form .inp-wrapper {
-    /* display: flex;
-    flex-direction: column;
-    gap: 10px; */
+    min-width: fit-content;
     max-width: 422px;
     width: 100%;
 }
@@ -127,8 +125,12 @@ form .inp-container.inp-code {
 }
 
 form .inp-container.inp-code input {
+    height: 70px;
     aspect-ratio: 1;
     border: 1px solid var(--clr-placeholder);
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--clr-active);
 }
 
 form input {
@@ -206,7 +208,7 @@ form .error > span {
 .btn-container {
     display: flex;
     gap: 35px;
-    margin: auto;
+    margin: auto; 
 }
 
 .btn-container button {
@@ -230,6 +232,27 @@ form .error > span {
     max-width: 656px;
     width: 100%;
 }
+
+/* LOGIN */ 
+
+#login button[type="submit"] {
+    width: 145px;
+}
+
+form:has(input:placeholder-shown) button[type="submit"] {
+    pointer-events: none;
+    font-weight: 500;
+    filter: invert(1);
+}
+
+/* #login:has(#password input:placeholder-shown) button[type="submit"]{
+    pointer-events: none;
+}
+
+#login:has(#password input) button {
+    background-color: aquamarine;
+    
+} */
 
 /* SIGNUP */
 

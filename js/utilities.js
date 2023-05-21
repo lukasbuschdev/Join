@@ -49,15 +49,6 @@ const includeTemplates = async () => {
   })
 }
 
-const goToPage = (page) => {
+const goTo = (page) => {
   location.href = page;
-}
-
-const generateVerificationCode = () => {
-  const charSet = 'abcdefghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let code = '';
-  for (let i = 0; i < 6; i++) {
-    code += charSet[(Math.floor(Math.random() * charSet.length))];
-  }
-  return code;
 }

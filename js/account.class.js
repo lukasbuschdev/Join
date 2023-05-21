@@ -1,9 +1,11 @@
 class Account {
-    constructor(name, email, password) {
-        this.id = Date.now();
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.contacts = [];
+    constructor({ id = Date.now(), name, email, password }) {
+        this.userData = {
+            id,
+            name,
+            email,
+            password,
+            contacts: []
+        }
     }
 }

@@ -5,7 +5,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     $emailAdress = $user['recipient'];
     $message = $user['message'];
-    $token = $user['token'];
 
     $subject = "Confirm your Account";
     $headers = "From: musician.tarik@gmx.de" . "\r\n";

@@ -1,18 +1,21 @@
 const logIn = async () => {
     event.preventDefault();
-    const email = $('#email input').value;
+    const emailOrUsername = $('#email input').value;
     const password = $('#password input').value;
 
-    const accountData = await REMOTE_getItem(email);
-    const user = new User(accountData.name, accountData.email, accountData.password);
-    if (!user) {
-        $('#email .error').classList.add('active');
+    const userData = await getUser(emailOrUsername);
+    const bool = userData == false;
+    throwErrors(
+        { identifier: 'invalid-email-or-username', bool },
+        { identifier: 'wrong-password', bool: userData.password !== password },
+        );
+    if(!userData) return;
+    if(userData.password !== password) {
+        log('wrong password!');
         return;
-    }
-    if (user.password !== password) {
-        $('#password .error').classList.add('active');
-        return;
-    }
+    };    
+    const user = new User(userData);
+    user.rememberMe();
     user.logIn();
 }
 
