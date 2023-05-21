@@ -99,7 +99,7 @@ const REMOTE_setDatatype = async (dataType) => {
 const getUser = async (input) => {
     const allUsers = await REMOTE_getDatatype('users');
     const user = Object.values(allUsers).filter(user => user.email == input || user.name == input);
-    return user[0];
+    return user[0] ?? false;
 }
 
 // LOCAL STORAGE

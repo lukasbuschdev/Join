@@ -8,7 +8,7 @@ const verificationEmailTemplate = ({ id, name }, verifyCode) => {
                 <h1>Hi, ${name}!</h1>
                 <p style="font-size: 14px;">Please click the button below or use the Code <span style="color: #29ABE2; font-size: 16px; font-weight: 700;">${verifyCode}</span> to verify your account.</p>
                 <a
-                href="https://tarik-uyan.developerakademie.net/Join/index/index.html?uid=${id}&token=${verifyCode}"
+                href="https://tarik-uyan.developerakademie.net/Join/index/verify_account.html?uid=${id}&token=${verifyCode}"
                 style="
                     background-color: rgb(42,54,71);
                     display: block;

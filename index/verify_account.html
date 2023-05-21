@@ -22,7 +22,7 @@
 
     <script src="./verify_account.js" defer></script>
 </head>
-<body class="bg-light" onload="">
+<body class="bg-light" onload="initPage()">
     <div id="logo">
         <img src="../assets/img/icons/logo.svg" alt="" width="100">
         <img src="../assets/img/icons/logo_white.svg" alt="" width="100">
@@ -35,7 +35,7 @@
                 <img src="../assets/img/icons/blue_line_bottom.svg" alt="">
             </div>
             <form novalidate>
-                <p class="txt-normal txt-center">Please check your inbox and enter the verification code below or click the link in the email</p>
+                <p class="txt-normal txt-center">Please check your inbox and enter the verification code below or click the link in the email<br><br>Code expires in: <span id="timer" class="txt-700">05:00</span></p>
                 <div class="inp-wrapper">
                     <div class="inp-container inp-code radius-10">
                         <input type="text" name="" id="" class="txt-normal radius-10 txt-center" onkeydown="incrementCodeInputField()">
