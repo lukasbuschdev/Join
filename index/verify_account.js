@@ -5,15 +5,17 @@ const initPage = () => {
 const initTimer = async () => {
     const newUserdata = LOCAL_getItem('user');
     const { expires } = await REMOTE_getItem('verification', newUserdata.id);
-    const timerElement = $('#timer')
+    // const expires = Date.now() + 65 * 1000;
     const timer = setInterval(()=>{
         const now = Date.now();
-        if (expires < now) clearInterval(timer);
-        const seconds = '00';
-        const minutes = (expires - now) % (1000 * 60);
-        log(minutes)
-        // const seconds = ;
-        timerElement.innerText = `0${minutes}:${seconds}`;
+        if (expires <= now) {
+            clearInterval(timer);
+            $('#timer-wrapper').innerText = 'Code Expired!'
+            return;
+        };
+        const minutes = Math.floor((expires - now + 1000) / 60 / 1000);
+        const seconds = Math.round((expires - now) / 1000) % 60;
+        $('#timer').innerText = `0${minutes}:${(seconds / 100).toFixed(2).toString().slice(-2)}`;
     }, 1000)
 }
 
