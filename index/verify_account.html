@@ -29,21 +29,21 @@
     </div>
     <div id="content">
         
-        <div class="card">
+        <div class="card" id="verification">
             <div class="header-container">
                 <h1 class="txt-center">Verify your Account</h1>
                 <img src="../assets/img/icons/blue_line_bottom.svg" alt="">
             </div>
             <form novalidate>
-                <p class="txt-normal txt-center">Please check your inbox and enter the verification code below or click the link in the email<br><br><span id="timer-wrapper">Code expires in:<span id="timer" class="txt-700">05:00</span></span></p>
+                <p class="txt-normal txt-center">Please check your inbox and enter the verification code below or click the link in the email<br><br><span id="timer-wrapper">Code expires in:<span id="timer" class="txt-700"></span></span></p>
                 <div class="inp-wrapper">
                     <div class="inp-container inp-code radius-10">
-                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" onkeydown="incrementCodeInputField()">
-                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" onkeydown="incrementCodeInputField()">
-                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" onkeydown="incrementCodeInputField()">
-                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" onkeydown="incrementCodeInputField()">
-                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" onkeydown="incrementCodeInputField()">
-                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" onkeydown="incrementCodeInputField()">
+                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" placeholder="_" onkeydown="incrementCodeInputField()" onpaste="pasteCode()">
+                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" placeholder="_" onkeydown="incrementCodeInputField()" onpaste="pasteCode()">
+                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" placeholder="_" onkeydown="incrementCodeInputField()" onpaste="pasteCode()">
+                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" placeholder="_" onkeydown="incrementCodeInputField()" onpaste="pasteCode()">
+                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" placeholder="_" onkeydown="incrementCodeInputField()" onpaste="pasteCode()">
+                        <input type="text" name="" id="" class="txt-normal radius-10 txt-center" placeholder="_" onkeydown="incrementCodeInputField()" onpaste="pasteCode()">
                     </div>
                     <div class="error txt-center">
                         <span>Wrong Code!</span>
@@ -53,7 +53,8 @@
                     </div>
                 </div>
                 <div class="btn-container">
-                    <button type="submit" class="btn btn-primary btn-check txt-700" id="login" onclick="processVerification()">Confirm</button>
+                    <button class="btn btn-secondary btn-check txt-700" id="resend-code" onclick="sendNewCode()">new Code</button>
+                    <button type="submit" class="btn btn-primary btn-check txt-700" id="login" style="width: 145px;" onclick="processVerification()">Confirm</button>
                 </div>
             </form>
         </div>

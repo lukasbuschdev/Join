@@ -52,3 +52,5 @@ const includeTemplates = async () => {
 const goTo = (page) => {
   location.href = page;
 }
+
+const customParser = (evalString) => Function(`'use strict'; return (${evalString}) ?? false`)();

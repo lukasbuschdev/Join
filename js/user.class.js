@@ -14,14 +14,15 @@ class User extends Account {
 
     initVerification = async () => {
         this.generateVerificationCode();
-        // this.#sendVerificationCode();
+        this.#sendVerificationCode();
+        log(this.verifyCode)
         LOCAL_setItem('user', this.userData);
-        await REMOTE_setItem('verification', this.verifyCode)
-        goTo(`./verify_account.html`)
+        await REMOTE_setItem('verification', this.verifyCode);
+        goTo(`./verify_account.html?uid=${this.userData.id}`);
     }
 
     #sendVerificationCode = async () => {
-        const recipient = this.userData.email
+        const recipient = this.userData.email;
         const message = verificationEmailTemplate(this.userData, this.verifyCode);
         const payload = { recipient, message };
         const response = await fetch(`../php/mailto.php`, {
@@ -31,7 +32,7 @@ class User extends Account {
     }
 
     verify = async () => {
-        this.logIn()
+        this.logIn();
     }
 
     logIn = async () => {
@@ -43,7 +44,7 @@ class User extends Account {
     rememberMe = () => {
         const rememberLogin = $('#remember-me').checked || false;
         if (rememberLogin) {
-            LOCAL_setItem('remember-me', { email: this.userData.email, password: this.userData.password });
+            LOCAL_setItem('remember-me', { email: $('#email input').value, password: this.userData.password });
         } else {
             if (LOCAL_getItem('remember-me') !== null) {
                 LOCAL_removeItem('remember-me');

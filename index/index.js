@@ -23,13 +23,6 @@ const goToForgotPw = () => {
     includeTemplates();
 }
 
-// const goToVerifyAccount = () => {
-//     document.title = 'Join - Verify your Account';
-//     $('[include-template]').setAttribute('include-template', '../assets/templates/verify_account_template.html');
-//     includeTemplates();
-//     initVerification();
-// }
-
 const togglePasswordVisibility = () => {
     event.preventDefault();
     const passwordInput = $('#password input');

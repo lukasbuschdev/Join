@@ -1,11 +1,32 @@
 const initPage = () => {
     initTimer();
+    // redirect();
+    checkEmailVerification();
+}
+
+const checkEmailVerification = async () => {
+    const searchParams = new URLSearchParams(document.location.search);
+    const { code } = await REMOTE_getItem(`verification/${searchParams.get('uid')}`)
+    if (searchParams.get('token') !== code) return;
+    fillCodeInputs(code);
+}
+
+const fillCodeInputs = (code) => {
+    $$('input').forEach((input, i) => setTimeout(()=>input.value = code[i], 200 * i))
+}
+
+const redirect = () => {
+    const searchParams = new URLSearchParams(document.location.search);
+    const newUserdata = LOCAL_getItem('user');
+    const id = newUserdata.id ?? '123';
+    if (searchParams.get('uid') == null || newUserdata == false || !(searchParams.get('uid') == id)) goTo(`./index.html?redirect`)
 }
 
 const initTimer = async () => {
     const newUserdata = LOCAL_getItem('user');
-    const { expires } = await REMOTE_getItem('verification', newUserdata.id);
-    // const expires = Date.now() + 65 * 1000;
+    if (!newUserdata) return
+    const { expires } = await REMOTE_getItem(`verification/${newUserdata.id}`);
+    if (expires == undefined) return;
     const timer = setInterval(()=>{
         const now = Date.now();
         if (expires <= now) {
@@ -24,7 +45,7 @@ const processVerification = async () => {
     
     const newUserdata = LOCAL_getItem('user');
     const newUser = new User(newUserdata);
-    const { code, expires } = await REMOTE_getItem('verification', newUserdata.id);
+    const { code, expires } = await REMOTE_getItem(`verification/${newUserdata.id}`);
     
     const inputCode = [...$$('input')].map(input => input.value).join('');
     
@@ -39,6 +60,13 @@ const processVerification = async () => {
     await REMOTE_removeItem('verification', newUserdata.id);
     LOCAL_removeItem('user');
     newUser.verify();
+}
+
+const sendNewCode = () => {
+    event.preventDefault();
+    const userData = LOCAL_getItem('user');
+    const user = new User(userData);
+    user.initVerification();
 }
 
 const incrementCodeInputField = () => {
@@ -57,3 +85,9 @@ const incrementCodeInputField = () => {
 }
 
 const isLetterOrNumber = (input) => input.length == 1 && /([a-z]|[A-Z]|[0-9])/.test(input)
+
+const pasteCode = () => {
+    event.preventDefault();
+    const code = event.clipboardData.getData('text');
+    fillCodeInputs(code)
+}

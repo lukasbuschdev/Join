@@ -249,6 +249,10 @@ form:has(input:placeholder-shown) button[type="submit"] {
 
 /* VERIFICATION */
 
+#verification input::placeholder {
+    color: transparent;
+}
+
 #timer {
     font-family: 'PT Mono';
     margin-left: 20px;

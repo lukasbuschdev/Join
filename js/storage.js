@@ -7,19 +7,9 @@ const STORAGE_KEY = 'dev';
 // ITEMS
 
 const REMOTE_setItem = async (dataType, itemData) => {
-    if (dataType !== 'users' &&
-        dataType !== 'verification') {
-            console.error(`'${dataType}' is not a valid subdirectory! Valid subdirectories are: 'users', 'verification'`);
-            return;
-        };
-    const data = await REMOTE_getDatatype(dataType);
-    const updatedData = { [itemData.id]: itemData, ...data }
-    return await REMOTE_updateDatatype(dataType, updatedData);
-}
-
-const REMOTE_getItem = async (dataType, key) => {
-    const data = await REMOTE_getDatatype(dataType)
-    return data[key];
+    const data = await REMOTE_getItem(dataType);
+    const updatedData = { ...data, [itemData.id]: itemData }
+    return REMOTE_updateDatatype(dataType, updatedData);
 }
 
 const REMOTE_removeItem = async (dataType, key) => {
@@ -49,17 +39,6 @@ const REMOTE_getAllData = async () => {
     return JSON.parse(value.replaceAll("'", '"'));
     // return value;
 } 
-
-const REMOTE_getDatatype = async (dataType) => {
-    try {
-        const response = await fetch(`${STORAGE_URL}?key=${STORAGE_KEY}&token=${STORAGE_TOKEN}`);
-        const { data: { value } } = await response.json();
-        const user = JSON.parse(value.replaceAll("'", '"'));
-        return user[dataType];
-    } catch(e) {
-        return false;
-    }
-}
 
 const REMOTE_updateDatatype = async (dataType, value) => {
     const initialData = await REMOTE_getAllData();
@@ -97,10 +76,82 @@ const REMOTE_setDatatype = async (dataType) => {
 // USERDATA
 
 const getUser = async (input) => {
-    const allUsers = await REMOTE_getDatatype('users');
-    const user = Object.values(allUsers).filter(user => user.email == input || user.name == input);
-    return user[0] ?? false;
+    const allUsers = await REMOTE_getItem('users');
+    const [ userData ] = Object.values(allUsers).filter(user => user.email == input || user.name == input);
+    if (userData == undefined) return false;
+    return new User(userData);
 }
+
+const REMOTE_getItem = async (path) => {
+    const allData = await REMOTE_getAllData();
+    return JSON_getDirectory(path, allData) ?? false;
+}
+
+// const JSON_setItem = async (path = 'users/two/three', value = { testkey: 'teststring' }) => {
+//     const allData = await REMOTE_getAllData();
+// }
+
+const getSelectorsFromPath = (path) => path.split('/').reduce((total, directory) => total += `['${directory}']`, '');
+
+const JSON_getDirectory = (path, json) => customParser(`${JSON.stringify(json)}${getSelectorsFromPath(path)}`);
+
+// const JSON_setDirectory = async (path, json, newValue) => {
+//     const data = await REMOTE_getAllData();
+//     const obj = JSON.stringify(data);
+//     // log(JSON.parse(obj))
+//     // const obj = JSON.stringify(json);
+//     const value = JSON.stringify(newValue);
+//     const directory = path.slice(0, path.indexOf('/'));
+//     const key = path.slice(path.lastIndexOf('/')+1);
+
+    
+
+//     return customParser(`{...${obj}, ${directory}: { ...${obj}.${directory}, ${key}: ${value} } }`);
+// }
+
+// const JSON_setDirectory = async (path) => {
+//     const allData = await REMOTE_getAllData();
+//     const JSON_string = JSON.stringify(allData);
+//     // JSON_string = JSON.stringify({a: '123', b: '456'})
+//     const [pathArray, directoryArray] = JSONdirectories(path);
+//     let parseString = `{...${JSON_string}, `;
+//     directoryArray.forEach((directory, i) => {
+//         // parseString += `"${directory}": {...${JSON_string}.${pathArray[i].replaceAll('/','.')}, `
+//         parseString += `"${directory}": ${tst(i, pathArray, JSON_string)} `
+//     });
+//     directoryArray.forEach(()=>parseString += '}')
+//     return customParser(`${parseString}}`);
+//     // return `${parseString.replace(', }', ' }')}}`
+// }
+
+// const tst = (i, array, JSON_string) => {
+//     if (i == array.length - 1) return `{`
+//     else return `{...${JSON_string}.${array[i].replaceAll('/','.')},`
+// }
+
+
+// const setDirectory = async (query) => {
+//     const allData = await REMOTE_getAllData();
+//     const [pathArray, directoryArray] = JSONdirectories(query);
+//     directoryArray.forEach((directory, i) => {
+//         if (!(`${directory}` in customParser(`${JSON.stringify(allData)}${pathArray[i]}`))) {
+//             log('creating directory...')
+//             let newArray = customParser(`${JSON.stringify(allData)}${pathArray[i]}['${directory}'] = 'test'`)
+//             log(newArray)
+//         }
+//     })
+// }
+
+// const JSONdirectories = (path) => {
+//     const directoryArray = path.split('/');
+//     let pathArray = [];
+//     for (let i = 0; i < directoryArray.length - 1; i++) {
+//         pathArray.unshift(`['${path.slice(0, path.lastIndexOf('/')).replaceAll('/',"']['")}']`)
+//         path = path.slice(0, path.lastIndexOf('/'));
+//     }
+//     pathArray.unshift("");
+//     return [pathArray, directoryArray];
+// }
 
 // LOCAL STORAGE
 
