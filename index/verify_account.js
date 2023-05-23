@@ -1,6 +1,6 @@
 const initPage = () => {
     initTimer();
-    // redirect();
+    redirect();
     checkEmailVerification();
 }
 
@@ -11,14 +11,11 @@ const checkEmailVerification = async () => {
     fillCodeInputs(code);
 }
 
-const fillCodeInputs = (code) => {
-    $$('input').forEach((input, i) => setTimeout(()=>input.value = code[i], 200 * i))
-}
-
 const redirect = () => {
     const searchParams = new URLSearchParams(document.location.search);
     const newUserdata = LOCAL_getItem('user');
-    const id = newUserdata.id ?? '123';
+    let id = '';
+    (newUserdata !== null) ? id = newUserdata.id : false;
     if (searchParams.get('uid') == null || newUserdata == false || !(searchParams.get('uid') == id)) goTo(`./index.html?redirect`)
 }
 
@@ -82,6 +79,10 @@ const incrementCodeInputField = () => {
         } catch (e) {}
     }
     event.preventDefault();
+}
+
+const fillCodeInputs = (code) => {
+    $$('input').forEach((input, i) => setTimeout(()=>input.value = code[i], 200 * i))
 }
 
 const isLetterOrNumber = (input) => input.length == 1 && /([a-z]|[A-Z]|[0-9])/.test(input)

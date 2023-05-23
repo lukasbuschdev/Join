@@ -15,7 +15,6 @@ class User extends Account {
     initVerification = async () => {
         this.generateVerificationCode();
         this.#sendVerificationCode();
-        log(this.verifyCode)
         LOCAL_setItem('user', this.userData);
         await REMOTE_setItem('verification', this.verifyCode);
         goTo(`./verify_account.html?uid=${this.userData.id}`);
