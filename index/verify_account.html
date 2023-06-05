@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join - Verify Account</title>
+    <title>Join</title>
     <link rel="icon" href="../assets/img/icons/logo.svg">
 
     <link rel="stylesheet" href="../fonts/fonts.css">
@@ -17,6 +17,7 @@
     <script src="../js/mail_templates.js"></script>
     <script src="../js/account.class.js"></script>
     <script src="../js/user.class.js"></script>
+    <script src="../js/language.js"></script>
 
     <script src="./index.js"></script>
 
@@ -29,13 +30,17 @@
     </div>
     <div id="content">
         
-        <div class="card" id="verification">
+        <div class="card" id="verification" data-title="title-verify-account">
             <div class="header-container">
-                <h1 class="txt-center">Verify your Account</h1>
+                <h1 class="txt-center" data-lang="verify-account">Verify your Account</h1>
                 <img src="../assets/img/icons/blue_line_bottom.svg" alt="">
             </div>
             <form novalidate>
-                <p class="txt-normal txt-center">Please check your inbox and enter the verification code below or click the link in the email<br><br><span id="timer-wrapper">Code expires in:<span id="timer" class="txt-700"></span></span></p>
+                <p class="txt-normal txt-center" data-lang="check-inbox">Please check your inbox and enter the verification code below or click the link in the email</p>
+                <p class="txt-normal txt-center" style="margin-top: -30px;">
+                    <span id="timer-wrapper" data-lang="expires-in"></span><span id="timer" class="txt-700"></span>
+                    <span class="txt-normal txt-center d-none" data-lang="code-expired"></span>
+                </p>
                 <div class="inp-wrapper">
                     <div class="inp-container inp-code radius-10">
                         <input type="text" name="" id="" class="txt-normal radius-10 txt-center" placeholder="_" onkeydown="incrementCodeInputField()" onpaste="pasteCode()">
@@ -46,15 +51,15 @@
                         <input type="text" name="" id="" class="txt-normal radius-10 txt-center" placeholder="_" onkeydown="incrementCodeInputField()" onpaste="pasteCode()">
                     </div>
                     <div class="error txt-center">
-                        <span>Wrong Code!</span>
+                        <span data-lang="wrong-code"></span>
                     </div>
                     <div class="error txt-center">
-                        <span>Code expired!</span>
+                        <span data-lang="code-expired"></span>
                     </div>
                 </div>
                 <div class="btn-container">
-                    <button class="btn btn-secondary btn-check txt-700" id="resend-code" onclick="sendNewCode()">new Code</button>
-                    <button type="submit" class="btn btn-primary btn-check txt-700" id="login" style="width: 145px;" onclick="processVerification()">Confirm</button>
+                    <button class="btn btn-secondary btn-check txt-700" id="resend-code" onclick="sendNewCode()" data-lang="new-code"></button>
+                    <button type="submit" class="btn btn-primary btn-check txt-700" id="login" style="width: 145px;" onclick="processVerification()" data-lang="confirm"></button>
                 </div>
             </form>
         </div>

@@ -36,18 +36,23 @@ const debounce = (cb, delay = 1000) => {
   };
 };
 
+let TEMPLATE_loaded = false;
+
 const includeTemplates = async () => {
   $$('[include-template]').forEach(
-    async templateContainer => {
-      const url = templateContainer.getAttribute('include-template');
-      const template = await ((await fetch(url)).text());
-      templateContainer.innerHTML = template;
-    }
+    async (templateContainer) => await includeTemplate(templateContainer)
   );
-  return new Promise(resolve => {
-    setTimeout(resolve, 100);
-  })
+  return;
 }
+
+const includeTemplate = async (templateContainer) => {
+  const url = templateContainer.getAttribute('include-template');
+  const template = await getTemplate(url);
+  templateContainer.innerHTML = template;
+  return;
+}
+
+const getTemplate = async (url) => (await fetch(url)).text();
 
 const goTo = (page) => {
   location.href = page;

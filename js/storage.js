@@ -109,20 +109,7 @@ const JSON_getDirectory = (path, json) => customParser(`${JSON.stringify(json)}$
 //     return customParser(`{...${obj}, ${directory}: { ...${obj}.${directory}, ${key}: ${value} } }`);
 // }
 
-// const JSON_setDirectory = async (path) => {
-//     const allData = await REMOTE_getAllData();
-//     const JSON_string = JSON.stringify(allData);
-//     // JSON_string = JSON.stringify({a: '123', b: '456'})
-//     const [pathArray, directoryArray] = JSONdirectories(path);
-//     let parseString = `{...${JSON_string}, `;
-//     directoryArray.forEach((directory, i) => {
-//         // parseString += `"${directory}": {...${JSON_string}.${pathArray[i].replaceAll('/','.')}, `
-//         parseString += `"${directory}": ${tst(i, pathArray, JSON_string)} `
-//     });
-//     directoryArray.forEach(()=>parseString += '}')
-//     return customParser(`${parseString}}`);
-//     // return `${parseString.replace(', }', ' }')}}`
-// }
+// const JSON_setDirectory        
 
 // const tst = (i, array, JSON_string) => {
 //     if (i == array.length - 1) return `{`

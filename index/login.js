@@ -28,3 +28,11 @@ const rememberLoginDetails = () => {
         $('#remember-me').checked = true;
     }
 }
+
+const automaticLogin = async () => {
+    if (!("PasswordCredential" in window)) return;
+    const cred = await navigator.credentials.get({ password: true }) || false;
+    if (cred == false) return;
+    const user = await getUser(cred.id);
+    user.logIn();
+}

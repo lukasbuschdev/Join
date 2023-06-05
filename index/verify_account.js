@@ -1,4 +1,5 @@
 const initPage = () => {
+    LANG_load();
     initTimer();
     redirect();
     checkEmailVerification();
@@ -14,8 +15,7 @@ const checkEmailVerification = async () => {
 const redirect = () => {
     const searchParams = new URLSearchParams(document.location.search);
     const newUserdata = LOCAL_getItem('user');
-    let id = '';
-    (newUserdata !== null) ? id = newUserdata.id : false;
+    let id = (newUserdata !== null) ? newUserdata.id : false;
     if (searchParams.get('uid') == null || newUserdata == false || !(searchParams.get('uid') == id)) goTo(`./index.html?redirect`)
 }
 
@@ -28,7 +28,9 @@ const initTimer = async () => {
         const now = Date.now();
         if (expires <= now) {
             clearInterval(timer);
-            $('#timer-wrapper').innerText = 'Code Expired!'
+            $('#timer').classList.toggle('d-none');
+            $('[data-lang="expires-in"]').classList.toggle('d-none');
+            $('[data-lang="code-expired"]').classList.toggle('d-none');
             return;
         };
         const minutes = Math.floor((expires - now + 1000) / 60 / 1000);

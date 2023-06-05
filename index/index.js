@@ -1,26 +1,32 @@
 const init = async () => {
     await includeTemplates();
+    LANG_load();
     if (document.title == 'Join - Login') {
         rememberLoginDetails();
     }
+
+    automaticLogin();
+}
+
+const validName = (nameInput) => /^(?=.{5,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])$/.test(nameInput);
+
+const validEmail = (emailInput) => /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/.test(emailInput);
+
+const validPassword = (passwordInput) => {
+    const passwordRegex = new RegExp(/^(?=.{8,}$)(?=.*?[0-9])(?=.*?[a-z])(?=.*?[A-Z]).+/, "g"); // at least one lowercase and one uppercase letter and one digit
+    return passwordRegex.test(passwordInput);
 }
 
 const goToLogin = async () => {
-    document.title = 'Join - Login';
     $('[include-template]').setAttribute('include-template', '../assets/templates/login_template.html');
-    includeTemplates();
+    await includeTemplates();
+    LANG_load();
 }
 
-const goToSignup = () => {
-    document.title = 'Join - Sign up';
+const goToSignup = async () => {
     $('[include-template]').setAttribute('include-template', '../assets/templates/signup_template.html');
-    includeTemplates();
-}
-
-const goToForgotPw = () => {
-    document.title = 'Join - Forgot password';
-    $('[include-template]').setAttribute('include-template', '../assets/templates/forgot_password_template.html');
-    includeTemplates();
+    await includeTemplates();
+    LANG_load();
 }
 
 const togglePasswordVisibility = () => {

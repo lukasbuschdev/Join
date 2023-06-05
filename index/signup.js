@@ -1,12 +1,3 @@
-const validName = (nameInput) => /^(?=.{5,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])$/.test(nameInput);
-
-const validEmail = (emailInput) => /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/.test(emailInput);
-
-const validPassword = (passwordInput) => {
-    const passwordRegex = new RegExp(/^(?=.{8,}$)(?=.*?[0-9])(?=.*?[a-z])(?=.*?[A-Z]).+/, "g"); // at least one lowercase and one uppercase letter and one digit
-    return passwordRegex.test(passwordInput);
-}
-
 const validateInputs = async ({ name, email, password }) => {
 
     const nameValidity = validName(name);
@@ -37,11 +28,7 @@ const signupInit = async () => {
         password: $('#password input').value
     }
     const user = new User(userData);
-    if (await validateInputs(userData) == false) {
-        log('failed!')
-        return;
-    };
-    log('passed')
+    if (await validateInputs(userData) == false) return;
     user.initVerification();
 }
 
