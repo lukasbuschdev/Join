@@ -5,7 +5,7 @@ const LANG_load = async (lang = LOCAL_getItem('lang') ?? navigator.language.slic
 
     // lang = "de";
     const languages = await (await fetch(`../assets/languages/${directory}/${lang}.json`)).json();
-    document.title = languages[$('[data-title]').dataset.title];
+    document.title = languages[$('[data-title]')?.dataset.title];
     $$('[data-lang]').forEach(element => element.innerText = languages[element.dataset.lang]);
     $$('[data-lang-placeholder]').forEach(input => input.placeholder = languages[input.dataset.langPlaceholder])
 }

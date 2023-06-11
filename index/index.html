@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join</title>
+
+    <link rel="stylesheet" href="../fonts/fonts.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./index.css">
+
+
+    <script src="../js/utilities.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/account.class.js"></script>
+    <script src="../js/user.class.js"></script>
+    <script src="../js/language.js"></script>
+
+    <script src="./index.js"></script>    
+</head>
+<body data-title="title-summary" onload="init()">
+
+    <nav>
+        <div class="logo">
+            <img src="../assets/img/icons/logo_white.svg" alt="Du Pisser">
+        </div>
+
+        <button id="summary" class="btn-nav txt-small active">
+            <span style="--img: url(../assets/img/icons/summary.svg)" data-lang="summary">Summary</span>
+        </button>
+        
+        <button id="boards" class="btn-nav txt-small">
+            <span style="--img: url(../assets/img/icons/boards.svg)" data-lang="boards">Boards</span>
+        </button>
+        
+        <button id="add-task" class="btn-nav txt-small">
+            <span style="--img: url(../assets/img/icons/add-task.svg)" data-lang="add-task">Add Task</span>
+        </button>
+        
+        <button id="contacts" class="btn-nav txt-small">
+            <span style="--img: url(../assets/img/icons/contacts.svg)" data-lang="contacts">Contacts</span>
+        </button>
+        
+        <button id="legal-notice" class="btn-nav txt-small">
+            <span style="--img: url(../assets/img/icons/legal-notice.svg)" data-lang="legal-notice">Legal-notice</span>
+        </button>
+    </nav>
+
+
+
+    <header>
+        <div data-lang="header-kanban" id="header-title" class="txt-normal">
+            Kanban Project Management Tool
+        </div>
+        
+        <button id="help">
+            <img src="../assets/img/icons/help.svg">
+        </button>
+
+        <button id="user-image">
+            <img src="../assets/img/icons/placeholder.jpg">
+        </button>
+    </header>
+
+    <div id="content"></div>
+    
+</body>
+</html>

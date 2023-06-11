@@ -7,10 +7,13 @@
     --clr-blue: #29ABE2;
     --clr-orange: #FF3D00;
     --clr-placeholder: #D1D1D1;
+    --clr-bg-light: #f5f5f5;
+    --txt-gray: #cdcdcd;
     --txt-normal: 21px;
     --txt-small: 16px;
 
     --load-animation-duration: 600ms ease-out;
+    --transition-fast: 100ms ease-in-out;
 }
 
 html {
@@ -66,7 +69,7 @@ button.bg-dark {
 
 .btn {
     border-radius: 8px;
-    transition: 100ms ease-in-out;
+    transition: var(--transition-fast);
     display: flex;
     align-items: center;
     justify-content: center;
