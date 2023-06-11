@@ -1,11 +1,15 @@
 const init = async () => {
-    await includeTemplates();
-    LANG_load();
     if (document.title == 'Join - Login') {
         rememberLoginDetails();
     }
+    $$('input:not([type="checkbox"])').for(
+        input => input.addEventListener('focus', automaticLogin)
+    )
+}
 
-    automaticLogin();
+function loadContent(template) {
+    const url = `../assets/templates/init/${template}_template.html`;
+    $('#content').includeTemplate(url);
 }
 
 const validName = (nameInput) => /^(?=.{5,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])$/.test(nameInput);
@@ -18,13 +22,13 @@ const validPassword = (passwordInput) => {
 }
 
 const goToLogin = async () => {
-    $('[include-template]').setAttribute('include-template', '../assets/templates/login_template.html');
+    $('[include-template]').setAttribute('include-template', '../assets/templates/init/login_template.html');
     await includeTemplates();
     LANG_load();
 }
 
 const goToSignup = async () => {
-    $('[include-template]').setAttribute('include-template', '../assets/templates/signup_template.html');
+    $('[include-template]').setAttribute('include-template', '../assets/templates/init/signup_template.html');
     await includeTemplates();
     LANG_load();
 }

@@ -30,6 +30,9 @@ const rememberLoginDetails = () => {
 }
 
 const automaticLogin = async () => {
+    $$('input:not([type="checkbox"])').for(
+        input => input.removeEventListener('focus', automaticLogin)
+    );
     if (!("PasswordCredential" in window)) return;
     const cred = await navigator.credentials.get({ password: true }) || false;
     if (cred == false) return;
