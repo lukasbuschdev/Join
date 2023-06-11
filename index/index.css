@@ -44,7 +44,11 @@ header {
     display: flex;
     gap: 20px;
     align-items: center;
-    padding-left: 20%;
+    padding-left: 35%;
+}
+
+.btn-nav:hover {
+    background-color: var(--clr-active);
 }
 
 .btn-nav span {
@@ -52,14 +56,14 @@ header {
     gap: 20px;
     align-items: center;
     height: 100%;
+    position: relative;
 }
 
-.btn-nav span::before {
-    content: '';
-    background: var(--img) no-repeat center;
-    background-size: contain;
-    width: 20px;
-    height: inherit;
+.btn-nav span::after {
+    content: var(--img);
+    position: absolute;
+    right: 100%;
+    margin-right: 20px;
 }
 
 .btn-nav.active {
@@ -96,4 +100,44 @@ header {
 #user-image img {
     object-fit: cover;
     height: 100%;
+}
+
+@media (max-width: 800px) {
+    body {
+        grid-template-columns: 1fr;
+        grid-template-rows: 85px 1fr 80px;
+    }
+    nav {
+        grid-row: 3 / 4;
+        flex-direction: row;
+        /* justify-content: space-around; */
+        padding: unset;
+        padding: 0 15px;
+    }
+    .btn-nav {
+        flex: 1;
+        width: unset;
+        height: 100%;
+        padding: unset;
+    }
+    .btn-nav span {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 0;
+        gap: 5px;
+        margin: 0 auto;
+        white-space: nowrap;
+    }
+    .btn-nav span::after {
+        position: static;
+        margin: unset;
+    }
+    .logo {
+        display: none;
+    }
+    #legal-notice {
+        display: none;
+    }
 }
