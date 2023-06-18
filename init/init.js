@@ -1,7 +1,4 @@
 const init = async () => {
-    if (document.title == 'Join - Login') {
-        rememberLoginDetails();
-    }
     // $$('#email input, #password input').for(
     //     input => input.addEventListener('focus', automaticLogin)
     // )

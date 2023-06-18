@@ -14,13 +14,13 @@ const checkEmailVerification = async () => {
 
 const redirect = () => {
     const searchParams = new URLSearchParams(document.location.search);
-    const newUserdata = LOCAL_getItem('user');
+    const newUserdata = LOCAL_getData('user');
     let id = (newUserdata !== null) ? newUserdata.id : false;
     if (searchParams.get('uid') == null || newUserdata == false || !(searchParams.get('uid') == id)) goTo(`./index.html?redirect`)
 }
 
 const initTimer = async () => {
-    const newUserdata = LOCAL_getItem('user');
+    const newUserdata = LOCAL_getData('user');
     if (!newUserdata) return
     const { expires } = await REMOTE_getItem(`verification/${newUserdata.id}`);
     if (expires == undefined) return;
@@ -42,7 +42,7 @@ const initTimer = async () => {
 const processVerification = async () => {
     event.preventDefault();
     
-    const newUserdata = LOCAL_getItem('user');
+    const newUserdata = LOCAL_getData('user');
     const newUser = new User(newUserdata);
     const { code, expires } = await REMOTE_getItem(`verification/${newUserdata.id}`);
     
@@ -63,7 +63,7 @@ const processVerification = async () => {
 
 const sendNewCode = () => {
     event.preventDefault();
-    const userData = LOCAL_getItem('user');
+    const userData = LOCAL_getData('user');
     const user = new User(userData);
     user.initVerification();
 }
