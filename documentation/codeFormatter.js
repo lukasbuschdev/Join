@@ -13,10 +13,11 @@ const CODE_RegExp = {
     js: {
         enclosers: /(^"|"$)/g,
         strings: /'[^']*'/g,
-        reserved: /(this|const|let|function)/g,
+        reserved: /(this|const|let|function|new)/g,
         functions: /([\w$]+\(|(?<=[\w$]+\([^)]*)\))/g,
-        operators: /[=;]/g,
-        numbers: /(?<!'[^>]*)\b\d+\.{0,1}\d*\b/g
+        operators: /[;=+-\/%*]/g,
+        numbers: /(?<!'[^>]*)\b\d+\.{0,1}\d*\b/g,
+        classes: /(?<=>[^<]*)\b[a-zA-Z]+\b/g,
     }
 }
 
@@ -33,8 +34,8 @@ const formatHTML = (code) => {
             .replaceAll(html.onevent, k => formatJS(k))
             .replaceAll(html.enclosers, k => `<_sp _cl"code-gray">${k.replaceAll('<', '&lt;').replaceAll('>', '&gt;')}</_sp>`) // gray <, >, </
         )
-        .replaceAll(html.tabs, i => i.replaceAll('  ', `&nbsp;&nbsp;`))
-        .replaceAll('\n', '<br>')
+        .replaceAll(html.tabs, i => i.replaceAll('  ', `&nbsp;&nbsp;`)) // tabs
+        .replaceAll('\n', '<br>') // line breaks
         .replaceAll('_sp', 'span')
         .replaceAll('_cl', 'class=')
 }
@@ -48,5 +49,6 @@ const formatJS = (code) => {
         .replaceAll(js.functions, i => `<_sp _cl"code-yellow">${i}</_sp>`) // functions
         .replaceAll(js.operators, i => `<_sp _cl"code-white">${i}</_sp>`) // white = and ;
         .replaceAll(js.numbers, i => `<_sp _cl"code-lightgreen">${i}</_sp>`) // lightgreen numbers
+        .replaceAll(js.classes, i => (i in window) ? `<_sp _cl"code-turquoise">${i}</_sp>` : i) // turquoise classes
     }</_sp>`
 }

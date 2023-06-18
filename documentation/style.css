@@ -160,6 +160,10 @@ dialog:focus-visible {
     color: #B1C9A4;
 }
 
+.code-turquoise {
+    color: #4EC9B0;
+}
+
 #copy-code {
     position: absolute;
     inset: 15px 15px auto auto;

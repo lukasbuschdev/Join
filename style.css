@@ -345,7 +345,7 @@ dialog {
 
 .anim-notification {
     animation-name: notification;
-    animation-duration: 3s;
+    animation-duration: 2s;
 }
 
 @keyframes notification {

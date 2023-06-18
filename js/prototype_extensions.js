@@ -23,8 +23,7 @@ HTMLDialogElement.prototype.openModal = function () {
     this.showModal();
     this.addEventListener('mousedown', closeHandler = () => {
         if (this.$('div').contains(event.target)) return;
-        this.$('.notification').classList.remove('anim-notification')
-        void this.$('.notification').offsetWidth;
+        this.$('.notification')?.classList.remove('anim-notification')
         this.closeModal();
     });
     if (this.classList.contains('dlg-notification')) {
