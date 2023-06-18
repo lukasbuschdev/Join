@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join - Docmentation</title>
+
+    <link rel="icon" href="../assets/img/icons/logo.svg">
+    <link rel="stylesheet" href="../fonts/fonts.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./style.css">
+
+    <script src="../js/prototype_extensions.js"></script>
+    <script src="../js/utilities.js"></script>
+    <script src="../js/setup.js" defer></script>
+
+    <script src="./codeFormatter.js"></script>
+    <script src="./script.js"></script>
+</head>
+<body onload="init()">
+
+    <div class="wrapper">
+        <nav></nav>
+        <header></header>
+        <div id="content">
+        </div>
+    </div>
+
+    <dialog type="modal" id="modal">
+        <div id="dialog-content">
+            <div class="header-container">
+                <button class="btn btn-secondary btn-cancel txt-normal" onclick="this.closest('dialog').closeModal()">
+                    <span data-lang="btn-cancel">Close</span>
+                </button>
+                <div id="title"></div>
+            </div>
+            <div id="img" class="grid-center">
+                <img src="" alt="">
+            </div>
+            <div id="info" class="txt-small"></div>
+            <div class="code-wrapper txt-small">
+                <button class="btn btn-primary txt-small" id="copy-code" onclick="copyCode()">Copy</button>
+                <div id="code"></div>
+            </div>
+            <span class="txt-small" style="width: 100%;">Working Example:</span>
+            <div id="example"></div>
+        </div>
+    </dialog>
+</body>
+</html>

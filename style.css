@@ -28,9 +28,13 @@ body {
 }
 
 *,
-*::after,
-*::before {
+::after,
+::before {
     box-sizing: border-box;
+}
+
+:focus-visible {
+    outline: none;
 }
 
 button, input, a, h1, h2, h3 {
@@ -113,9 +117,36 @@ button.bg-dark {
     color: var(--clr-active);
 }
 
-.btn-check img {
-    width: 16px;
-    height: 12px;
+.btn span {
+    align-items: center;
+    display: flex;
+    gap: 15px;
+}
+
+.btn-check span::after,
+.btn-cancel span::after,
+.btn-contact span::after {
+    display: block;
+} 
+
+.btn-check span::after {
+    content: url(./assets/img/icons/check.svg);
+}
+
+.btn-contact span::after {
+    content: url(./assets/img/icons/secondary_contact.svg);
+}
+
+.btn-cancel span::after {
+    content: url(./assets/img/icons/btn_cancel.svg);
+}
+
+.btn-cancel:hover span::after {
+    content: url(./assets/img/icons/btn_cancel_blue.svg);
+}
+
+.btn-plus span::after {
+    content: url(./assets/img/icons/btn_plus.svg);
 }
 
 .bg-light {
@@ -216,6 +247,112 @@ h1.txt-blue {
     border-radius: 30px;
     background-color: var(--clr-white);
     box-shadow: 0px 0px 14px 3px rgba(0 0 0 / 4%);
+}
+
+/* DROPDOWN */
+.drp {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 422px;
+}
+
+.drp-wrapper {
+    border-radius: 10px;
+    border: 1px solid var(--clr-placeholder);
+    display: grid;
+    grid-template-rows: 51px 0fr;
+    transition: var(--transition-fast);
+    background-color: white;
+}
+.drp-wrapper.active {
+    grid-template-rows: 51px 1fr;
+}
+.drp-option-wrapper{
+    overflow: hidden;
+}
+
+.drp-wrapper div:not(.drp-contacts):not(.drp-option-wrapper) {
+    padding: 13px 21px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 51px;
+}
+
+.drp-wrapper div:not(.drp-contacts):not(.drp-option-wrapper):not(.drp-title):hover {
+    background-color: var(--clr-placeholder);
+}
+
+.drp-invite {
+    border-radius: 0 0 10px 10px;
+}
+
+.drp-title::after {
+    content: url(./assets/img/icons/dropdown.svg);
+}
+
+.drp-option::after {
+    content: url(./assets/img/icons/check_button.svg);
+}
+
+.drp-option.active::after {
+    content: url(./assets/img/icons/check_button_checked.svg);
+}
+
+.drp-invite::after {
+    content: url(./assets/img/icons/new_contact.svg);
+    translate: 4px 0;
+}
+
+/* DIALOG */
+dialog {
+    user-select: none;
+    border: unset;
+    padding: unset;
+    overflow: hidden;
+}
+
+.dlg-notification {
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 10vh;
+    background-color: transparent;
+    height: 100vh;
+    width: 100vh;
+}
+
+.dlg-notification[open] {
+    display: flex;
+}
+
+.dlg-notification::backdrop {
+    background-color: transparent;
+}
+
+.dlg-notification > div {
+    background-color: var(--clr-dark);
+    color: white;
+    border-radius: 20px;
+    box-shadow: 0 0 4px rgba(0 0 0 / 15%);
+    padding: 23px 30px;
+    opacity: 0;
+    width: fit-content;
+    translate: 0 100px;
+}
+
+.anim-notification {
+    animation-name: notification;
+    animation-duration: 3s;
+}
+
+@keyframes notification {
+    20%, 80% {
+        opacity: 1;
+        translate: 0 0;
+    }
 }
 
 /* MEDIA QUERIES */

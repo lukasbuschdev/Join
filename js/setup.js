@@ -1,13 +1,16 @@
-$$('[type = menu]').for(menu => {
-    menu.querySelectorAll('button').for(
-        button => button.addEventListener('click', () => menu.querySelectorAll('button').for(
-            button => button.classList.toggle('active', button == event.currentTarget)
-        ))
-    )
-});
-
 $$('div[include-template]').for(container => {
     container.includeTemplate();
+    LANG_load();
 });
 
-LANG_load();
+const initMenus = () => {
+    $$('[type = "menu"]').for(menu => {
+        menu.$$('[type = "option"]').for(
+            button => button.addEventListener('click', () => menu.$$('[type = "option"]').for(
+                button => button.classList.toggle('active', button == event.currentTarget)
+            ))
+        )
+    });
+}
+
+initMenus();
