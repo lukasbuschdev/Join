@@ -37,7 +37,7 @@ body {
     outline: none;
 }
 
-button, input, a, h1, h2, h3 {
+button, input, textarea, a, h1, h2, h3 {
     all: unset;
 }
 

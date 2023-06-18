@@ -1,19 +1,19 @@
-<div class="">
-    <h1>Add Task</h1>
+<div class="txt-normal add-task-card">
+    <h1 class="padding-10">Add Task</h1>
 
-    <div class="add-task-rows">
+    <div class="add-task-rows padding-10">
         <div class="add-task-single-row">
             <div class="column">
                 <span>Title</span>
-                <textarea name="title" id="title"></textarea>
+                <textarea name="title" id="title" placeholder="Enter a title"></textarea>
             </div>
 
             <div class="column">
                 <span>Description</span>
-                <textarea name="description" id="description"></textarea>
+                <textarea name="description" id="description" placeholder="Enter a description"></textarea>
             </div>
 
-            <div class="drp txt-small">
+            <div class="drp">
                 <span>Category</span>
                 <div class="drp-wrapper">
                     <div class="drp-title" onclick="this.toggleDropDown()">Select task category</div>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class="drp txt-small">
+            <div class="drp">
                 <span>Assigned to</span>
                 <div class="drp-wrapper">
                     <div class="drp-title" onclick="this.toggleDropDown()">Select contacts to assign</div>
@@ -70,7 +70,7 @@
         </div>
     </div>
 
-    <div class="flex-right">
+    <div class="flex-right padding-10">
         <button class="btn btn-secondary btn-cancel txt-normal">
             <span data-lang="btn-cancel">Clear</span>
         </button>
@@ -82,16 +82,21 @@
 </div>
 
 <style>
+    .add-task-card {
+        max-height: calc(100vh - 85px);
+        overflow: hidden;
+    }
+
     .flex-right {
         display: flex;
         justify-content: flex-end;
         gap: 10px;
+        padding-right: 10%;
     }
 
     textarea {
         border: 1px solid #d1d1d1;
         border-radius: 10px;
-        font-size: 16px;
     }
 
     .column {
@@ -110,9 +115,14 @@
         gap: 35px;
     }
 
+    .padding-10 {
+        padding: 0 10%;
+    }
+
     .add-task-single-row {
+        box-sizing: border-box;
         display: grid;
-        max-width: 350px;
+        width: 422px;
         gap: 20px;
     }
 
@@ -127,6 +137,7 @@
 
     #description {
         padding: 18px 21px;
+        height: 119px;
     }
 
     #date {
