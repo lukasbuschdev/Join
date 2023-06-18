@@ -53,9 +53,9 @@
             <div id="priority" class="column">
                 <span>Prio</span>
                 <div class="btn-priority">
-                    <button class="btn btn-secondary btn-cancel txt-normal">Urgent</button>
-                    <button class="btn btn-secondary btn-cancel txt-normal">Medium</button>
-                    <button class="btn btn-secondary btn-cancel txt-normal">Low</button>
+                    <button class="btn btn-secondary txt-normal"><span style="--prio_icon: url(../assets/img/icons/prio_urgent.svg)">Urgent</span></button>
+                    <button class="btn btn-secondary txt-normal"><span style="--prio_icon: url(../assets/img/icons/prio_medium.svg)">Medium</span></button>
+                    <button class="btn btn-secondary txt-normal"><span style="--prio_icon: url(../assets/img/icons/prio_low.svg)">Low</span></button>
                 </div>
             </div>
 
@@ -84,7 +84,7 @@
 <style>
     .add-task-card {
         max-height: calc(100vh - 85px);
-        overflow: hidden;
+        /* overflow: hidden; */
     }
 
     .flex-right {
@@ -129,6 +129,20 @@
     .btn-priority {
         display: flex;
         gap: 10px;
+    }
+
+    .btn-priority button span {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    } 
+
+    .btn-priority button span::after {
+        content: var(--prio_icon);
+    }
+
+    .btn-priority button:nth-child(2) span::after {
+        translate: 0 -3px;
     }
 
     #title {
