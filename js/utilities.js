@@ -58,4 +58,4 @@ const goTo = (page) => {
   location.href = page;
 }
 
-const customParser = (evalString) => Function(`'use strict'; return (${evalString}) ?? false`)();
+const parse = (evalString) => Function(`'use strict'; return (${evalString}) ?? false`)();

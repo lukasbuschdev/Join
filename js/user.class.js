@@ -15,8 +15,8 @@ class User extends Account {
     initVerification = async () => {
         this.generateVerificationCode();
         this.#sendVerificationCode();
-        LOCAL_setItem('user', this.userData);
-        await REMOTE_setItem('verification', this.verifyCode);
+        LOCAL_setData('user', this.userData);
+        await REMOTE_setData('verification', this.userData.id, this.verifyCode);
         goTo(`./verify_account.html?uid=${this.userData.id}`);
     }
 
@@ -66,7 +66,7 @@ class User extends Account {
             name: this.userData.name,
             password: this.userData.password
         }
-        LOCAL_setItem('user', cred);
+        LOCAL_setData('user', cred);
     }
 
     logIn = async () => {
@@ -87,7 +87,7 @@ class User extends Account {
     }
 
     #update = async () => {
-        return REMOTE_setItem('users', this.userData);
+        return REMOTE_setData('users', this.userData.id, this.userData);
     }
 
     generateVerificationCode = () => {

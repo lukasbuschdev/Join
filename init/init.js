@@ -2,9 +2,9 @@ const init = async () => {
     if (document.title == 'Join - Login') {
         rememberLoginDetails();
     }
-    $$('input:not([type="checkbox"])').for(
-        input => input.addEventListener('focus', automaticLogin)
-    )
+    // $$('#email input, #password input').for(
+    //     input => input.addEventListener('focus', automaticLogin)
+    // )
 }
 
 function loadContent(template) {
@@ -38,7 +38,7 @@ const togglePasswordVisibility = () => {
     const passwordInput = $('#password input');
     const eye = $('#eye');
     passwordInput.type == 'password' ? passwordInput.type = 'text' : passwordInput.type = 'password';
-    eye.src.includes('show.png') ? eye.src = '../assets/img/icons/hide.png' : eye.src = '../assets/img/icons/show.png';
+    eye.src = eye.src.includes('show.png') ? '../assets/img/icons/hide.png' : '../assets/img/icons/show.png';
 }
 
 const throwErrors = (...params) => {

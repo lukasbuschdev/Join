@@ -3,8 +3,8 @@ const logIn = async () => {
     const emailOrUsername = $('#email input').value;
     const password = $('#password input').value;
 
-    const userData = await getUser(emailOrUsername);
-    const bool = userData == false;
+    const user = await getUser(emailOrUsername);
+    const bool = user.userData == false;
     throwErrors(
         { identifier: 'invalid-email-or-username', bool },
         { identifier: 'wrong-password', bool: userData.password !== password },
@@ -13,8 +13,7 @@ const logIn = async () => {
     if(userData.password !== password) {
         log('wrong password!');
         return;
-    };    
-    const user = new User(userData);
+    };
     user.rememberMe();
     user.logIn();
 }

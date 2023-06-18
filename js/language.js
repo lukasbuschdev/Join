@@ -1,4 +1,4 @@
-const LANG_load = async (lang = LOCAL_getItem('lang') ?? navigator.language.slice(0, 2) ?? "en-US") => {
+const LANG_load = async (lang = LOCAL_getData('lang') ?? navigator.language.slice(0, 2) ?? "en-US") => {
 
     // const directory = location.pathname.split('/')[2]; // !!! ONLINE !!!
     const directory = location.pathname.split('/')[1]; // !!! LOCAL SERVER !!!
@@ -12,10 +12,10 @@ const LANG_load = async (lang = LOCAL_getItem('lang') ?? navigator.language.slic
 
 const LANG_set = (lang) => {
     if (!(lang == 'de' || lang == 'en')) return;
-    LOCAL_setItem('lang', lang);
+    LOCAL_setData('lang', lang);
 }
 
-const LANG_get = () => LOCAL_getItem('lang');
+const LANG_get = () => LOCAL_getData('lang');
 
 const LANG_change = (lang) => {
     LANG_set(lang);
