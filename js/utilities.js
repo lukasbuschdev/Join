@@ -36,8 +36,6 @@ const debounce = (cb, delay = 1000) => {
   };
 };
 
-let TEMPLATE_loaded = false;
-
 const includeTemplates = async () => {
   $$('[include-template]').forEach(
     async (templateContainer) => await includeTemplate(templateContainer)

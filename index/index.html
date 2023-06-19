@@ -10,9 +10,10 @@
     <link rel="stylesheet" href="../fonts/fonts.css">
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./boards.css">
 
-    <script src="../js/prototype_extensions.js"></script>
     <script src="../js/utilities.js"></script>
+    <script src="../js/prototype_extensions.js"></script>
     <script src="../js/script.js"></script>
     <script src="../js/storage.js"></script>
     <script src="../js/account.class.js"></script>
@@ -21,19 +22,20 @@
     <script src="../js/setup.js" defer></script>
 
     <script src="./index.js"></script>    
+    <script src="./boards.js"></script>
 </head>
-<body data-title="title-summary">
+<body data-title="title-summary" onload="init()">
 
     <nav type="menu">
         <div class="logo">
-            <img src="../assets/img/icons/logo_white.svg" alt="Du Pisser">
+            <img src="../assets/img/icons/logo_white.svg" alt="Join">
         </div>
 
-        <button id="summary" class="btn-nav txt-small active" onclick="loadContent()" type="option">
+        <button id="summary" class="btn-nav txt-small" onclick="loadContent()" type="option">
             <span style="--img: url(../assets/img/icons/summary.svg)" data-lang="summary">Summary</span>
         </button>
         
-        <button id="boards" class="btn-nav txt-small" onclick="loadContent()" type="option">
+        <button id="boards" class="btn-nav txt-small active" onclick="loadContent()" type="option">
             <span style="--img: url(../assets/img/icons/boards.svg)" data-lang="boards">Boards</span>
         </button>
         

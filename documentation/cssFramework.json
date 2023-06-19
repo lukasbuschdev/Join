@@ -48,5 +48,11 @@
         "info": "Einfach den Code unten einfügen.",
         "codeTemplate": "dlg_notification.html",
         "minHeight": "350px"
+    },
+    "btn - plus": {
+        "imgSrc": "btn_plus.svg",
+        "category": "button",
+        "info": "Einfach den Code unten einfügen.",
+        "codeTemplate": "btn_plus.html"
     }
 }
