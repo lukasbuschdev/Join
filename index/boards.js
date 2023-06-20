@@ -3,7 +3,7 @@ const addTaskModal = async () => {
     $('#add-task-modal').openModal();
 }
 
-const addDragger = () => {
+const addDragAndDrop = () => {
     const task = event.currentTarget;
     const currentPosition = {
         mouseX: event.pageX,
@@ -15,8 +15,9 @@ const addDragger = () => {
         taskDragger(currentPosition);
     });
     document.addEventListener("mouseup", () => {
-        task.removeEventListener("mousemove", dragHandler), { once: true };
-    })
+        taskDropper(event);
+        task.removeEventListener("mousemove", dragHandler);
+    }, { once: true })
 }
 
 const taskDragger = throttle(({ mouseX, mouseY, currentX, currentY  }) => {
@@ -26,7 +27,7 @@ const taskDragger = throttle(({ mouseX, mouseY, currentX, currentY  }) => {
 }, 10)
 
 const checkPlaceholder = ({pageX, pageY}) => {
-    $$('#tasks > div:not(:hover)').for(taskWrapper => {
+    $$('#tasks > div').for(taskWrapper => {
         const { x, y, width, height } = taskWrapper.getBoundingClientRect();
         if (x < pageX && pageX < (x + width) &&
             y < pageY && pageY < (y + height)) {
@@ -36,5 +37,19 @@ const checkPlaceholder = ({pageX, pageY}) => {
             } else if (taskWrapper.classList.contains('placeholder')) {
                 taskWrapper.classList.remove('placeholder');
             }
+    })
+}
+
+const taskDropper = ({pageX, pageY}) => {
+    $$('#tasks > div').for(taskWrapper => {
+        const { x, y, width, height } = taskWrapper.getBoundingClientRect();
+        const task = event.target.closest('.task')
+        if (x < pageX && pageX < (x + width) &&
+            y < pageY && pageY < (y + height)) {
+                taskWrapper.classList.remove('placeholder');
+                taskWrapper.append(task)
+            }
+        task.style.setProperty('--x', '0');
+        task.style.setProperty('--y', '0');
     })
 }

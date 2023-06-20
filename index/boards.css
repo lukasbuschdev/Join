@@ -76,6 +76,12 @@
 }
 
 .task-description {
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    line-height: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: var(--clr-icon-gray);
 }
 
