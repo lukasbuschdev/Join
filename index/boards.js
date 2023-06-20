@@ -14,10 +14,14 @@ const addDragAndDrop = () => {
     task.addEventListener("mousemove", dragHandler = () => {
         taskDragger(currentPosition);
     });
+    // task.addEventListener("mouseleave", () => {
+    //     taskDropper(event, task);
+    //     task.removeEventListener("mousemove", dragHandler);
+    // }, { once: true });
     document.addEventListener("mouseup", () => {
-        taskDropper(event);
+        taskDropper(event, task);
         task.removeEventListener("mousemove", dragHandler);
-    }, { once: true })
+    }, { once: true });
 }
 
 const taskDragger = throttle(({ mouseX, mouseY, currentX, currentY  }) => {
@@ -40,16 +44,20 @@ const checkPlaceholder = ({pageX, pageY}) => {
     })
 }
 
-const taskDropper = ({pageX, pageY}) => {
+const taskDropper = ({pageX, pageY}, task) => {
     $$('#tasks > div').for(taskWrapper => {
         const { x, y, width, height } = taskWrapper.getBoundingClientRect();
-        const task = event.target.closest('.task')
         if (x < pageX && pageX < (x + width) &&
             y < pageY && pageY < (y + height)) {
                 taskWrapper.classList.remove('placeholder');
                 taskWrapper.append(task)
-            }
-        task.style.setProperty('--x', '0');
-        task.style.setProperty('--y', '0');
+        }
     })
+    task.classList.add('drop-transition');
+    task.addEventListener("transitionend", () => {
+        task.classList.remove('drop-transition');
+        log("transition removed!")
+    }, { once: true });
+    task.style.setProperty('--x', '0');
+    task.style.setProperty('--y', '0');
 }

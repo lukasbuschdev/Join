@@ -70,6 +70,9 @@ button.active {
     color: var(--clr-white);
 }
 
+button.active span::after {
+    filter: brightness(0) invert(1);
+}
 
 button.bg-dark {
     font-weight: 700;

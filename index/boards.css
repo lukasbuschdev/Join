@@ -58,6 +58,10 @@
     rotate: 2.5deg;
 }
 
+.drop-transition {
+    transition: translate var(--transition-fast);
+}
+
 #tasks > div.placeholder::after {
     content: '';
     display: block;
