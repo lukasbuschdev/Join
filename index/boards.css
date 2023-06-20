@@ -1,6 +1,6 @@
 #board {
     width: 100%;
-    /* min-height: 100%; */
+    min-height: 100%;
     padding: 50px 10%;
     display: flex;
     flex-direction: column;
@@ -13,10 +13,10 @@
 }
 
 #tasks {
-    margin-top: auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 38px;
+    flex-grow: 1;
 }
 
 #tasks > div {
@@ -51,13 +51,14 @@
     gap: 10px;
     cursor: pointer;
     transition: rotate var(--transition-fast);
+    translate: calc(var(--x) * 1px) calc(var(--y) * 1px);
 }
 
 .task:active {
     rotate: 2.5deg;
 }
 
-#tasks:has(.task:active) > div:hover::after {
+#tasks > div.placeholder::after {
     content: '';
     display: block;
     border-radius: 30px;
