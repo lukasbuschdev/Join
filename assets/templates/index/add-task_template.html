@@ -1,5 +1,7 @@
 <div class="txt-normal add-task-card">
-    <h1 class="padding-10">Add Task</h1>
+    <div class="add-task-heading">
+        <h1 class="padding-10 txt-700">Add Task</h1>
+    </div>
 
     <div class="add-task-rows padding-10">
         <div class="add-task-single-row">
@@ -44,10 +46,12 @@
             </div>
         </div>
 
-        <div class="add-task-single-row">
+        <div class="line"></div>
+
+        <div class="add-task-single-row second-row">
             <div id="calender" class="column">
                 <span>Due date</span>
-                <textarea name="date" id="date"></textarea>
+                <textarea name="date" id="date" class="padding-textarea"></textarea>
             </div>
 
             <div id="priority" class="column">
@@ -61,9 +65,9 @@
 
             <div class="subtasks column">
                 <span>Subtasks</span>
-                <textarea name="add-subtask" id="add-subtask"></textarea>
+                <textarea name="add-subtask" id="add-subtask" class="padding-textarea"></textarea>
                 <div class="row">
-                    <input type="checkbox" id="subtask" name="subtask" checked>
+                    <input type="checkbox" id="subtask" name="subtask" value="subtask">
                     <label for="subtask">Subtask 1</label>
                 </div>
             </div>
@@ -84,39 +88,61 @@
 <style>
     .add-task-card {
         max-height: calc(100vh - 85px);
-        /* overflow: hidden; */
     }
 
     .flex-right {
         display: flex;
         justify-content: flex-end;
         gap: 10px;
-        padding-right: 10%;
+    }
+
+    .add-task-heading {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 40px 0;
+    }
+
+    h1 {
+        font-size: 61px;
     }
 
     textarea {
         border: 1px solid #d1d1d1;
         border-radius: 10px;
+        background-color: white;
+        height: 23px;
+        overflow: hidden;
+    }
+
+    span {
+        line-height: 120%;
+    }
+
+    .line {
+        height: 559px;
+        width: 1px;
+        background-color: #d1d1d1;
     }
 
     .column {
         display: flex;
         flex-direction: column;
-    }
-
-    .row {
-        display: flex;
-        flex-direction: row;
+        gap: 8px;
     }
 
     .add-task-rows {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         gap: 35px;
+        max-width: 1440px;
     }
 
     .padding-10 {
         padding: 0 10%;
+    }
+
+    .padding-textarea {
+        padding: 13px 21px;
     }
 
     .add-task-single-row {
@@ -124,6 +150,12 @@
         display: grid;
         width: 422px;
         gap: 20px;
+    }
+
+    .second-row {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
     }
 
     .btn-priority {
@@ -153,9 +185,4 @@
         padding: 18px 21px;
         height: 119px;
     }
-
-    #date {
-
-    }
-
 </style>
