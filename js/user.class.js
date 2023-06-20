@@ -4,17 +4,17 @@ class User extends Account {
         this.loggedIn = 0;
     }
 
-    setPicture = (picture) => {
+    setPicture = (picture) => { // TODO
         this.userData.picture = picture;
     }
 
-    changePassword = (newPassword) => {
+    changePassword = (newPassword) => { // TODO
         this.userData.password = newPassword;
     }
 
     initVerification = async () => {
         this.generateVerificationCode();
-        this.#sendVerificationCode();
+        // this.#sendVerificationCode();
         LOCAL_setData('user', this.userData);
         await REMOTE_setData('verification', this.userData.id, this.verifyCode);
         goTo(`./verify_account.html?uid=${this.userData.id}`);
@@ -73,7 +73,7 @@ class User extends Account {
         this.loggedIn = 1;
         this.setCredentials();
         await this.#update();
-        location.href = `../summary/summary.html?uid=${this.userData.id}`;
+        goTo(`../index/index.html?uid=${this.userData.id}`);
     }
 
     rememberMe = () => {

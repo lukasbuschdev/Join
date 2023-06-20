@@ -1,9 +1,9 @@
 const validateInputs = async ({ name, email, password }) => {
 
     const nameValidity = validName(name);
-    const nameInUse = await getUser(name) == false;
+    const nameInUse = await getUser(name) == undefined;
     const emailValidity = validEmail(email);
-    const emailInUse = await getUser(email) == false;
+    const emailInUse = await getUser(email) == undefined;
     const passwordValidity = validPassword(password);
 
     if (nameValidity == true && nameInUse == true && emailValidity == true && passwordValidity == true && emailInUse == true) {

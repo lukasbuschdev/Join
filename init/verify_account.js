@@ -7,7 +7,7 @@ const initPage = () => {
 
 const checkEmailVerification = async () => {
     const searchParams = new URLSearchParams(document.location.search);
-    const { code } = await REMOTE_getItem(`verification/${searchParams.get('uid')}`)
+    const { code } = await REMOTE_getData(`verification/${searchParams.get('uid')}`)
     if (searchParams.get('token') !== code) return;
     fillCodeInputs(code);
 }
@@ -15,14 +15,14 @@ const checkEmailVerification = async () => {
 const redirect = () => {
     const searchParams = new URLSearchParams(document.location.search);
     const newUserdata = LOCAL_getData('user');
-    let id = (newUserdata !== null) ? newUserdata.id : false;
-    if (searchParams.get('uid') == null || newUserdata == false || !(searchParams.get('uid') == id)) goTo(`./index.html?redirect`)
+    const id = (newUserdata !== null) ? newUserdata.id : false;
+    if (searchParams.get('uid') == null || newUserdata == false || !(searchParams.get('uid') == id)) goTo(`./init.html?redirect`)
 }
 
 const initTimer = async () => {
     const newUserdata = LOCAL_getData('user');
     if (!newUserdata) return
-    const { expires } = await REMOTE_getItem(`verification/${newUserdata.id}`);
+    const { expires } = await REMOTE_getData(`verification/${newUserdata.id}`);
     if (expires == undefined) return;
     const timer = setInterval(()=>{
         const now = Date.now();
@@ -44,7 +44,7 @@ const processVerification = async () => {
     
     const newUserdata = LOCAL_getData('user');
     const newUser = new User(newUserdata);
-    const { code, expires } = await REMOTE_getItem(`verification/${newUserdata.id}`);
+    const { code, expires } = await REMOTE_getData(`verification/${newUserdata.id}`);
     
     const inputCode = [...$$('input')].map(input => input.value).join('');
     
@@ -56,8 +56,8 @@ const processVerification = async () => {
         $$('.error')[1].classList.add('active');
         return;
     }
-    await REMOTE_removeItem('verification', newUserdata.id);
-    LOCAL_removeItem('user');
+    await REMOTE_removeData(`verification/${newUserdata.id}`);
+    LOCAL_removeData('user');
     newUser.verify();
 }
 

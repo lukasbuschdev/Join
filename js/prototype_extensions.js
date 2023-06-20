@@ -57,7 +57,9 @@ HTMLElement.prototype.toggleDropDown = function () {
         if (this.closest('.drp-wrapper').contains(event.target)) return;
         this.closest('.drp-wrapper').toggleActive();
         document.removeEventListener('click', closeHandler);
+        log('closeHandler removed!')
     })
+    log('closeHandler added!')
 }
 
 HTMLElement.prototype.toggleActive = function () {

@@ -21,11 +21,13 @@ header {
     align-items: center;
     gap: 35px;
     padding: 20px 36px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1); 
+    z-index: 1;
 }
 
 #content {
-    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.1);
     background-color: var(--clr-bg-light);
+    overflow: auto;
 }
 
 .logo {

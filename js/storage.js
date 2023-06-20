@@ -16,7 +16,7 @@ const REMOTE_download = async (directory) => {
 
 // UPLOAD
 
-const REMOTE_upload = (path, data) => {
+const REMOTE_upload = async (path, data) => {
     const payload = {
         key: path.split('/')[0],
         value: data,
@@ -52,7 +52,7 @@ const REMOTE_setData = async (targetPath, newDirectory, data) => {
     const initialData = await REMOTE_getData(targetPath);
     if (!initialData) return;
     const upload = (initialData !== "empty") ? { ...initialData, [newDirectory]: data } : { [newDirectory]: data };
-    await REMOTE_upload(targetPath, upload);
+    return REMOTE_upload(targetPath, upload);
 }
 
 const REMOTE_removeData = async (path) => {
@@ -61,7 +61,7 @@ const REMOTE_removeData = async (path) => {
     let data = await REMOTE_getData(directory);
     if (!data) return;
     delete data[item];
-    await REMOTE_upload(path)
+    return REMOTE_upload(path)
 }
 
 // Directories
@@ -71,7 +71,7 @@ const REMOTE_addDirectory = async (directoryName) => {
         console.error(`directory '${directoryName}' already exists!`);
         return;
     }
-    REMOTE_upload(directoryName, "empty");
+    return (directoryName, "empty");
 }
 
 const REMOTE_resetDirectory = async (directoryName) => {

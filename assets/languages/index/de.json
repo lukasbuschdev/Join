@@ -8,8 +8,14 @@
     "summary": "Überblick",
     "boards": "Boards",
     "add-task": "Neue Aufgabe",
+    "find-task": "Aufgabe finden",
     "contacts": "Kontakte",
     "legal-notice": "Rechtliches",
+
+    "to-do": "Ausstehend",
+    "awaiting-feedback": "Warte auf Rückmeldung",
+    "in-progress": "In Arbeit",
+    "done": "Abgeschlossen",
 
     "header-kanban": "Kanban Projektmanager"
 }

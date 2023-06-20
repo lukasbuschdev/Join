@@ -8,8 +8,14 @@
     "summary": "Summary",
     "boards": "Boards",
     "add-task": "Add Task",
+    "find-task": "Find Task",
     "contacts": "Contacs",
     "legal-notice": "Legal notice",
+
+    "to-do": "To do",
+    "awaiting-feedback": "Awaiting Feedback",
+    "in-progress": "In Progress",
+    "done": "Done",
 
     "header-kanban": "Kanban Project Management Tool"
 }
