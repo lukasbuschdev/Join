@@ -1,24 +1,24 @@
 <div class="txt-normal add-task-card">
     <div class="add-task-heading">
-        <h1 class="padding-10 txt-700">Add Task</h1>
+        <h1 data-lang="heading-add-task" class="padding-10 txt-700">Add Task</h1>
     </div>
 
     <div class="add-task-rows padding-10">
         <div class="add-task-single-row">
             <div class="column">
-                <span>Title</span>
+                <span data-lang="title">Title</span>
                 <textarea name="title" id="title" placeholder="Enter a title"></textarea>
             </div>
 
             <div class="column">
-                <span>Description</span>
+                <span data-lang="description">Description</span>
                 <textarea name="description" id="description" placeholder="Enter a description"></textarea>
             </div>
 
             <div class="drp">
-                <span>Category</span>
+                <span data-lang="category">Category</span>
                 <div class="drp-wrapper">
-                    <div class="drp-title" onclick="this.toggleDropDown()">Select task category</div>
+                    <div data-lang="select-task-category" class="drp-title" onclick="this.toggleDropDown()">Select task category</div>
                     <div class="drp-option-wrapper">
                         <div class="drp-contacts">
                             <div class="drp-option" onclick="this.toggleActive()"></div>
@@ -30,9 +30,9 @@
             </div>
             
             <div class="drp">
-                <span>Assigned to</span>
+                <span data-lang="assigned-to">Assigned to</span>
                 <div class="drp-wrapper">
-                    <div class="drp-title" onclick="this.toggleDropDown()">Select contacts to assign</div>
+                    <div data-lang="select-contacts-to-asign" class="drp-title" onclick="this.toggleDropDown()">Select contacts to assign</div>
                     <div class="drp-option-wrapper">
                         <div class="drp-you" data-lang="assigned-you">You</div>
                         <div class="drp-contacts">
@@ -51,12 +51,12 @@
 
         <div class="add-task-single-row second-row">
             <div id="calender" class="column">
-                <span>Due date</span>
+                <span data-lang="due-date">Due date</span>
                 <textarea name="date" id="date" class="padding-textarea"></textarea>
             </div>
 
             <div id="priority" class="column">
-                <span>Prio</span>
+                <span data-lang="priority">Prio</span>
                 <div class="btn-priority" type="menu">
                     <button class="btn btn-secondary txt-normal" type="option"><span style="--prio_icon: url(../assets/img/icons/prio_urgent.svg)">Urgent</span></button>
                     <button class="btn btn-secondary txt-normal" type="option"><span style="--prio_icon: url(../assets/img/icons/prio_medium.svg)">Medium</span></button>
@@ -65,11 +65,11 @@
             </div>
 
             <div class="subtasks column">
-                <span>Subtasks</span>
+                <span data-lang="subtasks">Subtasks</span>
                 <textarea name="add-subtask" id="add-subtask" class="padding-textarea"></textarea>
                 <div class="row">
                     <input type="checkbox" id="subtask" name="subtask" value="subtask">
-                    <label for="subtask">Subtask 1</label>
+                    <label data-lang="subtask1" for="subtask">Subtask 1</label>
                 </div>
             </div>
         </div>
@@ -136,6 +136,7 @@
         justify-content: space-between;
         gap: 35px;
         max-width: 1440px;
+        flex-shrink: 0;
     }
 
     .padding-10 {

@@ -17,5 +17,37 @@
     "in-progress": "In Progress",
     "done": "Done",
 
-    "header-kanban": "Kanban Project Management Tool"
+    "header-kanban": "Kanban Project Management Tool",
+
+
+
+
+    "heading-add-task": "Add Task",
+    "title": "Title",
+    "description": "Description",
+    "category": "Category",
+    "select-task-category": "Select task category",
+    "assigned-to": "Assigned to",
+    "select-contacts-to-asign": "Select contacts to asign",
+    "assigned-you": "You",
+    "assigned-invite": "Invite new contact",
+    "due-date": "Due date",
+    "priority": "Prio",
+    "subtasks": "Subtasks",
+    "subtask1": "Subtask 1",
+
+
+    "btn-create-task": "Create Task",
+    "btn-cancel": "Clear",
+    "btn-new-contact": "New contact",
+
+
+
+
+    "header": "Contacts",
+    "sub-header": "Better with a team",
+
+    "contact-info": "Contact Information",
+    "edit-contact": "Edit Contact",
+    "phone": "Phone"
 }
