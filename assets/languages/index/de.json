@@ -17,5 +17,38 @@
     "in-progress": "In Arbeit",
     "done": "Abgeschlossen",
 
-    "header-kanban": "Kanban Projektmanager"
+    "header-kanban": "Kanban Projektmanager",
+
+
+
+
+    "heading-add-task": "Aufgabe hinzufügen",
+    "title": "Titel",
+    "description": "Beschreibung",
+    "category": "Kategorie",
+    "select-task-category": "Wähle eine Kategorie",
+    "assigned-to": "Hinzufügen zu",
+    "select-contacts-to-asign": "Kontakte zum hinzufügen auswählen",
+    "assigned-you": "Du",
+    "assigned-invite": "Neuen Kontakt einladen",
+    "due-date": "Due date",
+    "priority": "Priorität",
+    "subtasks": "Aufgabe",
+    "subtask1": "Unteraufgabe",
+
+
+    "btn-create-task": "Aufgabe erstellen",
+    "btn-cancel": "Abbrechen",
+    "btn-new-contact": "Kontakt hinzufügen",
+
+
+
+
+
+    "header": "Kontakte",
+    "sub-header": "Besser mit einem Team",
+
+    "contact-info": "Kontaktinformation",
+    "edit-contact": "Kontakt bearbeiten",
+    "phone": "Telefon"
 }
