@@ -52,6 +52,7 @@ const REMOTE_setData = async (targetPath, newDirectory, data) => {
     const initialData = await REMOTE_getData(targetPath);
     if (!initialData) return;
     const upload = (initialData !== "empty") ? { ...initialData, [newDirectory]: data } : { [newDirectory]: data };
+    // log(upload)
     return REMOTE_upload(targetPath, upload);
 }
 
@@ -61,7 +62,7 @@ const REMOTE_removeData = async (path) => {
     let data = await REMOTE_getData(directory);
     if (!data) return;
     delete data[item];
-    return REMOTE_upload(path)
+    return REMOTE_upload(path, data)
 }
 
 // Directories
@@ -89,7 +90,7 @@ const REMOTE_resetDirectory = async (directoryName) => {
 
 const getUser = async (input) => {
     const allUsers = await REMOTE_getData('users');
-    const [ userData ] = Object.values(allUsers).filter(user => user.email == input || user.name == input);
+    const [ userData ] = Object.values(allUsers).filter(({ id }) => id == input);
     return (userData !== undefined) ? new User(userData) : undefined;
 }
 
@@ -105,4 +106,39 @@ const LOCAL_getData = (key) => {
 
 const LOCAL_removeData = (key) => {
     localStorage.removeItem(key);
+}
+
+// DEV
+
+const getDevUsers = async (id) => {
+    return await (await fetch("../assets/dev/dev_users.json")).json();
+    return allUsers[id] ?? allUsers.guest;
+}
+
+// UserData
+
+const getCurrentUser = async () => {
+    const currentUserId = new URLSearchParams(document.location.search).get('id') ?? "";
+    const { userData } = await getUser(currentUserId);
+    log(userData)
+}
+
+const loadUserData = async (id) => {
+    const allUsers = await REMOTE_getData("dev/users");
+    const user = allUsers[id] ?? allUsers.guest;
+    if (user.img !== "") {
+        setUserImg(user.img);
+    } else {
+        setUserImgBackup(user.name);
+    }
+}
+
+const setUserImg = (img) => {
+    const imgContainer = $('#user-image img');
+    imgContainer.src = `../assets/img/userImg/${img}`;
+}
+
+const setUserImgBackup = (name) => {
+    const initials = name.slice(0, 2).toUpperCase();
+    $('#user-image').innerText = initials;
 }

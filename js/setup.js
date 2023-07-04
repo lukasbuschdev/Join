@@ -1,3 +1,7 @@
+const currentDirectory = window.location.pathname.match(/(?<=\/)\b\w+\b(?=\/)/)[0];
+const currentUserId = new URLSearchParams(document.location.search).get('id') ?? "";
+
+
 $$('div[include-template]').for(container => {
     container.includeTemplate();
     LANG_load();
@@ -14,3 +18,7 @@ const initMenus = () => {
 }
 
 initMenus();
+
+if (currentDirectory !== "Init") {
+    loadUserData(currentUserId);
+}

@@ -1,0 +1,289 @@
+<div class="summary-wrapper column">
+    <div class="summary-header row">
+        <h2 data-lang="summary" class="row">Summary</h2>
+        <h3>Everything in a nutshell!</h3>
+    </div>
+
+    <div class="summary-body column">
+        <div type="menu" class="summary-selection row">
+            <button class="summary-selection-arrows" onclick="incrementBoard(-1)"></button>
+            <div class="summary-selection-boards row">
+                <button class="active" type="option" onclick="selectBoardSummary()">Board 1</button>
+                <button class="" type="option" onclick="selectBoardSummary()">Board 2</button>
+                <button class="" type="option" onclick="selectBoardSummary()">Board 3</button>
+                <button class="" type="option" onclick="selectBoardSummary()">Board 1</button>
+                <button class="" type="option" onclick="selectBoardSummary()">Board 2</button>
+                <button class="" type="option" onclick="selectBoardSummary()">Board 3</button>
+            </div>
+            <button class="summary-selection-arrows" onclick="incrementBoard(1)"></button>
+        </div>
+
+        <div class="summary-content-wrapper">
+            <div class="summary-content-shadow"></div>
+            <div class="summary-content scroll-snap row txt-normal">
+                <div class="summary-grid column">
+    
+                    <div class="row">
+                        <div class="summary-btn"></div>
+                        <div class="summary-btn"></div>
+                        <div class="summary-btn"></div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="summary-btn big"></div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="summary-btn"></div>
+                        <div class="summary-btn"></div>
+                    </div>
+                </div>
+                <div id="summary-data" class="summary-grid column">
+    
+                    <div class="row">
+                        <button id="task-in-board" class="summary-btn column">
+                            <h1>5</h1>
+                            <span>Tasks in<br>Board</span>
+                        </button>
+                        <button id="task-in-progress" class="summary-btn column">
+                            <h1>2</h1>
+                            <span>Tasks in<br>Progress</span>
+                        </button>
+                        <button id="task-awaiting-feedback" class="summary-btn column">
+                            <h1>3</h1>
+                            <span>Awaiting<br>Feedback</span>
+                        </button>
+                    </div>
+    
+                    <div class="row">
+                        <button id="task-urgent" class="summary-btn big row">
+                            <span></span>
+                            <span>Urgent</span>
+                        </button>
+                    </div>
+    
+                    <div class="row">
+                        <button id="task-to-do" class="summary-btn row">
+                            <div class="column">
+                                <h1>1</h1>
+                                <span>To-do</span>
+                            </div>
+                        </button>
+                        <button id="task-done" class="summary-btn row">
+                            <div class="column">
+                                <h1>1</h1>
+                                <span>Done</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="summary-grid column">
+    
+                    <div class="row">
+                        <div class="summary-btn"></div>
+                        <div class="summary-btn"></div>
+                        <div class="summary-btn"></div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="summary-btn big"></div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="summary-btn"></div>
+                        <div class="summary-btn"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<style>
+
+    .summary-wrapper {
+        height: 100%;
+        gap: 50px;
+    }
+
+    .summary-header {
+        gap: 30px;
+    }
+
+    .summary-header h2::after {
+        content: '';
+        height: 3.8125rem;
+        width: 3px;
+        background-color: var(--clr-blue);
+        border-radius: 999px;
+        display: block;
+        margin-left: 60px;
+    }
+
+    .summary-body {
+        gap: 30px;
+    }
+
+    .summary-content-wrapper {
+        display: grid;
+        grid-template-areas: "a";
+    }
+
+    .summary-content-shadow {
+        grid-area: a;
+        position: relative;
+        pointer-events: none;
+    }
+
+    .summary-content-shadow::before,
+    .summary-content-shadow::after {
+        content: '';
+        position: absolute;
+        display: block;
+        height: 100%;
+        background: linear-gradient(var(--rot), var(--clr-bg-light), transparent) transparent;
+        width: 150px;
+    }
+    
+    .summary-content-shadow::before {
+        left: 0;
+        --rot: 90deg;
+    }
+
+    .summary-content-shadow::after {
+        right: 0;
+        --rot: 270deg;
+    }
+
+    .summary-content {
+        overflow-x: hidden;
+        padding: 0px 365px;
+        grid-area: a;
+    }
+    
+    .summary-content.scroll-snap {
+        scroll-snap-type: x mandatory;
+    }
+
+    .summary-content.scroll-smooth {
+        scroll-behavior: smooth;
+    }
+
+    .summary-grid {
+        gap: 35px;
+        flex-shrink: 0;
+        width: 580px;
+    }
+    
+    .summary-grid .row {
+        gap: 35px;
+        height: 170px;
+        padding: 3px 0;
+        text-align: center;
+    }
+    
+    #summary-data {
+        margin: 0 12rem;
+        scroll-snap-align: center;
+    }
+
+    .summary-btn {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        box-shadow: 0px 0px 4px 0px #0000001A;
+        border-radius: 30px;
+        padding: 20px 0;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition-fast);
+    }
+
+    #summary-data .summary-btn:hover {
+        background-color: var(--clr-dark);
+        color: white;
+        cursor: pointer;
+    }
+
+    .summary-btn:hover::before, 
+    .summary-btn:hover::before {
+        --icon-bg: black !important;
+        filter: grayscale(1) invert(1);
+    }
+
+    #task-done::before,
+    #task-to-do::before {
+        --icon-bg: var(--clr-dark);
+        content: '';
+        display: block;
+        width: 70px;
+        aspect-ratio: 1;
+        border-radius: 999px;
+        background: var(--icon) var(--icon-bg) center no-repeat;
+        background-size: 50% 50%;
+    }
+
+    #task-to-do {
+        --icon: url(../assets/img/icons/to_do.svg);
+    }
+
+    #task-done {
+        --icon: url(../assets/img/icons/done.svg);
+    }
+
+    .summary-selection {
+        margin: 0 auto;
+        gap: 25px;
+        width: 100%;
+        height: 45px;
+        justify-content: space-between;
+    }
+
+    .summary-selection-arrows {
+        height: 100%;
+        aspect-ratio: 1;
+        border-radius: 999px;
+        background: var(--clr-dark);
+        color: white;
+        text-align: center;
+        flex-shrink: 0;
+        position: relative;
+    }
+
+    .summary-selection-arrows::after {
+        position: absolute;
+        inset: 0;
+        content: '';
+        filter: brightness(0) invert(1);
+        background: url(../../assets/img/icons/back_arrow.svg) no-repeat center;
+    }
+
+    .summary-selection-arrows:last-of-type::after {
+        rotate: .5turn;
+    }
+    
+    .summary-selection-boards {
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        overflow: hidden;
+        padding: 0 calc(calc(calc(100vw - 232px) * .7) / 2);
+        height: 100%;
+    }
+
+    .summary-selection-boards button {
+        text-align: center;
+        flex-shrink: 0;
+        font-weight: 500;
+        width: 175px;
+        height: 100%;
+    }
+    
+    .summary-selection-boards .active {
+        background-color: var(--clr-dark);
+        border-radius: 999px;
+        scroll-snap-align: center;
+    }
+</style>

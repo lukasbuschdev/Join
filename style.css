@@ -37,7 +37,7 @@ body {
     outline: none;
 }
 
-button, input, textarea, a, h1, h2, h3 {
+button, input, textarea, a, h1, h2, h3, h4 {
     all: unset;
 }
 
@@ -243,19 +243,28 @@ button.bg-dark {
 }
 
 h1 {
-    font-size: 61px;
+    font-size: 4rem;
+    font-weight: 600;
+    line-height: initial;
+}
+
+h2 {
+    font-size: 3.8125rem;
     font-weight: 700;
     line-height: 120%;
     position: relative;
     animation: load var(--load-animation-duration);
 }
 
-h1.txt-blue {
+h2.txt-blue {
     font-size: 64px;
 }
 
-h2 {
-    font-size: 1.2rem;
+h3 {
+    font-size: 1.6875rem;
+}
+
+h4 {
     font-weight: 700;
 }
 
@@ -420,6 +429,12 @@ dialog {
         opacity: 1;
         translate: 0 0;
     }
+}
+
+/* DISPLAY */
+
+.d-none {
+    display: none !important;
 }
 
 /* MEDIA QUERIES */

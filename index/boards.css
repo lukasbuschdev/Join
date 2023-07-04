@@ -6,6 +6,7 @@
     flex-direction: column;
     gap: 38px;
     color: var(--clr-dark);
+    overflow: hidden;
 }
 
 #board-header input {

@@ -1,6 +1,6 @@
 NodeList.prototype.for = function(cb) {
     for (let i = 0; i < this.length; i++){
-        cb(this[i]);
+        cb(this[i], i);
     }
 }
 
@@ -64,4 +64,15 @@ HTMLElement.prototype.toggleDropDown = function () {
 
 HTMLElement.prototype.toggleActive = function () {
     this.classList.toggle('active');
+}
+
+HTMLElement.prototype.updatePosition = function (x = 0, y = 0) {
+    if (!this.style.getPropertyValue('--x')) return
+    this.style.setProperty('--x', `${x}`);
+    this.style.setProperty('--y', `${y}`);
+}
+
+HTMLElement.prototype.setTransitionSpeed = function (x = '', y = '') {
+    const transitionSpeed = (x && y) ? `${ parseInt(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)) / 2)}ms` : '';
+    this.style.transitionDuration = transitionSpeed;
 }

@@ -23,6 +23,7 @@
 
     <script src="./index.js"></script>    
     <script src="./boards.js"></script>
+    <script src="./summary.js"></script>
 </head>
 <body data-title="title-summary" onload="init()">
 
@@ -31,11 +32,11 @@
             <img src="../assets/img/icons/logo_white.svg" alt="Join">
         </div>
 
-        <button id="summary" class="btn-nav txt-small" onclick="loadContent()" type="option">
+        <button id="summary" class="btn-nav txt-small active" onclick="loadContent()" type="option">
             <span style="--img: url(../assets/img/icons/summary.svg)" data-lang="summary">Summary</span>
         </button>
         
-        <button id="boards" class="btn-nav txt-small active" onclick="loadContent()" type="option">
+        <button id="boards" class="btn-nav txt-small" onclick="loadContent()" type="option">
             <span style="--img: url(../assets/img/icons/boards.svg)" data-lang="boards">Boards</span>
         </button>
         
@@ -64,7 +65,7 @@
         </button>
 
         <button id="user-image">
-            <img src="../assets/img/icons/placeholder.jpg">
+            <img src="">
         </button>
     </header>
 

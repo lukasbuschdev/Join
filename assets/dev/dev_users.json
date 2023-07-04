@@ -1,0 +1,48 @@
+{
+    "1234567": {
+        "name": "Tarik",
+        "email": "musician.tarik@gmx.de",
+        "password": "Password123",
+        "img": "Tarik.jpg",
+        "boards": [
+            "abc",
+            "xyz"
+        ],
+        "contacts": [
+            "Lukas",
+            "Peter"
+        ]
+    },
+    "1123467": {
+        "name": "Lukas",
+        "email": "lukas.busch@gmx.de",
+        "password": "Password123",
+        "img": "",
+        "boards": [
+            "abc",
+            "xyz"
+        ],
+        "contacts": [
+            "Tarik",
+            "Peter"
+        ]
+    },
+    "1223562437": {
+        "name": "Peter",
+        "email": "peter.fritz@gmx.de",
+        "password": "Password123",
+        "img": "",
+        "boards": [
+            "abc",
+            "xyz"
+        ],
+        "contacts": [
+            "Lukas",
+            "Tarik"
+        ]
+    },
+    "guest": {
+        "name": "Guest",
+        "img": ""
+    }
+}

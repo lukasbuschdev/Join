@@ -28,6 +28,7 @@ header {
 #content {
     background-color: var(--clr-bg-light);
     overflow: auto;
+    padding: 3rem 4rem;
 }
 
 .logo {
@@ -83,12 +84,18 @@ header {
 }
 
 #user-image {
+    --user-bg: var(--clr-dark);
     height: 49px;
     aspect-ratio: 1;
     border-radius: 50%;
     outline: 3px solid var(--clr-active);
     overflow: hidden;
     position: relative;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: white;
+    background-color: var(--user-bg);
 }
 
 #user-image::after {
