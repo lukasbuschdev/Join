@@ -36,8 +36,7 @@ const initMenus = () => {
 }
 
 initMenus();
-
-if (currentDirectory !== "Init") {
+if (currentDirectory() !== "init") {
     const id = currentUserId();
     loadUserData(id);
 }
