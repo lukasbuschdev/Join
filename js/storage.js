@@ -108,19 +108,39 @@ const LOCAL_removeData = (key) => {
     localStorage.removeItem(key);
 }
 
+// SESSION STORAGE
+
+const SESSION_setData = (key, value) => {
+    sessionStorage.setItem(key, JSON.stringify(value));
+}
+
+const SESSION_getData = (key) => {
+    return sessionStorage.getItem(key);
+}
+
 // DEV
 
-const getDevUsers = async (id) => {
+const getDevUsers = async () => {
     return await (await fetch("../assets/dev/dev_users.json")).json();
-    return allUsers[id] ?? allUsers.guest;
+}
+
+const getDevData = async (type) => {
+    return await (await fetch(`../assets/dev/dev_${type}.json`)).json();
+}
+
+const uploadDevData = async () => {
+    const users = await (await fetch("../assets/dev/dev_users.json")).json();
+    const boards = await (await fetch("../assets/dev/dev_boards.json")).json();
+    await REMOTE_setData('dev', 'users', users);
+    await REMOTE_setData('dev', 'boards', boards);
 }
 
 // UserData
 
-const getCurrentUser = async () => {
-    const currentUserId = new URLSearchParams(document.location.search).get('id') ?? "";
-    const { userData } = await getUser(currentUserId);
-    log(userData)
+const getCurrentUserData = async () => {
+    const uid = new URLSearchParams(document.location.search).get('uid');
+    if (!uid) return;
+    return await REMOTE_getData(`dev/users/${uid}`)
 }
 
 const loadUserData = async (id) => {

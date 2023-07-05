@@ -1,48 +1,56 @@
 {
     "1234567": {
-        "name": "Tarik",
-        "email": "musician.tarik@gmx.de",
-        "password": "Password123",
+        "credentials": {
+            "name": "Tarik",
+            "email": "musician.tarik@gmx.de",
+            "password": "Password123"
+        },
         "img": "Tarik.jpg",
         "boards": [
-            "abc",
-            "xyz"
+            "Testboard-1",
+            "Testboard-2"
         ],
         "contacts": [
-            "Lukas",
-            "Peter"
+            "1123467",
+            "1223562437"
         ]
     },
     "1123467": {
-        "name": "Lukas",
-        "email": "lukas.busch@gmx.de",
-        "password": "Password123",
+        "credentials": {
+            "name": "Lukas",
+            "email": "lukas.busch@gmx.de",
+            "password": "Password123"
+        },
         "img": "",
         "boards": [
-            "abc",
-            "xyz"
+            "Testboard-1",
+            "Testboard-2"
         ],
         "contacts": [
-            "Tarik",
-            "Peter"
+            "1234567",
+            "1223562437"
         ]
     },
     "1223562437": {
-        "name": "Peter",
-        "email": "peter.fritz@gmx.de",
-        "password": "Password123",
+        "credentials": {
+            "name": "Peter",
+            "email": "peter.fritz@gmx.de",
+            "password": "Password123"
+        },
         "img": "",
         "boards": [
-            "abc",
-            "xyz"
+            "Testboard-1",
+            "Testboard-2"
         ],
         "contacts": [
-            "Lukas",
-            "Tarik"
+            "1123467",
+            "1234567"
         ]
     },
     "guest": {
-        "name": "Guest",
-        "img": ""
+        "credentials": {
+            "name": "Guest",
+            "img": ""
+        }
     }
 }

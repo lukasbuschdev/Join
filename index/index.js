@@ -3,7 +3,13 @@ const init = () => {
 }
 
 const loadContent = async () => {
-    const url = `../assets/templates/index/${event.currentTarget.id}_template.html`;
+    const id = event.currentTarget.id
+    const url = `../assets/templates/index/${id}_template.html`;
     await $('#content').includeTemplate(url);
-    initMenus();
+    if (id == "summary") {
+        initSummary();
+    } else if (id == "boards") {
+        initBoards();
+    }
+    resetMenus();
 }

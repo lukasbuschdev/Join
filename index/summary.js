@@ -1,3 +1,32 @@
+const initSummary = async () => {
+    const { boards } = await getCurrentUserData();
+    const activeBoardIndex = Math.max(boards.indexOf(SESSION_getData('activeBoardIndex')), 0)
+    boards.for((board, i) => {
+        log(activeBoardIndex)
+        // ${(i == activeBoardIndex) ? 'active' : ''}
+        $('.summary-selection-boards').innerHTML += /*html*/`
+            <button class="" name="${board}" type="option" onclick="selectBoardSummary()">${board.replaceAll('-',' ')}</button>
+        `
+    });
+    setTimeout(()=>$$('.summary-selection-boards button')[activeBoardIndex].click(), 0)
+}
+
+const loadBoardSummary = async (boardId) => {
+    const tasks = await REMOTE_getData(`dev/boards/${boardId}/tasks`);
+
+    const tasksInBoard = Object.values(tasks).join(',').replaceAll(',,', ',').split(',').length;
+    const tasksInProgress = tasks["in-progress"].length;
+    const tasksAwaitingFeeback = tasks["awaiting-feedback"].length;
+    const tasksToDo = tasks["to-do"].length;
+    const tasksDone = tasks["done"].length;
+
+    $('#tasks-in-board h1').innerText = tasksInBoard;
+    $('#tasks-in-progress h1').innerText = tasksInProgress;
+    $('#tasks-awaiting-feedback h1').innerText = tasksAwaitingFeeback;
+    $('#tasks-to-do h1').innerText = tasksToDo;
+    $('#tasks-done h1').innerText = tasksDone;
+}
+
 const incrementBoard = (direction) => {
     if (direction == 1 && $('.summary-selection-boards button.active').nextElementSibling == null) return
     else if (direction == -1 && $('.summary-selection-boards button.active').previousElementSibling == null) return
@@ -45,10 +74,10 @@ const scrollSummaryContent = (direction) => {
 }
 
 const selectBoardSummary = () => {
+    const button = event.currentTarget;
     let buttonIndex;
     let activeButtonIndex;
 
-    const button = event.currentTarget;
     button.parentElement.$$('button').for((btn, i) => {
         if (btn == button) {
             buttonIndex = i;
@@ -59,4 +88,5 @@ const selectBoardSummary = () => {
     
     const direction = (buttonIndex > activeButtonIndex) ? 1 : -1;
     scrollSummaryContent(direction);
+    loadBoardSummary(button.name);
 }

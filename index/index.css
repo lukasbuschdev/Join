@@ -28,7 +28,7 @@ header {
 #content {
     background-color: var(--clr-bg-light);
     overflow: auto;
-    padding: 3rem 4rem;
+    padding: 2vh 4rem;
 }
 
 .logo {

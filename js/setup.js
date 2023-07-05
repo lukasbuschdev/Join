@@ -1,11 +1,29 @@
-const currentDirectory = window.location.pathname.match(/(?<=\/)\b\w+\b(?=\/)/)[0];
-const currentUserId = new URLSearchParams(document.location.search).get('id') ?? "";
+const currentDirectory = () => window.location.pathname.match(/(?<=\/)\b\w+\b(?=\/)/)[0];
+const currentUserId = () => new URLSearchParams(document.location.search).get('uid') ?? "";
 
 
 $$('div[include-template]').for(container => {
     container.includeTemplate();
     LANG_load();
 });
+
+const menuOptionInitator = new MutationObserver(
+    mutation => {
+        initMenus();
+    }
+)
+
+const observerOptions = {
+    childList: true,
+};
+
+const resetMenus = () => {
+    menuOptionInitator.disconnect();
+    $$('[type = "menu"]').for(menu => {
+            menuOptionInitator.observe(menu, observerOptions)
+        }
+    )
+}
 
 const initMenus = () => {
     $$('[type = "menu"]').for(menu => {
@@ -20,5 +38,6 @@ const initMenus = () => {
 initMenus();
 
 if (currentDirectory !== "Init") {
-    loadUserData(currentUserId);
+    const id = currentUserId();
+    loadUserData(id);
 }
