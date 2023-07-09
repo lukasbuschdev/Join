@@ -35,5 +35,10 @@
     "wrong-code": "Wrong Code!",
     "code-expired": "Code Expired!",
     "new-code": "new Code",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+
+    "create-account": "Create Account",
+    "finish-setup": "Finish Setup",
+    "choose-image": "Choose Image",
+    "choose-image-info": "Upload your picture (optional)"
 }

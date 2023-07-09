@@ -4,8 +4,9 @@ class User extends Account {
         this.loggedIn = 0;
     }
 
-    setPicture = (picture) => { // TODO
-        this.userData.picture = picture;
+    setPicture = (img) => { // TODO
+        this.userData.img = img;
+        this.#update();
     }
 
     changePassword = (newPassword) => { // TODO

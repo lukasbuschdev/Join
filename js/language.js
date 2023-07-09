@@ -1,8 +1,9 @@
 const LANG_load = async (lang = LOCAL_getData('lang') ?? navigator.language.slice(0, 2) ?? "en-US") => {
 
     // const directory = location.pathname.split('/')[2]; // !!! ONLINE !!!
-    const directory = location.pathname.split('/')[1]; // !!! LOCAL SERVER !!!
+    // const directory = location.pathname.split('/')[1]; // !!! LOCAL SERVER !!!
 
+    const directory = location.pathname.match(/(?<=\/)\b\w+\b(?=\.)/g)[0];
     // lang = "de";
     const languages = await (await fetch(`../assets/languages/${directory}/${lang}.json`)).json();
     document.title = languages[$('[data-title]')?.dataset.title];

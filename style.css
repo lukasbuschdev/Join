@@ -86,6 +86,7 @@ button.bg-dark {
     justify-content: center;
     gap: 10px;
     font-size: 21px;
+    cursor: pointer;
 }
 
 .btn:hover {

@@ -35,5 +35,10 @@
     "wrong-code": "Falscher Code!",
     "code-expired": "Code abgelaufen!",
     "new-code": "neuer Code",
-    "confirm": "Bestätigen"
+    "confirm": "Bestätigen",
+
+    "create-account": "Konto erstellen",
+    "finish-setup": "Abschließen",
+    "choose-image": "Bild hochladen",
+    "choose-image-info": "Lade ein Bild von dir hoch (optional)"
 }
