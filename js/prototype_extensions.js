@@ -63,9 +63,7 @@ HTMLElement.prototype.toggleDropDown = function () {
         if (this.closest('.drp-wrapper').contains(event.target)) return;
         this.closest('.drp-wrapper').toggleActive();
         document.removeEventListener('click', closeHandler);
-        log('closeHandler removed!')
     })
-    log('closeHandler added!')
 }
 
 HTMLElement.prototype.toggleActive = function () {
@@ -81,4 +79,8 @@ HTMLElement.prototype.updatePosition = function (x = 0, y = 0) {
 HTMLElement.prototype.setTransitionSpeed = function (x = '', y = '') {
     const transitionSpeed = (x && y) ? `${ parseInt(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)) / 2)}ms` : '';
     this.style.transitionDuration = transitionSpeed;
+}
+
+Math.roundTo = function (nbr, decimals) {
+    return Math.round(nbr * Math.pow(10, decimals)) / Math.pow(10, decimals);
 }

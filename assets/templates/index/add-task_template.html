@@ -1,199 +1,89 @@
 <div class="txt-normal add-task-card">
-    <div class="add-task-heading">
-        <h1 data-lang="heading-add-task" class="padding-10 txt-700">Add Task</h1>
+    <div class="add-task-heading row">
+        <h2 data-lang="heading-add-task">Add Task</h2>
     </div>
 
-    <div class="add-task-rows padding-10">
-        <div class="add-task-single-row">
-            <div class="column">
-                <span data-lang="title">Title</span>
-                <textarea name="title" id="title" placeholder="Enter a title"></textarea>
-            </div>
-
-            <div class="column">
-                <span data-lang="description">Description</span>
-                <textarea name="description" id="description" placeholder="Enter a description"></textarea>
-            </div>
-
-            <div class="drp">
-                <span data-lang="category">Category</span>
-                <div class="drp-wrapper">
-                    <div data-lang="select-task-category" class="drp-title" onclick="this.toggleDropDown()">Select task category</div>
-                    <div class="drp-option-wrapper">
-                        <div class="drp-contacts">
-                            <div class="drp-option" onclick="this.toggleActive()"></div>
-                            <div class="drp-option" onclick="this.toggleActive()"></div>
+    <div class="add-task-rows column">
+        <div class="inputs row">
+            <div class="add-task-single-row">
+                <div class="column">
+                    <span data-lang="title">Title</span>
+                    <textarea name="title" id="title" placeholder="Enter a title"></textarea>
+                </div>
+    
+                <div class="column">
+                    <span data-lang="description">Description</span>
+                    <textarea name="description" id="description" placeholder="Enter a description"></textarea>
+                </div>
+    
+                <div class="drp">
+                    <span data-lang="category">Category</span>
+                    <div class="drp-wrapper">
+                        <div data-lang="select-task-category" class="drp-title" onclick="this.toggleDropDown()">Select task category</div>
+                        <div class="drp-option-wrapper">
+                            <div class="drp-contacts">
+                                <div class="drp-option" onclick="this.toggleActive()"></div>
+                                <div class="drp-option" onclick="this.toggleActive()"></div>
+                            </div>
+                            <div class="drp-invite" data-lang="assigned-invite"></div>
                         </div>
-                        <div class="drp-invite" data-lang="assigned-invite"></div>
+                    </div>
+                </div>
+                
+                <div class="drp">
+                    <span data-lang="assigned-to">Assigned to</span>
+                    <div class="drp-wrapper">
+                        <div data-lang="select-contacts-to-asign" class="drp-title" onclick="this.toggleDropDown()">Select contacts to assign</div>
+                        <div class="drp-option-wrapper">
+                            <div class="drp-you" data-lang="assigned-you">You</div>
+                            <div class="drp-contacts">
+                                <!--Add contacts here!-->
+                            
+                                <div class="drp-option" onclick="this.toggleActive()">Maximilian Pisser</div>
+                                <div class="drp-option" onclick="this.toggleActive()">Antoine Burtz</div>
+                            </div>
+                            <div class="drp-invite" data-lang="assigned-invite">Invite new contact</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="drp">
-                <span data-lang="assigned-to">Assigned to</span>
-                <div class="drp-wrapper">
-                    <div data-lang="select-contacts-to-asign" class="drp-title" onclick="this.toggleDropDown()">Select contacts to assign</div>
-                    <div class="drp-option-wrapper">
-                        <div class="drp-you" data-lang="assigned-you">You</div>
-                        <div class="drp-contacts">
-                            <!--Add contacts here!-->
-                        
-                            <div class="drp-option" onclick="this.toggleActive()">Maximilian Pisser</div>
-                            <div class="drp-option" onclick="this.toggleActive()">Antoine Burtz</div>
-                        </div>
-                        <div class="drp-invite" data-lang="assigned-invite">Invite new contact</div>
+    
+            <div class="line"></div>
+    
+            <div class="add-task-single-row second-row">
+                <div id="calender" class="column">
+                    <span data-lang="due-date">Due date</span>
+                    <textarea name="date" id="date" class="padding-textarea"></textarea>
+                </div>
+    
+                <div id="priority" class="column">
+                    <span data-lang="priority">Prio</span>
+                    <div class="btn-priority" type="menu">
+                        <button class="btn btn-secondary txt-normal" type="option"><span style="--prio_icon: url(../assets/img/icons/prio_urgent.svg)">Urgent</span></button>
+                        <button class="btn btn-secondary txt-normal" type="option"><span style="--prio_icon: url(../assets/img/icons/prio_medium.svg)">Medium</span></button>
+                        <button class="btn btn-secondary txt-normal" type="option"><span style="--prio_icon: url(../assets/img/icons/prio_low.svg)">Low</span></button>
+                    </div>
+                </div>
+    
+                <div class="subtasks column">
+                    <span data-lang="subtasks">Subtasks</span>
+                    <textarea name="add-subtask" id="add-subtask" class="padding-textarea"></textarea>
+                    <div class="row">
+                        <input type="checkbox" id="subtask" name="subtask" value="subtask">
+                        <label data-lang="subtask1" for="subtask">Subtask 1</label>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="line"></div>
-
-        <div class="add-task-single-row second-row">
-            <div id="calender" class="column">
-                <span data-lang="due-date">Due date</span>
-                <textarea name="date" id="date" class="padding-textarea"></textarea>
-            </div>
-
-            <div id="priority" class="column">
-                <span data-lang="priority">Prio</span>
-                <div class="btn-priority" type="menu">
-                    <button class="btn btn-secondary txt-normal" type="option"><span style="--prio_icon: url(../assets/img/icons/prio_urgent.svg)">Urgent</span></button>
-                    <button class="btn btn-secondary txt-normal" type="option"><span style="--prio_icon: url(../assets/img/icons/prio_medium.svg)">Medium</span></button>
-                    <button class="btn btn-secondary txt-normal" type="option"><span style="--prio_icon: url(../assets/img/icons/prio_low.svg)">Low</span></button>
-                </div>
-            </div>
-
-            <div class="subtasks column">
-                <span data-lang="subtasks">Subtasks</span>
-                <textarea name="add-subtask" id="add-subtask" class="padding-textarea"></textarea>
-                <div class="row">
-                    <input type="checkbox" id="subtask" name="subtask" value="subtask">
-                    <label data-lang="subtask1" for="subtask">Subtask 1</label>
-                </div>
-            </div>
+        <div class="flex-right">
+            <button class="btn btn-secondary btn-cancel txt-normal">
+                <span data-lang="btn-cancel">Clear</span>
+            </button>
+    
+            <button class="btn btn-primary btn-check txt-normal txt-700">
+                <span data-lang="btn-create-task">Create Task</span>
+            </button>
         </div>
     </div>
 
-    <div class="flex-right padding-10">
-        <button class="btn btn-secondary btn-cancel txt-normal">
-            <span data-lang="btn-cancel">Clear</span>
-        </button>
-
-        <button class="btn btn-primary btn-check txt-normal txt-700">
-            <span data-lang="btn-create-task">Create Task</span>
-        </button>
-    </div>
 </div>
-
-<style>
-    .add-task-card {
-        max-height: calc(100vh - 85px);
-    }
-
-    .flex-right {
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-    }
-
-    .add-task-heading {
-        width: 100%;
-        box-sizing: border-box;
-        padding: 40px 0;
-    }
-
-    h1 {
-        font-size: 61px;
-    }
-
-    textarea {
-        border: 1px solid #d1d1d1;
-        border-radius: 10px;
-        background-color: white;
-        height: 23px;
-        overflow: hidden;
-    }
-
-    span {
-        line-height: 120%;
-    }
-
-    .line {
-        height: 559px;
-        width: 1px;
-        background-color: #d1d1d1;
-    }
-
-    .column {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .add-task-rows {
-        display: flex;
-        justify-content: space-between;
-        gap: 35px;
-        max-width: 1440px;
-        flex-shrink: 0;
-    }
-
-    .padding-10 {
-        padding: 0 10%;
-    }
-
-    .padding-textarea {
-        padding: 13px 21px;
-    }
-
-    .add-task-single-row {
-        box-sizing: border-box;
-        display: grid;
-        width: 422px;
-        gap: 20px;
-    }
-
-    .second-row {
-        display: flex;
-        flex-direction: column;
-        gap: 50px;
-    }
-
-    .btn-priority {
-        display: flex;
-        gap: 10px;
-    }
-
-    .btn-priority > * {
-        flex-grow: 1;
-        outline: none;
-    }
-
-    .btn-priority [type="option"]:nth-of-type(1).active {
-        background-color: var(--clr-orange);
-    }
-
-    .btn-priority button span {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    } 
-
-    .btn-priority button span::after {
-        content: var(--prio_icon);
-    }
-
-    .btn-priority button:nth-child(2) span::after {
-        translate: 0 -3px;
-    }
-
-    #title {
-        padding: 13px 21px;
-    }
-
-    #description {
-        padding: 18px 21px;
-        height: 119px;
-    }
-</style>

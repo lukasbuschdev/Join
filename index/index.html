@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="./index.css">
     <link rel="stylesheet" href="./boards.css">
     <link rel="stylesheet" href="./summary.css">
+    <link rel="stylesheet" href="./add_task.css">
+    <link rel="stylesheet" href="./contacts.css">
 
     <script src="../js/utilities.js"></script>
     <script src="../js/prototype_extensions.js"></script>
@@ -38,8 +40,8 @@
             <span style="--img: url(../assets/img/icons/summary.svg)" data-lang="summary">Summary</span>
         </button>
         
-        <button id="boards" class="btn-nav txt-small" onclick="loadContent()" type="option">
-            <span style="--img: url(../assets/img/icons/boards.svg)" data-lang="boards">Boards</span>
+        <button id="board" class="btn-nav txt-small" onclick="loadContent()" type="option">
+            <span style="--img: url(../assets/img/icons/boards.svg)" data-lang="board">Board</span>
         </button>
         
         <button id="add-task" class="btn-nav txt-small" onclick="loadContent()" type="option">
@@ -66,7 +68,7 @@
             <img src="../assets/img/icons/help.svg">
         </button>
 
-        <button id="user-image">
+        <button class="user-image">
             <img src="">
         </button>
     </header>

@@ -1,0 +1,110 @@
+
+.add-task-card {
+    padding: 2vh 4rem;
+}
+
+.flex-right {
+    display: flex;
+    margin-left: auto;
+    gap: 10px;
+}
+
+.add-task-heading {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 40px 0;
+}
+
+h1 {
+    font-size: 61px;
+}
+
+textarea {
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    background-color: white;
+    height: 23px;
+    overflow: hidden;
+}
+
+span {
+    line-height: 120%;
+}
+
+.line {
+    height: 559px;
+    width: 1px;
+    background-color: #d1d1d1;
+}
+
+.add-task-rows {
+    width: fit-content;
+    margin: auto;
+    gap: 35px;
+    align-items: center;
+}
+
+.add-task-rows .inputs {
+    align-items: flex-start;
+    gap: 35px;
+    max-width: 1440px;
+    flex-shrink: 0;
+}
+
+.padding-textarea {
+    padding: 13px 21px;
+}
+
+.add-task-single-row {
+    box-sizing: border-box;
+    display: grid;
+    width: 422px;
+    gap: 20px;
+}
+
+.add-task-single-row > div {
+    gap: 8px;
+}
+
+.second-row {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.btn-priority {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-priority > * {
+    flex-grow: 1;
+    outline: none;
+}
+
+.btn-priority [type="option"]:nth-of-type(1).active {
+    background-color: var(--clr-orange);
+}
+
+.btn-priority button span {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+} 
+
+.btn-priority button span::after {
+    content: var(--prio_icon);
+}
+
+.btn-priority button:nth-child(2) span::after {
+    translate: 0 -3px;
+}
+
+#title {
+    padding: 13px 21px;
+}
+
+#description {
+    padding: 18px 21px;
+    height: 119px;
+}

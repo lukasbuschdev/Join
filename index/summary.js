@@ -1,9 +1,7 @@
 const initSummary = async () => {
     const { boards } = await getCurrentUserData();
     const activeBoardIndex = Math.max(boards.indexOf(SESSION_getData('activeBoardIndex')), 0)
-    boards.for((board, i) => {
-        log(activeBoardIndex)
-        // ${(i == activeBoardIndex) ? 'active' : ''}
+    boards.for((board) => {
         $('.summary-selection-boards').innerHTML += /*html*/`
             <button class="" name="${board}" type="option" onclick="selectBoardSummary()">${board.replaceAll('-',' ')}</button>
         `

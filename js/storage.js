@@ -147,15 +147,15 @@ const loadUserData = async (id) => {
     const allUsers = await REMOTE_getData("dev/users");
     const user = allUsers[id] ?? allUsers.guest;
     if (user.img !== "") {
-        setUserImg(user.img);
+        setUserImg(user.id);
     } else {
         setUserImgBackup(user.name);
     }
 }
 
-const setUserImg = (img) => {
-    const imgContainer = $('#user-image img');
-    imgContainer.src = `../assets/img/userImg/${img}`;
+const setUserImg = (id) => {
+    const imgContainer = $('.user-image img');
+    imgContainer.src = `../assets/img/userImg/${id}`;
 }
 
 const setUserImgBackup = (name) => {

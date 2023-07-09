@@ -1,12 +1,11 @@
 {
     "title-summary": "Join - Überblick",
-    "title-boards": "Join - Boards",
+    "title-boards": "Join - Tafel",
     "title-add-task": "Join - Aufgabe hinzufügen",
     "title-contacts": "Join - Kontakte",
     "title-legal-notice": "Join - Rechtliches",
 
     "summary": "Überblick",
-    "boards": "Boards",
     "add-task": "Neue Aufgabe",
     "find-task": "Aufgabe finden",
     "contacts": "Kontakte",
@@ -31,7 +30,7 @@
     "select-contacts-to-asign": "Kontakte zum hinzufügen auswählen",
     "assigned-you": "Du",
     "assigned-invite": "Neuen Kontakt einladen",
-    "due-date": "Due date",
+    "due-date": "Fällig bis",
     "priority": "Priorität",
     "subtasks": "Aufgabe",
     "subtask1": "Unteraufgabe",
@@ -41,14 +40,12 @@
     "btn-cancel": "Abbrechen",
     "btn-new-contact": "Kontakt hinzufügen",
 
-
-
-
-
     "header": "Kontakte",
     "sub-header": "Besser mit einem Team",
 
     "contact-info": "Kontaktinformation",
     "edit-contact": "Kontakt bearbeiten",
-    "phone": "Telefon"
+    "phone": "Telefon",
+
+    "board": "Tafel"
 }

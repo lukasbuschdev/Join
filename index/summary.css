@@ -1,6 +1,7 @@
 .summary-wrapper {
     height: 100%;
     gap: 50px;
+    padding: 2vh 4rem;
 }
 
 .summary-header {

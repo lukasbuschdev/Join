@@ -1,11 +1,10 @@
-#board {
+#board-wrapper {
     width: 100%;
     min-height: 100%;
-    padding: 50px 10%;
+    padding: 2vh 4rem;
     display: flex;
     flex-direction: column;
     gap: 38px;
-    color: var(--clr-dark);
     overflow: hidden;
 }
 
@@ -29,6 +28,7 @@
 #tasks-header {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    color: var(--clr-dark);
     gap: 38px;
     min-height: 30px;
 }
