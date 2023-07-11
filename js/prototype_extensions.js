@@ -91,3 +91,5 @@ HTMLElement.prototype.renderItems = function (items, templateFunction) {
         this.innerHTML += templateFunction(item);
     })
 }
+
+$('div').renderItems(array, )

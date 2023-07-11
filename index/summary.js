@@ -1,18 +1,20 @@
 const initSummary = async () => {
     const { boards } = await getCurrentUserData();
     const activeBoardIndex = Math.max(boards.indexOf(SESSION_getData('activeBoardIndex')), 0)
-    boards.for((board) => {
-        $('.summary-selection-boards').innerHTML += /*html*/`
-            <button class="" name="${board}" type="option" onclick="selectBoardSummary()">${board.replaceAll('-',' ')}</button>
-        `
-    });
+
+    // boards.for((board) => {
+    //     $('.summary-selection-boards').innerHTML += summarySelectionTemplate(board);
+    // });
+
+    $('.summary-selection-boards').renderItems(boards, summarySelectionTemplate);
+
     setTimeout(()=>$$('.summary-selection-boards button')[activeBoardIndex].click(), 0)
 }
 
-const summarySelectionTemplate = () => {
+const summarySelectionTemplate = (board) => {
     return /*html*/`
     <button class="" name="${board}" type="option" onclick="selectBoardSummary()">${board.replaceAll('-',' ')}</button>
-`
+    `
 }
 
 const loadBoardSummary = async (boardId) => {
