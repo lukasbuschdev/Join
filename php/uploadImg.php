@@ -4,6 +4,7 @@ if (isset($_POST['uid']))
 {
     header("Access-Control-Allow-Origin: *");
     $uid = $_POST['uid'];
+    $target = '';
     if (isset($_FILES['user-img'])) {
         $file = $_FILES['user-img'];
         $fileName = $file['name'];
@@ -24,9 +25,10 @@ if (isset($_POST['uid']))
 
     if (isset($file)) {
         move_uploaded_file($tempName, $target);
-        $data = array(
-            'imageSrc'  => '' . $target
-        );
-        echo json_encode($data);
     }
+    
+    $data = array(
+        'imageSrc'  => '' . $target
+    );
+    echo json_encode($data);
 }

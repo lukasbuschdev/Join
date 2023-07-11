@@ -38,6 +38,7 @@ const removeUpload = async () => {
 
     container.$('img').src = '';
     container.dataset.img = false;
+    REMOTE_setData(`users/${uid}`, {img: ""});
 }
 
 const finishSetup = async () => {

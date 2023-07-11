@@ -1,4 +1,4 @@
-const currentDirectory = () => window.location.pathname.match(/(?<=\/)\b\w+\b(?=\.)/g)[0];
+const currentDirectory = () => location.pathname.split('/').at(-2);
 const currentUserId = () => new URLSearchParams(document.location.search).get('uid') ?? "";
 
 
@@ -35,9 +35,17 @@ const initMenus = () => {
     });
 }
 
+let inactivityTimer;
+const addInactivityTimer = (minutes = 1/12) => {
+    inactivityTimer = setTimeout(()=>goTo('../init/init.html?expired'), minutes * 60 * 1000)
+}
+
 initMenus();
-// if (currentDirectory() !== "init") {
-//     log(currentDirectory())
-//     const id = currentUserId();
-//     loadUserData(id);
-// }
+if (currentDirectory() !== "init") {
+    const uid = currentUserId();
+    loadUserData(uid);
+    // window.addEventListener("visibilitychange", () => {
+    //     if (document.hidden) addInactivityTimer();
+    //     else clearTimeout(inactivityTimer);
+    // });
+}

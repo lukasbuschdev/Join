@@ -9,6 +9,12 @@ const initSummary = async () => {
     setTimeout(()=>$$('.summary-selection-boards button')[activeBoardIndex].click(), 0)
 }
 
+const summarySelectionTemplate = () => {
+    return /*html*/`
+    <button class="" name="${board}" type="option" onclick="selectBoardSummary()">${board.replaceAll('-',' ')}</button>
+`
+}
+
 const loadBoardSummary = async (boardId) => {
     const tasks = await REMOTE_getData(`dev/boards/${boardId}/tasks`);
 

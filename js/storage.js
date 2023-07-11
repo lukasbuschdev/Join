@@ -106,10 +106,10 @@ const REMOTE_resetDirectory = async (directoryName) => {
 
 // USERDATA
 
-const userAlreadyExists = async (input) => {
+const getUserByInput = async (input) => {
     const allUsers = await REMOTE_getData('users');
     const [ userData ] = Object.values(allUsers).filter(({ name, email }) => name == input || email == input);
-    return (userData !== undefined) ? true : false;
+    return (userData !== undefined) ? new User(userData) : false;
 }
 
 // LOCAL STORAGE
@@ -162,12 +162,12 @@ const getCurrentUserData = async () => {
 }
 
 const loadUserData = async (id) => {
-    const allUsers = await REMOTE_getData("dev/users");
+    const allUsers = await REMOTE_getData("users");
     const user = allUsers[id] ?? allUsers.guest;
     if (user.img !== "") {
         setUserImg(user.img);
     } else {
-        setUserImgBackup(user.credentials.name);
+        setUserImgBackup(user.name);
     }
 }
 

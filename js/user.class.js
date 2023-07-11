@@ -49,7 +49,7 @@ class User extends Account {
     }
 
     verify = async () => {
-        // await REMOTE_removeData(`verification/${this.userData.id}`)
+        await REMOTE_removeData(`verification/${this.userData.id}`)
         log(this.userData)
         await this.#update();
         goTo(`../init/create_account.html?uid=${this.userData.id}`)
@@ -64,14 +64,6 @@ class User extends Account {
         navigator.credentials.store(cred);
     }
 
-    setCredentialsFallback = () => {
-        const cred = {
-            name: this.userData.name,
-            password: this.userData.password
-        }
-        LOCAL_setData('user', cred);
-    }
-
     logIn = async () => {
         this.loggedIn = 'true';
         this.setCredentials();
@@ -82,11 +74,7 @@ class User extends Account {
     rememberMe = () => {
         const rememberLogin = $('#remember-me').checked || false;
         if (rememberLogin == false) return;
-        if ("PasswordCredential" in window) {
-            this.setCredentials();
-        } else {
-            this.setCredentialsFallback();
-        }
+        if ("PasswordCredential" in window) this.setCredentials();
     }
 
     #update = async () => {

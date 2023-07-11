@@ -84,3 +84,10 @@ HTMLElement.prototype.setTransitionSpeed = function (x = '', y = '') {
 Math.roundTo = function (nbr, decimals) {
     return Math.round(nbr * Math.pow(10, decimals)) / Math.pow(10, decimals);
 }
+
+HTMLElement.prototype.renderItems = function (items, templateFunction) {
+    this.innerHTML = '';
+    items.for(item => {
+        this.innerHTML += templateFunction(item);
+    })
+}
