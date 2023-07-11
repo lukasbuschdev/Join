@@ -10,6 +10,8 @@ const loadContent = async () => {
         initSummary();
     } else if (id == "boards") {
         initBoards();
+    } else if (id == "contacts") {
+        initContacts();
     }
     resetMenus();
 }

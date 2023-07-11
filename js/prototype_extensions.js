@@ -86,10 +86,8 @@ Math.roundTo = function (nbr, decimals) {
 }
 
 HTMLElement.prototype.renderItems = function (items, templateFunction) {
-    this.innerHTML = '';
+    // this.innerHTML = '';
     items.for(item => {
         this.innerHTML += templateFunction(item);
     })
 }
-
-$('div').renderItems(array, )

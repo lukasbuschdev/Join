@@ -112,6 +112,15 @@ const getUserByInput = async (input) => {
     return (userData !== undefined) ? new User(userData) : false;
 }
 
+const getContactsData = async (contactIds) => {
+    return await Promise.all(contactIds.map(
+        async (contactId) => {
+            return await REMOTE_getData(`users/${contactId}`);
+            }
+        )
+    )
+}
+
 // LOCAL STORAGE
 
 const LOCAL_setData = (key, value) => {
