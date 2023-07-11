@@ -15,10 +15,6 @@ const addDragAndDrop = () => {
     task.addEventListener("mousemove", dragHandler = () => {
         taskDragger(startingPosition);
     });
-    // task.addEventListener("mouseleave", () => {
-    //     taskDropper(event, task);
-    //     task.removeEventListener("mousemove", dragHandler);
-    // }, { once: true });
     document.addEventListener("mouseup", (event) => {
         taskDropper(event, task, startingPosition);
         task.removeEventListener("mousemove", dragHandler);

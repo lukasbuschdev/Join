@@ -1,9 +1,9 @@
 const validateInputs = async ({ name, email, password }) => {
 
     const nameValidity = validName(name);
-    const nameInUse = await getUser(name) == undefined;
+    const nameInUse = await userAlreadyExists(name) == false;
     const emailValidity = validEmail(email);
-    const emailInUse = await getUser(email) == undefined;
+    const emailInUse = await userAlreadyExists(email) == false;
     const passwordValidity = validPassword(password);
 
     if (nameValidity == true && nameInUse == true && emailValidity == true && passwordValidity == true && emailInUse == true) {
@@ -22,13 +22,14 @@ const validateInputs = async ({ name, email, password }) => {
 const signupInit = async () => {
     event.preventDefault();
 
-    const userData = {
+    const dataInput = {
         name: $('#name input').value,
         email: $('#email input').value,
         password: $('#password input').value
     }
-    const user = new User(userData);
-    if (await validateInputs(userData) == false) return;
+
+    if (await validateInputs(dataInput) == false) return;
+    const user = new User(dataInput)
     user.initVerification();
 }
 

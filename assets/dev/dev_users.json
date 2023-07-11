@@ -5,7 +5,7 @@
             "email": "musician.tarik@gmx.de",
             "password": "Password123"
         },
-        "img": "1234567.jpg",
+        "img": "",
         "boards": [
             "Testboard-1",
             "Testboard-2"

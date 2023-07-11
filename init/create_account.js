@@ -1,3 +1,9 @@
+const initCreateAccount = async () => {
+    const uid = currentUserId();
+    const { name } = await REMOTE_getData(`users/${uid}`);
+    $('.picture-container h1').innerText = name.slice(0, 2).toUpperCase();
+}
+
 const submitUpload = async () => {
     const formData = new FormData();
     const img = $('[type="file"]').files[0];
@@ -7,13 +13,15 @@ const submitUpload = async () => {
     formData.append('user-img', img);
     formData.append('uid', uid)
     
-    const userImg = await (await fetch('../php/uploadImg.php', {
+    const {  imageSrc } = await (await fetch('../php/uploadImg.php', {
         method: 'POST',
         body: formData
-    })).json()
+    })).json();
 
-    $('#user-img').src = userImg.imageSrc;
+    $('#user-img').src = imageSrc;
     $('.picture-container').dataset.img = 'true';
+
+    REMOTE_setData(`users/${uid}`, {img: imageSrc});
 }
 
 const removeUpload = async () => {
@@ -30,4 +38,11 @@ const removeUpload = async () => {
 
     container.$('img').src = '';
     container.dataset.img = false;
+}
+
+const finishSetup = async () => {
+    event.preventDefault();
+    const userData = await REMOTE_getData(`users/${currentUserId()}`);
+    const user = new User(userData);
+    user.logIn();
 }

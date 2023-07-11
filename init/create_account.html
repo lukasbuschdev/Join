@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join</title>
+    <link rel="icon" href="../assets/img/icons/logo.svg">
+
+    <link rel="stylesheet" href="../fonts/fonts.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./init.css">
+    <link rel="stylesheet" href="./create_account.css">
+
+    <script src="../js/prototype_extensions.js"></script>
+    <script src="../js/utilities.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/mail_templates.js"></script>
+    <script src="../js/account.class.js"></script>
+    <script src="../js/user.class.js"></script>
+    <script src="../js/language.js"></script>
+    <script src="../js/setup.js" defer></script>
+
+    <script src="./init.js"></script>
+
+    <script src="./create_account.js" defer></script>
+</head>
+<body class="bg-light" onload="initCreateAccount()">
+    <div id="logo">
+        <img src="../assets/img/icons/logo.svg" alt="" width="100">
+        <img src="../assets/img/icons/logo_white.svg" alt="" width="100">
+    </div>
+    <div id="content">
+        <div>
+            <div class="card" id="create-account">
+                <form>
+                    <div class="header-container">
+                        <h1 class="txt-center" data-lang="create-account">Create Account</h1>
+                        <img src="../assets/img/icons/blue_line_bottom.svg" alt="">
+                    </div>
+            
+                    <div class="picture-container grid-center" data-img="false" onclick="removeUpload()">
+                        <h1>TU</h1>
+                        <img id="user-img" src="" alt="">
+                    </div>
+        
+                    <p class="txt-normal txt-center" data-lang="choose-image-info"></p>
+                    
+                    <div class="btn-container">
+                        <input type="file" style="display: none;" id="choose-image" name="user-img" onchange="submitUpload()">
+                        <label for="choose-image" class="btn btn-secondary txt-500" data-lang="choose-image">Choose Image</label>
+                        <button class="btn btn-primary txt-700" id="login" data-lang="finish-setup" onclick="finishSetup()">Finish Setup</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

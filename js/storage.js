@@ -16,10 +16,10 @@ const REMOTE_download = async (directory) => {
 
 // UPLOAD
 
-const REMOTE_upload = async (path, data) => {
+const REMOTE_upload = async (directory, data) => {
     const payload = {
-        key: path.split('/')[0],
-        value: data,
+        key: directory,
+        value: JSON.stringify(data),
         token: STORAGE_TOKEN
     };
     return fetch(STORAGE_URL, {
@@ -48,13 +48,24 @@ const REMOTE_getData = async (path) => {
     }
 }
 
-const REMOTE_setData = async (targetPath, newDirectory, data) => {
-    const initialData = await REMOTE_getData(targetPath);
-    if (!initialData) return;
-    const upload = (initialData !== "empty") ? { ...initialData, [newDirectory]: data } : { [newDirectory]: data };
-    // log(upload)
-    return REMOTE_upload(targetPath, upload);
+const REMOTE_setData = async (targetPath, upload) => {
+    const data = await REMOTE_getData(targetPath.split('/')[0]);
+    const directories = targetPath.split('/');
+    let currentObj = data;
+
+    for (let i = 1; i < directories.length; i++) {
+        const directory = directories[i];
+        if (!currentObj.hasOwnProperty(directory)) {
+        currentObj[directory] = {};
+        }
+        currentObj = currentObj[directory];
+    }
+    Object.assign(currentObj, upload);
+
+    return REMOTE_upload(directories[0], data);
 }
+
+
 
 const REMOTE_removeData = async (path) => {
     const directory = path.slice(0, path.lastIndexOf('/'));
@@ -62,7 +73,14 @@ const REMOTE_removeData = async (path) => {
     let data = await REMOTE_getData(directory);
     if (!data) return;
     delete data[item];
-    return REMOTE_upload(path, data)
+    log(data, directory)
+    return REMOTE_setData(path, {});
+}
+
+const REMOTE_removeVerification = async (id) => {
+    const allVerifications = await REMOTE_getData('verification');
+    delete allVerifications[id]
+    return REMOTE_upload('verification', {...filteredVerifications});
 }
 
 // Directories
@@ -80,7 +98,7 @@ const REMOTE_resetDirectory = async (directoryName) => {
     if (!dev) return;
     let prompt = window.prompt(`Do you really want to reset '${directoryName}'?`, 'Password');
     if (prompt == dev) {
-        REMOTE_upload(directoryName, "empty");
+        REMOTE_upload(directoryName, {});
     } else if (prompt) {
         window.alert('Wrong password!');
     }
@@ -88,10 +106,10 @@ const REMOTE_resetDirectory = async (directoryName) => {
 
 // USERDATA
 
-const getUser = async (input) => {
+const userAlreadyExists = async (input) => {
     const allUsers = await REMOTE_getData('users');
-    const [ userData ] = Object.values(allUsers).filter(({ id }) => id == input);
-    return (userData !== undefined) ? new User(userData) : undefined;
+    const [ userData ] = Object.values(allUsers).filter(({ name, email }) => name == input || email == input);
+    return (userData !== undefined) ? true : false;
 }
 
 // LOCAL STORAGE
@@ -138,27 +156,27 @@ const uploadDevData = async () => {
 // UserData
 
 const getCurrentUserData = async () => {
-    const uid = new URLSearchParams(document.location.search).get('uid');
+    const uid = currentUserId();
     if (!uid) return;
-    return await REMOTE_getData(`dev/users/${uid}`)
+    return await REMOTE_getData(`users/${uid}`)
 }
 
 const loadUserData = async (id) => {
     const allUsers = await REMOTE_getData("dev/users");
     const user = allUsers[id] ?? allUsers.guest;
     if (user.img !== "") {
-        setUserImg(user.id);
+        setUserImg(user.img);
     } else {
-        setUserImgBackup(user.name);
+        setUserImgBackup(user.credentials.name);
     }
 }
 
-const setUserImg = (id) => {
+const setUserImg = (img) => {
     const imgContainer = $('.user-image img');
-    imgContainer.src = `../assets/img/userImg/${id}`;
+    imgContainer.src = `${img}`;
 }
 
 const setUserImgBackup = (name) => {
     const initials = name.slice(0, 2).toUpperCase();
-    $('#user-image').innerText = initials;
+    $('.user-image').innerText = initials;
 }

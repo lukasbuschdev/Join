@@ -154,7 +154,10 @@
     inset: 0;
     content: '';
     filter: brightness(0) invert(1);
-    background: url(../../assets/img/icons/back_arrow.svg) no-repeat center;
+    /* LOCAL SERVER */
+    background: url(/assets/img/icons/back_arrow.svg) no-repeat center;
+    /* LOCALHOST */
+    /* background: url(/Join/assets/img/icons/back_arrow.svg) no-repeat center; */
 }
 
 .summary-selection-arrows:last-of-type::after {

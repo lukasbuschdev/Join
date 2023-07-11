@@ -1,14 +1,14 @@
-const initPage = () => {
+const initVerifyAccount = () => {
     LANG_load();
     initTimer();
-    redirect();
+    // redirect();
     checkEmailVerification();
 }
 
 const checkEmailVerification = async () => {
-    const searchParams = new URLSearchParams(document.location.search);
-    const { code } = await REMOTE_getData(`verification/${searchParams.get('uid')}`)
-    if (searchParams.get('token') !== code) return;
+    const uid = currentUserId();
+    const { verifyCode: { code } } = await REMOTE_getData(`verification/${uid}`)
+    if (new URLSearchParams(location.search).get('token') !== code) return;
     fillCodeInputs(code);
 }
 
@@ -20,9 +20,8 @@ const redirect = () => {
 }
 
 const initTimer = async () => {
-    const newUserdata = LOCAL_getData('user');
-    if (!newUserdata) return
-    const { expires } = await REMOTE_getData(`verification/${newUserdata.id}`);
+    const uid = currentUserId();
+    const { verifyCode: { expires } } = await REMOTE_getData(`verification/${uid}`);
     if (expires == undefined) return;
     const timer = setInterval(()=>{
         const now = Date.now();
@@ -42,9 +41,8 @@ const initTimer = async () => {
 const processVerification = async () => {
     event.preventDefault();
     
-    const newUserdata = LOCAL_getData('user');
-    const newUser = new User(newUserdata);
-    const { code, expires } = await REMOTE_getData(`verification/${newUserdata.id}`);
+    const uid = currentUserId();
+    const { verifyCode: { code, expires }, userData } = await REMOTE_getData(`verification/${uid}`);
     
     const inputCode = [...$$('input')].map(input => input.value).join('');
     
@@ -56,8 +54,8 @@ const processVerification = async () => {
         $$('.error')[1].classList.add('active');
         return;
     }
-    await REMOTE_removeData(`verification/${newUserdata.id}`);
-    LOCAL_removeData('user');
+    // await REMOTE_removeData(`verification/${newUserdata.id}`);
+    const newUser = new User(userData);
     newUser.verify();
 }
 

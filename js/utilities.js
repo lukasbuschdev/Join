@@ -72,3 +72,5 @@ const goTo = (page) => {
 }
 
 const parse = (evalString) => Function(`'use strict'; return (${evalString}) ?? false`)();
+
+const getFraction = (numerator, denominator, range = 1) => numerator / (denominator / range);

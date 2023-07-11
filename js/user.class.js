@@ -16,8 +16,7 @@ class User extends Account {
     initVerification = async () => {
         this.generateVerificationCode();
         // this.#sendVerificationCode();
-        LOCAL_setData('user', this.userData);
-        await REMOTE_setData('verification', this.userData.id, this.verifyCode);
+        await REMOTE_setData('verification', {[this.userData.id]: { verifyCode: this.verifyCode, userData: this.userData }});
         goTo(`./verify_account.html?uid=${this.userData.id}`);
     }
 
@@ -50,7 +49,10 @@ class User extends Account {
     }
 
     verify = async () => {
-        this.logIn();
+        // await REMOTE_removeData(`verification/${this.userData.id}`)
+        log(this.userData)
+        await this.#update();
+        goTo(`../init/create_account.html?uid=${this.userData.id}`)
     }
 
     setCredentials = () => {
@@ -71,7 +73,7 @@ class User extends Account {
     }
 
     logIn = async () => {
-        this.loggedIn = 1;
+        this.loggedIn = 'true';
         this.setCredentials();
         await this.#update();
         goTo(`../index/index.html?uid=${this.userData.id}`);
@@ -88,7 +90,7 @@ class User extends Account {
     }
 
     #update = async () => {
-        return REMOTE_setData('users', this.userData.id, this.userData);
+        return REMOTE_setData('users', {[this.userData.id]: this.userData});
     }
 
     generateVerificationCode = () => {
@@ -97,7 +99,7 @@ class User extends Account {
         for (let i = 0; i < 6; i++) {
           code += charSet[(Math.floor(Math.random() * charSet.length))];
         }
-        this.verifyCode = { id: this.userData.id, code, expires: Date.now() + 5 * 1000 * 60 };
+        this.verifyCode = { code, expires: Date.now() + 5 * 1000 * 60 };
       }
 
     codeExpired = () => this.verifyCode.expires < Date.now(); 
