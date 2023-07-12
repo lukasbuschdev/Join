@@ -90,7 +90,7 @@ const REMOTE_addDirectory = async (directoryName) => {
         console.error(`directory '${directoryName}' already exists!`);
         return;
     }
-    return (directoryName, "empty");
+    return REMOTE_upload(directoryName, {});
 }
 
 const REMOTE_resetDirectory = async (directoryName) => {
