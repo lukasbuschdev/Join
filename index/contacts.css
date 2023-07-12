@@ -182,6 +182,13 @@
     overflow: hidden;
     height: 594px;
     max-width: 1200px;
+    animation: slide-in 500ms ease-in-out;
+}
+
+@keyframes slide-in {
+    from{
+        translate: 100vw;
+    }
 }
 
 .add-contact-container {
