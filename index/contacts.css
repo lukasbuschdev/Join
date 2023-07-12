@@ -43,9 +43,9 @@
     gap: 5px;
 }
 
-.contact-name {
+/* .contact-name {
 
-}
+} */
 
 .contact-email {
     color: var(--clr-email);
@@ -172,3 +172,103 @@
     color: var(--clr-blue);
     width: fit-content;
 }
+
+
+
+/*ADD CONTACT MODAL*/
+
+#add-contact-modal {
+    border-radius: 30px;
+    overflow: hidden;
+    height: 594px;
+    max-width: 1200px;
+}
+
+.add-contact-container {
+    height: 100%;
+    width: 100%;
+}
+
+
+
+/* CONTACT THEME (LEFT SIDE) */
+
+.add-contact-theme {
+    flex-shrink: 0;
+    background-color: var(--clr-dark);
+    width: 463px;
+    height: 100%;
+    gap: 12px;
+    padding: 66px 46px;
+    justify-content: center;
+    color: white;
+}
+
+.add-contact-theme img {
+    height: 66px;
+    width: 55px;
+}
+
+/* .add-contact-theme h1 {
+    
+} */
+
+.add-contact-theme span {
+    font-size: 1.6875rem;
+}
+
+.add-contact-theme span::after {
+    content: '';
+    display: block;
+    background: var(--clr-blue);
+    height: 3px;
+    width: 90px;
+    margin-top: 12px;
+}
+
+
+/* CONTACT INPUT/SEARCH (RIGHT SIDE) */
+
+.add-contact-field {
+    width: 749px;
+    height: 100%;
+    justify-content: space-around;
+    position: relative;
+    padding: 66px 46px;
+}
+
+.search-contact {
+    align-items: center;
+    justify-content: space-between;
+}
+
+.close {
+    position: absolute;
+    height: 22px;
+    width: 22px;
+    top: 26px;
+    right: 40px;
+    cursor: pointer;
+}
+
+.user-img-gray {
+    height: 120px;
+    width: 120px;
+}
+
+.add-contact-field input {
+    width: 422px;
+    height: fit-content;
+    padding: 13px 21px;
+    border-radius: 10px;
+    border: 1px solid #d1d1d1;
+}
+
+.add-contact-btns {
+    position: absolute;
+    bottom: 50px;
+    right: 40px;
+}
+
+
+

@@ -17,9 +17,7 @@ async function renderContacts() {
         $('#contacts-container').innerHTML += contactListLetterTemplate(letter);
         const filteredContacts = contactsData.filter(({name}) => name[0] == letter)
         $('#contacts-container').renderItems(filteredContacts, contactListTemplate);
-    }
-    )
-
+    })
 }
 
 const contactListLetterTemplate = (letter) => {
@@ -42,4 +40,12 @@ const contactListTemplate = ({img, name, email}) => {
             </div>
         </div>
     `;
+}
+
+function addContactModal() {
+    $('#add-contact-modal').openModal();
+}
+
+function closeAddContact() {
+    $('#add-contact-modal').closeModal();
 }

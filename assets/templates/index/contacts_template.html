@@ -37,7 +37,39 @@
         </div>
     </div>
 
-    <button class="btn btn-primary btn-contact txt-normal txt-700 absolute">
+    <button onclick="addContactModal()" class="btn btn-primary btn-contact txt-normal txt-700 absolute">
         <span data-lang="btn-new-contact">New contact</span>
     </button>
+
+
+    <dialog id="add-contact-modal" type="modal">
+        <div class="add-contact-container row">
+            <div class="add-contact-theme column">
+                <img src="../assets/img/icons/logo_white.svg">
+                <h1 data-lang="add-contact-heading">Add contact</h1>
+                <span data-lang="add-contact-subheading">Tasks are better with a team!</span>
+            </div>
+
+
+
+            <div class="add-contact-field column">
+                <img onclick="closeAddContact()" class="close" src="../assets/img/icons/close.svg" alt="Close">
+
+                <div class="search-contact row">
+                    <img class="user-img-gray" src="../assets/img/icons/user_img_gray.svg">
+                    <input type="text" placeholder="Search names...">
+                </div>
+                
+                <div class="add-contact-btns row gap-15">
+                    <button class="btn btn-secondary btn-cancel txt-normal">
+                        <span data-lang="btn-cancel">Cancel</span>
+                    </button>
+
+                    <button class="btn btn-primary btn-check txt-normal txt-700">
+                        <span data-lang="btn-add-contact">Add Contact</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </dialog>
 </div>
