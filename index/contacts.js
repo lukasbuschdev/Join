@@ -8,17 +8,15 @@ async function renderContacts() {
     const contactsData = await getContactsData(contactIds);
     const initialLetters = [...new Set(
         contactsData.map(
-            (contact) => contact.credentials.name[0]
+            (contact) => contact.name[0]
         )
     )];
 
     initialLetters.forEach(letter => {
         $('#contacts-container').innerHTML += contactListLetterTemplate(letter);
-        const filteredContacts = contactsData.filter(({credentials}) => credentials.name[0] == letter)
+        const filteredContacts = contactsData.filter(({name}) => name[0] == letter)
         $('#contacts-container').renderItems(filteredContacts, contactListTemplate);
-    }
-    )
-
+    })
 }
 
 const contactListLetterTemplate = (letter) => {
@@ -29,7 +27,7 @@ const contactListLetterTemplate = (letter) => {
     `
 }
 
-const contactListTemplate = ({img, credentials: {name, email}}) => {
+const contactListTemplate = ({img, name, email}) => {
     return /*html*/`
         <div class="contact row">
             <div class="contact-img">
