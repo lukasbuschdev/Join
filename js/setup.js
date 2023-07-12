@@ -1,5 +1,5 @@
 const currentDirectory = () => location.pathname.split('/').at(-2);
-const currentUserId = () => new URLSearchParams(document.location.search).get('uid') ?? "";
+const currentUserId = () => `${new URLSearchParams(document.location.search).get('uid')}` ?? "";
 
 
 $$('div[include-template]').for(container => {
