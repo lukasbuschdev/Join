@@ -36,6 +36,7 @@
     "btn-create-task": "Create Task",
     "btn-cancel": "Clear",
     "btn-new-contact": "New contact",
+    "btn-add-contact": "Add Contact",
 
     "header": "Contacts",
     "sub-header": "Better with a team",
@@ -44,5 +45,8 @@
     "edit-contact": "Edit Contact",
     "phone": "Phone",
 
-    "board": "Board"
+    "board": "Board",
+
+    "add-contact-heading": "Add contact",
+    "add-contact-subheading": "Tasks are better with a team!"
 }

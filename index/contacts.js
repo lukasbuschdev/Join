@@ -40,3 +40,11 @@ const contactListTemplate = ({img, name, email}) => {
         </div>
     `;
 }
+
+function addContactModal() {
+    $('#add-contact-modal').openModal();
+}
+
+function closeAddContact() {
+    $('#add-contact-modal').closeModal();
+}

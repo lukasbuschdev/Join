@@ -39,6 +39,7 @@
     "btn-create-task": "Aufgabe erstellen",
     "btn-cancel": "Abbrechen",
     "btn-new-contact": "Kontakt hinzufügen",
+    "btn-add-contact": "Kontakt hinzufügen",
 
     "header": "Kontakte",
     "sub-header": "Besser mit einem Team",
@@ -47,5 +48,9 @@
     "edit-contact": "Kontakt bearbeiten",
     "phone": "Telefon",
 
-    "board": "Tafel"
+    "board": "Tafel",
+
+
+    "add-contact-heading": "Neuer Kontakt",
+    "add-contact-subheading": "Aufgaben, besser im Team!"
 }
