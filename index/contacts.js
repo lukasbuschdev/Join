@@ -25,9 +25,6 @@ const contactListLetterTemplate = (letter) => {
     return /*html*/`
         <div class="contact-letter">
             <span class="txt-normal">${letter}</span>
-            <div class="contact-letter-bottom">
-                <div></div>
-            </div>
         </div>
     `
 }

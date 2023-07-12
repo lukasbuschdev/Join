@@ -73,8 +73,8 @@ const REMOTE_removeData = async (path) => {
     let data = await REMOTE_getData(directory);
     if (!data) return;
     delete data[item];
-    log(data, directory)
-    return REMOTE_setData(path, {});
+
+    return REMOTE_upload(directory, data);
 }
 
 const REMOTE_removeVerification = async (id) => {
