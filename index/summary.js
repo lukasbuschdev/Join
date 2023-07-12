@@ -1,11 +1,7 @@
 const initSummary = async () => {
     const { boards } = await getCurrentUserData();
-    const activeBoardIndex = Math.max(boards.indexOf(SESSION_getData('activeBoardIndex')), 0)
-
-    // boards.for((board) => {
-    //     $('.summary-selection-boards').innerHTML += summarySelectionTemplate(board);
-    // });
-
+    const activeBoardIndex = Math.max(SESSION_getData('activeBoardIndex'), 0)
+    log(SESSION_getData('activeBoardIndex'))
     $('.summary-selection-boards').renderItems(boards, summarySelectionTemplate);
 
     setTimeout(()=>$$('.summary-selection-boards button')[activeBoardIndex].click(), 0)
@@ -18,7 +14,7 @@ const summarySelectionTemplate = (board) => {
 }
 
 const loadBoardSummary = async (boardId) => {
-    const tasks = await REMOTE_getData(`dev/boards/${boardId}/tasks`);
+    const tasks = await REMOTE_getData(`boards/${boardId}/tasks`);
 
     const tasksInBoard = Object.values(tasks).join(',').replaceAll(',,', ',').split(',').length;
     const tasksInProgress = tasks["in-progress"].length;
@@ -91,6 +87,7 @@ const selectBoardSummary = () => {
             activeButtonIndex = i;
         }
     });
+    SESSION_setData('activeBoardIndex', activeButtonIndex)
     
     const direction = (buttonIndex > activeButtonIndex) ? 1 : -1;
     scrollSummaryContent(direction);
