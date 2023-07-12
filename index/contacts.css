@@ -29,14 +29,7 @@
     padding: 30px 20px;
     width: 100%;
     border-bottom: 1px solid #d1d1d1;
-}
-
-.contact-letter-bottom {
-    width: 100%;
-    height: fit-content;
-    padding: 14px 12px;
-    box-sizing: border-box;
-    border-bottom: 1px solid #d1d1d1;
+    margin-bottom: 1rem;
 }
 
 .contact-img img{

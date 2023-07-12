@@ -1,7 +1,7 @@
 class User extends Account {
     constructor(userData){
         super(userData);
-        this.loggedIn = 0;
+        this.userData.password = userData.password;
     }
 
     setPicture = (img) => { // TODO

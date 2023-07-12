@@ -109,16 +109,21 @@ const REMOTE_resetDirectory = async (directoryName) => {
 const getUserByInput = async (input) => {
     const allUsers = await REMOTE_getData('users');
     const [ userData ] = Object.values(allUsers).filter(({ name, email }) => name == input || email == input);
-    return (userData !== undefined) ? new User(userData) : false;
+    return (userData !== undefined) ? new User(userData).userData : false;
 }
 
 const getContactsData = async (contactIds) => {
-    return await Promise.all(contactIds.map(
-        async (contactId) => {
-            return await REMOTE_getData(`users/${contactId}`);
-            }
-        )
+    const userData = await REMOTE_getData('users');
+    let accounts = [];
+    Object.values(userData).for(
+        account => accounts.push(new Account(account).userData)
     )
+    const filteredContacts = accounts.filter(({id}) => contactIds.indexOf(`${id}`) !== -1);
+    const sortedContacts = filteredContacts.sort(({name: name1}, {name: name2}) => {
+        if (name1 > name2) return 1
+        else return -1
+    })
+    return sortedContacts;
 }
 
 // LOCAL STORAGE
