@@ -238,7 +238,12 @@
 }
 
 .search-contact {
-    align-items: center;
+    position: absolute;
+    top: 15%;
+    /* top: 40%; */
+    transition: top 125ms ease-in-out;
+    left: 46px;
+    right: 46px;
     justify-content: space-between;
 }
 
