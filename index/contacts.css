@@ -1,23 +1,37 @@
-.contacts-container {
-    height: calc(100vh - 85px);
+.contacts-wrapper {
+    height: 100%;
     width: 100%;
+    position: relative;
 }
 
-.contact-list-container {
-    height: calc(100vh - 85px);
-    width: 453px;
+#contacts-container {
+    height: 100%;
+    width: clamp(250px, 30vw, 453px);
+    flex-shrink: 0;
     background-color: white;
     box-shadow: 4px 0px 6px 0px #00000014;
     overflow: auto;
-    padding: 3rem;
-    flex-shrink: 0;
+    padding: 3rem 3vw;
+    container-type: inline-size;
 }
 
 .contact {
-    width: 357px;
     border-radius: 10px;
     padding: 15px 25px;
     gap: 35px;
+}
+
+@container (max-width: 200px) {
+    .contact {
+        gap: 10px;
+        padding: 15px;
+    }
+    .contact .column {
+        width: calc(100%) !important;
+    }
+    .contact-img {
+        display: none;
+    }
 }
 
 .contact:hover {
@@ -40,6 +54,7 @@
 }
 
 .contact .column {
+    width: calc(100% - 40px - 25px);
     gap: 5px;
 }
 
@@ -49,6 +64,10 @@
 
 .contact-email {
     color: var(--clr-email);
+    font-size: .875rem;
+    width: calc(100%);
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 
@@ -80,8 +99,7 @@
 }
 
 .contact-container {
-    width: 461px;
-    height: 364px;
+    width: 100%;
     gap: 21px;
 }
 
@@ -275,5 +293,14 @@
     right: 40px;
 }
 
-
-
+@media (max-width: 800px) {
+    #contacts-container {
+        width: calc(100%);
+        padding: 3rem;
+    }
+    .header-contact {
+        display: none;
+        position: absolute;
+        inset: 0;
+    }
+}
