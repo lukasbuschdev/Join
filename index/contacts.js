@@ -3,7 +3,7 @@ function initContacts () {
 }
 
 async function renderContacts() {
-    const contactsData = await getContactsData(contactIds);
+    const contactsData = await getContactsData();
     const initialLetters = [...new Set(
         contactsData.map(
             ({name}) => name[0]
@@ -27,9 +27,9 @@ const contactListLetterTemplate = (letter) => {
     `
 }
 
-const contactListTemplate = ({img, name, email}) => {
+const contactListTemplate = ({img, name, email, id}) => {
     return /*html*/`
-        <div class="contact row" onclick="selectContact()">
+        <div class="contact row" onclick="selectContact(${id})">
             <div class="contact-img">
                 <img src="${img}">
             </div>
@@ -77,17 +77,64 @@ const getInput = debounce(async function () {
 
 }, 200);
 
-async function selectContact() {
-    let userData = await getContactsData(['']);
+async function selectContact(id) {
+    let userData = await getContactsData();
 
-    log(user)
+    let selectedContact = userData.find(user => user.id == id);
+    log(selectedContact)
+    renderSelectedContact(selectedContact);
+}
+
+function renderSelectedContact(selectedContact) {
+    const selectedContactContainer = $('#selected-contact-container');
+
+    selectedContactContainer.innerHTML = selectedContactTemplate(selectedContact);
+}
+
+function selectedContactTemplate({img, name, email, phone}) {
+    return /*html*/`
+    <div class="contact-container column">
+        <div class="img-name row">
+            <img src="${img}">
+
+            <div class="column contact-name">
+                <span>${name}</span>
+                <button data-lang="add-task" class="row">Add Task</button>
+            </div>
+        </div>
+
+        <div class="edit-contact row">
+            <span data-lang="contact-info">Contact Information</span>
+        </div>
+
+        <div class="mail-container column">
+            <span class="txt-700">E-Mail</span>
+            <a class="email" href="mailto:${email}">${email}</a>                 
+        </div>
+
+        <div class="phone-container column">
+            <span data-lang="phone" class="txt-700">Phone</span>
+            <a id="phone-number" href="${(phone == 'N/A') ? '#' : 'tel:${phone}'}">${phone}</a>
+        </div>
+    </div>
+    `;
 }
 
 
 
 
+// SEARCH BAR SECTION
+// $('#input-name').onfocus = setSearchBarAnimation();
+// $('#input-name').onblur = unsetSearchBarAnimation();
 
+function setSearchBarAnimation() {
+    log('aaa')
+    $('.search-contact.row').style.top = '15%'; 
+}
 
+function unsetSearchBarAnimation() {
+    $('.search-contact.row').style.top = '40%'; 
+}
 
 
 function renderUserSearch(sortedUsers) {

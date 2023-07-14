@@ -10,31 +10,7 @@
             <span data-lang="sub-header">Better with a team</span>
         </div>
     
-        <div class="contact-container column">
-            <div class="img-name row">
-                <img src="">
-
-                <div class="column contact-name">
-                    <span>Heinz Peter</span>
-                    <button data-lang="add-task" class="row">Add Task</button>
-                </div>
-            </div>
-
-            <div class="edit-contact row">
-                <span data-lang="contact-info">Contact Information</span>
-                <button data-lang="edit-contact" class="row">Edit Contact</button>
-            </div>
-
-            <div class="mail-container column">
-                <span class="txt-700">E-Mail</span>
-                <a class="email" href="mailto:peter.duPisser@gmx.de">peter.duPisser@gmx.de</a>                 
-            </div>
-
-            <div class="phone-container column">
-                <span data-lang="phone" class="txt-700">Phone</span>
-                <a id="phone-number" href="tel:+436649995399">+43 664 999 53 99</a>
-            </div>
-        </div>
+        <div id="selected-contact-container"></div>
     </div>
 
     <button onclick="addContactModal()" class="btn btn-primary btn-contact txt-normal txt-700 absolute">
@@ -42,7 +18,7 @@
     </button>
 
 
-    <dialog id="add-contact-modal" type="modal">
+    <dialog id="add-contact-modal" type="modal" inert>
         <div class="add-contact-container row">
             <div class="add-contact-theme column">
                 <img src="../assets/img/icons/logo_white.svg">
