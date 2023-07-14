@@ -1,7 +1,6 @@
 const initSummary = async () => {
     const { boards } = await getCurrentUserData();
-    const activeBoardIndex = Math.max(SESSION_getData('activeBoardIndex'), 0)
-    log(SESSION_getData('activeBoardIndex'))
+    const activeBoardIndex = SESSION_getData('activeBoardIndex') ?? 0;
     $('.summary-selection-boards').renderItems(boards, summarySelectionTemplate);
 
     setTimeout(()=>$$('.summary-selection-boards button')[activeBoardIndex].click(), 0)
@@ -36,11 +35,12 @@ const incrementBoard = (direction) => {
 }
 
 const scrollSummarySelection = (direction) => {
+    log(direction)
     const activeBtn = $('.summary-selection-boards button.active');
     if (direction == 1) {
         activeBtn.nextElementSibling.classList.add('active');
         activeBtn.classList.remove('active');
-    } else {
+    } else if (direction == -1) {
         activeBtn.previousElementSibling.classList.add('active');
         activeBtn.classList.remove('active');
     }
@@ -87,9 +87,13 @@ const selectBoardSummary = () => {
             activeButtonIndex = i;
         }
     });
-    SESSION_setData('activeBoardIndex', activeButtonIndex)
+
+    SESSION_setData('activeBoardIndex', buttonIndex)
     
     const direction = (buttonIndex > activeButtonIndex) ? 1 : -1;
-    scrollSummaryContent(direction);
+    if (activeButtonIndex !== undefined) {
+        scrollSummarySelection(direction)
+        scrollSummaryContent(direction);
+    }
     loadBoardSummary(button.name);
 }
