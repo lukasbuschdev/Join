@@ -73,8 +73,17 @@ const getInput = debounce(async function () {
         // console.log(sortedUsers);
     
         renderSearchResults(sortedUsers);
+        $('#input-name').style.borderRadius = '10px 10px 0 0';
+        $('#input-name').style.borderBottomStyle = 'none';
+        $('#user-search-result').style.border = '1px solid #d1d1d1';
+        $('#user-search-result').style.borderTopStyle = 'none';
+
     } else {
         $('#user-search-result').innerHTML = '';
+        $('#user-search-result').style.border = 'none';
+        $('#input-name').style.borderRadius = '10px 10px 10px 10px';
+        $('#input-name').style.border = '1px solid #d1d1d1';
+
     }
 
 }, 200);
@@ -137,7 +146,7 @@ function searchResultTemplates([{id, img, name, email}]) {
             <div class="contact-img">
                 <img src="${img}">
             </div>
-            <span class="txt-normal txt-500 result-name-email">${name}</span>
+            <span class="txt-normal result-name-email">${name}</span>
             <span class="txt-normal result-name-email mail-clr">${email}</span>
         </div>
     `;
