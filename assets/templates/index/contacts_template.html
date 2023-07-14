@@ -57,7 +57,10 @@
 
                 <div class="search-contact row">
                     <img class="user-img-gray" src="../assets/img/icons/user_img_gray.svg">
-                    <input id="input-name" type="text" placeholder="Search names...">
+                    <div class="column">
+                        <input id="input-name" type="text" oninput="getInput()" placeholder="Search names...">
+                        <div id="user-search-result"></div>
+                    </div>
                 </div>
                 
                 <div class="add-contact-btns row gap-15">

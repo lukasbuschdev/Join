@@ -50,30 +50,34 @@ function closeAddContact() {
     $('#add-contact-modal').closeModal();
 }
 
-async function getInput() {
+const getInput = debounce(async function () {
     let input = $('#input-name');
     const userId = currentUserId();
 
-    if(!input.value.length >= 3) return;
+    if(input.value.length >= 3) {
+        const allUsers = await REMOTE_getData('users');
+    
+        const filteredUsers = Object.values(allUsers).filter(
+            user => (user.name.includes(input.value) && !(userId == user.id))
+        )
+    
+        const sortedUsers = filteredUsers.sort(
+            function(a, b) {
+                if(a.name > b.name) {
+                    return 1
+                } else {
+                    return -1
+                } 
+            }
+        );
+    
+        console.log(sortedUsers);
+    
+        renderUserSearch(sortedUsers);
+    }
 
-    const allUsers = await REMOTE_getData('users');
+}, 200);
 
-    const filteredUsers = Object.values(allUsers).filter(
-        user => (user.name.includes(input.value) && userId !== user.id)
-    )
+function renderUserSearch(sortedUsers) {
 
-    const sortedUsers = filteredUsers.sort(
-        function(a, b) {
-            if(a.name > b.name) {
-                return 1
-            } else {
-                return -1
-            } 
-        }
-    );
-
-
-
-
-    log(sortedUsers)
 }
