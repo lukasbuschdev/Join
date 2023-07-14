@@ -112,7 +112,10 @@ const getUserByInput = async (input) => {
     return (userData !== undefined) ? new User(userData).userData : false;
 }
 
-const getContactsData = async (contactIds) => {
+const getContactsData = async () => {
+    const {contacts: contactIds} = await REMOTE_getData(`users/${currentUserId()}`);
+    if (contactIds == false) return;
+
     const userData = await REMOTE_getData('users');
     let accounts = [];
     Object.values(userData).for(
@@ -147,7 +150,8 @@ const SESSION_setData = (key, value) => {
 }
 
 const SESSION_getData = (key) => {
-    return sessionStorage.getItem(key);
+    const data = sessionStorage.getItem(key)
+    return (!(data == 'undefined')) ? data : undefined;
 }
 
 // DEV
