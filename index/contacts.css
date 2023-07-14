@@ -255,14 +255,46 @@
     padding: 66px 46px;
 }
 
+.search-result-container {
+    height: 100%;
+}
+
 .search-contact {
-    position: absolute;
-    /* top: 15%; */
-    top: 40%;
-    transition: top 125ms ease-in-out;
-    left: 46px;
-    right: 46px;
     justify-content: space-between;
+}
+
+.user-search-result {
+    height: 100%;
+    width: 100%;
+    padding: 13px 21px;
+    border: 1px solid black;
+}
+
+.user-search-result-inactive {
+    width: 100%;
+    padding: 0;
+    border: none;
+    height: 0;
+}
+
+.search-result-contact {
+    border-radius: 10px;
+    padding: 15px 25px;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.search-result-contact:hover {
+    background: linear-gradient(180deg, #f9f9f9 0%, #f0f0f0 100%);
+    cursor: pointer;
+}
+
+.result-name-email {
+    width: fit-content;
+}
+
+.mail-clr {
+    color: var(--clr-email);
 }
 
 .close {
@@ -288,9 +320,7 @@
 }
 
 .add-contact-btns {
-    position: absolute;
-    bottom: 50px;
-    right: 40px;
+    justify-content: flex-end;
 }
 
 @media (max-width: 800px) {

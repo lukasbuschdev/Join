@@ -57,7 +57,7 @@ const getInput = debounce(async function () {
         const allUsers = await REMOTE_getData('users');
     
         const filteredUsers = Object.values(allUsers).filter(
-            user => (user.name.includes(input.value) && !(userId == user.id))
+            user => (user.name.toLowerCase().includes(input.value.toLowerCase()) && !(userId == user.id))
         )
     
         const sortedUsers = filteredUsers.sort(
@@ -70,9 +70,11 @@ const getInput = debounce(async function () {
             }
         );
     
-        console.log(sortedUsers);
+        // console.log(sortedUsers);
     
-        renderUserSearch(sortedUsers);
+        renderSearchResults(sortedUsers);
+    } else {
+        $('#user-search-result').innerHTML = '';
     }
 
 }, 200);
@@ -81,7 +83,7 @@ async function selectContact(id) {
     let userData = await getContactsData();
 
     let selectedContact = userData.find(user => user.id == id);
-    log(selectedContact)
+    // log(selectedContact)
     renderSelectedContact(selectedContact);
 }
 
@@ -122,21 +124,37 @@ function selectedContactTemplate({img, name, email, phone}) {
 
 
 
+// RENDER USER SERACH RESULTS
+
+function renderSearchResults(sortedUsers) {
+    const searchResultsContainer = $('#user-search-result');
+    searchResultsContainer.innerHTML = searchResultTemplates(sortedUsers);
+}
+
+function searchResultTemplates([{id, img, name, email}]) {
+    return /*html*/`
+        <div class="search-result-contact row" onclick="addContact(${id})">
+            <div class="contact-img">
+                <img src="${img}">
+            </div>
+            <span class="txt-normal txt-500 result-name-email">${name}</span>
+            <span class="txt-normal result-name-email mail-clr">${email}</span>
+        </div>
+    `;
+}
+
+
+
 
 // SEARCH BAR SECTION
 // $('#input-name').onfocus = setSearchBarAnimation();
 // $('#input-name').onblur = unsetSearchBarAnimation();
 
-function setSearchBarAnimation() {
-    log('aaa')
-    $('.search-contact.row').style.top = '15%'; 
-}
+// function setSearchBarAnimation() {
+//     log('aaa')
+//     $('#user-search-result-active').style.height = '100%'; 
+// }
 
-function unsetSearchBarAnimation() {
-    $('.search-contact.row').style.top = '40%'; 
-}
-
-
-function renderUserSearch(sortedUsers) {
-
-}
+// function unsetSearchBarAnimation() {
+//     $('#user-search-result').style.height = '0px'; 
+// }
