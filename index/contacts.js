@@ -103,13 +103,12 @@ function renderSelectedContact(selectedContact) {
     selectedContactContainer.innerHTML = selectedContactTemplate(selectedContact);
 }
 
-function selectedContactTemplate({img, name, email, phone}) {
+function selectedContactTemplate({img, name, email, phone, color}) {
     return /*html*/`
     <div class="contact-container column">
         <div class="img-name row">
-            <!-- <img src="${img}"> -->
-            <div class="user-img-container">
-                <span></span>
+            <div class="user-img-container" style="--user-clr: ${color}">
+                <h1>${name.slice(0, 2).toUpperCase()}</h1>
                 <img src="${img}" alt="">
             </div>
 

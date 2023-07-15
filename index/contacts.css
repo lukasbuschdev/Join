@@ -144,13 +144,6 @@
     gap: 54px;
 }
 
-.img-name img {
-    height: 120px;
-    width: 120px;
-    border-radius: 999px;
-    background-color: yellow;
-}
-
 .edit-contact {
     gap: 60px;
     height: 74px;

@@ -60,8 +60,12 @@ const REMOTE_setData = async (targetPath, upload) => {
         }
         currentObj = currentObj[directory];
     }
-    Object.assign(currentObj, upload);
-
+    // log(currentObj, typeof currentObj)
+    if (Array.isArray(currentObj)) {
+        currentObj.push(upload)
+    } else {
+        Object.assign(currentObj, upload);
+    }
     return REMOTE_upload(directories[0], data);
 }
 
