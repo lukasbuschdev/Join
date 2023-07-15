@@ -238,6 +238,10 @@ button.bg-dark {
     font-weight: 500;
 }
 
+.txt-600 {
+    font-weight: 600;
+}
+
 .txt-400 {
     font-weight: 400;
 }

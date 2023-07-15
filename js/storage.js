@@ -60,7 +60,6 @@ const REMOTE_setData = async (targetPath, upload) => {
         }
         currentObj = currentObj[directory];
     }
-    // log(currentObj, typeof currentObj)
     if (Array.isArray(currentObj)) {
         currentObj.push(upload)
     } else {
@@ -81,10 +80,14 @@ const REMOTE_removeData = async (path) => {
     return REMOTE_upload(directory, data);
 }
 
-const REMOTE_removeVerification = async (id) => {
-    const allVerifications = await REMOTE_getData('verification');
-    delete allVerifications[id]
-    return REMOTE_upload('verification', {...filteredVerifications});
+const REMOTE_clearVerifications = async () => {
+    const verifications = await REMOTE_getData('verification');
+    for (const verification in verifications) {
+        if (verifications[verification].verifyCode.expires < Date.now()) {
+            delete verifications[verification]
+        }
+    }
+    return REMOTE_upload('verification', verifications);
 }
 
 // Directories
@@ -179,31 +182,24 @@ const uploadDevData = async () => {
 
 const getCurrentUserData = async () => {
     const uid = currentUserId();
-    if (!uid) return;
+    if (!uid) return null;
     return await REMOTE_getData(`users/${uid}`)
 }
 
-const loadUserData = async (id) => {
+const loadUserData = async () => {
     const allUsers = await REMOTE_getData("users");
-    const user = allUsers[id] ?? allUsers.guest;
-    setUserColor(user.color);
-    if (user.img !== "") {
-        setUserImg(user.img);
-    } else {
-        setUserImgBackup(user.name);
-    }
+    const uid = currentUserId();
+    const user = (uid) ? allUsers[uid] : allUsers.guest;
+    setUserColor(user?.color);
+    setUserImg(user?.img, user.name);
 }
 
 const setUserColor = (color) => {
-    $('.user-img-container').style.setProperty('--user-clr', color);
+    $('.user-img-container').style.setProperty('--user-clr', color ?? 'var(--clr-dark)');
 }
 
-const setUserImg = (img) => {
+const setUserImg = (img, name) => {
     const imgContainer = $('.user-img');
-    imgContainer.src = `${img}`;
-}
-
-const setUserImgBackup = (name) => {
-    const initials = name.slice(0, 2).toUpperCase();
-    $('.user-img > *').innerText = initials;
+    imgContainer.src = img ?? "";
+    if (!img) $('header .user-img-container > *').innerText = name.slice(0, 2).toUpperCase();
 }

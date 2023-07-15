@@ -2,6 +2,19 @@ const init = async () => {
     // $$('#email input, #password input').for(
     //     input => input.addEventListener('focus', automaticLogin)
     // )
+    isSessionExpired();
+}
+
+const isSessionExpired = () => {
+    const a = new URLSearchParams(document.location.search);
+    if (a.has('expired')){
+        document.addEventListener("visibilitychange", ()=>{
+            log('aaa')
+            if (document.visibilityState == 'visible') {
+                $('#expired-notification').openModal();
+            }
+        }, { once: true });
+    }
 }
 
 function loadContent(template) {

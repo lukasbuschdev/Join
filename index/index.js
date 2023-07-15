@@ -18,7 +18,6 @@ const loadContent = async () => {
 }
 
 const initTextLoadAnimationOvserver = () => {
-    log('aa')
     $$('#summary-data button').for(
         button => textLoadAnimationOvserver.observe(button, { characterData: true, childList: true, subtree: true })
     );

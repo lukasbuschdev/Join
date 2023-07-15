@@ -82,9 +82,14 @@ header {
     margin-right: auto;
 }
 
-.user-img-container {
+header .user-img-container {
     height: 100%;
     aspect-ratio: 1;
+    cursor: pointer;
+}
+
+header .user-img-container img[src="../assets/img/icons/user_img_gray.svg"] {
+    --outline-thickness: 0px;
 }
 
 /* .user-image {

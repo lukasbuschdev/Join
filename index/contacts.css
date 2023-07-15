@@ -285,6 +285,11 @@
     cursor: pointer;
 }
 
+.search-result-contact .user-img-container {
+    height: 30px;
+    aspect-ratio: 1;
+}
+
 .result-name-email {
     width: fit-content;
 }

@@ -1,8 +1,10 @@
 .user-img-container {
-    width: 10rem;
-    height: 10rem;
+    width: 9rem;
+    height: 9rem;
     margin: 50px 0;
     --outline-thickness: 3px;
 }
 
-
+#user-name {
+    font-size: 3rem;
+}

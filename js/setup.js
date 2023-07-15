@@ -1,5 +1,5 @@
-const currentDirectory = () => location.pathname.split('/').at(-2);
-const currentUserId = () => `${new URLSearchParams(document.location.search).get('uid')}` ?? "";
+const currentDirectory = () => location.pathname.split('/').at(-1).split('.')[0];
+const currentUserId = () => (searchParams().get('uid') == null) ? undefined : `${searchParams().get('uid')}`;
 
 
 $$('div[include-template]').for(container => {
@@ -35,17 +35,32 @@ const initMenus = () => {
     });
 }
 
-let inactivityTimer;
-const addInactivityTimer = (minutes = 1/12) => {
-    inactivityTimer = setTimeout(()=>goTo('../init/init.html?expired'), minutes * 60 * 1000)
+const redirect = async () => {
+    const userData = await getCurrentUserData();
+    if (!userData && searchParams().has('redirected') == false) {
+        // goTo('../init/init.html?redirected');
+    }
 }
 
+let inactivityTimer;
+const addInactivityTimer = (minutes = 5) => {
+    inactivityTimer = setTimeout(()=>{
+        goTo('../init/init.html?expired');
+    }, minutes * 60 * 1000)
+}
+
+const initInactivity = () => {
+    window.addEventListener("visibilitychange", () => {
+        if (document.hidden) addInactivityTimer();
+        else clearTimeout(inactivityTimer);
+    });
+}
+
+// redirect();
 initMenus();
-if (currentDirectory() !== "init") {
+REMOTE_clearVerifications();
+if (currentDirectory() == "index") {
     const uid = currentUserId();
     loadUserData(uid);
-    // window.addEventListener("visibilitychange", () => {
-    //     if (document.hidden) addInactivityTimer();
-    //     else clearTimeout(inactivityTimer);
-    // });
+    // initInactivity();
 }

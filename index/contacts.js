@@ -9,7 +9,7 @@ async function renderContacts() {
             ({name}) => name[0]
         )
     )];
-    log(contactsData)
+    // log(contactsData)
     $('#contacts-container').innerHTML = '';
 
     initialLetters.forEach(letter => {
