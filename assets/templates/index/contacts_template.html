@@ -1,5 +1,5 @@
 <div class="contacts-wrapper row">
-    <div id="contacts-container" class="contact-list-container">
+    <div id="contacts-container" class="contact-list-container gap-15">
 
     </div>
 
@@ -10,31 +10,7 @@
             <span data-lang="sub-header">Better with a team</span>
         </div>
     
-        <div class="contact-container column">
-            <div class="img-name row">
-                <img src="">
-
-                <div class="column contact-name">
-                    <span>Heinz Peter</span>
-                    <button data-lang="add-task" class="row">Add Task</button>
-                </div>
-            </div>
-
-            <div class="edit-contact row">
-                <span data-lang="contact-info">Contact Information</span>
-                <button data-lang="edit-contact" class="row">Edit Contact</button>
-            </div>
-
-            <div class="mail-container column">
-                <span class="txt-700">E-Mail</span>
-                <a class="email" href="mailto:peter.duPisser@gmx.de">peter.duPisser@gmx.de</a>                 
-            </div>
-
-            <div class="phone-container column">
-                <span data-lang="phone" class="txt-700">Phone</span>
-                <a id="phone-number" href="tel:+436649995399">+43 664 999 53 99</a>
-            </div>
-        </div>
+        <div id="selected-contact-container"></div>
     </div>
 
     <button onclick="addContactModal()" class="btn btn-primary btn-contact txt-normal txt-700 absolute">
@@ -42,7 +18,7 @@
     </button>
 
 
-    <dialog id="add-contact-modal" type="modal">
+    <dialog id="add-contact-modal" type="modal" inert>
         <div class="add-contact-container row">
             <div class="add-contact-theme column">
                 <img src="../assets/img/icons/logo_white.svg">
@@ -55,14 +31,25 @@
             <div class="add-contact-field column">
                 <img onclick="closeAddContact()" class="close" src="../assets/img/icons/close.svg" alt="Close">
 
-                <div class="search-contact row">
+
+
+
+
+                <div class="search-result-container row gap-25">
                     <img class="user-img-gray" src="../assets/img/icons/user_img_gray.svg">
-                    <div class="column">
-                        <input id="input-name" type="text" oninput="getInput()" placeholder="Search names...">
-                        <div id="user-search-result"></div>
+                    <div class="search-contact column">
+                        <input id="input-name" type="text" oninput="getInput()" class="txt-normal" placeholder="Search names..." autocomplete="off">
+                        <div id="user-search-result" class="user-search-result column gap-15"></div>
                     </div>
-                </div>
-                
+                    
+                </div>    
+
+
+
+
+
+
+
                 <div class="add-contact-btns row gap-15">
                     <button class="btn btn-secondary btn-cancel txt-normal">
                         <span data-lang="btn-cancel">Cancel</span>

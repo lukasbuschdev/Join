@@ -3,7 +3,7 @@ function initContacts () {
 }
 
 async function renderContacts() {
-    const contactsData = await getContactsData(contactIds);
+    const contactsData = await getContactsData();
     const initialLetters = [...new Set(
         contactsData.map(
             ({name}) => name[0]
@@ -27,9 +27,9 @@ const contactListLetterTemplate = (letter) => {
     `
 }
 
-const contactListTemplate = ({img, name, email}) => {
+const contactListTemplate = ({img, name, email, id}) => {
     return /*html*/`
-        <div class="contact row" onclick="selectContact()">
+        <div class="contact row" onclick="selectContact(${id})">
             <div class="contact-img">
                 <img src="${img}">
             </div>
@@ -57,7 +57,7 @@ const getInput = debounce(async function () {
         const allUsers = await REMOTE_getData('users');
     
         const filteredUsers = Object.values(allUsers).filter(
-            user => (user.name.includes(input.value) && !(userId == user.id))
+            user => (user.name.toLowerCase().includes(input.value.toLowerCase()) && !(userId == user.id))
         )
     
         const sortedUsers = filteredUsers.sort(
@@ -70,26 +70,100 @@ const getInput = debounce(async function () {
             }
         );
     
-        console.log(sortedUsers);
+        // console.log(sortedUsers);
     
-        renderUserSearch(sortedUsers);
+        renderSearchResults(sortedUsers);
+        $('#input-name').style.borderRadius = '10px 10px 0 0';
+        $('#input-name').style.borderBottomStyle = 'none';
+        $('#user-search-result').style.border = '1px solid #d1d1d1';
+        $('#user-search-result').style.borderTopStyle = 'none';
+
+    } else {
+        $('#user-search-result').innerHTML = '';
+        $('#user-search-result').style.border = 'none';
+        $('#input-name').style.borderRadius = '10px 10px 10px 10px';
+        $('#input-name').style.border = '1px solid #d1d1d1';
+
     }
 
 }, 200);
 
-async function selectContact() {
-    let userData = await getContactsData(['']);
+async function selectContact(id) {
+    let userData = await getContactsData();
 
-    log(user)
+    let selectedContact = userData.find(user => user.id == id);
+    // log(selectedContact)
+    renderSelectedContact(selectedContact);
+}
+
+function renderSelectedContact(selectedContact) {
+    const selectedContactContainer = $('#selected-contact-container');
+
+    selectedContactContainer.innerHTML = selectedContactTemplate(selectedContact);
+}
+
+function selectedContactTemplate({img, name, email, phone}) {
+    return /*html*/`
+    <div class="contact-container column">
+        <div class="img-name row">
+            <img src="${img}">
+
+            <div class="column contact-name">
+                <span>${name}</span>
+                <button data-lang="add-task" class="row">Add Task</button>
+            </div>
+        </div>
+
+        <div class="edit-contact row">
+            <span data-lang="contact-info">Contact Information</span>
+        </div>
+
+        <div class="mail-container column">
+            <span class="txt-700">E-Mail</span>
+            <a class="email" href="mailto:${email}">${email}</a>                 
+        </div>
+
+        <div class="phone-container column">
+            <span data-lang="phone" class="txt-700">Phone</span>
+            <a id="phone-number" href="${(phone == 'N/A') ? '#' : 'tel:${phone}'}">${phone}</a>
+        </div>
+    </div>
+    `;
+}
+
+
+
+// RENDER USER SERACH RESULTS
+
+function renderSearchResults(sortedUsers) {
+    const searchResultsContainer = $('#user-search-result');
+    searchResultsContainer.innerHTML = searchResultTemplates(sortedUsers);
+}
+
+function searchResultTemplates([{id, img, name, email}]) {
+    return /*html*/`
+        <div class="search-result-contact row" onclick="addContact(${id})">
+            <div class="contact-img">
+                <img src="${img}">
+            </div>
+            <span class="txt-normal result-name-email">${name}</span>
+            <span class="txt-normal result-name-email mail-clr">${email}</span>
+        </div>
+    `;
 }
 
 
 
 
+// SEARCH BAR SECTION
+// $('#input-name').onfocus = setSearchBarAnimation();
+// $('#input-name').onblur = unsetSearchBarAnimation();
 
+// function setSearchBarAnimation() {
+//     log('aaa')
+//     $('#user-search-result-active').style.height = '100%'; 
+// }
 
-
-
-function renderUserSearch(sortedUsers) {
-
-}
+// function unsetSearchBarAnimation() {
+//     $('#user-search-result').style.height = '0px'; 
+// }

@@ -27,10 +27,12 @@ HTMLElement.prototype.$$ = function (sel) {
 
 HTMLDialogElement.prototype.openModal = function () {
     this.showModal();
+    this.inert = false;
     this.addEventListener('mousedown', closeHandler = () => {
         if (this.$('div').contains(event.target)) return;
         this.$('.notification')?.classList.remove('anim-notification')
         this.closeModal();
+        this.inert = true;
     });
     if (this.classList.contains('dlg-notification')) {
         this.showNotification();
