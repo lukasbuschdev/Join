@@ -2,13 +2,12 @@
     <div class="card" id="create-account">
         <form onsubmit="uploadImage()">
             <div class="header-container">
-                <h1 class="txt-center" data-lang="create-account">Create Account</h1>
-                <img src="../assets/img/icons/blue_line_bottom.svg" alt="">
+                <h2 class="txt-center" data-lang="create-account">Create Account</h2>
             </div>
     
-            <div class="picture-container grid-center" data-img="false" onclick="removeUpload()">
+            <div class="user-img-container grid-center" data-img="false" onclick="removeUpload()">
                 <h1>TU</h1>
-                <img id="user-img" src="" alt="">
+                <img class="user-img" src="" alt="">
             </div>
 
             <p class="txt-normal txt-center" data-lang="choose-image-info"></p>
@@ -21,56 +20,3 @@
         </form>
     </div>
 </div>
-
-<style>
-    .picture-container {
-        --user-clr: var(--clr-blue);
-        width: 10rem;
-        height: 10rem;
-        background-color: var(--user-clr);
-        border-radius: 999px;
-        color: var(--clr-white);
-        grid-template-areas: 'a';
-        outline: 3px solid var(--user-clr);
-        position: relative;
-        margin: 50px 0;
-        overflow: hidden;
-    }
-
-    .picture-container > * {
-        grid-area: a;
-    }
-
-    .picture-container img {
-        width: calc(100% - 6px);
-        object-fit: cover;
-        border-radius: inherit;
-    }
-
-    .picture-container::after {
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        content: '';
-        box-shadow: inset 0 0 0 3px white;
-    }
-
-    .picture-container[data-img="true"]:hover::before {
-        content: '';
-        position: absolute;
-        display: grid;
-        z-index: 1;
-        width: 3rem;
-        aspect-ratio: 1;
-        background: url(../assets/img/icons/btn_cancel.svg) rgba(255, 255, 255, 0.4) center no-repeat;
-        background-size: 50%;
-        filter: invert(1);
-        border-radius: 999px;
-        cursor: pointer;
-    }
-
-    .picture-container[data-img="true"] {
-        cursor: pointer;
-    }
-
-</style>

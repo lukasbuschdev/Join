@@ -44,8 +44,8 @@
     position: absolute;
     display: block;
     height: 100%;
-    background: linear-gradient(var(--rot), var(--clr-bg-light), transparent) transparent;
-    width: 150px;
+    background: linear-gradient(var(--rot), var(--clr-bg-light), transparent);
+    width: 78px;
 }
 
 .summary-content-shadow::before {
@@ -64,12 +64,6 @@
     grid-area: a;
 }
 
-@container summary-content (max-width: 700px) {
-    .summary-content .summary-grid:not(#summary-data) {
-        display: none;
-    }
-}
-
 .summary-content.scroll-snap {
     scroll-snap-type: x mandatory;
 }
@@ -79,13 +73,15 @@
 }
 
 .summary-grid {
-    gap: 35px;
+    --gap: 35px;
+    gap: var(--gap);
     flex-shrink: 0;
     width: var(--grid-width);
 }
 
 .summary-grid .row {
-    gap: 35px;
+    --gap: inherit;
+    gap: var(--gap);
     height: 170px;
     padding: 3px 0;
     text-align: center;
@@ -94,6 +90,41 @@
 #summary-data {
     margin: 0 max(calc(calc(calc(100vw - 232px - var(--grid-width)) / 2) - 200px), 80px);
     scroll-snap-align: center;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@container summary-content (max-width: 724px) {
+    .summary-content {
+        padding: 0;
+    }
+    .summary-content-shadow {
+        display: none;
+    }
+}
+
+@container summary-content (max-width: 580px) {
+    .summary-grid {
+        --gap: 5%;
+        width: 100%;
+        aspect-ratio: 1;
+    }
+    .summary-grid h1 {
+        font-size: 2rem;
+    }
+    .summary-grid span {
+        font-size: .875rem;
+    }
+    .summary-grid > .row{
+        flex: 1;
+    }
 }
 
 .summary-btn {
@@ -171,7 +202,7 @@
     overflow: hidden;
     gap: 15px;
     height: 100%;
-    padding: 0 calc(calc(calc(100vw - 232px) * .7) / 2);
+    padding: 0 calc(calc(100vw - 510px) / 2);
     position: relative;
     /* width: 175px; */
 }
@@ -185,6 +216,7 @@
     display: block;
     top: 0;
     z-index: 1;
+    pointer-events: none;
 }
 .summary-selection-arrows::after {
     left: calc(var(--width) + 15px);

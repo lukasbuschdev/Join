@@ -1,7 +1,7 @@
 const initCreateAccount = async () => {
     const uid = currentUserId();
     const { name } = await REMOTE_getData(`users/${uid}`);
-    $('.picture-container h1').innerText = name.slice(0, 2).toUpperCase();
+    $('.user-img-container h1').innerText = name.slice(0, 2).toUpperCase();
 }
 
 const submitUpload = async () => {
@@ -18,8 +18,8 @@ const submitUpload = async () => {
         body: formData
     })).json();
 
-    $('#user-img').src = imageSrc;
-    $('.picture-container').dataset.img = 'true';
+    $('.user-img').src = imageSrc;
+    $('.user-img-container').dataset.img = 'true';
 
     REMOTE_setData(`users/${uid}`, {img: imageSrc});
 }

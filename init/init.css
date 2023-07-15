@@ -86,11 +86,16 @@ body {
     align-items: center;
     gap: 24px;
     margin: 0 50px;
+    position: relative;
 }
 
-.header-container img {
+.header-container::after {
+    content: '';
+    background-color: var(--clr-blue);
+    height: 3px;
+    width: 9rem;
+    border-radius: 999px;
     animation: load-blue-bar var(--load-animation-duration);
-    width: 150px;
 }
 
 form {
@@ -323,8 +328,8 @@ form:has(input:placeholder-shown) button[type="submit"] {
 /* KEYFRAMES */
 
 @keyframes load-blue-bar {
-    0%, 20% {
-        scale: 50% 100%;
+    from {
+        width: 3rem;
     }
 }
 

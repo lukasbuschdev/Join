@@ -13,5 +13,29 @@ const loadContent = async () => {
     } else if (id == "contacts") {
         initContacts();
     }
+    initTextLoadAnimationOvserver();
     resetMenus();
+}
+
+const initTextLoadAnimationOvserver = () => {
+    log('aa')
+    $$('#summary-data button').for(
+        button => textLoadAnimationOvserver.observe(button, { characterData: true, childList: true, subtree: true })
+    );
+}
+
+const textLoadAnimationOvserver = new MutationObserver(
+    mutationList => {
+        for (const { type, target } of mutationList) {
+            if (type == "childList" || type == "characterData") {
+                log('abc');
+                triggerTextLoadAnimation(target);
+            }
+        }
+    }
+);
+
+const triggerTextLoadAnimation = (target) => {
+    target.style.animation = '';
+    target.style.animation = `fade-in 2s forwards`;
 }

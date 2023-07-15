@@ -109,7 +109,7 @@ const REMOTE_resetDirectory = async (directoryName) => {
 const getUserByInput = async (input) => {
     const allUsers = await REMOTE_getData('users');
     const [ userData ] = Object.values(allUsers).filter(({ name, email }) => name == input || email == input);
-    return (userData !== undefined) ? new User(userData).userData : false;
+    return (userData == undefined) ? false : new User(userData);
 }
 
 const getContactsData = async () => {
