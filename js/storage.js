@@ -182,6 +182,7 @@ const getCurrentUserData = async () => {
 const loadUserData = async (id) => {
     const allUsers = await REMOTE_getData("users");
     const user = allUsers[id] ?? allUsers.guest;
+    setUserColor(user.color);
     if (user.img !== "") {
         setUserImg(user.img);
     } else {
@@ -189,12 +190,16 @@ const loadUserData = async (id) => {
     }
 }
 
+const setUserColor = (color) => {
+    $('.user-img-container').style.setProperty('--user-clr', color);
+}
+
 const setUserImg = (img) => {
-    const imgContainer = $('.user-image img');
+    const imgContainer = $('.user-img');
     imgContainer.src = `${img}`;
 }
 
 const setUserImgBackup = (name) => {
     const initials = name.slice(0, 2).toUpperCase();
-    $('.user-image').innerText = initials;
+    $('.user-img > *').innerText = initials;
 }

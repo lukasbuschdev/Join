@@ -389,14 +389,16 @@ h4 {
 /* USER */
 
 .user-img-container {
+    --outline-thickness: 2px;
     --user-clr: var(--clr-blue);
     background-color: var(--user-clr);
     border-radius: 999px;
     color: var(--clr-white);
+    display: grid;
+    place-items: center;
     grid-template-areas: 'a';
-    outline: 3px solid var(--user-clr);
+    outline: var(--outline-thickness) solid var(--user-clr);
     position: relative;
-    margin: 50px 0;
     overflow: hidden;
 }
 
@@ -405,8 +407,8 @@ h4 {
 }
 
 .user-img-container img:not([src=""]) {
-    width: calc(100% - 6px);
-    height: calc(100% - 6px);
+    width: calc(100% - calc(var(--outline-thickness) * 2));
+    height: calc(100% - calc(var(--outline-thickness) * 2));
     object-fit: cover;
     border-radius: inherit;
 }
@@ -416,7 +418,7 @@ h4 {
     inset: 0;
     border-radius: inherit;
     content: '';
-    box-shadow: inset 0 0 0 3px white;
+    box-shadow: inset 0 0 0 var(--outline-thickness) white;
 }
 
 .user-img-container[data-img="true"]:hover::before {

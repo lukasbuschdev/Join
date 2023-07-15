@@ -46,21 +46,24 @@
     margin-bottom: 1rem;
 }
 
-.contact-img img{
+#contacts-container .user-img-container {
     height: 40px;
-    width: 40px;
+}
+
+.header-contact .user-img-container {
+    --outline-thickness: 3px;
+    height: 120px;
+}
+
+/* .contact-img img{
     border: 2px solid white;
     border-radius: 999px;
-}
+} */
 
 .contact .column {
     width: calc(100% - 40px - 25px);
     gap: 5px;
 }
-
-/* .contact-name {
-
-} */
 
 .contact-email {
     color: var(--clr-email);

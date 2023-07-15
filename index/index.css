@@ -82,7 +82,12 @@ header {
     margin-right: auto;
 }
 
-.user-image {
+.user-img-container {
+    height: 100%;
+    aspect-ratio: 1;
+}
+
+/* .user-image {
     --user-bg: var(--clr-dark);
     height: 49px;
     aspect-ratio: 1;
@@ -108,7 +113,7 @@ header {
 .user-image img {
     object-fit: cover;
     height: 100%;
-}
+} */
 
 @media (max-width: 800px) {
     body {
