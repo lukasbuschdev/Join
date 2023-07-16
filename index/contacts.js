@@ -138,18 +138,28 @@ function selectedContactTemplate({img, name, email, phone}) {
 function renderSearchResults(sortedUsers) {
     const searchResultsContainer = $('#user-search-result');
     searchResultsContainer.innerHTML = searchResultTemplates(sortedUsers);
+
+    // if(sortedUsers.id == sortedUsers.id) {
+
+    // }
+
 }
 
 function searchResultTemplates([{id, img, name, email}]) {
-    return /*html*/`
-        <div class="search-result-contact row" onclick="addContact(${id})">
-            <div class="contact-img">
-                <img src="${img}">
-            </div>
-            <span class="txt-normal result-name-email">${name}</span>
-            <span class="txt-normal result-name-email mail-clr">${email}</span>
-        </div>
-    `;
+
+    if(id === id) {
+        return;
+    } else {
+        return /*html*/`
+            <div class="search-result-contact row" id="${id}" onclick="addContact(${id})">
+                <div class="contact-img">
+                    <img src="${img}">
+                </div>
+                <span class="txt-normal result-name-email">${name}</span>
+                <span class="txt-normal result-name-email mail-clr">${email}</span>
+            </div>   
+        `;
+    }
 }
 
 
