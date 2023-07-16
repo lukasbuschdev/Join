@@ -60,8 +60,11 @@ const REMOTE_setData = async (targetPath, upload) => {
         }
         currentObj = currentObj[directory];
     }
-    Object.assign(currentObj, upload);
-
+    if (Array.isArray(currentObj)) {
+        currentObj.push(upload)
+    } else {
+        Object.assign(currentObj, upload);
+    }
     return REMOTE_upload(directories[0], data);
 }
 
@@ -77,10 +80,14 @@ const REMOTE_removeData = async (path) => {
     return REMOTE_upload(directory, data);
 }
 
-const REMOTE_removeVerification = async (id) => {
-    const allVerifications = await REMOTE_getData('verification');
-    delete allVerifications[id]
-    return REMOTE_upload('verification', {...filteredVerifications});
+const REMOTE_clearVerifications = async () => {
+    const verifications = await REMOTE_getData('verification');
+    for (const verification in verifications) {
+        if (verifications[verification].verifyCode.expires < Date.now()) {
+            delete verifications[verification]
+        }
+    }
+    return REMOTE_upload('verification', verifications);
 }
 
 // Directories
@@ -109,7 +116,7 @@ const REMOTE_resetDirectory = async (directoryName) => {
 const getUserByInput = async (input) => {
     const allUsers = await REMOTE_getData('users');
     const [ userData ] = Object.values(allUsers).filter(({ name, email }) => name == input || email == input);
-    return (userData !== undefined) ? new User(userData).userData : false;
+    return (userData == undefined) ? false : new User(userData);
 }
 
 const getContactsData = async () => {
@@ -175,26 +182,24 @@ const uploadDevData = async () => {
 
 const getCurrentUserData = async () => {
     const uid = currentUserId();
-    if (!uid) return;
+    if (!uid) return null;
     return await REMOTE_getData(`users/${uid}`)
 }
 
-const loadUserData = async (id) => {
+const loadUserData = async () => {
     const allUsers = await REMOTE_getData("users");
-    const user = allUsers[id] ?? allUsers.guest;
-    if (user.img !== "") {
-        setUserImg(user.img);
-    } else {
-        setUserImgBackup(user.name);
-    }
+    const uid = currentUserId();
+    const user = (uid) ? allUsers[uid] : allUsers.guest;
+    setUserColor(user?.color);
+    setUserImg(user?.img, user.name);
 }
 
-const setUserImg = (img) => {
-    const imgContainer = $('.user-image img');
-    imgContainer.src = `${img}`;
+const setUserColor = (color) => {
+    $('.user-img-container').style.setProperty('--user-clr', color ?? 'var(--clr-dark)');
 }
 
-const setUserImgBackup = (name) => {
-    const initials = name.slice(0, 2).toUpperCase();
-    $('.user-image').innerText = initials;
+const setUserImg = (img, name) => {
+    const imgContainer = $('.user-img');
+    imgContainer.src = img ?? "";
+    if (!img) $('header .user-img-container > *').innerText = name.slice(0, 2).toUpperCase();
 }

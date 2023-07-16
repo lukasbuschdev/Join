@@ -9,7 +9,7 @@ async function renderContacts() {
             ({name}) => name[0]
         )
     )];
-
+    // log(contactsData)
     $('#contacts-container').innerHTML = '';
 
     initialLetters.forEach(letter => {
@@ -27,11 +27,12 @@ const contactListLetterTemplate = (letter) => {
     `
 }
 
-const contactListTemplate = ({img, name, email, id}) => {
+const contactListTemplate = ({img, name, email, id, color}) => {
     return /*html*/`
         <div class="contact row" onclick="selectContact(${id})">
-            <div class="contact-img">
-                <img src="${img}">
+            <div class="user-img-container" style="--user-clr: ${color}">
+                <span>${name.slice(0, 2).toUpperCase()}</span>
+                <img src="${img}" alt="">
             </div>
             <div class="column">
                 <span class="txt-normal contact-name">${name}</span>
@@ -102,11 +103,14 @@ function renderSelectedContact(selectedContact) {
     selectedContactContainer.innerHTML = selectedContactTemplate(selectedContact);
 }
 
-function selectedContactTemplate({img, name, email, phone}) {
+function selectedContactTemplate({img, name, email, phone, color}) {
     return /*html*/`
     <div class="contact-container column">
         <div class="img-name row">
-            <img src="${img}">
+            <div class="user-img-container" style="--user-clr: ${color}">
+                <h1>${name.slice(0, 2).toUpperCase()}</h1>
+                <img src="${img}" alt="">
+            </div>
 
             <div class="column contact-name">
                 <span>${name}</span>
@@ -125,7 +129,7 @@ function selectedContactTemplate({img, name, email, phone}) {
 
         <div class="phone-container column">
             <span data-lang="phone" class="txt-700">Phone</span>
-            <a id="phone-number" href="${(phone == 'N/A') ? '#' : 'tel:${phone}'}">${phone}</a>
+            <a id="phone-number" href="${(phone == 'N/A') ? 'return false;' : 'tel:${phone}'}">${phone}</a>
         </div>
     </div>
     `;

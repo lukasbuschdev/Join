@@ -82,7 +82,17 @@ header {
     margin-right: auto;
 }
 
-.user-image {
+header .user-img-container {
+    height: 100%;
+    aspect-ratio: 1;
+    cursor: pointer;
+}
+
+header .user-img-container img[src="../assets/img/icons/user_img_gray.svg"] {
+    --outline-thickness: 0px;
+}
+
+/* .user-image {
     --user-bg: var(--clr-dark);
     height: 49px;
     aspect-ratio: 1;
@@ -108,7 +118,7 @@ header {
 .user-image img {
     object-fit: cover;
     height: 100%;
-}
+} */
 
 @media (max-width: 800px) {
     body {
@@ -146,5 +156,9 @@ header {
     }
     #legal-notice {
         display: none;
+    }
+    .summary-header {
+        flex-direction: column;
+        align-items: unset;
     }
 }

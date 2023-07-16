@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../fonts/fonts.css">
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="./init.css">
+    <link rel="stylesheet" href="./create_account.css">
 
     <script src="../js/prototype_extensions.js"></script>
     <script src="../js/utilities.js"></script>
@@ -33,5 +34,11 @@
         <img src="../assets/img/icons/logo_white.svg" alt="" width="100">
     </div>
     <div include-template="../assets/templates/init/login_template.html" id="content"></div>
+
+    <dialog id="expired-notification" type="modal" class="dlg-notification">
+        <div class="notification grid-center">
+            <span data-lang="automatic-signout">You were autumatically signed out!</span>
+        </div>
+    </dialog>
 </body>
 </html>

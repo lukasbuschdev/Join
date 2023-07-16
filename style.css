@@ -15,6 +15,8 @@
 
     --load-animation-duration: 600ms ease-out;
     --transition-fast: 100ms ease-in-out;
+    --transition-medium: 175ms ease-in-out;
+    --transition-slow: 250ms ease-in-out;
 }
 
 html {
@@ -236,6 +238,10 @@ button.bg-dark {
     font-weight: 500;
 }
 
+.txt-600 {
+    font-weight: 600;
+}
+
 .txt-400 {
     font-weight: 400;
 }
@@ -384,6 +390,59 @@ h4 {
     translate: 4px 0;
 }
 
+/* USER */
+
+.user-img-container {
+    --outline-thickness: 2px;
+    --user-clr: var(--clr-blue);
+    background-color: var(--user-clr);
+    border-radius: 999px;
+    color: var(--clr-white);
+    display: grid;
+    place-items: center;
+    grid-template-areas: 'a';
+    outline: var(--outline-thickness) solid var(--user-clr);
+    position: relative;
+    overflow: hidden;
+}
+
+.user-img-container > * {
+    grid-area: a;
+}
+
+.user-img-container img:not([src=""]) {
+    width: calc(100% - calc(var(--outline-thickness) * 2));
+    height: calc(100% - calc(var(--outline-thickness) * 2));
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.user-img-container::after {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    content: '';
+    box-shadow: inset 0 0 0 var(--outline-thickness) white;
+}
+
+.user-img-container[data-img="true"]:hover::before {
+    content: '';
+    position: absolute;
+    display: grid;
+    z-index: 1;
+    width: 3rem;
+    aspect-ratio: 1;
+    background: url(../assets/img/icons/btn_cancel.svg) rgba(255, 255, 255, 0.4) center no-repeat;
+    background-size: 50%;
+    filter: invert(1);
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.user-img-container[data-img="true"] {
+    cursor: pointer;
+}
+
 /* DIALOG */
 dialog {
     user-select: none;
@@ -443,7 +502,19 @@ dialog {
 
 @media (max-width: 800px) {
     h1 {
-        font-size: 40px;
+        font-size: 2.9375rem;
+    }
+
+    h2 {
+        font-size: 2.9375rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+    }
+
+    .txt-normal {
+        font-size: .875rem;
     }
 
     .btn {

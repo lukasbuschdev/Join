@@ -49,10 +49,9 @@ class User extends Account {
     }
 
     verify = async () => {
-        await REMOTE_removeData(`verification/${this.userData.id}`)
-        log(this.userData)
+        await REMOTE_removeData(`verification/${this.userData.id}`);
         await this.#update();
-        goTo(`../init/create_account.html?uid=${this.userData.id}`)
+        goTo(`../init/create_account.html?uid=${this.userData.id}`);
     }
 
     setCredentials = () => {
@@ -65,6 +64,7 @@ class User extends Account {
     }
 
     logIn = async () => {
+        log('abcde')
         this.loggedIn = 'true';
         this.setCredentials();
         await this.#update();

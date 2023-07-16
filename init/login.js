@@ -7,13 +7,9 @@ const logIn = async () => {
     const { userData } = user;
     throwErrors(
         { identifier: 'invalid-email-or-username', bool: userData == undefined },
-        { identifier: 'wrong-password', bool: userData?.password || password !== password },
+        { identifier: 'wrong-password', bool: (!(userData?.password == password)) || false },
         );
     if(userData == undefined) return;
-    if(userData.password !== password) {
-        log('wrong password!');
-        return;
-    };
     user.rememberMe();
     user.logIn();
 }
@@ -21,7 +17,6 @@ const logIn = async () => {
 const rememberLoginDetails = () => {
     if (LOCAL_getItem('remember-me') !== null) {
         const { email, password } = LOCAL_getItem('remember-me');
-        // LOCAL_setItem('user', { email, password });
         $('#email input').value = email;
         $('#password input').value = password;
         $('#remember-me').checked = true;

@@ -1,7 +1,6 @@
 const initVerifyAccount = () => {
     LANG_load();
     initTimer();
-    // redirect();
     checkEmailVerification();
 }
 
@@ -10,13 +9,6 @@ const checkEmailVerification = async () => {
     const { verifyCode: { code } } = await REMOTE_getData(`verification/${uid}`)
     if (new URLSearchParams(location.search).get('token') !== code) return;
     fillCodeInputs(code);
-}
-
-const redirect = () => {
-    const searchParams = new URLSearchParams(document.location.search);
-    const newUserdata = LOCAL_getData('user');
-    const id = (newUserdata !== null) ? newUserdata.id : false;
-    if (searchParams.get('uid') == null || newUserdata == false || !(searchParams.get('uid') == id)) goTo(`./init.html?redirect`)
 }
 
 const initTimer = async () => {

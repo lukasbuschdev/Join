@@ -1,7 +1,7 @@
 const initCreateAccount = async () => {
-    const uid = currentUserId();
-    const { name } = await REMOTE_getData(`users/${uid}`);
-    $('.picture-container h1').innerText = name.slice(0, 2).toUpperCase();
+    const { name } = await getCurrentUserData();
+    $('.user-img-container h1').innerText = name.slice(0, 2).toUpperCase();
+    $('#user-name').innerText = name;
 }
 
 const submitUpload = async () => {
@@ -18,8 +18,8 @@ const submitUpload = async () => {
         body: formData
     })).json();
 
-    $('#user-img').src = imageSrc;
-    $('.picture-container').dataset.img = 'true';
+    $('.user-img').src = imageSrc;
+    $('.user-img-container').dataset.img = 'true';
 
     REMOTE_setData(`users/${uid}`, {img: imageSrc});
 }
@@ -43,7 +43,7 @@ const removeUpload = async () => {
 
 const finishSetup = async () => {
     event.preventDefault();
-    const userData = await REMOTE_getData(`users/${currentUserId()}`);
+    const userData = await getCurrentUserData();
     const user = new User(userData);
     user.logIn();
 }
