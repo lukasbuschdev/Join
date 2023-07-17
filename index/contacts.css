@@ -48,6 +48,7 @@
 
 #contacts-container .user-img-container {
     height: 40px;
+    flex-shrink: 0;
 }
 
 .header-contact .user-img-container {

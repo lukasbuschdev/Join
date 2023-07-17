@@ -404,6 +404,7 @@ h4 {
     outline: var(--outline-thickness) solid var(--user-clr);
     position: relative;
     overflow: hidden;
+    aspect-ratio: 1;
 }
 
 .user-img-container > * {

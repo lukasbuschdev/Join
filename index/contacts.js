@@ -43,18 +43,33 @@ const contactListTemplate = ({img, name, email, id, color}) => {
 }
 
 function addContactModal() {
-    $('#add-contact-modal').openModal();
+    const modal = $('#add-contact-modal');
+    clearInput();
+    clearResult();
+    modal.openModal();
 }
 
 function closeAddContact() {
     $('#add-contact-modal').closeModal();
 }
 
+function clearInput(){
+    let input = $("#input-name");
+      if (input.value !="") {
+          input.value = "";
+      }
+}
+
+function clearResult() {
+    $('#user-search-result').innerHTML = '';
+    unsetSearchResultStyle();
+}
+
 const getInput = debounce(async function () {
     let input = $('#input-name');
     const userId = currentUserId();
 
-    if(input.value.length >= 3) {
+    if(input.value.length >= 2) {
         const allUsers = await REMOTE_getData('users');
     
         const filteredUsers = Object.values(allUsers).filter(
@@ -71,23 +86,28 @@ const getInput = debounce(async function () {
             }
         );
     
-        // console.log(sortedUsers);
-    
+        // $('#user-search-result').innerHTML = '';
         renderSearchResults(sortedUsers);
-        $('#input-name').style.borderRadius = '10px 10px 0 0';
-        $('#input-name').style.borderBottomStyle = 'none';
-        $('#user-search-result').style.border = '1px solid #d1d1d1';
-        $('#user-search-result').style.borderTopStyle = 'none';
+        setSearchResultStyle();
 
     } else {
-        $('#user-search-result').innerHTML = '';
-        $('#user-search-result').style.border = 'none';
-        $('#input-name').style.borderRadius = '10px 10px 10px 10px';
-        $('#input-name').style.border = '1px solid #d1d1d1';
-
+        unsetSearchResultStyle();
     }
-
 }, 200);
+
+function setSearchResultStyle() {
+    $('#input-name').style.borderRadius = '10px 10px 0 0';
+    $('#input-name').style.borderBottomStyle = 'none';
+    $('#user-search-result').style.border = '1px solid #d1d1d1';
+    $('#user-search-result').style.borderTopStyle = 'none';
+}
+
+function unsetSearchResultStyle() {
+    $('#user-search-result').innerHTML = '';
+    $('#user-search-result').style.border = 'none';
+    $('#input-name').style.borderRadius = '10px 10px 10px 10px';
+    $('#input-name').style.border = '1px solid #d1d1d1';
+}
 
 async function selectContact(id) {
     let userData = await getContactsData();
@@ -142,42 +162,46 @@ function selectedContactTemplate({img, name, email, phone, color}) {
 function renderSearchResults(sortedUsers) {
     const searchResultsContainer = $('#user-search-result');
     searchResultsContainer.innerHTML = searchResultTemplates(sortedUsers);
-
-    // if(sortedUsers.id == sortedUsers.id) {
-
-    // }
-
 }
 
 function searchResultTemplates([{id, img, name, email}]) {
 
-    if(id === id) {
-        return;
-    } else {
+    // if(id === id) {
+    //     return;
+    // } else {
         return /*html*/`
-            <div class="search-result-contact row" id="${id}" onclick="addContact(${id})">
-                <div class="contact-img">
+            <div class="search-result-contact row" id="search-result-contact" onclick="selectNewContact(${img} ${name})">
+                <div class="contact-img user-img-container">
                     <img src="${img}">
                 </div>
                 <span class="txt-normal result-name-email">${name}</span>
                 <span class="txt-normal result-name-email mail-clr">${email}</span>
             </div>   
         `;
-    }
+    // }
+}
+
+// function selectNewContact(img, name) {
+//     let image = $('.user-img-gray');
+//     let input = $('#input-name');
+    
+//     image.src = img;
+//     input.value = name;
+// }
+
+function selectNewContact(img, name) {
+    let image = $('.user-img-gray');
+    let input = $('#input-name');
+    
+    image.attr('src', img);
+    input.val(name);
 }
 
 
+// async function selectNewContact(img, name) {
+//     let userData = await getContactsData();
 
-
-// SEARCH BAR SECTION
-// $('#input-name').onfocus = setSearchBarAnimation();
-// $('#input-name').onblur = unsetSearchBarAnimation();
-
-// function setSearchBarAnimation() {
-//     log('aaa')
-//     $('#user-search-result-active').style.height = '100%'; 
-// }
-
-// function unsetSearchBarAnimation() {
-//     $('#user-search-result').style.height = '0px'; 
+//     let selectedContact = userData.find(user => user.id == id);
+//     // log(selectedContact)
+//     renderSelectedContact(selectedContact);
 // }
