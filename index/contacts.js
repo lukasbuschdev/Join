@@ -86,7 +86,6 @@ const getInput = debounce(async function () {
             }
         );
     
-        // $('#user-search-result').innerHTML = '';
         renderSearchResults(sortedUsers);
         setSearchResultStyle();
 
@@ -113,7 +112,6 @@ async function selectContact(id) {
     let userData = await getContactsData();
 
     let selectedContact = userData.find(user => user.id == id);
-    // log(selectedContact)
     renderSelectedContact(selectedContact);
 }
 
@@ -161,16 +159,18 @@ function selectedContactTemplate({img, name, email, phone, color}) {
 
 function renderSearchResults(sortedUsers) {
     const searchResultsContainer = $('#user-search-result');
-    searchResultsContainer.innerHTML = searchResultTemplates(sortedUsers);
+    searchResultsContainer.innerHTML = '';
+    // log(sortedUsers)
+
+    for(let i = 0; i < sortedUsers.length; i++) {
+        const user = sortedUsers[i];
+        searchResultsContainer.innerHTML += searchResultTemplates(user);
+    }
 }
 
-function searchResultTemplates([{id, img, name, email}]) {
-
-    // if(id === id) {
-    //     return;
-    // } else {
+function searchResultTemplates({id, img, name, email}) {
         return /*html*/`
-            <div class="search-result-contact row" id="search-result-contact" onclick="selectNewContact(${img} ${name})">
+            <div class="search-result-contact row" id="search-result-contact" onclick="selectNewContact('${id}', '${img}', '${name}')">
                 <div class="contact-img user-img-container">
                     <img src="${img}">
                 </div>
@@ -178,30 +178,33 @@ function searchResultTemplates([{id, img, name, email}]) {
                 <span class="txt-normal result-name-email mail-clr">${email}</span>
             </div>   
         `;
-    // }
 }
 
-// function selectNewContact(img, name) {
+function selectNewContact(id, img, name) {
+    console.log(id, name);
+    let image = $('.user-img-gray');
+    let input = $('#input-name');
+    let userImgContainer = image.previousElementSibling;
+
+    userImgContainer.innerHTML = name.slice(0, 2).toUpperCase();
+    image.src = img;
+    input.value = name;
+}
+
+// function selectNewContact(id, img, name) {
+//     console.log(id, name);
 //     let image = $('.user-img-gray');
 //     let input = $('#input-name');
     
-//     image.src = img;
-//     input.value = name;
+//     image.attr('src', img);
+//     input.val(name);
 // }
 
-function selectNewContact(img, name) {
-    let image = $('.user-img-gray');
-    let input = $('#input-name');
-    
-    image.attr('src', img);
-    input.val(name);
-}
 
-
-// async function selectNewContact(img, name) {
+// async function selectNewContact(id) {
 //     let userData = await getContactsData();
 
 //     let selectedContact = userData.find(user => user.id == id);
-//     // log(selectedContact)
-//     renderSelectedContact(selectedContact);
+//     log(selectedContact)
+//     // renderSelectedContact(selectedContact);
 // }

@@ -394,7 +394,7 @@ h4 {
 
 .user-img-container {
     --outline-thickness: 2px;
-    --user-clr: var(--clr-dark);
+    --user-clr: var(--clr-placeholder);
     --text-clr: white;
     background-color: var(--user-clr);
     border-radius: 999px;
