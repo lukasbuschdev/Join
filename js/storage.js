@@ -195,7 +195,7 @@ const loadUserData = async () => {
 }
 
 const setUserColor = (color) => {
-    $('.user-img-container').style.setProperty('--user-clr', color ?? 'var(--clr-dark)');
+    if (color) $('.user-img-container').style.setProperty('--user-clr', color);
 }
 
 const setUserImg = (img, name) => {

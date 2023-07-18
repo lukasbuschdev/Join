@@ -3,6 +3,7 @@ const init = async () => {
     //     input => input.addEventListener('focus', automaticLogin)
     // )
     isSessionExpired();
+    getIp();
 }
 
 const isSessionExpired = () => {

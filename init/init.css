@@ -105,31 +105,31 @@ form {
     gap: 30px;
 }
 
-form .inp-wrapper {
+.inp-wrapper {
     min-width: fit-content;
     max-width: 422px;
     width: 100%;
 }
 
-form .inp-container {
+.inp-container {
     padding: 13px 21px;
     border: 1px solid var(--clr-placeholder);
     display: flex;
     justify-content: space-between;
 }
 
-form .inp-container > div,
-form .inp-container > button {
+.inp-container > div,
+.inp-container > button {
     width: 35px;
 }
 
-form .inp-container.inp-code {
+.inp-container.inp-code {
     border: unset;
     padding: unset;
     gap: 5px;
 }
 
-form .inp-container.inp-code input {
+.inp-container.inp-code input {
     height: 70px;
     aspect-ratio: 1;
     border: 1px solid var(--clr-placeholder);
@@ -138,13 +138,13 @@ form .inp-container.inp-code input {
     color: var(--clr-active);
 }
 
-form input {
+input {
     width: 100%;
     height: 100%;
     cursor: pointer;
 }
 
-form .error {
+.error {
     width: 100%;
     padding: 0 21px;
     font-size: 16px;
@@ -155,13 +155,13 @@ form .error {
     transition: 100ms;
 }
 
-form .error.active {
+.error.active {
     margin-top: 10px;
     grid-template-rows: 1fr;
     opacity: 1;
 }
 
-form .error > span {
+.error > span {
     overflow: hidden;
 }
 

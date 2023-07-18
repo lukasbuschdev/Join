@@ -4,6 +4,7 @@
     "title-verify-account": "Join - Konto bestätigen",
     "title-forgot-password": "Join - Passwort vergessen",
     "title-reset-password": "Join - Passwort zurücksetzen",
+    "title-create-account": "Join - Profil",
 
     "email-or-username": "Email oder Benutzername",
     "email": "Email",
@@ -38,7 +39,7 @@
     "new-code": "neuer Code",
     "confirm": "Bestätigen",
 
-    "create-account": "Konto erstellen",
+    "create-account": "Bearbeite dein Profil",
     "finish-setup": "Abschließen",
     "choose-image": "Bild hochladen",
     "choose-image-info": "Lade ein Bild von dir hoch (optional)",

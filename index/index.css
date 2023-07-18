@@ -92,34 +92,6 @@ header .user-img-container img[src="../assets/img/icons/user_img_gray.svg"] {
     --outline-thickness: 0px;
 }
 
-/* .user-image {
-    --user-bg: var(--clr-dark);
-    height: 49px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    outline: 3px solid var(--clr-active);
-    overflow: hidden;
-    position: relative;
-    text-align: center;
-    font-size: 1.4rem;
-    font-weight: 500;
-    color: white;
-    background-color: var(--user-bg);
-}
-
-.user-image::after {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    content: '';
-    box-shadow: inset 0 0 0 2px white;
-}
-
-.user-image img {
-    object-fit: cover;
-    height: 100%;
-} */
-
 @media (max-width: 800px) {
     body {
         grid-template-columns: 1fr;

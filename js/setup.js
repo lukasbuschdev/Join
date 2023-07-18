@@ -1,4 +1,4 @@
-const currentDirectory = () => location.pathname.split('/').at(-1).split('.')[0];
+const currentDirectory = () => location.pathname.split('/').filter(i=>i !== "").at(-1).split('.')[0];
 const currentUserId = () => (searchParams().get('uid') == null) ? undefined : `${searchParams().get('uid')}`;
 
 
@@ -58,6 +58,7 @@ const initInactivity = () => {
 
 // redirect();
 initMenus();
+LANG_load();
 REMOTE_clearVerifications();
 if (currentDirectory() == "index") {
     const uid = currentUserId();

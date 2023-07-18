@@ -2,10 +2,16 @@ class User extends Account {
     constructor(userData){
         super(userData);
         this.userData.password = userData.password;
+        this.userData.color = userData.color ?? "";
     }
 
     setPicture = (img) => { // TODO
         this.userData.img = img;
+        this.#update();
+    }
+
+    setColor = (color) => {
+        this.userData.color = color;
         this.#update();
     }
 
@@ -88,7 +94,7 @@ class User extends Account {
           code += charSet[(Math.floor(Math.random() * charSet.length))];
         }
         this.verifyCode = { code, expires: Date.now() + 5 * 1000 * 60 };
-      }
+    }
 
     codeExpired = () => this.verifyCode.expires < Date.now(); 
 }

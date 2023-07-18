@@ -1,10 +1,102 @@
-.user-img-container {
-    width: 9rem;
+.card .user-img-container {
     height: 9rem;
-    margin: 50px 0;
     --outline-thickness: 3px;
+    position: relative;
+    overflow: unset;
+}
+
+:is(label[for="choose-image"], #user-color):hover {
+    opacity: 1;
 }
 
 #user-name {
     font-size: 3rem;
+}
+
+label[for="choose-image"],
+#user-color,
+#accept-user-color {
+    --width: 35px;
+    position: absolute;
+    z-index: 2;
+    width: var(--width);
+    aspect-ratio: 1;
+    border-radius: 9999px;
+    cursor: pointer;
+    box-shadow: 0 0px 8px 0 rgba(0 0 0 / 25%);
+    background: var(--clr-blue) no-repeat center;
+    transition: var(--transition-fast);
+}
+
+label[for="choose-image"] {
+    background-image: url(../assets/img/icons/edit.svg);
+    inset: auto 0 0 auto;
+}
+
+label[for="choose-image"]:hover {
+    background-color: var(--clr-dark);
+}
+
+label[for="choose-image"].border:hover {
+    border: 1px solid white;
+}
+
+#user-color {
+    background-image: url(../assets/img/icons/color_wheel.svg);
+    background-size: 100% 100%;
+    transition-property: filter;
+    inset: 0 0 auto auto;
+}
+
+#user-color:not(.active):not(:hover) {
+    filter: grayscale(.5);
+}
+
+#accept-user-color {
+    background-image: url(../assets/img/icons/check.svg);
+    display: none;
+}
+
+#user-color.active {
+    background: url(../assets/img/icons/btn_cancel_white.svg) var(--clr-blue) no-repeat center;
+    background-size: 50%;
+    transition-property: background-color;
+}
+
+#user-color.active:hover {
+    background-color: var(--clr-dark);
+}
+
+#user-color.active + #accept-user-color.active {
+    display: unset;
+    inset: auto 0 0 auto;
+}
+
+#user-color.active + #accept-user-color:hover {
+    background-color: var(--clr-dark);
+}
+
+#color-wheel {
+    position: absolute;
+    inset: 2px;
+    border-radius: inherit;
+    cursor: pointer;
+    z-index: 1;
+}
+
+#color-cursor {
+    position: absolute;
+    content: '';
+    width: 20px;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    border: 2px solid white;
+    top: calc(calc(var(--y) * 1px) - 10px);
+    left: calc(calc(var(--x) * 1px) - 10px);
+    pointer-events: none;
+}
+
+.card > .column {
+    align-items: center;
+    margin-top: 20px;
 }
