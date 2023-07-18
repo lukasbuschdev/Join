@@ -36,7 +36,10 @@
 
 
                 <div class="search-result-container row gap-25">
-                    <img class="user-img-gray" src="../assets/img/icons/user_img_gray.svg">
+                    <div class="user-img-container" data-img="false">
+                        <h3></h3>
+                        <img class="user-img-gray" src="../assets/img/icons/user_img_gray.svg">
+                    </div>
                     <div class="search-contact column">
                         <input id="input-name" type="text" oninput="getInput()" class="txt-normal" placeholder="Search names..." autocomplete="off">
                         <div id="user-search-result" class="user-search-result column gap-15"></div>
@@ -52,7 +55,7 @@
 
                 <div class="add-contact-btns row gap-15">
                     <button class="btn btn-secondary btn-cancel txt-normal">
-                        <span data-lang="btn-cancel">Cancel</span>
+                        <span data-lang="btn-cancel" onclick="closeAddContact()">Cancel</span>
                     </button>
 
                     <button class="btn btn-primary btn-check txt-normal txt-700">

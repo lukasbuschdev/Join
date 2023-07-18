@@ -256,6 +256,15 @@
     height: 100%;
 }
 
+.search-result-container > .user-img-container {
+    width: 120px;
+}
+
+.search-result-container > .user-img-container:has( > img[src="../assets/img/icons/user_img_gray.svg"]) {
+    --outline-thickness: 0;
+    --user-clr: 'unset';
+}
+
 .search-contact {
     justify-content: center;
     height: 100%;
@@ -306,11 +315,6 @@
     top: 26px;
     right: 40px;
     cursor: pointer;
-}
-
-.user-img-gray {
-    height: 120px;
-    width: 120px;
 }
 
 .add-contact-field input {
