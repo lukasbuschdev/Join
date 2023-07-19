@@ -36,13 +36,11 @@ const validPhone = (phoneInput) => /^(?!00)0?\d{3}\s?(?!.*[\s])\d+/.test(phoneIn
 const goToLogin = async () => {
     $('[include-template]').setAttribute('include-template', '../assets/templates/init/login_template.html');
     await includeTemplates();
-    LANG_load();
 }
 
 const goToSignup = async () => {
     $('[include-template]').setAttribute('include-template', '../assets/templates/init/signup_template.html');
     await includeTemplates();
-    LANG_load();
 }
 
 const togglePasswordVisibility = () => {
@@ -54,5 +52,11 @@ const togglePasswordVisibility = () => {
 }
 
 const throwErrors = (...params) => {
-    params.forEach(({identifier, bool}) => $(`#${identifier}`).classList.toggle('active', bool));
+    params.forEach(({identifier, bool}) => {
+        const errorContainer = $(`#${identifier}`);
+        const inputWrapper = errorContainer.closest('.inp-wrapper').$('.inp-container');
+
+        errorContainer.classList.toggle('active', bool);
+        inputWrapper.classList.toggle('active', bool);
+    });
 }

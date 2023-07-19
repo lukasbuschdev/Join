@@ -49,11 +49,12 @@ const processVerification = async () => {
     // await REMOTE_removeData(`verification/${newUserdata.id}`);
     const newUser = new User(userData);
     newUser.verify();
+    goTo(`../init/create_account.html?uid=${this.userData.id}`);
 }
 
-const sendNewCode = () => {
+const sendNewCode = async () => {
     event.preventDefault();
-    const userData = LOCAL_getData('user');
+    const { userData } = await REMOTE_getData(`verification/${currentUserId()}`);
     const user = new User(userData);
     user.initVerification();
 }
@@ -77,10 +78,8 @@ const fillCodeInputs = (code) => {
     $$('input').forEach((input, i) => setTimeout(()=>input.value = code[i], 200 * i))
 }
 
-const isLetterOrNumber = (input) => input.length == 1 && /([a-z]|[A-Z]|[0-9])/.test(input)
-
 const pasteCode = () => {
     event.preventDefault();
     const code = event.clipboardData.getData('text');
-    fillCodeInputs(code)
+    fillCodeInputs(code);
 }

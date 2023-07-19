@@ -7,7 +7,9 @@ const forgotPassword = async () => {
 
     const email = $('input').value;
 
-    const emailInUse = await getUser(email) !== false;
-    const validEmail = validEmail(email) == false;
-    throwErrors({ identifier: 'invalid email', bool }, { identifier: 'email-not-found', bool: emailInUse });
+    const user = await getUserByInput(email);
+    const emailValidity = validEmail(email);
+    throwErrors({ identifier: 'invalid-email', bool: !emailValidity });
+    if (!emailValidity) return;
+    throwErrors({ identifier: 'email-not-found', bool: !user });
 }

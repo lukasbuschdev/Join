@@ -55,6 +55,8 @@ const includeTemplates = async () => {
   $$('[include-template]').forEach(
     async (templateContainer) => await includeTemplate(templateContainer)
   );
+  
+  LANG_load();
   return;
 }
 
@@ -232,3 +234,5 @@ const linearGradient = ([...colors], resolutionFactor = 5) => {
 const getIp = async () => {
   return await (await fetch('../php/getIp.php')).text();
 }
+
+const isLetterOrNumber = (input) => input.length == 1 && /([a-z]|[A-Z]|[0-9])/.test(input);

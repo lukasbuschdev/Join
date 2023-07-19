@@ -5,28 +5,24 @@ class User extends Account {
         this.userData.color = userData.color ?? "";
     }
 
-    setPicture = (img) => { // TODO
-        this.userData.img = img;
+    setProperty = (type, data) => {
+        this.userData[type] = data;
         this.#update();
     }
 
-    setColor = (color) => {
-        this.userData.color = color;
-        this.#update();
-    }
+    setPicture = (img) => this.setProperty("img", img);
 
-    setPhoneNumber = (phone) => {
-        this.userData.phone = phone;
-        this.#update();
-    }
+    setColor = (color) => this.setProperty("color", color);
 
-    changePassword = (newPassword) => { // TODO
-        this.userData.password = newPassword;
+    setPhoneNumber = (phone) => this.setProperty("phone", phone);
+
+    resetPassword = (newPassword) => { // TODO
+        this.setProperty("password", newPassword);
     }
 
     initVerification = async () => {
         this.generateVerificationCode();
-        // this.#sendMail("verification");
+        this.#sendMail("verification");
         await REMOTE_setData('verification', {[this.userData.id]: { verifyCode: this.verifyCode, userData: this.userData }});
         goTo(`./verify_account.html?uid=${this.userData.id}`);
     }
@@ -48,7 +44,6 @@ class User extends Account {
     verify = async () => {
         await REMOTE_removeData(`verification/${this.userData.id}`);
         await this.#update();
-        goTo(`../init/create_account.html?uid=${this.userData.id}`);
     }
 
     setCredentials = () => {

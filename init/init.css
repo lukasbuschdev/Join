@@ -116,9 +116,13 @@ form {
     border: 1px solid var(--clr-placeholder);
     display: flex;
     justify-content: space-between;
+    transition: border-color var(--transition-fast);
 }
 
-/* .inp-container > div, */
+.inp-container.active {
+    border-color: var(--clr-orange);
+}
+
 .inp-container > button {
     width: 35px;
 }
@@ -153,14 +157,12 @@ input {
     grid-template-rows: 0fr;
     opacity: 0;
     transition: 100ms;
-    display: none;
 }
 
 .error.active {
     margin-top: 10px;
     grid-template-rows: 1fr;
     opacity: 1;
-    display: block;
 }
 
 .error > span {
