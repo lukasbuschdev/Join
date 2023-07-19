@@ -15,43 +15,34 @@ class User extends Account {
         this.#update();
     }
 
+    setPhoneNumber = (phone) => {
+        this.userData.phone = phone;
+        this.#update();
+    }
+
     changePassword = (newPassword) => { // TODO
         this.userData.password = newPassword;
     }
 
     initVerification = async () => {
         this.generateVerificationCode();
-        // this.#sendVerificationCode();
+        // this.#sendMail("verification");
         await REMOTE_setData('verification', {[this.userData.id]: { verifyCode: this.verifyCode, userData: this.userData }});
         goTo(`./verify_account.html?uid=${this.userData.id}`);
     }
 
-    #sendVerificationCode = async () => {
-        const subject = 'Verify your Account';
-        const message = verificationEmailTemplate(this.userData, this.verifyCode);
-        this.#sendMail(message, subject);
-    }
-
     initPasswordReset = () => {
-        this.#sendPasswordReset();
+        this.#sendMail("passwordReset");
     }
 
-    #sendPasswordReset = () => {
-        const subject = 'Reset your passowrd';
-        const message = forgotPasswordEmailTemplate(this.userData);
-        this.#sendMail(message, subject);
-    }
-
-    #sendMail = async (message, subject) => {
-        const payload = {
-            recipient: this.userData.email,
-            message,
-            subject
-        };
-        return fetch(`../php/mailto.php`, {
-            method: 'POST',
-            body: JSON.stringify(payload)
-        });
+    #sendMail = async (type) => {
+        const mailOptions = {
+            recipient: this.userData,
+            type,
+            langData: await getEmailLanguage(type)
+        }
+        const mail = new Email(mailOptions);
+        log(await mail.send());
     }
 
     verify = async () => {
@@ -70,7 +61,6 @@ class User extends Account {
     }
 
     logIn = async () => {
-        log('abcde')
         this.loggedIn = 'true';
         this.setCredentials();
         await this.#update();
@@ -93,7 +83,7 @@ class User extends Account {
         for (let i = 0; i < 6; i++) {
           code += charSet[(Math.floor(Math.random() * charSet.length))];
         }
-        this.verifyCode = { code, expires: Date.now() + 5 * 1000 * 60 };
+        this.userData.verifyCode = { code, expires: Date.now() + 5 * 1000 * 60 };
     }
 
     codeExpired = () => this.verifyCode.expires < Date.now(); 

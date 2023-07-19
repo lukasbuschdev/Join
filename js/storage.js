@@ -22,6 +22,10 @@ const REMOTE_upload = async (directory, data) => {
         value: JSON.stringify(data),
         token: STORAGE_TOKEN
     };
+
+    // log(data);
+    // return;
+
     return fetch(STORAGE_URL, {
         method: 'POST',
         body: JSON.stringify(payload)
@@ -29,6 +33,7 @@ const REMOTE_upload = async (directory, data) => {
 }
 
 const REMOTE_getData = async (path) => {
+    if (!path) return
     if (!/^(?=[a-zA-Z0-9])(?!.*\/\/)[a-zA-Z0-9\/-]*[a-zA-Z0-9]$/.test(path)) {
         console.error(`'${path}' is not a valid path!`);
         return
@@ -109,6 +114,22 @@ const REMOTE_resetDirectory = async (directoryName) => {
     } else if (prompt) {
         window.alert('Wrong password!');
     }
+}
+
+const REMOTE_updateUsers = async () => {
+    const allUsers = Object.values(await REMOTE_getData('users'));
+
+    let updatedUsersObject = {};
+
+    let updatedUsers = allUsers.map(
+        user => new User(user).userData
+    );
+
+    updatedUsers.for(
+        user => updatedUsersObject[user.id] = user
+    )
+
+    return await REMOTE_upload('users', updatedUsersObject);
 }
 
 // USERDATA

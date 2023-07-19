@@ -6,14 +6,14 @@ const initVerifyAccount = () => {
 
 const checkEmailVerification = async () => {
     const uid = currentUserId();
-    const { verifyCode: { code } } = await REMOTE_getData(`verification/${uid}`)
+    const { verifyCode: { code }} = await REMOTE_getData(`verification/${uid}`)
     if (new URLSearchParams(location.search).get('token') !== code) return;
     fillCodeInputs(code);
 }
 
 const initTimer = async () => {
     const uid = currentUserId();
-    const { verifyCode: { expires } } = await REMOTE_getData(`verification/${uid}`);
+    const { verifyCode: { expires }} = await REMOTE_getData(`verification/${uid}`);
     if (expires == undefined) return;
     const timer = setInterval(()=>{
         const now = Date.now();
@@ -34,7 +34,7 @@ const processVerification = async () => {
     event.preventDefault();
     
     const uid = currentUserId();
-    const { verifyCode: { code, expires }, userData } = await REMOTE_getData(`verification/${uid}`);
+    const { verifyCode: { code, expires }} = await REMOTE_getData(`verification/${uid}`);
     
     const inputCode = [...$$('input')].map(input => input.value).join('');
     

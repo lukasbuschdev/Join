@@ -88,6 +88,7 @@ const HSLToRGB = (h, s, l) => {
 };
 
 function HSLToHex(hsl) {
+  if (!hsl) return;
   const h = Number(hsl.match(/(?<=\()\d+/g)[0]);
   const s = Number(hsl.match(/(?<=,[\s]{0,1})\d+/g)[0]);
   const l = Number(hsl.match(/(?<=,[\s]{0,1})\d+/g)[1]);
@@ -229,6 +230,5 @@ const linearGradient = ([...colors], resolutionFactor = 5) => {
 }
 
 const getIp = async () => {
-  const ip = await (await fetch('../php/getIp.php')).text();
-  log(ip)
+  return await (await fetch('../php/getIp.php')).text();
 }

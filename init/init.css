@@ -118,7 +118,7 @@ form {
     justify-content: space-between;
 }
 
-.inp-container > div,
+/* .inp-container > div, */
 .inp-container > button {
     width: 35px;
 }
@@ -153,12 +153,14 @@ input {
     grid-template-rows: 0fr;
     opacity: 0;
     transition: 100ms;
+    display: none;
 }
 
 .error.active {
     margin-top: 10px;
     grid-template-rows: 1fr;
     opacity: 1;
+    display: block;
 }
 
 .error > span {

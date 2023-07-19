@@ -1,14 +1,9 @@
-const setEmailLanguage = () => {
-    
-}
-
-const verificationEmailTemplate = ({ id, name }, { code }) => {
-
+const verificationEmailTemplate = ({ id, name, verifyCode: { code }}, langData) => {
     return /*html*/`
         <div style="height: 500px; background-color: #F6F7F8; padding: 30px;">
             <img src="https://tarik-uyan.developerakademie.net/Join/assets/img/icons/logo.svg" alt="" style="width: 75px; margin-bottom: 30px;">
-            <h1>Hi, ${name}!</h1>
-            <p style="font-size: 14px;">Please click the button below or use the Code <span style="color: #29ABE2; font-size: 16px; font-weight: 700;">${code}</span> to verify your account.</p>
+            <h1>${langData["message-1"]}${name}!</h1>
+            <p style="font-size: 14px;">${langData["message-2"]}<span style="color: #29ABE2; font-size: 16px; font-weight: 700;">${code}</span>${langData["message-3"]}</p>
             <a
             href="https://tarik-uyan.developerakademie.net/Join/index/verify_account.html?uid=${id}&token=${code}"
             style="
@@ -23,18 +18,17 @@ const verificationEmailTemplate = ({ id, name }, { code }) => {
                 font-weight: 700;
                 text-decoration: none;
                 text-align: center
-            ">Verify</a>
+            ">${langData["message-4"]}</a>
         </div>
         `
 }
 
-const forgotPasswordEmailTemplate = ({ id, name }) => {
-
+const resetPasswordEmailTemplate = ({ id, name }, langData) => {
     return /*html*/`
         <div style="height: 500px; background-color: #F6F7F8; padding: 30px;">
             <img src="https://tarik-uyan.developerakademie.net/Join/assets/img/icons/logo.svg" alt="" style="width: 75px; margin-bottom: 30px;">
-            <h1>Hi, ${name}!</h1>
-            <p style="font-size: 14px;">A Request has been sent to change the password for your Join account.</p>
+            <h1>${langData["message-1"]}${name}!</h1>
+            <p style="font-size: 14px;">${langData["message-2"]}</p>
             <a
             href="https://tarik-uyan.developerakademie.net/Join/index/forgot_password.html?uid=${id}"
             style="
@@ -49,8 +43,8 @@ const forgotPasswordEmailTemplate = ({ id, name }) => {
                 font-weight: 700;
                 text-decoration: none;
                 text-align: center
-            ">Reset Password</a>
-            <p style="font-size: 12px;">If this wasn't you, please contact us immediately under <a href="" mailto="musician.tarik@gmx.de">musician.tarik@gmx.de</a></p>
+            ">${langData["message-3"]}</a>
+            <p style="font-size: 12px;">${langData["message-4"]}<a href="" mailto="noreply.info.join@gmail.com">noreply.info.join@gmail.com</a></p>
         </div>
     `
 }

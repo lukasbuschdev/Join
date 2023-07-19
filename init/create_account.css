@@ -3,6 +3,7 @@
     --outline-thickness: 3px;
     position: relative;
     overflow: unset;
+    --user-clr: var(--clr-dark);
 }
 
 :is(label[for="choose-image"], #user-color):hover {
@@ -46,6 +47,10 @@ label[for="choose-image"].border:hover {
     background-size: 100% 100%;
     transition-property: filter;
     inset: 0 0 auto auto;
+}
+
+#phone .drp-wrapper {
+    border: unset;
 }
 
 #user-color:not(.active):not(:hover) {

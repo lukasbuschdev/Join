@@ -3,7 +3,6 @@ const init = async () => {
     //     input => input.addEventListener('focus', automaticLogin)
     // )
     isSessionExpired();
-    getIp();
 }
 
 const isSessionExpired = () => {
@@ -31,6 +30,8 @@ const validPassword = (passwordInput) => {
     const passwordRegex = new RegExp(/^(?=.{8,}$)(?=.*?[0-9])(?=.*?[a-z])(?=.*?[A-Z]).+/, "g"); // at least one lowercase and one uppercase letter and one digit
     return passwordRegex.test(passwordInput);
 }
+
+const validPhone = (phoneInput) => /^(?!00)0?\d{3}\s?(?!.*[\s])\d+/.test(phoneInput);
 
 const goToLogin = async () => {
     $('[include-template]').setAttribute('include-template', '../assets/templates/init/login_template.html');
