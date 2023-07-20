@@ -9,7 +9,14 @@ const forgotPassword = async () => {
 
     const user = await getUserByInput(email);
     const emailValidity = validEmail(email);
+
     throwErrors({ identifier: 'invalid-email', bool: !emailValidity });
     if (!emailValidity) return;
+
     throwErrors({ identifier: 'email-not-found', bool: !user });
+    if (!user) return;
+
+    await notification("email-sent");
+    log(await user.forgotPassword());
+    goTo('./init.html')
 }

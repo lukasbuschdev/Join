@@ -12,15 +12,15 @@
                 </div>
             </div>
             <div class="error" id="invalid-email-or-username">
-                <span data-lang="email-not-found">Email or username not found!</span>
+                <span data-lang="email-or-username-not-found">Email or username not found!</span>
             </div>
         </div>
 
         <div class="inp-wrapper" id="password">
             <div class="inp-container radius-10">
                 <input type="password" required name="" class="txt-normal" placeholder="Password" data-lang-placeholder="password">
-                <button class="grid-center" onclick="togglePasswordVisibility()">
-                    <img src="../assets/img/icons/hide.png" id="eye">
+                <button class="grid-center" onclick="togglePasswordVisibility()" tabindex="-1">
+                    <img src="../assets/img/icons/hide.png" class="eye">
                 </button>
             </div>
             <div class="error" id="wrong-password">

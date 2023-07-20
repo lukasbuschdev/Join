@@ -8,12 +8,12 @@ const init = async () => {
 const isSessionExpired = () => {
     const a = new URLSearchParams(document.location.search);
     if (a.has('expired')){
-        document.addEventListener("visibilitychange", ()=>{
-            log('aaa')
+        document.addEventListener("visibilitychange", visibilityHander = () => {
             if (document.visibilityState == 'visible') {
-                $('#expired-notification').openModal();
+                notification("automatic-signout");
+                document.removeEventListener("visibilitychange", visibilityHander);
             }
-        }, { once: true });
+        });
     }
 }
 
@@ -22,7 +22,7 @@ function loadContent(template) {
     $('#content').includeTemplate(url);
 }
 
-const validName = (nameInput) => /^(?=.{5,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])$/.test(nameInput);
+const validName = (nameInput) => /^(?=.{4,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])$/.test(nameInput);
 
 const validEmail = (emailInput) => /^(?=[a-zA-Z0-9])(?!.*[^a-zA-Z0-9]{2})[a-zA-Z0-9_!#$%&'*+\/=?`{|}~^.-]{0,63}[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9.-]*\.\w{2,3}$/.test(emailInput);
 
@@ -45,8 +45,8 @@ const goToSignup = async () => {
 
 const togglePasswordVisibility = () => {
     event.preventDefault();
-    const passwordInput = $('#password input');
-    const eye = $('#eye');
+    const passwordInput = event.currentTarget.previousElementSibling;
+    const eye = event.currentTarget.children[0];
     passwordInput.type == 'password' ? passwordInput.type = 'text' : passwordInput.type = 'password';
     eye.src = eye.src.includes('show.png') ? '../assets/img/icons/hide.png' : '../assets/img/icons/show.png';
 }

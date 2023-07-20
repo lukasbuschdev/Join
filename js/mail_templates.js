@@ -5,7 +5,7 @@ const verificationEmailTemplate = ({ id, name, verifyCode: { code }}, langData) 
             <h1>${langData["message-1"]}${name}!</h1>
             <p style="font-size: 14px;">${langData["message-2"]}<span style="color: #29ABE2; font-size: 16px; font-weight: 700;">${code}</span>${langData["message-3"]}</p>
             <a
-            href="https://tarik-uyan.developerakademie.net/Join/index/verify_account.html?uid=${id}&token=${code}"
+            href="https://tarik-uyan.developerakademie.net/Join/init/verify_account.html?uid=${id}&token=${code}"
             style="
                 background-color: rgb(42,54,71);
                 display: block;
@@ -30,15 +30,15 @@ const resetPasswordEmailTemplate = ({ id, name }, langData) => {
             <h1>${langData["message-1"]}${name}!</h1>
             <p style="font-size: 14px;">${langData["message-2"]}</p>
             <a
-            href="https://tarik-uyan.developerakademie.net/Join/index/forgot_password.html?uid=${id}"
+            href="https://tarik-uyan.developerakademie.net/Join/init/reset_password.html?uid=${id}"
             style="
                 background-color: rgb(42,54,71);
                 display: block;
-                padding: 10px 20px;
+                padding: 10px 10px;
                 margin-top: 30px;
-                margin-bottom: 30px;
                 border-radius: 10px;
                 color: white;
+                width: 145px;
                 font-size: 21px;
                 font-weight: 700;
                 text-decoration: none;

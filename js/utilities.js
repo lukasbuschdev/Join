@@ -25,6 +25,26 @@ const addNavToggleBtns = () => {
   );
 };
 
+const notification = async (message) => {
+  await new Promise(resolve => {
+    const el = document.createElement('dialog');
+    $('body').append(el);
+
+    el.outerHTML = /*html*/`
+        <dialog type="modal" class="dlg-notification">
+            <div class="notification grid-center">
+                <span data-lang="${message}"></span>
+            </div>
+        </dialog>
+    `
+    LANG_load();
+    $('.dlg-notification').openModal();
+    $('.dlg-notification').addEventListener("close", () => {
+      resolve();
+    });
+  });
+}
+
 const debounce = (cb, delay = 1000) => {
   let timeout;
 

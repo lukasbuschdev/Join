@@ -3,7 +3,7 @@
         <img src="../assets/img/icons/back_arrow.svg" alt="">
     </button>
     <div class="header-container">
-        <h1 class="txt-center" data-lang="sign-up"></h1>
+        <h2 class="txt-center" data-lang="sign-up"></h2>
     </div>
     <form novalidate>
         <div class="inp-wrapper" id="name">
@@ -37,8 +37,8 @@
         <div class="inp-wrapper" id="password">
             <div class="inp-container radius-10">
                 <input type="password" name="" class="txt-normal" placeholder="Password" data-lang-placeholder="password" autocomplete="new-password">
-                <button class="grid-center" onclick="togglePasswordVisibility()">
-                    <img src="../assets/img/icons/hide.png" id="eye">
+                <button class="grid-center" onclick="togglePasswordVisibility()" tabindex="-1">
+                    <img src="../assets/img/icons/hide.png" class="eye">
                 </button>
             </div>
             <div class="error" id="invalid-password">
@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="btn-container">
-            <button type="submit" class="btn btn-primary btn-check txt-700" id="login" onclick="signupInit()" data-lang="sign-up"></button>
+            <button type="submit" class="btn btn-primary btn-check txt-700" style="width: 180px;" id="login" onclick="signupInit()" data-lang="sign-up"></button>
         </div>
     </form>
 </div>

@@ -5,19 +5,19 @@ class User extends Account {
         this.userData.color = userData.color ?? "";
     }
 
-    setProperty = (type, data) => {
+    setProperty = async (type, data) => {
         this.userData[type] = data;
-        this.#update();
+        return this.#update();
     }
 
-    setPicture = (img) => this.setProperty("img", img);
+    setPicture = async (img) => await this.setProperty("img", img);
 
-    setColor = (color) => this.setProperty("color", color);
+    setColor = async (color) => await this.setProperty("color", color);
 
-    setPhoneNumber = (phone) => this.setProperty("phone", phone);
+    setPhoneNumber = async (phone) => await this.setProperty("phone", phone);
 
-    resetPassword = (newPassword) => { // TODO
-        this.setProperty("password", newPassword);
+    resetPassword = async (newPassword = '') => { // TODO
+        return this.setProperty("password", newPassword);
     }
 
     initVerification = async () => {
@@ -38,12 +38,16 @@ class User extends Account {
             langData: await getEmailLanguage(type)
         }
         const mail = new Email(mailOptions);
-        log(await mail.send());
+        return await mail.send();
     }
 
     verify = async () => {
         await REMOTE_removeData(`verification/${this.userData.id}`);
         await this.#update();
+    }
+
+    forgotPassword = async () => {
+        return await this.#sendMail("passwordReset");
     }
 
     setCredentials = () => {
@@ -69,7 +73,7 @@ class User extends Account {
     }
 
     #update = async () => {
-        return REMOTE_setData('users', {[this.userData.id]: this.userData});
+        return await REMOTE_setData('users', {[this.userData.id]: this.userData});
     }
 
     generateVerificationCode = () => {
