@@ -138,7 +138,7 @@ function selectedContactTemplate({img, name, email, phone, color}) {
 
             <div class="column contact-name">
                 <span>${name}</span>
-                <button data-lang="add-task" class="row">Add Task</button>
+                <button data-lang="add-task" class="row" onclick="addTaskModal()">Add Task</button>
             </div>
         </div>
 
@@ -197,18 +197,4 @@ function selectNewContact(id, img, name) {
     input.value = name;
     const selectedContact = id;
     console.log(selectedContact);
-}
-
-function addOpenTaskModal() {
-    let modalContainer = $('');
-
-    modalContainer.innerHTML = renderAddTaskModal();
-}
-
-function renderAddTaskModal() {
-    return `
-        <dialog id="add-task-modal" type="modal">
-            <div include-template="../assets/templates/index/add-task_template.html"></div>
-        </dialog>
-    `;
 }
