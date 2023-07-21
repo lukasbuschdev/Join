@@ -144,19 +144,6 @@ span {
 /* MOBILE VERSION MAX.-WIDTH 800px */
 
 @media(max-width: 800px) {
-    ::-webkit-scrollbar {
-        width: 10px;
-        background-color: #d1d1d1;
-        border-radius: 999px;
-        margin-left: 20px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        width: 6px;
-        background-color: var(--clr-icon-gray);
-        border-radius: 999px;
-    }
-
     .add-task-rows .inputs {
         gap: 15px;
         flex-direction: column;
