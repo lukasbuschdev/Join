@@ -25,6 +25,26 @@ const addNavToggleBtns = () => {
   );
 };
 
+const notification = async (message) => {
+  await new Promise(resolve => {
+    const el = document.createElement('dialog');
+    $('body').append(el);
+
+    el.outerHTML = /*html*/`
+        <dialog type="modal" class="dlg-notification">
+            <div class="notification grid-center">
+                <span data-lang="${message}"></span>
+            </div>
+        </dialog>
+    `
+    LANG_load();
+    $('.dlg-notification').openModal();
+    $('.dlg-notification').addEventListener("close", () => {
+      resolve();
+    });
+  });
+}
+
 const debounce = (cb, delay = 1000) => {
   let timeout;
 
@@ -55,6 +75,8 @@ const includeTemplates = async () => {
   $$('[include-template]').forEach(
     async (templateContainer) => await includeTemplate(templateContainer)
   );
+  
+  LANG_load();
   return;
 }
 
@@ -88,6 +110,7 @@ const HSLToRGB = (h, s, l) => {
 };
 
 function HSLToHex(hsl) {
+  if (!hsl) return;
   const h = Number(hsl.match(/(?<=\()\d+/g)[0]);
   const s = Number(hsl.match(/(?<=,[\s]{0,1})\d+/g)[0]);
   const l = Number(hsl.match(/(?<=,[\s]{0,1})\d+/g)[1]);
@@ -229,6 +252,7 @@ const linearGradient = ([...colors], resolutionFactor = 5) => {
 }
 
 const getIp = async () => {
-  const ip = await (await fetch('../php/getIp.php')).text();
-  log(ip)
+  return await (await fetch('../php/getIp.php')).text();
 }
+
+const isLetterOrNumber = (input) => input.length == 1 && /([a-z]|[A-Z]|[0-9])/.test(input);

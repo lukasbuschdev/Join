@@ -4,12 +4,13 @@ const logIn = async () => {
     const password = $('#password input').value;
 
     const user = await getUserByInput(emailOrUsername);
-    const { userData } = user;
+    const userData = user?.userData;
+    const passwordValidity = userData?.password == password || undefined;
     throwErrors(
         { identifier: 'invalid-email-or-username', bool: userData == undefined },
-        { identifier: 'wrong-password', bool: (!(userData?.password == password)) || false },
+        { identifier: 'wrong-password', bool: !passwordValidity || false },
         );
-    if(userData == undefined) return;
+    if(!userData || !passwordValidity) return;
     user.rememberMe();
     user.logIn();
 }

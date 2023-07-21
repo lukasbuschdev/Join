@@ -54,8 +54,20 @@
     
                 <p class="txt-normal txt-center" data-lang="choose-image-info"></p>
     
-                <div class="inp-wrapper" id="phone">
-                    <div class="inp-container radius-10">
+                <div class="inp-container radius-10">
+                        <div class="inp-wrapper row" id="phone">
+                            <div class="drp txt-small">
+                                <div class="drp-wrapper">
+                                    <div class="drp-title" onclick="this.toggleDropDown()">+43</div>
+                                    <div class="drp-option-wrapper">
+                                        <div class="drp-contacts">
+                                            <div class="drp-option" onclick="this.toggleActive()">+43</div>
+                                            <div class="drp-option" onclick="this.toggleActive()">+49</div>
+                                        </div>
+                                        <div class="drp-invite" data-lang="assigned-invite">Invite new contact</div>
+                                    </div>
+                                </div>
+                            </div>
                         <input type="tel" required name="" class="txt-normal" placeholder="Phone number (optional)" data-lang-placeholder="phone-number">
                         <div class="grid-center">
                             <img src="../assets/img/icons/phone.svg" alt="">

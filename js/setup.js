@@ -11,16 +11,17 @@ const menuOptionInitator = new MutationObserver(
     mutation => {
         initMenus();
     }
-)
+);
 
-const observerOptions = {
+const mutationObserverOptions = {
     childList: true,
+    subTree: true
 };
 
 const resetMenus = () => {
     menuOptionInitator.disconnect();
     $$('[type = "menu"]').for(menu => {
-            menuOptionInitator.observe(menu, observerOptions)
+            menuOptionInitator.observe(menu, mutationObserverOptions)
         }
     )
 }
@@ -51,17 +52,49 @@ const addInactivityTimer = (minutes = 5) => {
 
 const initInactivity = () => {
     window.addEventListener("visibilitychange", () => {
-        if (document.hidden) addInactivityTimer();
+        if (document.visibilityState == "hidden") addInactivityTimer();
         else clearTimeout(inactivityTimer);
     });
 }
+
+// const renderObserver = new MutationObserver(
+//     mutation => {
+//         if ("user-data" in mutation.target.dataset) {
+
+//         }
+//     }
+// )
+
+const renderUserData = async () => {
+    const { name, img, boards } = await getCurrentUserData();
+    $$('[data-user-data]').for(
+        (userField) => {
+            const dataType = userField.dataset.userData
+            if (dataType == "img") renderImage(userField, img);
+            else if (dataType == "name") renderName(userField, name);
+            else if (dataType == "initials") renderInitials(userField, name);
+            else if (dataType == "boards") renderBoards(userField, boards);
+            // else if (dataType == "tasks") renderTasks(userField, boards.activeBoard.tasks); TBD
+        }
+    );
+}
+
+const renderName = (userField, name) => {
+    userField.innerText = name;
+};
+const renderImage = (userField, img) => {
+    userField.src = img;
+};
+const renderInitials = (userField, name) => {
+    userField.innerText = name.slice(0, 2).toUpperCase();
+};
 
 // redirect();
 initMenus();
 LANG_load();
 REMOTE_clearVerifications();
 if (currentDirectory() == "index") {
-    const uid = currentUserId();
-    loadUserData(uid);
+    // const uid = currentUserId();
+    // loadUserData(uid);
     // initInactivity();
 }

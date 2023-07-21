@@ -18,7 +18,7 @@
     "not-join-user": "Not a Join user?",
     "sign-up": "Sign up",
 
-    "email-not-found": "Email or username not found!",
+    "email-or-username-not-found": "Email or username not found!",
     "wrong-password": "Wrong Password!",
     "invalid-name": "Invalid Name",
     "name-in-use": "Username is already in use!",
@@ -30,6 +30,16 @@
     "i-forgot-password": "I forgot my password",
     "dont-worry": "Don't worry! We will send you an email with the instructions to reset your password.",
     "send-email": "Send email",
+    "email-not-found": "Email unknown!",
+    "email-sent": "An E-Mail has been sent to you",
+
+    "reset-password": "Reset your password",
+    "change-password": "Change your account password",
+    "different-passwords": "Passwords not matching!",
+    "new-password": "New password",
+    "confirm-password": "Confirm password",
+    "continue": "Continue",
+    "password-reset": "Passwort zurückgesetzt",
 
     "verify-account": "Verify your Account",
     "check-inbox": "Please check your inbox and enter the verification code below or click the link in the email",

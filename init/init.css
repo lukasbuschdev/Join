@@ -116,9 +116,13 @@ form {
     border: 1px solid var(--clr-placeholder);
     display: flex;
     justify-content: space-between;
+    transition: border-color var(--transition-fast);
 }
 
-.inp-container > div,
+.inp-container.active {
+    border-color: var(--clr-orange);
+}
+
 .inp-container > button {
     width: 35px;
 }
@@ -165,7 +169,7 @@ input {
     overflow: hidden;
 }
 
-#eye {
+.eye {
     height: 25px;
     object-fit: contain;
 }

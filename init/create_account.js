@@ -45,9 +45,17 @@ const removeUpload = async () => {
 const finishSetup = async () => {
     event.preventDefault();
     const userData = await getCurrentUserData();
+    const phoneInput = $('#phone input').value;
+    const phoneValidity = validPhone(phoneInput);
+    
+    throwErrors({ identifier: 'invalid-phone-number', bool: (phoneInput == true && !phoneValidity) });
+    if (phoneInput !== "" && phoneValidity == false) return
+
     const user = new User(userData);
     const userColor = HSLToHex($('.user-img-container').style.getPropertyValue('--user-clr'));
-    user.setColor(userColor);
+
+    if (userColor) user.setColor(userColor);
+    user.setPhoneNumber(phoneInput);
     // user.logIn();
 }
 
@@ -106,7 +114,6 @@ const addAcceptColor = (userColor, r, g, b) => {
     $('#accept-user-color').addEventListener("click", colorPicker = (event) => {
         event.preventDefault();
         $('.user-img-container').style.setProperty('--user-clr', userColor);
-        $('.user-img-container').style.setProperty('--text-clr', `${(luma(r, g, b) > 200) ? 'var(--clr-dark)' : 'white'}`);
         event.currentTarget.previousElementSibling.click();
     });
 }

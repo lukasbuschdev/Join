@@ -1,5 +1,6 @@
 const init = () => {
     $('nav button.active').click();
+    renderUserData();
 }
 
 const loadContent = async () => {

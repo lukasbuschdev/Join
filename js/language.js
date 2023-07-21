@@ -1,9 +1,8 @@
-const LANG_load = async (lang = LOCAL_getData('lang') ?? navigator.language.slice(0, 2) ?? "en-US") => {
+const currentLang = () => LOCAL_getData('lang') ?? navigator.language.slice(0, 2) ?? "en-US"
 
-    // const directory = location.pathname.split('/')[2]; // !!! ONLINE !!!
-    // const directory = location.pathname.split('/')[1]; // !!! LOCAL SERVER !!!
+const LANG_load = async (lang = currentLang()) => {
 
-    const directory = location.pathname.split('/').at(-2);
+    const directory = location.pathname.split('/').filter(i=>i !== "").at(-2);
     // lang = "de";
     const languages = await (await fetch(`../assets/languages/${directory}/${lang}.json`)).json();
     document.title = languages[$('[data-title]')?.dataset.title];
@@ -21,4 +20,14 @@ const LANG_get = () => LOCAL_getData('lang');
 const LANG_change = (lang) => {
     LANG_set(lang);
     LANG_load();
+}
+
+const getEmailLanguage = async (type) => {
+    if (!type) return;
+    type = type.convert();
+    const data = await (await fetch(`../assets/languages/mail/${currentLang()}.json`)).json();
+    return Object.entries(data).reduce((total, [key, value]) => {
+        if (key.includes(type)) return { ...total, [key.replace(`${type}-`, '')]: value }
+        else return total;
+    }, {});
 }

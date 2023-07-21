@@ -10,6 +10,18 @@ Array.prototype.for = function(cb) {
     }
 }
 
+Array.prototype.toObject = function (keys) {
+    if (keys.length < this.length) {
+        console.error('not enough keys provided!');
+        return;
+    }
+    return this.reduce((total, current, i) => { return {...total, [keys[i]]: current }}, {});
+}
+
+String.prototype.convert = function () {
+    return this.replaceAll(/[A-Z]/g, i => `-${i.toLowerCase()}`);
+}
+
 HTMLElement.prototype.includeTemplate = async function(url = this.getAttribute('include-template') || '') {
     if (!url) return;
     const template = await (await fetch(url)).text();

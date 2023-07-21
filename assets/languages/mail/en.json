@@ -1,0 +1,13 @@
+{
+    "verification-subject": "Verify your Account",
+    "verification-message-1": "Hi, ",
+    "verification-message-2": "Please click the button below or use the Code ",
+    "verification-message-3": " to verify your account.",
+    "verification-message-4": "Verify",
+
+    "password-reset-subject": "Reset your password",
+    "password-reset-message-1": "Hi, ",
+    "password-reset-message-2": "A Request has been sent to change the password for your Join account.",
+    "password-reset-message-3": "Reset Password",
+    "password-reset-message-4": "If this wasn't you, please contact us immediately under "
+}

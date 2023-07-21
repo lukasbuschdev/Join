@@ -5,59 +5,49 @@ class User extends Account {
         this.userData.color = userData.color ?? "";
     }
 
-    setPicture = (img) => { // TODO
-        this.userData.img = img;
-        this.#update();
+    setProperty = async (type, data) => {
+        this.userData[type] = data;
+        return this.#update();
     }
 
-    setColor = (color) => {
-        this.userData.color = color;
-        this.#update();
-    }
+    setPicture = async (img) => await this.setProperty("img", img);
 
-    changePassword = (newPassword) => { // TODO
-        this.userData.password = newPassword;
+    setColor = async (color) => await this.setProperty("color", color);
+
+    setPhoneNumber = async (phone) => await this.setProperty("phone", phone);
+
+    resetPassword = async (newPassword = '') => { // TODO
+        return this.setProperty("password", newPassword);
     }
 
     initVerification = async () => {
         this.generateVerificationCode();
-        // this.#sendVerificationCode();
+        this.#sendMail("verification");
         await REMOTE_setData('verification', {[this.userData.id]: { verifyCode: this.verifyCode, userData: this.userData }});
         goTo(`./verify_account.html?uid=${this.userData.id}`);
     }
 
-    #sendVerificationCode = async () => {
-        const subject = 'Verify your Account';
-        const message = verificationEmailTemplate(this.userData, this.verifyCode);
-        this.#sendMail(message, subject);
-    }
-
     initPasswordReset = () => {
-        this.#sendPasswordReset();
+        this.#sendMail("passwordReset");
     }
 
-    #sendPasswordReset = () => {
-        const subject = 'Reset your passowrd';
-        const message = forgotPasswordEmailTemplate(this.userData);
-        this.#sendMail(message, subject);
-    }
-
-    #sendMail = async (message, subject) => {
-        const payload = {
-            recipient: this.userData.email,
-            message,
-            subject
-        };
-        return fetch(`../php/mailto.php`, {
-            method: 'POST',
-            body: JSON.stringify(payload)
-        });
+    #sendMail = async (type) => {
+        const mailOptions = {
+            recipient: this.userData,
+            type,
+            langData: await getEmailLanguage(type)
+        }
+        const mail = new Email(mailOptions);
+        return await mail.send();
     }
 
     verify = async () => {
         await REMOTE_removeData(`verification/${this.userData.id}`);
         await this.#update();
-        goTo(`../init/create_account.html?uid=${this.userData.id}`);
+    }
+
+    forgotPassword = async () => {
+        return await this.#sendMail("passwordReset");
     }
 
     setCredentials = () => {
@@ -70,7 +60,6 @@ class User extends Account {
     }
 
     logIn = async () => {
-        log('abcde')
         this.loggedIn = 'true';
         this.setCredentials();
         await this.#update();
@@ -84,7 +73,7 @@ class User extends Account {
     }
 
     #update = async () => {
-        return REMOTE_setData('users', {[this.userData.id]: this.userData});
+        return await REMOTE_setData('users', {[this.userData.id]: this.userData});
     }
 
     generateVerificationCode = () => {
@@ -93,7 +82,7 @@ class User extends Account {
         for (let i = 0; i < 6; i++) {
           code += charSet[(Math.floor(Math.random() * charSet.length))];
         }
-        this.verifyCode = { code, expires: Date.now() + 5 * 1000 * 60 };
+        this.userData.verifyCode = { code, expires: Date.now() + 5 * 1000 * 60 };
     }
 
     codeExpired = () => this.verifyCode.expires < Date.now(); 

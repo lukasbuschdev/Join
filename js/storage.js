@@ -22,6 +22,10 @@ const REMOTE_upload = async (directory, data) => {
         value: JSON.stringify(data),
         token: STORAGE_TOKEN
     };
+
+    // log(data);
+    // return;
+
     return fetch(STORAGE_URL, {
         method: 'POST',
         body: JSON.stringify(payload)
@@ -29,6 +33,7 @@ const REMOTE_upload = async (directory, data) => {
 }
 
 const REMOTE_getData = async (path) => {
+    if (!path) return
     if (!/^(?=[a-zA-Z0-9])(?!.*\/\/)[a-zA-Z0-9\/-]*[a-zA-Z0-9]$/.test(path)) {
         console.error(`'${path}' is not a valid path!`);
         return
@@ -111,12 +116,28 @@ const REMOTE_resetDirectory = async (directoryName) => {
     }
 }
 
+const REMOTE_updateUsers = async () => {
+    const allUsers = Object.values(await REMOTE_getData('users'));
+
+    let updatedUsersObject = {};
+
+    let updatedUsers = allUsers.map(
+        user => new User(user).userData
+    );
+
+    updatedUsers.for(
+        user => updatedUsersObject[user.id] = user
+    )
+
+    return await REMOTE_upload('users', updatedUsersObject);
+}
+
 // USERDATA
 
 const getUserByInput = async (input) => {
     const allUsers = await REMOTE_getData('users');
     const [ userData ] = Object.values(allUsers).filter(({ name, email }) => name == input || email == input);
-    return (userData == undefined) ? false : new User(userData);
+    return (userData == undefined) ? undefined : new User(userData);
 }
 
 const getContactsData = async () => {

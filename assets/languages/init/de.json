@@ -18,7 +18,7 @@
     "not-join-user": "Neu bei Join?",
     "sign-up": "Registrieren",
     
-    "email-not-found": "Email oder Benutzer nicht gefunden!",
+    "email-or-username-not-found": "Email oder Benutzer nicht gefunden!",
     "wrong-password": "Falsches Passwort!",
     "invalid-name": "Ungültiger Name",
     "name-in-use": "Name bereits vergeben!",
@@ -30,6 +30,16 @@
     "i-forgot-password": "Passwort vergessen?",
     "dont-worry": "Kann passieren! Wir senden dir eine Email mit den Anweisungen, um dein Passwort zurückzusetzen.",
     "send-email": "Email senden",
+    "email-not-found": "Email unbekannt!",
+    "email-sent": "An E-Mail has been sent to you",
+
+    "reset-password": "Password zurücksetzen",
+    "change-password": "Ändere dein Passwort",
+    "different-passwords": "Passwörter stimmen nicht überein!",
+    "new-password": "Neues Password",
+    "confirm-password": "Password bestätigen",
+    "continue": "Weiter",
+    "password-reset": "You reset your password",
 
     "verify-account": "Bestätige dein Konto",
     "check-inbox": "Überprüfe deinen Posteingang und gib den Code unten ein oder klicke auf den Link in der Email",

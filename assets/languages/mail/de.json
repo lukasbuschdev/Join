@@ -1,0 +1,13 @@
+{
+    "verification-subject": "Bestätige dein Konto",
+    "verification-message-1": "Hallo, ",
+    "verification-message-2": "Klicke den Button unten oder diesen Link ",
+    "verification-message-3": " um dein Konto zu aktivieren.",
+    "verification-message-4": "Verifizieren",
+
+    "password-reset-subject": "Password zurücksetzen",
+    "password-reset-message-1": "Hallo, ",
+    "password-reset-message-2": "Uns wurde eine Anfrage für die Rücksetzung deines Passworts gesendet.",
+    "password-reset-message-3": "Password zurücksetzen",
+    "password-reset-message-4": "Das warst nicht du? Dann schreib uns unverzüglich unter "
+}
