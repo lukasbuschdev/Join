@@ -50,6 +50,10 @@ function addContactModal() {
     modal.openModal();
 }
 
+function closeAddTaskModal() {
+    $('#add-task-modal').closeModal();
+}
+
 function closeAddContact() {
     $('#add-contact-modal').closeModal();
 }

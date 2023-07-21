@@ -9,6 +9,7 @@
     justify-content: flex-end;
     gap: 10px;
     width: 100%;
+    margin-top: 20px;
 }
 
 .add-task-heading {
@@ -34,7 +35,7 @@ span {
 }
 
 .line {
-    height: 500px;
+    height: 495px;
     width: 1px;
     background-color: #d1d1d1;
 }
@@ -135,7 +136,12 @@ span {
     }
     
     .btn-priority button span {
-        font-size: 1rem;
+        font-size: 0.9rem;
+        gap: 5px;
+    }
+
+    .btn-priority button:nth-child(2) span::after {
+        translate: 0 -1px;
     }
 }
 
@@ -150,9 +156,28 @@ span {
         justify-content: center;
         align-items: center;
     }
-
+    
     .add-task-rows.column {
-        max-height: 550px;
+        max-height: 490px;
         overflow-y: scroll;
+    }
+}
+
+
+
+/* MOBILE VERSION MAX.-WIDTH 500px */
+
+@media(max-width: 500px) {
+    .add-task-card {
+        padding: 2vh 1.5rem ;
+    }
+
+    .btn-priority button span {
+        font-size: 0.8rem;
+    }
+
+    .flex-right {
+        justify-content: center;
+        margin-top: 10px;
     }
 }

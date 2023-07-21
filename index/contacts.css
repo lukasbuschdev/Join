@@ -55,11 +55,6 @@
     height: 120px;
 }
 
-/* .contact-img img{
-    border: 2px solid white;
-    border-radius: 999px;
-} */
-
 .contact .column {
     width: calc(100% - 40px - 25px);
     gap: 5px;
@@ -228,10 +223,6 @@
     width: 55px;
 }
 
-/* .add-contact-theme h1 {
-    
-} */
-
 .add-contact-theme span {
     font-size: 1.6875rem;
 }
@@ -343,6 +334,10 @@
 
 .contact-img.user-img-container h3 {
     font-size: 0.9rem;
+}
+
+#add-task-modal > div {
+    width: 1080px;
 }
 
 @media (max-width: 1000px) {
