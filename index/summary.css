@@ -90,6 +90,23 @@
 #summary-data {
     margin: 0 max(calc(calc(calc(100vw - 232px - var(--grid-width)) / 2) - 200px), 80px);
     scroll-snap-align: center;
+    position: relative;
+}
+
+#summary-data h1.loading {
+    animation: fade-in var(--transition-slow);
+}
+
+#summary-data #add-board {
+    position: absolute;
+    content: '';
+    inset: 0;
+    background: red;
+}
+
+#summary-data .content {
+    aspect-ratio: 1;
+    justify-content: space-between;
 }
 
 @keyframes fade-in {
@@ -240,5 +257,8 @@
 
 .summary-selection-boards .active {
     background-color: var(--clr-dark);
+}
+
+.summary-selection-boards .centered {
     scroll-snap-align: center;
 }

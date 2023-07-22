@@ -1,5 +1,5 @@
 class Email {
-    constructor({recipient, type = '', langData}) {
+    constructor({recipient, type = '', langData, options}) {
         this.recipient = recipient;
         this.subject = langData["subject"];
         if (type == "verification") {
@@ -7,6 +7,9 @@ class Email {
         }
         if (type == "passwordReset") {
             this.message = resetPasswordEmailTemplate(recipient, langData);
+        }
+        if (type == "unknownDevice") {
+            this.message = unknownDeviceEmailTemplate(recipient, langData, options);
         }
     }
 

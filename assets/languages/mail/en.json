@@ -9,5 +9,12 @@
     "password-reset-message-1": "Hi, ",
     "password-reset-message-2": "A Request has been sent to change the password for your Join account.",
     "password-reset-message-3": "Reset Password",
-    "password-reset-message-4": "If this wasn't you, please contact us immediately under "
+    "password-reset-message-4": "If this wasn't you, please contact us immediately under ",
+
+    "unknown-device-subject": "Unknown device access",
+    "unknown-device-message-1": "Hi, ",
+    "unknown-device-message-2": "Someone signed in to your account from an unknown Device.",
+    "unknown-device-message-3": "If this was not you, please reset your password as soon as possible!",
+    "unknown-device-message-4": "Reset Password",
+    "unknown-device-message-5": "If this was you, just ignore this email."
 }

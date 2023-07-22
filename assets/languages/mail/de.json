@@ -9,5 +9,12 @@
     "password-reset-message-1": "Hallo, ",
     "password-reset-message-2": "Uns wurde eine Anfrage für die Rücksetzung deines Passworts gesendet.",
     "password-reset-message-3": "Password zurücksetzen",
-    "password-reset-message-4": "Das warst nicht du? Dann schreib uns unverzüglich unter "
+    "password-reset-message-4": "Das warst nicht du? Dann schreib uns unverzüglich unter ",
+
+    "unknown-device-subject": "Unbekannter Zugriff auf deine Konto",
+    "unknown-device-message-1": "Hallo, ",
+    "unknown-device-message-2": "Jemand hat sich mit einem uns unbekannten Gerät bei deinem Konto angemeldet.",
+    "unknown-device-message-3": "Falls das nicht du warst, setze bitte umgehend dein Passwort zurück!",
+    "unknown-device-message-4": "Password zurücksetzen",
+    "unknown-device-message-5": "Wenn du es warst, kannst du diese Mail einfach ignorieren."
 }

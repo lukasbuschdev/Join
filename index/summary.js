@@ -1,9 +1,19 @@
-const initSummary = async () => {
+const initSummary = () => {
+    renderBoards();
+}
+
+const renderBoards = async () => {
     const { boards } = await getCurrentUserData();
+    if (boards == false) return;
+
     const activeBoardIndex = SESSION_getData('activeBoardIndex') ?? 0;
+    $('#summary-data .content').classList.remove('d-none');
+    $('#summary-data #add-board').classList.add('d-none');
+
+    $('.summary-selection-boards').innerHTML = '';
     $('.summary-selection-boards').renderItems(boards, summarySelectionTemplate);
 
-    setTimeout(()=>$$('.summary-selection-boards button')[activeBoardIndex].click(), 0)
+    setTimeout(()=>$$('.summary-selection-boards button')[activeBoardIndex].click(), 0);
 }
 
 const summarySelectionTemplate = (board) => {
@@ -29,35 +39,28 @@ const loadBoardSummary = async (boardId) => {
 }
 
 const incrementBoard = (direction) => {
-    if (direction == 1 && $('.summary-selection-boards button.active').nextElementSibling == null) return
-    else if (direction == -1 && $('.summary-selection-boards button.active').previousElementSibling == null) return
+    if (direction == 1 && $('.summary-selection-boards button.centered').nextElementSibling == null) return
+    else if (direction == -1 && $('.summary-selection-boards button.centered').previousElementSibling == null) return
     scrollSummarySelection(direction);
 }
 
 const scrollSummarySelection = (direction) => {
-    log(direction)
-    const activeBtn = $('.summary-selection-boards button.active');
+    const centeredBtn = $('.summary-selection-boards button.centered');
     if (direction == 1) {
-        activeBtn.nextElementSibling.classList.add('active');
-        activeBtn.classList.remove('active');
+        centeredBtn.nextElementSibling.classList.add('centered');
+        centeredBtn.classList.remove('centered');
     } else if (direction == -1) {
-        activeBtn.previousElementSibling.classList.add('active');
-        activeBtn.classList.remove('active');
+        centeredBtn.previousElementSibling.classList.add('centered');
+        centeredBtn.classList.remove('centered');
     }
 
-    $('.summary-selection-boards button.active').style.scrollSnapAlign = 'unset';
+    $('.summary-selection-boards button.centered').style.scrollSnapAlign = 'unset';
     $('.summary-selection-boards').scrollBy(175 * direction, 0)
     setTimeout(() => {
-        $('.summary-selection-boards button.active').style.scrollSnapAlign = '';
+        $('.summary-selection-boards button.centered').style.scrollSnapAlign = '';
     }, 200);
 
-    checkArrows(activeBtn);
-}
-
-const checkArrows = (activeBtn) => {
-    const [left, right] = $$('.summary-selection-arrows');
-    left.classList.toggle('d-none', $('.summary-selection-boards button:nth-of-type(2)' == activeBtn))
-    right.classList.toggle('d-none', $('.summary-selection-boards button:nth-last-of-type(2)' == activeBtn))
+    setArrowVisibility([...centeredBtn.parentElement.$$('button')].indexOf(centeredBtn), $$('.summary-selection-boards button').length);
 }
 
 const scrollSummaryContent = (direction) => {
@@ -78,22 +81,43 @@ const scrollSummaryContent = (direction) => {
 const selectBoardSummary = () => {
     const button = event.currentTarget;
     let buttonIndex;
-    let activeButtonIndex;
+    let centeredBtnIndex;
+    let activeBtnIndex;
 
-    button.parentElement.$$('button').for((btn, i) => {
-        if (btn == button) {
-            buttonIndex = i;
-        } else if (btn.classList.contains('active')) {
-            activeButtonIndex = i;
-        }
+    if (!(button.parentElement.$('button.centered'))) button.classList.toggle('centered');
+    const buttons = button.parentElement.$$('button');
+    buttons.for((btn, i) => {
+        if (btn == button) buttonIndex = i;
+        if (btn.classList.contains('centered')) centeredBtnIndex = i;
+        if (btn.classList.contains('active')) activeBtnIndex = i;
     });
 
-    SESSION_setData('activeBoardIndex', buttonIndex)
+    if (buttonIndex == activeBtnIndex) return;
+    SESSION_setData('activeBoardIndex', buttonIndex);
     
-    const direction = (buttonIndex > activeButtonIndex) ? 1 : -1;
-    if (activeButtonIndex !== undefined) {
-        scrollSummarySelection(direction)
+    let direction;
+    if (buttonIndex > activeBtnIndex) direction = 1;
+    else if (buttonIndex < activeBtnIndex) direction = -1;
+
+    if (direction !== undefined) {
+        if (!(buttonIndex == centeredBtnIndex)) {
+            scrollSummarySelection(direction)
+        }
         scrollSummaryContent(direction);
     }
     loadBoardSummary(button.name);
+}
+
+const setArrowVisibility = (buttonIndex, boardsLength) => {
+    log(buttonIndex, boardsLength)
+    const [leftArrow, rightArrow] = $$('.summary-selection-arrows');
+    // const [leftGrid, rightGrid] = $$('.summary-grid:not(#summary-data)');
+
+    [leftArrow, rightArrow].for(container => container.show());
+
+    if (buttonIndex == 0) {
+        leftArrow.hide()
+    } else if (buttonIndex == boardsLength - 1) {
+        rightArrow.hide();
+    }
 }

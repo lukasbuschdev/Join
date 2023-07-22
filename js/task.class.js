@@ -1,14 +1,14 @@
 class Task {
-    constructor({ type, title, description, category, ["assigned-to"]: assignedTo = [], dueDate, priority, progress }) {
-        type,
-        title,
-        description,
-        category,
+    constructor({ type, title, description = "", category = "default", ["assigned-to"]: assignedTo = [], dueDate = "", priority, progress = "", subTasks = "" }) {
+        this.type = type,
+        this.title = title,
+        this.description = description,
+        this.category = category,
         this["assigned-to"] = assignedTo,
-        dueDate,
-        priority,
-        subTasks,
-        progress
+        this.dueDate = dueDate,
+        this.priority = priority,
+        this.subTasks = subTasks,
+        this.progres = progress
     }
     
     changePriority = (priority) => {

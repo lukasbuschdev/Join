@@ -12,6 +12,7 @@ const logIn = async () => {
         );
     if(!userData || !passwordValidity) return;
     user.rememberMe();
+    await checkDevice(user);
     user.logIn();
 }
 
@@ -33,4 +34,12 @@ const automaticLogin = async () => {
     if (cred == false) return;
     const user = await getUser(cred.id);
     user.logIn();
+}
+
+const checkDevice = async (user) => {
+    const savedId = LOCAL_getData('deviceId');
+    if (!savedId) {
+        const deviceData = await getDeviceData();
+        await user.unknownDevice(deviceData);
+    }
 }

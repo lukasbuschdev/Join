@@ -1,12 +1,19 @@
 class User extends Account {
-    constructor(userData){
+    constructor(userData, method){
         super(userData);
-        this.userData.password = userData.password;
-        this.userData.color = userData.color ?? "";
+        this.password = userData.password;
+        this.color = userData.color ?? "";
+        if (method) {
+            return this;
+        } else {
+            const noMethods = JSON.parse(JSON.stringify(this));
+            delete noMethods.password;
+            return noMethods;
+        }
     }
 
     setProperty = async (type, data) => {
-        this.userData[type] = data;
+        this[type] = data;
         return this.#update();
     }
 
@@ -23,26 +30,27 @@ class User extends Account {
     initVerification = async () => {
         this.generateVerificationCode();
         this.#sendMail("verification");
-        await REMOTE_setData('verification', {[this.userData.id]: { verifyCode: this.verifyCode, userData: this.userData }});
-        goTo(`./verify_account.html?uid=${this.userData.id}`);
+        await REMOTE_setData('verification', {[this.id]: { verifyCode: this.verifyCode, userData: this }});
+        goTo(`./verify_account.html?uid=${this.id}`);
     }
 
     initPasswordReset = () => {
         this.#sendMail("passwordReset");
     }
 
-    #sendMail = async (type) => {
+    #sendMail = async (type, options) => {
         const mailOptions = {
-            recipient: this.userData,
+            recipient: this,
             type,
             langData: await getEmailLanguage(type)
         }
+        if (typeof options == "object") mailOptions.options = options;
         const mail = new Email(mailOptions);
         return await mail.send();
     }
 
     verify = async () => {
-        await REMOTE_removeData(`verification/${this.userData.id}`);
+        await REMOTE_removeData(`verification/${this.id}`);
         await this.#update();
     }
 
@@ -52,9 +60,9 @@ class User extends Account {
 
     setCredentials = () => {
         const cred = new PasswordCredential({
-            id: this.userData.name,
-            password: this.userData.password,
-            name: this.userData.email
+            id: this.name,
+            password: this.password,
+            name: this.email
         });
         navigator.credentials.store(cred);
     }
@@ -63,7 +71,7 @@ class User extends Account {
         this.loggedIn = 'true';
         this.setCredentials();
         await this.#update();
-        goTo(`../index/index.html?uid=${this.userData.id}`);
+        goTo(`../index/index.html?uid=${this.id}`);
     }
 
     rememberMe = () => {
@@ -73,7 +81,7 @@ class User extends Account {
     }
 
     #update = async () => {
-        return await REMOTE_setData('users', {[this.userData.id]: this.userData});
+        return await REMOTE_setData('users', {[this.id]: this});
     }
 
     generateVerificationCode = () => {
@@ -82,8 +90,12 @@ class User extends Account {
         for (let i = 0; i < 6; i++) {
           code += charSet[(Math.floor(Math.random() * charSet.length))];
         }
-        this.userData.verifyCode = { code, expires: Date.now() + 5 * 1000 * 60 };
+        this.verifyCode = { code, expires: Date.now() + 5 * 1000 * 60 };
     }
 
-    codeExpired = () => this.verifyCode.expires < Date.now(); 
+    codeExpired = () => this.verifyCode.expires < Date.now();
+
+    unknownDevice = async (deviceData) => {
+        await this.#sendMail("unknownDevice", deviceData);
+    }
 }
