@@ -45,8 +45,13 @@ const contactListTemplate = ({img, name, email, id, color}) => {
 function addContactModal() {
     const modal = $('#add-contact-modal');
     clearInput();
+    clearImage();
     clearResult();
     modal.openModal();
+}
+
+function closeAddTaskModal() {
+    $('#add-task-modal').closeModal();
 }
 
 function closeAddContact() {
@@ -58,6 +63,11 @@ function clearInput(){
       if (input.value !="") {
           input.value = "";
       }
+}
+
+function clearImage() {
+    let image = $('.user-img-gray');
+    image.src = "../assets/img/icons/user_img_gray.svg";
 }
 
 function clearResult() {
@@ -132,7 +142,7 @@ function selectedContactTemplate({img, name, email, phone, color}) {
 
             <div class="column contact-name">
                 <span>${name}</span>
-                <button data-lang="add-task" class="row">Add Task</button>
+                <button data-lang="add-task" class="row" onclick="addTaskModal()">Add Task</button>
             </div>
         </div>
 
@@ -171,7 +181,8 @@ function renderSearchResults(sortedUsers) {
 function searchResultTemplates({id, img, name, email}) {
         return /*html*/`
             <div class="search-result-contact row" id="search-result-contact" onclick="selectNewContact('${id}', '${img}', '${name}')">
-                <div class="contact-img user-img-container">
+                <div class="contact-img user-img-container" data-img="false">
+                    <h3>${name.slice(0, 2).toUpperCase()}</h3>
                     <img src="${img}">
                 </div>
                 <span class="txt-normal result-name-email">${name}</span>
@@ -181,30 +192,13 @@ function searchResultTemplates({id, img, name, email}) {
 }
 
 function selectNewContact(id, img, name) {
-    console.log(id, name);
     let image = $('.user-img-gray');
     let input = $('#input-name');
     let userImgContainer = image.previousElementSibling;
-
+    
     userImgContainer.innerHTML = name.slice(0, 2).toUpperCase();
     image.src = img;
     input.value = name;
+    const selectedContact = id;
+    console.log(selectedContact);
 }
-
-// function selectNewContact(id, img, name) {
-//     console.log(id, name);
-//     let image = $('.user-img-gray');
-//     let input = $('#input-name');
-    
-//     image.attr('src', img);
-//     input.val(name);
-// }
-
-
-// async function selectNewContact(id) {
-//     let userData = await getContactsData();
-
-//     let selectedContact = userData.find(user => user.id == id);
-//     log(selectedContact)
-//     // renderSelectedContact(selectedContact);
-// }

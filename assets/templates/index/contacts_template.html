@@ -6,8 +6,10 @@
     <div class="header-contact column">
         <div class="contacts-header-container row">
             <h2 data-lang="header">Contacts</h2>
-            <p></p>
-            <span data-lang="sub-header">Better with a team</span>
+            <div class="row gap-15">
+                <p></p>
+                <span data-lang="sub-header">Better with a team</span>
+            </div>
         </div>
     
         <div id="selected-contact-container"></div>
@@ -17,7 +19,6 @@
         <span data-lang="btn-new-contact">New contact</span>
     </button>
 
-
     <dialog id="add-contact-modal" type="modal" inert>
         <div class="add-contact-container row">
             <div class="add-contact-theme column">
@@ -26,14 +27,8 @@
                 <span data-lang="add-contact-subheading">Tasks are better with a team!</span>
             </div>
 
-
-
             <div class="add-contact-field column">
                 <img onclick="closeAddContact()" class="close" src="../assets/img/icons/close.svg" alt="Close">
-
-
-
-
 
                 <div class="search-result-container row gap-25">
                     <div class="user-img-container" data-img="false">
@@ -43,15 +38,8 @@
                     <div class="search-contact column">
                         <input id="input-name" type="text" oninput="getInput()" class="txt-normal" placeholder="Search names..." autocomplete="off">
                         <div id="user-search-result" class="user-search-result column gap-15"></div>
-                    </div>
-                    
+                    </div>                   
                 </div>    
-
-
-
-
-
-
 
                 <div class="add-contact-btns row gap-15">
                     <button class="btn btn-secondary btn-cancel txt-normal">
@@ -64,5 +52,9 @@
                 </div>
             </div>
         </div>
+    </dialog>
+
+    <dialog id="add-task-modal" type="modal">
+        <div include-template="../assets/templates/index/add-task_template.html"></div>
     </dialog>
 </div>

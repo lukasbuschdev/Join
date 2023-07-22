@@ -1,18 +1,21 @@
 
 .add-task-card {
     padding: 2vh 4rem;
+    width: 100%;
 }
 
 .flex-right {
     display: flex;
-    margin-left: auto;
+    justify-content: flex-end;
     gap: 10px;
+    width: 100%;
+    margin-top: 20px;
 }
 
 .add-task-heading {
     width: 100%;
     box-sizing: border-box;
-    padding: 40px 0;
+    padding: 30px 0;
 }
 
 h1 {
@@ -32,23 +35,20 @@ span {
 }
 
 .line {
-    height: 515px;
+    height: 495px;
     width: 1px;
     background-color: #d1d1d1;
 }
 
 .add-task-rows {
-    width: fit-content;
-    margin: auto;
-    gap: 35px;
-    align-items: center;
+    width: 100%;
+    gap: 30px;
 }
 
 .add-task-rows .inputs {
+    width: 100%;
     align-items: flex-start;
-    gap: 35px;
-    max-width: 1440px;
-    flex-shrink: 0;
+    justify-content: center;
 }
 
 .padding-textarea {
@@ -58,18 +58,13 @@ span {
 .add-task-single-row {
     box-sizing: border-box;
     display: grid;
-    width: 422px;
+    width: 100%;
+    max-width: 400px;
     gap: 20px;
 }
 
 .add-task-single-row > div {
     gap: 8px;
-}
-
-.second-row {
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
 }
 
 .btn-priority {
@@ -107,4 +102,82 @@ span {
 #description {
     padding: 18px 21px;
     height: 119px;
+}
+
+.width-btn {
+    width: 0;
+}
+
+
+
+/* MOBILE VERSION MAX.-WIDTH 1100px */
+
+@media(max-width: 1100px) {
+    .add-task-card {
+        padding: 2vh 3rem ;
+    }
+
+    .add-task-rows .inputs {
+        gap: 25px;
+    }
+}
+
+
+
+/* MOBILE VERSION MAX.-WIDTH 1000px */
+
+@media(max-width: 1000px) {
+    .add-task-card {
+        padding: 2vh 3rem ;
+    }
+    
+    .line {
+        display: none;
+    }
+    
+    .btn-priority button span {
+        font-size: 0.9rem;
+        gap: 5px;
+    }
+
+    .btn-priority button:nth-child(2) span::after {
+        translate: 0 -1px;
+    }
+}
+
+
+
+/* MOBILE VERSION MAX.-WIDTH 800px */
+
+@media(max-width: 800px) {
+    .add-task-rows .inputs {
+        gap: 15px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .add-task-rows.column {
+        max-height: 490px;
+        overflow-y: scroll;
+    }
+}
+
+
+
+/* MOBILE VERSION MAX.-WIDTH 500px */
+
+@media(max-width: 500px) {
+    .add-task-card {
+        padding: 2vh 1.5rem ;
+    }
+
+    .btn-priority button span {
+        font-size: 0.8rem;
+    }
+
+    .flex-right {
+        justify-content: center;
+        margin-top: 10px;
+    }
 }

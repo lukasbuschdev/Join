@@ -55,11 +55,6 @@
     height: 120px;
 }
 
-/* .contact-img img{
-    border: 2px solid white;
-    border-radius: 999px;
-} */
-
 .contact .column {
     width: calc(100% - 40px - 25px);
     gap: 5px;
@@ -79,13 +74,14 @@
 
 .contacts-header-container {
     gap: 30px;
+    width: 100%;
 }
 
 .contacts-header-container p {
     background-color: var(--clr-blue);
     width: 3px;
     height: 57px;
-    border-radius: 99px;
+    border-radius: 999px;
 }
 
 .contacts-header-container span {
@@ -104,6 +100,10 @@
 .contact-container {
     width: 100%;
     gap: 21px;
+}
+
+#selected-contact-container {
+    width: 100%;
 }
 
 .absolute {
@@ -223,10 +223,6 @@
     width: 55px;
 }
 
-/* .add-contact-theme h1 {
-    
-} */
-
 .add-contact-theme span {
     font-size: 1.6875rem;
 }
@@ -262,6 +258,12 @@
 .search-result-container > .user-img-container:has( > img[src="../assets/img/icons/user_img_gray.svg"]) {
     --outline-thickness: 0;
     --user-clr: 'unset';
+    height: 130px;
+    width: 130px;
+}
+
+.search-result-container .user-img-container h3 {
+    font-size: 2.5rem;
 }
 
 .search-contact {
@@ -271,8 +273,10 @@
 
 .user-search-result {
     height: fit-content;
+    max-height: 270px;
     width: 100%;
     border-radius: 0 0 10px 10px;
+    overflow: auto;
 }
 
 .user-search-result-inactive {
@@ -328,14 +332,44 @@
     justify-content: flex-end;
 }
 
+.contact-img.user-img-container h3 {
+    font-size: 0.9rem;
+}
+
+#add-task-modal > div {
+    width: 1080px;
+}
+
+@media (max-width: 1000px) {
+    .contacts-header-container {
+        flex-direction: column;
+        gap: 0;
+        align-items: flex-start;
+    }
+
+    .header-contact .user-img-container {
+        height: 100px;
+    }
+}
+
 @media (max-width: 800px) {
     #contacts-container {
         width: calc(100%);
         padding: 3rem;
     }
+
     .header-contact {
         display: none;
         position: absolute;
         inset: 0;
+        gap: 25px;
+    }
+
+    .img-name {
+        gap: 10px;
+    }
+
+    .header-contact .user-img-container {
+        height: 80px;
     }
 }
