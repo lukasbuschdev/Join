@@ -6,11 +6,6 @@ class User extends Account {
         if (!methods) return removeMethods(this)
     }
 
-    setProperty = async (type, data) => {
-        this[type] = data;
-        return this.#update();
-    }
-
     setPicture = async (img) => await this.setProperty("img", img);
 
     setColor = async (color) => await this.setProperty("color", color);

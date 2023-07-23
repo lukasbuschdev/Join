@@ -13,6 +13,7 @@ class Board {
         }
     }, methods) {
         this.owner = owner;
+        this.id = id;
         this.collaborators = collaborators;
         this.dateOfCreation = dateOfCreation;
         this.dateOfLastEdit = dateOfLastEdit;
@@ -21,18 +22,18 @@ class Board {
     }
 
     addTask = async (taskData) => {
-        const task = new Task(taskData);
+        const task = new Task(taskData, true);
         this.tasks[taskData.type].push(task);
-        await this.update();
+        await this.#update();
         return task;
     }
     
     addCollaborator = async (collaboratorId) => {
         this.collaborators.push(collaboratorId);
-        await this.update();
+        await this.#update();
     }
     
-    update = async () => {
+    #update = async () => {
         this.dateOfLastEdit = Date.now();
         return REMOTE_setData(`boards`, {[this.id]: this});
     }

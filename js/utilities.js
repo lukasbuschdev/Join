@@ -264,7 +264,7 @@ const getDeviceData = async () => {
 }
 
 removeMethods = (obj) => {
-  if (obj.hasOwn("password")) delete obj.password;
+  if (obj.hasOwnProperty("password")) delete obj.password;
   return JSON.parse(JSON.stringify(obj));
 }
 
