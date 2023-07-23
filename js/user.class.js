@@ -1,15 +1,9 @@
 class User extends Account {
-    constructor(userData, method){
+    constructor(userData, methods){
         super(userData);
         this.password = userData.password;
         this.color = userData.color ?? "";
-        if (method) {
-            return this;
-        } else {
-            const noMethods = JSON.parse(JSON.stringify(this));
-            delete noMethods.password;
-            return noMethods;
-        }
+        if (!methods) return removeMethods(this)
     }
 
     setProperty = async (type, data) => {

@@ -11,18 +11,20 @@ class Board {
             "awaiting-feedback": [],
             "done": []
         }
-    }) {
-        this.owner = owner,
-        this.collaborators = collaborators,
-        this.dateOfCreation = dateOfCreation,
-        this.dateOfLastEdit = dateOfLastEdit,
-        this.tasks = tasks
+    }, methods) {
+        this.owner = owner;
+        this.collaborators = collaborators;
+        this.dateOfCreation = dateOfCreation;
+        this.dateOfLastEdit = dateOfLastEdit;
+        this.tasks = tasks;
+        return (methods) ? this : removeMethods(this); 
     }
 
     addTask = async (taskData) => {
         const task = new Task(taskData);
         this.tasks[taskData.type].push(task);
         await this.update();
+        return task;
     }
     
     addCollaborator = async (collaboratorId) => {

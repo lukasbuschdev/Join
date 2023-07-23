@@ -263,6 +263,11 @@ const getDeviceData = async () => {
   return {city, country, platform};
 }
 
+removeMethods = (obj) => {
+  if (obj.hasOwn("password")) delete obj.password;
+  return JSON.parse(JSON.stringify(obj));
+}
+
 // const fetchData = async (url, fetchOptions = {method: "GET", dataType: "json"}) => {
 //   let response;
 //   let data;
