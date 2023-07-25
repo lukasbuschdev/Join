@@ -147,7 +147,7 @@ const getContactsData = async () => {
     const userData = await REMOTE_getData('users');
     let accounts = [];
     Object.values(userData).for(
-        account => accounts.push(new Account(account).userData)
+        account => accounts.push(new Account(account))
     )
     const filteredContacts = accounts.filter(({id}) => contactIds.indexOf(`${id}`) !== -1);
     const sortedContacts = filteredContacts.sort(({name: name1}, {name: name2}) => {
@@ -164,7 +164,8 @@ const LOCAL_setData = (key, value) => {
 }
 
 const LOCAL_getData = (key) => {
-    return JSON.parse(localStorage.getItem(key)); 
+    let data = localStorage.getItem(key);
+    return (!!data) ? JSON.parse(data) : undefined; 
 }
 
 const LOCAL_removeData = (key) => {

@@ -95,6 +95,24 @@ HTMLElement.prototype.setTransitionSpeed = function (x = '', y = '') {
     this.style.transitionDuration = transitionSpeed;
 }
 
+HTMLElement.prototype.triggerAnimation = function (className) {
+    this.classList.add(className);
+    this.addEventListener("animationend", endHandler = () => {
+        this.classList.remove(className);
+        this.removeEventListener("animationend", endHandler);
+        this.removeEventListener("animationcancel", endHandler);
+    });
+    this.addEventListener("animationcancel", endHandler);
+}
+
+HTMLElement.prototype.hide = function () {
+    this.classList.add('d-none');
+}
+
+HTMLElement.prototype.show = function () {
+    this.classList.remove('d-none');
+}
+
 Math.roundTo = function (nbr, decimals) {
     return Math.round(nbr * Math.pow(10, decimals)) / Math.pow(10, decimals);
 }

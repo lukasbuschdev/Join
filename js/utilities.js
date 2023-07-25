@@ -256,3 +256,68 @@ const getIp = async () => {
 }
 
 const isLetterOrNumber = (input) => input.length == 1 && /([a-z]|[A-Z]|[0-9])/.test(input);
+
+const getDeviceData = async () => {
+  const {city: {name: city}, country: {name: country}} = await (await fetch("https://api.geoapify.com/v1/ipinfo?&apiKey=58aa476deefd4ea69553d253e4063d6a")).json();
+  const platform = navigator.userAgent.match(/(?<=\()[^;\s]*/)[0];
+  return {city, country, platform};
+}
+
+removeMethods = (obj) => {
+  if (obj.hasOwnProperty("password")) delete obj.password;
+  return JSON.parse(JSON.stringify(obj));
+}
+
+// const fetchData = async (url, fetchOptions = {method: "GET", dataType: "json"}) => {
+//   let response;
+//   let data;
+
+//   if (method == "GET") {
+//     response = await fetch(url);
+//   } else if (method == "POST") {
+//     response = await fetch(url, fetchOptions);
+    
+//   }
+
+//   if (response?.ok) {
+//     if (dataType == "json") data = await response.json();
+//     else if (dataType == "text") data = await response.text();
+//   }
+// }
+
+// async function fetch2 (url = '../php/tst.php', options) {
+//   let requestOptions = {
+//     method: options?.method ?? "GET",
+//     load: options?.load ?? undefined,
+//     body: options?.body ?? undefined
+//   }
+//   return await new Promise((resolve, reject) => {
+
+//     const xhr = new XMLHttpRequest();
+//     xhr.open(requestOptions.method, url);
+//     // if (typeof requestOptions.load == "function") xhr.onload = requestOptions.load();
+//     // (!!requestOptions.body && requestOptions.method == "POST") ? xhr.send(requestOptions.body) : xhr.send();
+//     // xhr.responseType = "json";
+
+//     const headerInit = JSON.parse(`{${xhr.getAllResponseHeaders().replaceAll(/[a-z\-]+(?=\:)/g, i => `"${i}"`).replaceAll(/(?<=[^\S\n\r])[^\r]*/g, i => `"${i}"`).replaceAll(/\r\n(?!$)/g, ', ')}}`)
+    
+    
+//     xhr.onload = () => {
+//       const stream = new ReadableStream({
+//         start(controller) {
+//           log('starting')
+//           controller.enqueue(xhr.response);
+//           controller.close();
+//         }
+//       });
+//       const response = new Response(stream, {statusText: xhr.statusText, status: xhr.status, headers: new Headers(headerInit)});
+//       resolve(response);
+//     }
+
+//     xhr.onerror = (e) => {
+//       reject('failed');
+//     }
+
+//     xhr.send();
+//   })
+// }

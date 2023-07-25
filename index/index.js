@@ -27,15 +27,7 @@ const initTextLoadAnimationOvserver = () => {
 const textLoadAnimationOvserver = new MutationObserver(
     mutationList => {
         for (const { type, target } of mutationList) {
-            if (type == "childList" || type == "characterData") {
-                log('abc');
-                triggerTextLoadAnimation(target);
-            }
+            if (type == "childList" || type == "characterData") target.triggerAnimation('loading');
         }
     }
 );
-
-const triggerTextLoadAnimation = (target) => {
-    target.style.animation = '';
-    target.style.animation = `fade-in 2s forwards`;
-}

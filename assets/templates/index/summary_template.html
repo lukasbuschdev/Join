@@ -6,16 +6,16 @@
 
     <div class="summary-body column">
         <div class="summary-selection row">
-            <button class="summary-selection-arrows" onclick="incrementBoard(-1)"></button>
+            <button class="summary-selection-arrows d-none" onclick="incrementBoard(-1)"></button>
             <div class="summary-selection-boards row" type="menu">
             </div>
-            <button class="summary-selection-arrows" onclick="incrementBoard(1)"></button>
+            <button class="summary-selection-arrows d-none" onclick="incrementBoard(1)"></button>
         </div>
 
         <div class="summary-content-wrapper">
             <div class="summary-content-shadow"></div>
             <div class="summary-content scroll-snap row txt-normal">
-                <div class="summary-grid column">
+                <div class="summary-grid column d-none">
     
                     <div class="row">
                         <div class="summary-btn"></div>
@@ -33,45 +33,47 @@
                     </div>
                 </div>
                 <div id="summary-data" class="summary-grid column">
-    
-                    <div class="row">
-                        <button id="tasks-in-board" class="summary-btn column">
-                            <h1>5</h1>
-                            <span>Tasks in<br>Board</span>
-                        </button>
-                        <button id="tasks-in-progress" class="summary-btn column">
-                            <h1>2</h1>
-                            <span>Tasks in<br>Progress</span>
-                        </button>
-                        <button id="tasks-awaiting-feedback" class="summary-btn column">
-                            <h1>3</h1>
-                            <span>Awaiting<br>Feedback</span>
-                        </button>
-                    </div>
-    
-                    <div class="row">
-                        <button id="tasks-urgent" class="summary-btn big row">
-                            <span></span>
-                            <span>Urgent</span>
-                        </button>
-                    </div>
-    
-                    <div class="row">
-                        <button id="tasks-to-do" class="summary-btn row">
-                            <div class="column">
-                                <h1>1</h1>
-                                <span>To-do</span>
-                            </div>
-                        </button>
-                        <button id="tasks-done" class="summary-btn row">
-                            <div class="column">
-                                <h1>1</h1>
-                                <span>Done</span>
-                            </div>
-                        </button>
+                    <div id="add-board"><h2>Add Board</h2></div>
+                    <div class="content column d-none">
+                        <div class="row">
+                            <button id="tasks-in-board" class="summary-btn column">
+                                <h1>&nbsp;</h1>
+                                <span>Tasks in<br>Board</span>
+                            </button>
+                            <button id="tasks-in-progress" class="summary-btn column">
+                                <h1>&nbsp;</h1>
+                                <span>Tasks in<br>Progress</span>
+                            </button>
+                            <button id="tasks-awaiting-feedback" class="summary-btn column">
+                                <h1>&nbsp;</h1>
+                                <span>Awaiting<br>Feedback</span>
+                            </button>
+                        </div>
+        
+                        <div class="row">
+                            <button id="tasks-urgent" class="summary-btn big row">
+                                <span></span>
+                                <span>Urgent</span>
+                            </button>
+                        </div>
+        
+                        <div class="row">
+                            <button id="tasks-to-do" class="summary-btn row">
+                                <div class="column">
+                                    <h1>&nbsp;</h1>
+                                    <span>To-do</span>
+                                </div>
+                            </button>
+                            <button id="tasks-done" class="summary-btn row">
+                                <div class="column">
+                                    <h1>&nbsp;</h1>
+                                    <span>Done</span>
+                                </div>
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="summary-grid column">
+                <div class="summary-grid column d-none">
     
                     <div class="row">
                         <div class="summary-btn"></div>

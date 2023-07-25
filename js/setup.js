@@ -66,15 +66,14 @@ const initInactivity = () => {
 // )
 
 const renderUserData = async () => {
-    const { name, img, boards } = await getCurrentUserData();
+    const { name, img, color } = await getCurrentUserData();
     $$('[data-user-data]').for(
         (userField) => {
-            const dataType = userField.dataset.userData
+            const dataType = userField.dataset.userData;
             if (dataType == "img") renderImage(userField, img);
             else if (dataType == "name") renderName(userField, name);
             else if (dataType == "initials") renderInitials(userField, name);
-            else if (dataType == "boards") renderBoards(userField, boards);
-            // else if (dataType == "tasks") renderTasks(userField, boards.activeBoard.tasks); TBD
+            else if (dataType == "color") renderColor(userField, color);
         }
     );
 }
@@ -87,6 +86,9 @@ const renderImage = (userField, img) => {
 };
 const renderInitials = (userField, name) => {
     userField.innerText = name.slice(0, 2).toUpperCase();
+};
+const renderColor = (userField, color) => {
+    userField.style.setProperty('--user-clr', color);
 };
 
 // redirect();
