@@ -6,6 +6,8 @@ const $$ = (selector) => document.querySelectorAll(selector);
 const show = (selector) => $(selector).classList.remove("d-none");
 const hide = (selector) => $(selector).classList.add("d-none");
 
+const error = (error) => console.error(error);
+
 const toggleActiveBtn = (buttons) => {
   buttons.forEach((button) =>
 
@@ -88,10 +90,6 @@ const includeTemplate = async (templateContainer) => {
 }
 
 const getTemplate = async (url) => (await fetch(url)).text();
-
-const goTo = (page) => {
-  location.href = page;
-}
 
 const parse = (evalString) => Function(`'use strict'; return (${evalString}) ?? false`)();
 

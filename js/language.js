@@ -1,11 +1,15 @@
 const currentLang = () => LOCAL_getData('lang') ?? navigator.language.slice(0, 2) ?? "en-US"
 
 const LANG_load = async (lang = currentLang()) => {
-
-    const directory = location.pathname.split('/').filter(i=>i !== "").at(-2);
+    let langDirectory = 'index';
+    if (currentDirectory() == 'signup' ||
+        currentDirectory() == 'login' ||
+        currentDirectory() == 'create_account' ||
+        currentDirectory() == 'forgot_password' ||
+        currentDirectory() == 'reset_password') langDirectory = 'init';
     // lang = "de";
-    const languages = await (await fetch(`../assets/languages/${directory}/${lang}.json`)).json();
-    document.title = languages[$('[data-title]')?.dataset.title];
+    const languages = await (await fetch(`/Join/assets/languages/${langDirectory}/${lang}.json`)).json();
+    document.title = languages[`title-${currentDirectory()}`];
     $$('[data-lang]').forEach(element => element.innerText = languages[element.dataset.lang]);
     $$('[data-lang-placeholder]').forEach(input => input.placeholder = languages[input.dataset.langPlaceholder])
 }
@@ -25,7 +29,7 @@ const LANG_change = (lang) => {
 const getEmailLanguage = async (type) => {
     if (!type) return;
     type = type.convert();
-    const data = await (await fetch(`../assets/languages/mail/${currentLang()}.json`)).json();
+    const data = await (await fetch(`/Join/assets/languages/mail/${currentLang()}.json`)).json();
     return Object.entries(data).reduce((total, [key, value]) => {
         if (key.includes(type)) return { ...total, [key.replace(`${type}-`, '')]: value }
         else return total;

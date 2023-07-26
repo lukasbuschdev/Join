@@ -5,61 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join</title>
 
-    <link rel="icon" href="../assets/img/icons/logo.svg">
+    <link rel="icon" href="/Join/assets/img/icons/logo.svg">
 
-    <link rel="stylesheet" href="../fonts/fonts.css">
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="./index.css">
-    <link rel="stylesheet" href="./boards.css">
-    <link rel="stylesheet" href="./summary.css">
-    <link rel="stylesheet" href="./add_task.css">
-    <link rel="stylesheet" href="./contacts.css">
+    <link rel="stylesheet" href="/Join/fonts/fonts.css">
+    <link rel="stylesheet" href="/Join/style.css">
+    <link rel="stylesheet" href="/Join/index/index.css">
+    <link rel="stylesheet" href="/Join/index/boards.css">
+    <link rel="stylesheet" href="/Join/index/summary.css">
+    <link rel="stylesheet" href="/Join/index/add_task.css">
+    <link rel="stylesheet" href="/Join/index/contacts.css">
 
-    <script src="../js/utilities.js"></script>
-    <script src="../js/prototype_extensions.js"></script>
-    <script src="../js/script.js"></script>
-    <script src="../js/storage.js"></script>
-    <script src="../js/base.class.js"></script>
-    <script src="../js/account.class.js"></script>
-    <script src="../js/user.class.js"></script>
-    <script src="../js/email.class.js"></script>
-    <script src="../js/board.class.js"></script>
-    <script src="../js/task.class.js"></script>
-    <script src="../js/mail_templates.js"></script>
-    <script src="../js/language.js"></script>
-    <script src="../js/setup.js" defer></script>
+    <script src="/Join/js/utilities.js"></script>
+    <script src="/Join/js/prototype_extensions.js"></script>
+    <script src="/Join/js/script.js"></script>
+    <script src="/Join/js/storage.js"></script>
+    <script src="/Join/js/base.class.js"></script>
+    <script src="/Join/js/account.class.js"></script>
+    <script src="/Join/js/user.class.js"></script>
+    <script src="/Join/js/email.class.js"></script>
+    <script src="/Join/js/board.class.js"></script>
+    <script src="/Join/js/task.class.js"></script>
+    <script src="/Join/js/mail_templates.js"></script>
+    <script src="/Join/js/language.js"></script>
+    <script src="/Join/js/setup.js" defer></script>
     
-    <script src="./index.js"></script>    
-    <script src="./boards.js"></script>
-    <script src="./summary.js"></script>
-    <script src="./contacts.js"></script>
-    <script src="./add_task.js"></script>
+    <script src="/Join/index/index.js"></script>    
+    <script src="/Join/index/boards.js"></script>
+    <script src="/Join/index/summary.js"></script>
+    <script src="/Join/index/contacts.js"></script>
+    <script src="/Join/index/add_task.js"></script>
+    <script src="/Join/assets/templates/index/task.template.js"></script>
 </head>
 <body data-title="title-summary" onload="init()">
 
     <nav type="menu">
         <div class="logo">
-            <img src="../assets/img/icons/logo_white.svg" alt="Join">
+            <img src="/Join/assets/img/icons/logo_white.svg" alt="Join">
         </div>
 
-        <button id="summary" class="btn-nav txt-small active" onclick="loadContent()" type="option">
-            <span style="--img: url(../assets/img/icons/summary.svg)" data-lang="summary">Summary</span>
+        <button id="summary" class="btn-nav txt-small" onclick="loadContent()" type="option">
+            <span style="--img: url(/Join/assets/img/icons/summary.svg)" data-lang="summary">Summary</span>
         </button>
         
         <button id="board" class="btn-nav txt-small" onclick="loadContent()" type="option">
-            <span style="--img: url(../assets/img/icons/boards.svg)" data-lang="board">Board</span>
+            <span style="--img: url(/Join/assets/img/icons/boards.svg)" data-lang="board">Board</span>
         </button>
         
         <button id="add-task" class="btn-nav txt-small" onclick="loadContent()" type="option">
-            <span style="--img: url(../assets/img/icons/add-task.svg)" data-lang="add-task">Add Task</span>
+            <span style="--img: url(/Join/assets/img/icons/add-task.svg)" data-lang="add-task">Add Task</span>
         </button>
         
-        <button id="contacts" class="btn-nav txt-small active" onclick="loadContent()" type="option">
-            <span style="--img: url(../assets/img/icons/contacts.svg)" data-lang="contacts">Contacts</span>
+        <button id="contacts" class="btn-nav txt-small" onclick="loadContent()" type="option">
+            <span style="--img: url(/Join/assets/img/icons/contacts.svg)" data-lang="contacts">Contacts</span>
         </button>
         
         <button id="legal-notice" class="btn-nav txt-small" onclick="loadContent()" type="option">
-            <span style="--img: url(../assets/img/icons/legal-notice.svg)" data-lang="legal-notice">Legal-notice</span>
+            <span style="--img: url(/Join/assets/img/icons/legal-notice.svg)" data-lang="legal-notice">Legal-notice</span>
         </button>
     </nav>
 
@@ -71,16 +72,16 @@
         </div>
         
         <button id="help">
-            <img src="../assets/img/icons/help.svg">
+            <img src="/Join/assets/img/icons/help.svg">
         </button>
 
         <div class="user-img-container" data-img="false" data-user-data="color">
             <span data-user-data="initials"></span>
-            <img class="user-img" src="../assets/img/icons/user_img_gray.svg" alt="" data-user-data="img">
+            <img class="user-img" src="/Join/assets/img/icons/user_img_gray.svg" alt="" data-user-data="img">
         </div>
     </header>
 
-    <div id="content" include-template="../assets/templates/index/summary_template.html"></div>
+    <div id="content" include-template="/Join/assets/templates/index/summary_template.html"></div>
     
 </body>
 </html>

@@ -1,0 +1,18 @@
+RewriteEngine On
+
+# INIT
+
+RewriteRule ^signup$  init/signup.html [L]
+RewriteRule ^login$  init/login.html [L]
+RewriteRule ^verify_account$  init/verify_account.html [L]
+RewriteRule ^reset_password$  init/reset_password.html [L]
+RewriteRule ^forgot_password$  init/forgot_password.html [L]
+RewriteRule ^create_account$  init/create_account.html [L]
+
+# INDEX
+
+RewriteRule ^summary$  index/index.html [L]
+RewriteRule ^board$  index/index.html [L]
+RewriteRule ^add-task$  index/index.html [L]
+RewriteRule ^contacts$  index/index.html [L]
+RewriteRule ^legal_notice$  index/index.html [L]

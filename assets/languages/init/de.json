@@ -1,10 +1,10 @@
 {
     "title-login": "Join - Anmelden",
     "title-signup": "Join - Registrieren",
-    "title-verify-account": "Join - Konto bestätigen",
-    "title-forgot-password": "Join - Passwort vergessen",
-    "title-reset-password": "Join - Passwort zurücksetzen",
-    "title-create-account": "Join - Profil",
+    "title-verify_account": "Join - Konto bestätigen",
+    "title-forgot_password": "Join - Passwort vergessen",
+    "title-reset_password": "Join - Passwort zurücksetzen",
+    "title-create_account": "Join - Profil",
 
     "email-or-username": "Email oder Benutzername",
     "email": "Email",

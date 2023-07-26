@@ -3,9 +3,13 @@ const initSummary = () => {
 }
 
 const renderBoards = async () => {
-    const { boards } = await getCurrentUserData();
-    if (boards == false) return;
-
+    const { boards: userBoards } = await getCurrentUser();
+    if (userBoards == undefined) return;
+    let boards = [];
+    for await (const boardId of userBoards) {
+        const board = await REMOTE_getData(`boards/${boardId}`);
+        boards.push(board); 
+    }
     const activeBoardIndex = SESSION_getData('activeBoardIndex') ?? 0;
     $('#summary-data .content').classList.remove('d-none');
     $('#summary-data #add-board').classList.add('d-none');
@@ -17,19 +21,21 @@ const renderBoards = async () => {
 }
 
 const summarySelectionTemplate = (board) => {
+    const {name, id} = board;
     return /*html*/`
-    <button class="" name="${board}" type="option" onclick="selectBoardSummary()">${board.replaceAll('-',' ')}</button>
+    <button class="" name="${name}" type="option" onclick="selectBoardSummary('${id}')">${name.replaceAll('-',' ')}</button>
     `
 }
 
 const loadBoardSummary = async (boardId) => {
-    const tasks = await REMOTE_getData(`boards/${boardId}/tasks`);
+    const board = await REMOTE_getData(`boards/${boardId}`);
+    const {tasks} = board;
 
-    const tasksInBoard = Object.values(tasks).join(',').replaceAll(',,', ',').split(',').length;
-    const tasksInProgress = tasks["in-progress"].length;
-    const tasksAwaitingFeeback = tasks["awaiting-feedback"].length;
-    const tasksToDo = tasks["to-do"].length;
-    const tasksDone = tasks["done"].length;
+    const tasksInBoard = Object.values(tasks).map(a => Object.values(a).length).reduce((total, current) => total += current, 0)
+    const tasksInProgress = Object.values(tasks["in-progress"]).length;
+    const tasksAwaitingFeeback = Object.values(tasks["awaiting-feedback"]).length;
+    const tasksToDo = Object.values(tasks["to-do"]).length;
+    const tasksDone = Object.values(tasks["done"]).length;
 
     $('#tasks-in-board h1').innerText = tasksInBoard;
     $('#tasks-in-progress h1').innerText = tasksInProgress;
@@ -78,7 +84,7 @@ const scrollSummaryContent = (direction) => {
     }, 500)
 }
 
-const selectBoardSummary = () => {
+const selectBoardSummary = (id) => {
     const button = event.currentTarget;
     let buttonIndex;
     let centeredBtnIndex;
@@ -105,7 +111,7 @@ const selectBoardSummary = () => {
         }
         scrollSummaryContent(direction);
     }
-    loadBoardSummary(button.name);
+    loadBoardSummary(id);
 }
 
 const setArrowVisibility = (buttonIndex, boardsLength) => {

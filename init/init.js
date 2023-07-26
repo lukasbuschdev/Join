@@ -17,11 +17,6 @@ const isSessionExpired = () => {
     }
 }
 
-function loadContent(template) {
-    const url = `../assets/templates/init/${template}_template.html`;
-    $('#content').includeTemplate(url);
-}
-
 const validName = (nameInput) => /^(?=.{4,20}$)(?![_])(?!.*[_]{2})[a-zA-Z0-9_]+(?<![_])$/.test(nameInput);
 
 const validEmail = (emailInput) => /^(?=[a-zA-Z0-9])(?!.*[^a-zA-Z0-9]{2})[a-zA-Z0-9_!#$%&'*+\/=?`{|}~^.-]{0,63}[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9.-]*\.\w{2,3}$/.test(emailInput);
@@ -32,16 +27,6 @@ const validPassword = (passwordInput) => {
 }
 
 const validPhone = (phoneInput) => /^(?!00)0?\d{3}\s?(?!.*[\s])\d+/.test(phoneInput);
-
-const goToLogin = async () => {
-    $('[include-template]').setAttribute('include-template', '../assets/templates/init/login_template.html');
-    await includeTemplates();
-}
-
-const goToSignup = async () => {
-    $('[include-template]').setAttribute('include-template', '../assets/templates/init/signup_template.html');
-    await includeTemplates();
-}
 
 const togglePasswordVisibility = () => {
     event.preventDefault();

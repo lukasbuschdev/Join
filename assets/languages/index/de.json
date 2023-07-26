@@ -1,9 +1,9 @@
 {
     "title-summary": "Join - Überblick",
-    "title-boards": "Join - Tafel",
-    "title-add-task": "Join - Aufgabe hinzufügen",
+    "title-board": "Join - Tafel",
+    "title-add_task": "Join - Aufgabe hinzufügen",
     "title-contacts": "Join - Kontakte",
-    "title-legal-notice": "Join - Rechtliches",
+    "title-legal_notice": "Join - Rechtliches",
 
     "summary": "Überblick",
     "add-task": "Neue Aufgabe",

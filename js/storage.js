@@ -32,21 +32,26 @@ const REMOTE_upload = async (directory, data) => {
     });
 }
 
-const REMOTE_getData = async (path) => {
+const REMOTE_getData = async (path, methods) => {
     if (!path) return
     if (!/^(?=[a-zA-Z0-9])(?!.*\/\/)[a-zA-Z0-9\/-]*[a-zA-Z0-9]$/.test(path)) {
         console.error(`'${path}' is not a valid path!`);
         return
     };
     let pathArray = path.split('/');
-    const directory = pathArray.shift();
-    const pathSelector = pathArray.map(directory => `["${directory}"]`).join('');
+    const directory = pathArray[0];
+    const pathSelector = pathArray.slice(1).map(directory => `["${directory}"]`).join('');
 
     const data = await REMOTE_download(directory);
     if(!data) return;
 
     if (parse(`${JSON.stringify(data)}${pathSelector}`)) {
-        return parse(`${JSON.stringify(data)}${pathSelector}`);
+        const result = parse(`${JSON.stringify(data)}${pathSelector}`);
+        if (pathArray.at(-2) == "users") return (methods) ? new User(result) : removeMethods(new User(result));
+        else if (pathArray.at(-2) == "boards") return (methods) ? new Board(result) : removeMethods(new Board(result));
+        else if (pathArray.at(-3) == "tasks") return (methods) ? new Task(result) : removeMethods(new Task(result));
+        else return result;
+
     } else {
         console.error(`subdirectory '${path}' not found!`);
         return undefined;
@@ -65,11 +70,7 @@ const REMOTE_setData = async (targetPath, upload) => {
         }
         currentObj = currentObj[directory];
     }
-    if (Array.isArray(currentObj)) {
-        currentObj.push(upload)
-    } else {
-        Object.assign(currentObj, upload);
-    }
+    Object.assign(currentObj, upload);
     return REMOTE_upload(directories[0], data);
 }
 
@@ -160,12 +161,12 @@ const getContactsData = async () => {
 // LOCAL STORAGE
 
 const LOCAL_setData = (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, (typeof value == "object") ? JSON.stringify(value) : value);
 }
 
 const LOCAL_getData = (key) => {
     let data = localStorage.getItem(key);
-    return (!!data) ? JSON.parse(data) : undefined; 
+    return (typeof data == "object") ? JSON.parse(data) : data; 
 }
 
 const LOCAL_removeData = (key) => {
@@ -202,10 +203,10 @@ const uploadDevData = async () => {
 
 // UserData
 
-const getCurrentUserData = async () => {
-    const uid = currentUserId();
+const getCurrentUser = async (methods) => {
+    const uid = currentUserId() ?? "guest";
     if (!uid) return null;
-    return await REMOTE_getData(`users/${uid}`)
+    return REMOTE_getData(`users/${uid}`, methods);
 }
 
 const loadUserData = async () => {
@@ -225,3 +226,5 @@ const setUserImg = (img, name) => {
     imgContainer.src = img ?? "";
     if (!img) $('header .user-img-container > *').innerText = name.slice(0, 2).toUpperCase();
 }
+
+// BOARDS

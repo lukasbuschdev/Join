@@ -1,11 +1,18 @@
-const currentDirectory = () => location.pathname.split('/').filter(i=>i !== "").at(-1).split('.')[0];
+// let directories = [];
+const currentDirectory = () => window.location.pathname.split('/').at(-1);
+const goTo = (directory, options) => {
+    const search = options?.search ?? location.search;
+    const reroute = options?.reroute ?? false; 
+    const newUrl = `/Join/${directory}${search}`;
+    if (reroute) location.href = newUrl;
+    else history.pushState(directory, '', newUrl);
+}
 const currentUserId = () => (searchParams().get('uid') == null) ? undefined : `${searchParams().get('uid')}`;
 
-
-$$('div[include-template]').for(container => {
-    container.includeTemplate();
-    LANG_load();
-});
+// $$('div[include-template]').for(container => {
+//     container.includeTemplate();
+//     LANG_load();
+// });
 
 const menuOptionInitator = new MutationObserver(
     mutation => {
@@ -66,7 +73,7 @@ const initInactivity = () => {
 // )
 
 const renderUserData = async () => {
-    const { name, img, color } = await getCurrentUserData();
+    const { name, img, color } = await getCurrentUser();
     $$('[data-user-data]').for(
         (userField) => {
             const dataType = userField.dataset.userData;
@@ -92,6 +99,7 @@ const renderColor = (userField, color) => {
 };
 
 // redirect();
+
 initMenus();
 LANG_load();
 REMOTE_clearVerifications();

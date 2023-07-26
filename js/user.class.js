@@ -3,7 +3,6 @@ class User extends Account {
         super(userData);
         this.password = userData.password;
         this.color = userData.color ?? "";
-        if (!methods) return removeMethods(this)
     }
 
     setPicture = async (img) => await this.setProperty("img", img);
@@ -20,7 +19,7 @@ class User extends Account {
         this.generateVerificationCode();
         this.#sendMail("verification");
         await REMOTE_setData('verification', {[this.id]: { verifyCode: this.verifyCode, userData: this }});
-        goTo(`./verify_account.html?uid=${this.id}`);
+        goTo('/Join/verify_account',`?uid=${this.id}`);
     }
 
     initPasswordReset = () => {
@@ -40,7 +39,7 @@ class User extends Account {
 
     verify = async () => {
         await REMOTE_removeData(`verification/${this.id}`);
-        await this.#update();
+        await this.update();
     }
 
     forgotPassword = async () => {
@@ -59,8 +58,8 @@ class User extends Account {
     logIn = async () => {
         this.loggedIn = 'true';
         this.setCredentials();
-        await this.#update();
-        goTo(`../index/index.html?uid=${this.id}`);
+        await this.update();
+        goTo('summary', {search: `?uid=${this.id}`, reroute: true});
     }
 
     rememberMe = () => {
@@ -69,7 +68,7 @@ class User extends Account {
         if ("PasswordCredential" in window) this.setCredentials();
     }
 
-    #update = async () => {
+    update = async () => {
         return await REMOTE_setData('users', {[this.id]: this});
     }
 
@@ -87,4 +86,17 @@ class User extends Account {
     unknownDevice = async (deviceData) => {
         await this.#sendMail("unknownDevice", deviceData);
     }
+
+    addBoard = async (boardData) => {
+
+        if (typeof boardData !== "object") return;
+        boardData.owner = this.id;
+        const board = new Board(boardData);
+        await board.update();
+        this.boards.push(board.id);
+        this.update();
+        return board;
+    }
+
+    getBoard = async (boardId) => await REMOTE_getData(`boards/${boardId}`, true);
 }

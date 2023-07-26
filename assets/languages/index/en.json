@@ -1,9 +1,9 @@
 {
     "title-summary": "Join - Summary",
-    "title-boards": "Join - Boards",
-    "title-add-task": "Join - Add Task",
+    "title-board": "Join - Board",
+    "title-add_task": "Join - Add Task",
     "title-contacts": "Join - Contacts",
-    "title-legal-notice": "Join - Legal notice",
+    "title-legal_notice": "Join - Legal notice",
 
     "summary": "Summary",
     "add-task": "Add Task",

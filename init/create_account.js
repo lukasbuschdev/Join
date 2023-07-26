@@ -14,7 +14,7 @@ const submitUpload = async () => {
     formData.append('user-img', img);
     formData.append('uid', uid)
     
-    const {  imageSrc } = await (await fetch('../php/uploadImg.php', {
+    const { imageSrc } = await (await fetch('/sJoin/php/uploadImg.php', {
         method: 'POST',
         body: formData
     })).json();
@@ -44,14 +44,13 @@ const removeUpload = async () => {
 
 const finishSetup = async () => {
     event.preventDefault();
-    const userData = await getCurrentUserData();
     const phoneInput = $('#phone input').value;
     const phoneValidity = validPhone(phoneInput);
     
     throwErrors({ identifier: 'invalid-phone-number', bool: (phoneInput == true && !phoneValidity) });
     if (phoneInput !== "" && phoneValidity == false) return
 
-    const user = new User(userData);
+    const user = await getCurrentUser();
     const userColor = HSLToHex($('.user-img-container').style.getPropertyValue('--user-clr'));
 
     if (userColor) user.setColor(userColor);

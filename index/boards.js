@@ -1,8 +1,30 @@
+const initBoard = () => {
+    renderTasks();
+}
+
+const renderTasks = async () => {
+    const [boardId] = await REMOTE_getData(`users/${currentUserId()}/boards`) ?? [undefined];
+    if (!boardId) return;
+    const board = await REMOTE_getData(`boards/${boardId}`, true);
+    if (!board) return;
+    Object.entries(board.tasks).for(
+        async ([category, tasks]) => {
+            const container = $(`#${category}`);
+            for await (const task of Object.values(tasks)) {
+                container.innerHTML += await taskTemplate(task);
+            };
+        }
+    )
+}
+
 const addTaskModal = async () => {
     await includeTemplate($('#add-task-modal > div'));
     $('#add-task-modal').openModal();
 }
 
+
+let waitForMovement = true;
+let taskNotActive = true;
 const addDragAndDrop = () => {
     const task = event.currentTarget;
     const { x, y } = task.getBoundingClientRect();
@@ -12,18 +34,37 @@ const addDragAndDrop = () => {
         offsetX: event.clientX - x,
         offsetY: event.clientY - y
     }
-    task.addEventListener("mousemove", dragHandler = () => {
-        taskDragger(startingPosition);
-    });
+
+    const clickTimeout = setTimeout(() => {
+        task.classList.add('active');
+    }, 200);
+
+    const dragHandler = () => taskDragger(startingPosition)
+
+    task.addEventListener("mousemove", dragHandler);
+
     document.addEventListener("mouseup", (event) => {
-        taskDropper(event, task, startingPosition);
+        if (!waitForMovement) taskDropper(event, task, startingPosition);
+        task.classList.remove('active');
+        waitForMovement = true;
+        taskNotActive = true;
         task.removeEventListener("mousemove", dragHandler);
+        clearTimeout(clickTimeout);
     }, { once: true });
 }
 
 const taskDragger = throttle(({ startingX, startingY }) => {
-    event.currentTarget.style.setProperty('--x', event.pageX - startingX);
-    event.currentTarget.style.setProperty('--y', event.pageY - startingY);
+    const task = event.currentTarget;
+    if (Math.abs(event.pageX - startingX) > 10) waitForMovement = false;
+    if (waitForMovement) return;
+
+    if (taskNotActive) {
+        task.classList.add('active');
+        taskNotActive = false;
+    };
+
+    task.style.setProperty('--x', event.pageX - startingX);
+    task.style.setProperty('--y', event.pageY - startingY);
     checkPlaceholder(event);
 }, 10)
 
@@ -53,16 +94,12 @@ const taskDropper = ({ pageX, pageY }, task, { offsetX, offsetY }) => {
             const deltaX = (pageX - parseInt(x)) - parseInt(offsetX);
             const deltaY = (pageY - parseInt(y)) - parseInt(offsetY);
             task.updatePosition(deltaX, deltaY);
-            log(taskWrapper.id)
         }
     })
     const start = Date.now()
     task.classList.add('drop-transition');
-    log(task.classList.contains('drop-transition'))
-    task.addEventListener("transitionstart", ()=>log('started'))
     task.addEventListener("transitionend", () => {
         task.classList.remove('drop-transition');
-        task.style.transitionDuration = '';
         log(Date.now() - start)
     }, { once: true });
     task.updatePosition();

@@ -2,7 +2,8 @@ body {
     display: grid;
     grid-template-columns: 232px 1fr;
     grid-template-rows: 85px 1fr;
-    min-height: 100vh;
+    height: 100vh;
+    height: 100dvh;
     width: 100%;
     transition: grid-template-columns var(--transition-fast);
 }
@@ -28,6 +29,7 @@ header {
 #content {
     background-color: var(--clr-bg-light);
     overflow: auto;
+    scrollbar-gutter: stable;
 }
 
 .logo {

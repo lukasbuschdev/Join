@@ -5,32 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join</title>
-    <link rel="icon" href="../assets/img/icons/logo.svg">
+    <link rel="icon" href="/Join/assets/img/icons/logo.svg">
 
-    <link rel="stylesheet" href="../fonts/fonts.css">
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="./init.css">
-    <link rel="stylesheet" href="./create_account.css">
+    <link rel="stylesheet" href="/Join/fonts/fonts.css">
+    <link rel="stylesheet" href="/Join/style.css">
+    <link rel="stylesheet" href="/Join/init/init.css">
+    <link rel="stylesheet" href="/Join/init/create_account.css">
 
-    <script src="../js/prototype_extensions.js"></script>
-    <script src="../js/utilities.js"></script>
-    <script src="../js/script.js"></script>
-    <script src="../js/storage.js"></script>
-    <script src="../js/mail_templates.js"></script>
-    <script src="../js/base.class.js"></script>
-    <script src="../js/account.class.js"></script>
-    <script src="../js/user.class.js"></script>
-    <script src="../js/language.js"></script>
-    <script src="../js/setup.js" defer></script>
+    <script src="/Join/js/prototype_extensions.js"></script>
+    <script src="/Join/js/utilities.js"></script>
+    <script src="/Join/js/script.js"></script>
+    <script src="/Join/js/storage.js"></script>
+    <script src="/Join/js/mail_templates.js"></script>
+    <script src="/Join/js/base.class.js"></script>
+    <script src="/Join/js/account.class.js"></script>
+    <script src="/Join/js/user.class.js"></script>
+    <script src="/Join/js/language.js"></script>
+    <script src="/Join/js/setup.js" defer></script>
 
-    <script src="./init.js"></script>
+    <script src="/Join/init/init.js"></script>
 
-    <script src="./create_account.js" defer></script>
+    <script src="/Join/init/create_account.js" defer></script>
 </head>
 <body class="bg-light" onload="initCreateAccount()" data-title="title-create-account">
     <div id="logo">
-        <img src="../assets/img/icons/logo.svg" alt="" width="100">
-        <img src="../assets/img/icons/logo_white.svg" alt="" width="100">
+        <img src="/Join/assets/img/icons/logo.svg" alt="" width="100">
+        <img src="/Join/assets/img/icons/logo_white.svg" alt="" width="100">
     </div>
     <div id="content">
         <div>
@@ -49,6 +49,7 @@
                             <div id="color-cursor"></div>
                         </div>
                         <label class="border" for="choose-image"></label>
+                        <input type="file" style="display: none;" id="choose-image" name="user-img" accept="image/*" onchange="submitUpload()">
                     </div>
                     <span id="user-name" class="txt-600"></span>
                 </div>
@@ -71,7 +72,7 @@
                             </div>
                         <input type="tel" required name="" class="txt-normal" placeholder="Phone number (optional)" data-lang-placeholder="phone-number">
                         <div class="grid-center">
-                            <img src="../assets/img/icons/phone.svg" alt="">
+                            <img src="/Join/assets/img/icons/phone.svg" alt="">
                         </div>
                     </div>
                     <div class="error" id="invalid-phone-number">
@@ -80,7 +81,6 @@
                 </div>
                 
                 <div class="btn-container">
-                    <input type="file" style="display: none;" id="choose-image" name="user-img" onchange="submitUpload()">
                     <button type="submit" class="btn btn-primary txt-700" id="login" data-lang="finish-setup" onclick="finishSetup()">Finish Setup</button>
                 </div>
             </div>

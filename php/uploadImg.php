@@ -10,16 +10,16 @@ if (isset($_POST['uid']))
         $fileName = $file['name'];
         $tempName = $file['tmp_name'];
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
-        $target = '../assets/img/userImg/'. $uid . '.' . $extension;
+        $target = '/Join/assets/img/userImg/'. $uid . '.' . $extension;
     }
     
-    $imgDir = scandir('../assets/img/userImg');
+    $imgDir = scandir('/Join/assets/img/userImg');
     $userImg = preg_grep("/^$uid/", $imgDir);
     $userImgExists = !empty($userImg);
 
     if ($userImgExists) {
         foreach($userImg as $img) {
-            unlink('../assets/img/userImg/' . $img);
+            unlink('/Join/assets/img/userImg/' . $img);
         }
     }
 

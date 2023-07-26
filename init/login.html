@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join</title>
+    <link rel="icon" href="/Join/assets/img/icons/logo.svg">
+
+    <link rel="stylesheet" href="/Join/fonts/fonts.css">
+    <link rel="stylesheet" href="/Join/style.css">
+    <link rel="stylesheet" href="/Join/init/init.css">
+    <link rel="stylesheet" href="/Join/init/create_account.css">
+
+    <script src="/Join/js/prototype_extensions.js"></script>
+    <script src="/Join/js/utilities.js"></script>
+    <script src="/Join/js/script.js"></script>
+    <script src="/Join/js/storage.js"></script>
+    <script src="/Join/js/base.class.js"></script>
+    <script src="/Join/js/account.class.js"></script>
+    <script src="/Join/js/user.class.js"></script>
+    <script src="/Join/js/email.class.js"></script>
+    <script src="/Join/js/mail_templates.js"></script>
+    <script src="/Join/js/language.js"></script>
+    <script src="/Join/js/setup.js" defer></script>
+
+    <script src="/Join/init/init.js"></script>
+
+    <script src="/Join/init/login.js" defer></script>
+    <script src="/Join/init/signup.js" defer></script>
+    <script src="/Join/init/create_account.js" defer></script>
+</head>
+<body class="bg-light" onload="init()">
+    <div id="logo">
+        <img src="/Join/assets/img/icons/logo.svg" alt="" width="100">
+        <img src="/Join/assets/img/icons/logo_white.svg" alt="" width="100">
+    </div>
+    <div id="content">
+        <div class="card" id="login" data-title="title-login">
+            <div class="header-container">
+                <h2 class="txt-center" data-lang="log-in">Log in</h2>
+            </div>
+        
+            <form novalidate>
+                <div class="inp-wrapper" id="email">
+                    <div class="inp-container radius-10">
+                        <input type="email" required name="" class="txt-normal" placeholder="Email or Username" data-lang-placeholder="email-or-username">
+                        <div class="grid-center">
+                            <img src="/Join/assets/img/icons/mail.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="error" id="invalid-email-or-username">
+                        <span data-lang="email-or-username-not-found">Email or username not found!</span>
+                    </div>
+                </div>
+        
+                <div class="inp-wrapper" id="password">
+                    <div class="inp-container radius-10">
+                        <input type="password" required name="" class="txt-normal" placeholder="Password" data-lang-placeholder="password">
+                        <button class="grid-center" onclick="togglePasswordVisibility()" tabindex="-1">
+                            <img src="/Join/assets/img/icons/hide.png" class="eye">
+                        </button>
+                    </div>
+                    <div class="error" id="wrong-password">
+                        <span data-lang="wrong-password">Wrong Password!</span>
+                    </div>
+                </div>
+        
+                <div class="login-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember-me">
+                        <label for="remember-me" class="txt-small" data-lang="remember-me">Remember Me</label>
+                    </div>
+                    <a href="/Join/forgot_password" class="txt-blue txt-small" data-lang="forgot-password"></a>
+                </div>
+        
+                <div class="btn-container">
+                    <button type="submit" class="btn btn-primary txt-700" id="login" onclick="logIn()" data-lang="log-in">Log In</button>
+                    <button class="btn btn-secondary txt-700" id="guest-login" data-lang="guest-log-in">Guest Log in</button>
+                </div>
+        
+            </form>
+        
+        </div>
+        <div id="sign-up">
+            <span class="txt-normal" data-lang="not-join-user">Not a Join user?</span>
+            <a href="/Join/signup" class="btn btn-primary txt-small txt-700" data-lang="sign-up">Sign up</a>
+        </div>
+    </div>
+</body>
+</html>

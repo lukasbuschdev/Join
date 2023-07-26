@@ -17,6 +17,6 @@ const forgotPassword = async () => {
     if (!user) return;
 
     await notification("email-sent");
-    log(await user.forgotPassword());
-    goTo('./init.html')
+    // log(await user.forgotPassword());
+    goTo('login', {reroute: true});
 }

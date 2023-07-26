@@ -19,7 +19,7 @@ class Email {
             message: this.message,
             subject: this.subject
         };
-        return (await fetch(`../php/mailto.php`, {
+        return (await fetch(`/Join/php/mailto.php`, {
             method: 'POST',
             body: JSON.stringify(payload)
         })).text();
