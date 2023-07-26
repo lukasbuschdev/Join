@@ -10,7 +10,7 @@ const logIn = async () => {
         { identifier: 'wrong-password', bool: !passwordValidity || false },
         );
     if(!user || !passwordValidity) return console.error(user);
-    // user.rememberMe();
+    user.rememberMe();
     // await checkDevice(user);
     user.logIn();
 }

@@ -56,15 +56,17 @@ class User extends Account {
     }
 
     logIn = async () => {
+        LOCAL_setData('loggedIn', true);
         this.loggedIn = 'true';
         this.setCredentials();
         await this.update();
         goTo('summary', {search: `?uid=${this.id}`, reroute: true});
     }
-
+    
     rememberMe = () => {
         const rememberLogin = $('#remember-me').checked || false;
-        if (rememberLogin == false) return;
+        if (rememberLogin == false) return LOCAL_setData('rememberMe', false);
+        LOCAL_setData('rememberMe', true);
         if ("PasswordCredential" in window) this.setCredentials();
     }
 

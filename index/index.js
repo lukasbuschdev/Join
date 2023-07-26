@@ -1,6 +1,17 @@
 const init = () => {
+    checkLogin();
     $(`#${currentDirectory().replace('_','-')}`).click();
     renderUserData();
+}
+if (LOCAL_getData('rememberMe') == 'false') {
+    window.addEventListener("beforeunload", () => LOCAL_setData('loggedIn', false))
+}
+
+const checkLogin = () => {
+    // log(LOCAL_getData('loggedIn'), true, 'true')
+    if (LOCAL_getData('loggedIn') == 'false') {
+        goTo('login', {search: '', reroute: true});
+    }
 }
 
 
