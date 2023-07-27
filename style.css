@@ -90,6 +90,7 @@ button.bg-dark {
     gap: 10px;
     font-size: 21px;
     cursor: pointer;
+    width: fit-content;
 }
 
 .btn:hover {
@@ -492,6 +493,21 @@ dialog {
     overflow: hidden;
 }
 
+.big-modal {
+    border-radius: 30px;
+    animation: swipe-in 300ms ease-in-out;
+    background: none;
+}
+
+@keyframes swipe-in {
+    from{
+        translate: 100vw 0;
+    }
+    to{
+        translate: 0 0;
+    }
+}
+
 .dlg-notification {
     flex-direction: column;
     justify-content: flex-end;
@@ -531,6 +547,45 @@ dialog {
         opacity: 1;
         translate: 0 0;
     }
+}
+
+/* INPUT */
+
+.inp-container {
+    padding: 13px 21px;
+    border: 1px solid var(--clr-placeholder);
+    display: flex;
+    justify-content: space-between;
+    transition: border-color var(--transition-fast);
+}
+
+.inp-container.active {
+    border-color: var(--clr-orange);
+}
+
+.inp-container > button {
+    width: 35px;
+}
+
+.inp-container.inp-code {
+    border: unset;
+    padding: unset;
+    gap: 5px;
+}
+
+.inp-container.inp-code input {
+    height: 70px;
+    aspect-ratio: 1;
+    border: 1px solid var(--clr-placeholder);
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--clr-active);
+}
+
+.inp-wrapper {
+    min-width: fit-content;
+    max-width: 422px;
+    width: 100%;
 }
 
 /* DISPLAY */

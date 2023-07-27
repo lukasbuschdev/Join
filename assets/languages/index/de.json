@@ -18,8 +18,9 @@
 
     "header-kanban": "Kanban Projektmanager",
 
-
-
+    "summary-subtext": "Alles an einem Ort",
+    "add-board": "Neue Tafel",
+    "add-categories": "Kategorien hinzufügen",
 
     "heading-add-task": "Aufgabe hinzufügen",
     "title": "Titel",

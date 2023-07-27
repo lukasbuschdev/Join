@@ -1,7 +1,10 @@
 <div class="summary-wrapper column">
     <div class="summary-header row">
         <h2 data-lang="summary" class="row">Summary</h2>
-        <h3>Everything in a nutshell!</h3>
+        <h3 data-lang="summary-subtext">Everything in a nutshell!</h3>
+        <button class="add-board btn btn-primary btn-add-task txt-normal txt-700" onclick="createBoardModal()">
+            <span data-lang="add-board">Add board</span>
+        </button>
     </div>
 
     <div class="summary-body column">
@@ -33,7 +36,7 @@
                     </div>
                 </div>
                 <div id="summary-data" class="summary-grid column">
-                    <div id="add-board"><h2>Add Board</h2></div>
+                    <!-- <div id="add-board"><h2>Add Board</h2></div> -->
                     <div class="content column d-none">
                         <div class="row">
                             <button id="tasks-in-board" class="summary-btn column">
@@ -95,4 +98,31 @@
 
 
     </div>
+
+    <dialog type="modal" id="add-board" class="big-modal">
+        <div class="add-board-content row">
+            <div class="add-board-header column">
+                <h2 data-lang="add-board">New Board</h2>
+            </div>
+            <div class="add-board-data column gap-25">
+                <div class="inp-wrapper gap-10 column">
+                    <div class="inp-container radius-10">
+                        <input type="text" name="" id="" data-lang-placeholder="title">
+                    </div>
+                </div>
+                <div class="inp-wrapper gap-10 column">
+                    <div class="inp-container radius-10">
+                        <input type="text" name="" id="" data-lang-placeholder="add-categories">
+                        <div class="grid-center">
+                            <img src="/Join/assets/img/icons/colour.png" width="20">
+                        </div>
+                    </div>
+                    <div class="categories-container">
+                        <div class="task-category" style="--clr: green;">Sales</div>
+                    </div>
+                </div>
+                <div class="">Add Collaborators</div>
+            </div>
+        </div>
+    </dialog>
 </div>

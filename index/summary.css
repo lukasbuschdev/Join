@@ -4,7 +4,6 @@
 
 .summary-wrapper {
     height: 100%;
-    justify-content: space-between;
     padding: 2vh 4rem;
 }
 
@@ -24,6 +23,7 @@
 
 .summary-body {
     gap: 30px;
+    margin: auto;
 }
 
 .summary-content-wrapper {
@@ -251,10 +251,6 @@
     box-shadow: 0px 0px 4px 0px #0000001A;
 }
 
-.summary-selection-boards button:not(.active):hover {
-    /* background: linear-gradient(180deg, #f9f9f9 0%, #f0f0f0 100%); */
-}
-
 .summary-selection-boards .active {
     background-color: var(--clr-dark);
 }
@@ -262,3 +258,5 @@
 .summary-selection-boards .centered {
     scroll-snap-align: center;
 }
+
+/* CREATE BOARD */

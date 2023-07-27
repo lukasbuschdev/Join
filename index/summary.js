@@ -12,7 +12,6 @@ const renderBoards = async () => {
     }
     const activeBoardIndex = SESSION_getData('activeBoardIndex') ?? 0;
     $('#summary-data .content').classList.remove('d-none');
-    $('#summary-data #add-board').classList.add('d-none');
 
     $('.summary-selection-boards').innerHTML = '';
     $('.summary-selection-boards').renderItems(boards, summarySelectionTemplate);
@@ -126,4 +125,8 @@ const setArrowVisibility = (buttonIndex, boardsLength) => {
     } else if (buttonIndex == boardsLength - 1) {
         rightArrow.hide();
     }
+}
+
+const createBoardModal = () => {
+    $('#add-board').openModal();
 }

@@ -18,6 +18,10 @@
 
     "header-kanban": "Kanban Project Management Tool",
 
+    "summary-subtext": "Everything in a nutshell",
+    "add-board": "New Board",
+    "add-categories": "Add categories",
+
     "heading-add-task": "Add Task",
     "title": "Title",
     "description": "Description",

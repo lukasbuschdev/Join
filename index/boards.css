@@ -46,7 +46,7 @@
     background-color: white;
     width: 100%;
     min-height: 205px;
-    border-radius: 30px;
+    border-radius: 15px;
     padding: 18px 19px;
     box-shadow: 0px 0px 14px 3px #0000000A;
     display: flex;
@@ -156,18 +156,34 @@
     background: var(--priority) no-repeat center;
 }
 
-#add-task-modal {
-    border-radius: 30px;
-    padding: 15px;
-    /* translate: 0 0; */
-    animation: swipe-in 300ms ease-in-out;
+/* ADD BOARD */
+
+.add-board-content {
+    height: 594px;
+    width: 1025px;
 }
 
-@keyframes swipe-in {
-    from{
-        translate: 100vw 0;
-    }
-    to{
-        translate: 0 0;
-    }
+.add-board-content > div {
+    height: 100%;
+    padding: 15px;
+}
+
+.add-board {
+    margin-left: auto;
+}
+
+.add-board-header {
+    background: var(--clr-dark);
+    color: white;
+    justify-content: center;
+    width: 455px;
+}
+
+.add-board-data {
+    justify-content: center;
+    background-color: white;
+}
+
+dialog#add-board .task-category{
+    cursor: pointer;
 }
