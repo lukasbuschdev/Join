@@ -33,7 +33,7 @@ const loadContent = async () => {
     }
     if (currentDirectory() !== id) goTo(id)
     initTextLoadAnimationOvserver();
-    resetMenus();
+    initMenus();
 }
 
 const initTextLoadAnimationOvserver = () => {

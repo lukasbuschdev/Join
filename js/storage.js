@@ -49,7 +49,7 @@ const REMOTE_getData = async (path, methods) => {
         const result = parse(`${JSON.stringify(data)}${pathSelector}`);
         if (pathArray.at(-2) == "users") return (methods) ? new User(result) : removeMethods(new User(result));
         else if (pathArray.at(-2) == "boards") return (methods) ? new Board(result) : removeMethods(new Board(result));
-        else if (pathArray.at(-3) == "tasks") return (methods) ? new Task(result) : removeMethods(new Task(result));
+        else if (pathArray.at(-2) == "tasks") return (methods) ? new Task(result) : removeMethods(new Task(result));
         else return result;
 
     } else {
@@ -82,7 +82,7 @@ const REMOTE_removeData = async (path) => {
     let data = await REMOTE_getData(directory);
     if (!data) return;
     delete data[item];
-
+    if (!path.includes('/')) return error('can only remove subdirectory!');
     return REMOTE_upload(directory, data);
 }
 

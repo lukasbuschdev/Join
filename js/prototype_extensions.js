@@ -46,12 +46,7 @@ HTMLDialogElement.prototype.openModal = function () {
     this.addEventListener('mousedown', closeHandler = () => {
         if (this.$('div').contains(event.target)) return;
         this.$('.notification')?.classList.remove('anim-notification');
-        if (this.classList.contains('big-modal')) {
-            this.addEventListener('transitionend', () => this.closeModal(), {once: true});
-            this.classList.remove('active');
-        } else {
-            this.closeModal();
-        }
+        this.closeModal();
         this.inert = true;
     });
     if (this.classList.contains('dlg-notification')) {
@@ -61,7 +56,10 @@ HTMLDialogElement.prototype.openModal = function () {
 }
 
 HTMLDialogElement.prototype.closeModal = function () {
-    this.close();
+    if (this.classList.contains('big-modal')) {
+        this.addEventListener('transitionend', () => this.close(), {once: true});
+        this.classList.remove('active');
+    }
     this.removeEventListener('mousedown', closeHandler);
 }
 

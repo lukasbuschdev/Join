@@ -29,12 +29,11 @@ const summarySelectionTemplate = (board) => {
 const loadBoardSummary = async (boardId) => {
     const board = await REMOTE_getData(`boards/${boardId}`);
     const {tasks} = board;
-
-    const tasksInBoard = Object.values(tasks).map(a => Object.values(a).length).reduce((total, current) => total += current, 0)
-    const tasksInProgress = Object.values(tasks["in-progress"]).length;
-    const tasksAwaitingFeeback = Object.values(tasks["awaiting-feedback"]).length;
-    const tasksToDo = Object.values(tasks["to-do"]).length;
-    const tasksDone = Object.values(tasks["done"]).length;
+    const tasksInBoard = Object.values(tasks).length;
+    const tasksInProgress = Object.values(tasks).filter(({type}) => type == "in-progress").length;
+    const tasksAwaitingFeeback = Object.values(tasks).filter(({type}) => type == "awaiting-feedback").length;
+    const tasksToDo = Object.values(tasks).filter(({type}) => type == "to-do").length;
+    const tasksDone = Object.values(tasks).filter(({type}) => type == "done").length;
 
     $('#tasks-in-board h1').innerText = tasksInBoard;
     $('#tasks-in-progress h1').innerText = tasksInProgress;

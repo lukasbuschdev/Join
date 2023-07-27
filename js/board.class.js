@@ -6,12 +6,7 @@ class Board extends BaseClass {
         collaborators = [],
         ["date-of-creation"]: dateOfCreation = Date.now().toString(),
         ["date-of-last-edit"]: dateOfLastEdit = Date.now().toString(),
-        tasks = {
-            "to-do": {},
-            "in-progress": {},
-            "awaiting-feedback": {},
-            "done": {}
-        },
+        tasks = {},
         categories = {
             "Design": "#FF7A00",
             "Media": "#FFC701",
@@ -35,34 +30,25 @@ class Board extends BaseClass {
         const task = new Task(taskData, true);
         task.color = this.categories[taskData.category];
         task.boardId = this.id;
-        this.tasks[taskData.type][task.id] = task;
+        this.tasks[task.id] = task;
         await this.update();
         return task;
     }
 
     getTasks = async (taskIds) => {
-        let tasks = [];
-        const allTasks = Object.values(await REMOTE_getData(`boards/${this.id}/tasks`))
-        taskIds.for(
-            id => allTasks.for(
+        let allTasks = await REMOTE_getData(`boards/${this.id}/tasks`);
+        if (taskIds) {
+            allTasks = Object.values(allTasks).filter(
                 task => {
-                    if (task.hasOwnProperty(id)) tasks.push(task[id]);
+                    log(task.id, taskIds.includes(task.id))
+                    return taskIds.includes(task.id);
                 }
-            )
-        )
-        return tasks.map(
-            task => new Task(task)
-        )
+            ).map(
+                task => new Task(task)
+            );        
+        }
+        return allTasks;
     }
-
-    editTask = async (taskId) => {
-        let task;
-        Object.values(this.tasks).for(
-            taskType => {
-                if (taskType[taskId]) task = taskType[taskId];
-            } 
-        );
-    };
     
     addCollaborator = async (collaboratorId) => {
         const contacts = await REMOTE_getData(`users/${currentUserId()}/contacts`);

@@ -36,12 +36,13 @@ class Task extends BaseClass {
     assignTo = async (userId) => {
         const collaborators = await REMOTE_getData(`boards/${this.boardId}/collaborators`);
         if (!collaborators.includes(userId)) return error('user not in collaborators!');
+        if (this.assignedTo.includes(userId)) return error('user already assigned!')
         this.assignedTo.push(userId);
         return this.update();
     }
 
     update = () => {
-        return REMOTE_setData(`boards/${this.boardId}/tasks/${this.type}`, {[this.id]: this});
+        return REMOTE_setData(`boards/${this.boardId}/tasks`, {[this.id]: this});
     }
 }
 

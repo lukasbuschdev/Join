@@ -7,14 +7,9 @@ const renderTasks = async () => {
     if (!boardId) return;
     const board = await REMOTE_getData(`boards/${boardId}`, true);
     if (!board) return;
-    Object.entries(board.tasks).for(
-        async ([category, tasks]) => {
-            const container = $(`#${category}`);
-            for await (const task of Object.values(tasks)) {
-                container.innerHTML += await taskTemplate(task);
-            };
-        }
-    )
+    for await (const task of Object.values(board.tasks)) {
+        $(`#${task.type}`).innerHTML += await taskTemplate(task);
+    };
 }
 
 const addTaskModal = async () => {
@@ -55,7 +50,7 @@ const addDragAndDrop = () => {
 
 const taskDragger = throttle(({ startingX, startingY }) => {
     const task = event.currentTarget;
-    if (Math.abs(event.pageX - startingX) > 10) waitForMovement = false;
+    if (Math.abs(event.pageX - startingX) > 10 || Math.abs(event.pageY - startingY) > 10) waitForMovement = false;
     if (waitForMovement) return;
 
     if (taskNotActive) {
@@ -89,7 +84,8 @@ const taskDropper = ({ pageX, pageY }, task, { offsetX, offsetY }) => {
             y < pageY && pageY < (y + height)) {
             taskWrapper.classList.remove('placeholder');
             task.updatePosition();
-            taskWrapper.append(task)
+            taskWrapper.append(task);
+            changeTaskType(task, taskWrapper.id)
             const { x, y } = task.getBoundingClientRect();
             const deltaX = (pageX - parseInt(x)) - parseInt(offsetX);
             const deltaY = (pageY - parseInt(y)) - parseInt(offsetY);
@@ -113,4 +109,10 @@ const setTransitionSpeed = (el, deltaX, deltaY) => {
 const updatePosition = (el, x = 0, y = 0) => {
     el.style.setProperty('--x', `${x}`);
     el.style.setProperty('--y', `${y}`);
+}
+
+const changeTaskType = async (taskElement, newType) => {
+    const [boardId, taskId] = taskElement.dataset.id.split('/');
+    const task = await REMOTE_getData(`boards/${boardId}/tasks/${taskId}`, true);
+    await task.setProperty('type', newType);
 }

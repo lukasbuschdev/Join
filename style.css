@@ -274,6 +274,10 @@ h3 {
     font-size: 1.6875rem;
 }
 
+h4 {
+    font-weight: 700;
+}
+
 .radius-10 {
     border-radius: 10px;
 }
