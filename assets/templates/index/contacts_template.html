@@ -19,26 +19,26 @@
         <span data-lang="btn-new-contact">New contact</span>
     </button>
 
-    <dialog id="add-contact-modal" type="modal" inert>
+    <dialog id="add-contact-modal" type="modal" class="big-modal" inert>
         <div class="add-contact-container row">
             <div class="add-contact-theme column">
-                <img src="../assets/img/icons/logo_white.svg">
+                <img src="/Join/assets/img/icons/logo_white.svg">
                 <h1 data-lang="add-contact-heading">Add contact</h1>
                 <span data-lang="add-contact-subheading">Tasks are better with a team!</span>
             </div>
 
             <div class="user-img-container" data-img="false">
                 <h3></h3>
-                <img class="user-img-gray" src="../assets/img/icons/user_img_gray.svg">
+                <img class="user-img-gray" src="/Join/assets/img/icons/user_img_gray.svg">
             </div>
 
             <div class="add-contact-field column">
-                <img onclick="closeAddContact()" class="close" src="../assets/img/icons/close.svg" alt="Close">
+                <img onclick="closeAddContact()" class="close" src="/Join/assets/img/icons/close.svg" alt="Close">
 
                 <div class="search-result-container row gap-25">
                     <div class="user-img-container" data-img="false">
                         <h3></h3>
-                        <img class="user-img-gray" src="../assets/img/icons/user_img_gray.svg">
+                        <img class="user-img-gray" src="/Join/assets/img/icons/user_img_gray.svg">
                     </div>
                     <div class="search-contact column">
                         <input id="input-name" type="text" oninput="getInput()" class="txt-normal" placeholder="Search names..." autocomplete="off">
@@ -59,7 +59,7 @@
         </div>
     </dialog>
 
-    <dialog id="add-task-modal" type="modal">
-        <div include-template="../assets/templates/index/add-task_template.html"></div>
+    <dialog id="add-task-modal" type="modal" class="big-modal">
+        <div include-template="/Join/assets/templates/index/add-task_template.html"></div>
     </dialog>
 </div>

@@ -91,6 +91,7 @@ button.bg-dark {
     font-size: 21px;
     cursor: pointer;
     width: fit-content;
+    white-space: nowrap;
 }
 
 .btn:hover {
@@ -273,10 +274,6 @@ h3 {
     font-size: 1.6875rem;
 }
 
-h4 {
-    font-weight: 700;
-}
-
 .radius-10 {
     border-radius: 10px;
 }
@@ -436,6 +433,7 @@ h4 {
     aspect-ratio: 1;
     flex-shrink: 0;
     transition: --text-clr var(--transition-fast);
+    z-index: 1;
 }
 
 @property --text-clr {
@@ -495,17 +493,13 @@ dialog {
 
 .big-modal {
     border-radius: 30px;
-    animation: swipe-in 300ms ease-in-out;
     background: none;
+    transition: translate 300ms ease-in-out;
+    translate: 100vw 0;
 }
 
-@keyframes swipe-in {
-    from{
-        translate: 100vw 0;
-    }
-    to{
-        translate: 0 0;
-    }
+.big-modal.active {
+    translate: 0 0;
 }
 
 .dlg-notification {

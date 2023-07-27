@@ -60,14 +60,14 @@ function closeAddContact() {
 
 function clearInput(){
     let input = $("#input-name");
-      if (input.value !="") {
+      if (input.value !=="") {
           input.value = "";
       }
 }
 
 function clearImage() {
     let image = $('.user-img-gray');
-    image.src = "../assets/img/icons/user_img_gray.svg";
+    image.src = "/Join/assets/img/icons/user_img_gray.svg";
 }
 
 function clearResult() {

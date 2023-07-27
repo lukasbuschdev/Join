@@ -259,4 +259,36 @@
     scroll-snap-align: center;
 }
 
-/* CREATE BOARD */
+/* ADD BOARD */
+
+.add-board-content {
+    height: 594px;
+    width: 1025px;
+}
+
+.add-board-content > div {
+    height: 100%;
+    padding: 15px;
+}
+
+.add-board {
+    margin-left: auto;
+}
+
+.add-board-header {
+    background: var(--clr-dark);
+    color: white;
+    justify-content: center;
+    width: 455px;
+    gap: 12px;
+}
+
+.add-board-data {
+    justify-content: center;
+    background-color: white;
+    flex-grow: 1;
+}
+
+dialog#add-board .task-category{
+    cursor: pointer;
+}

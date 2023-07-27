@@ -109,6 +109,10 @@ span {
 }
 
 
+#add-task-modal > div {
+    width: 1080px;
+    background-color: white;
+}
 
 /* MOBILE VERSION MAX.-WIDTH 1100px */
 

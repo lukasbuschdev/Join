@@ -39,11 +39,19 @@ HTMLElement.prototype.$$ = function (sel) {
 
 HTMLDialogElement.prototype.openModal = function () {
     this.showModal();
+    if (this.classList.contains('big-modal')) {
+        this.classList.add('active');
+    };
     this.inert = false;
     this.addEventListener('mousedown', closeHandler = () => {
         if (this.$('div').contains(event.target)) return;
-        this.$('.notification')?.classList.remove('anim-notification')
-        this.closeModal();
+        this.$('.notification')?.classList.remove('anim-notification');
+        if (this.classList.contains('big-modal')) {
+            this.addEventListener('transitionend', () => this.closeModal(), {once: true});
+            this.classList.remove('active');
+        } else {
+            this.closeModal();
+        }
         this.inert = true;
     });
     if (this.classList.contains('dlg-notification')) {
