@@ -1,7 +1,7 @@
 body {
     display: grid;
     grid-template-columns: 232px 1fr;
-    grid-template-rows: 85px 1fr;
+    grid-template-rows: var(--header-height) 1fr;
     height: 100vh;
     height: 100dvh;
     width: 100%;

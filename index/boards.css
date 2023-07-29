@@ -1,6 +1,6 @@
 #board-wrapper {
     width: 100%;
-    min-height: 100%;
+    height: calc(100vh - 80px);
     padding: 2vh 4rem;
     display: flex;
     flex-direction: column;
@@ -17,6 +17,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 38px;
     flex-grow: 1;
+    overflow: auto;
 }
 
 #tasks > div {
@@ -155,3 +156,4 @@
     height: 20px;
     background: var(--priority) no-repeat center;
 }
+

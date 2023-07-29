@@ -129,3 +129,8 @@ const setArrowVisibility = (buttonIndex, boardsLength) => {
 const createBoardModal = () => {
     $('#add-board').openModal();
 }
+
+// const clearInput = () => {
+//     const input = event.currentTarget.parentElement.previousElementSibling;
+//     input.value = '';
+// }

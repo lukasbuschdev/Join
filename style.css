@@ -17,6 +17,8 @@
     --transition-fast: 100ms ease-in-out;
     --transition-medium: 175ms ease-in-out;
     --transition-slow: 250ms ease-in-out;
+
+    --header-height: 85px;
 }
 
 html {

@@ -141,6 +141,17 @@ const getUserByInput = async (input) => {
     return (userData == undefined) ? undefined : new User(userData);
 }
 
+const getUsersById = async (uids) => {
+    let returnData = {};
+    const allUsers = await REMOTE_getData(`users`);
+    uids.for(
+        uid => {
+            if (allUsers[uid]) returnData[uid] = allUsers[uid];
+        }
+    )
+    return returnData;
+}
+
 const getContactsData = async () => {
     const {contacts: contactIds} = await REMOTE_getData(`users/${currentUserId()}`);
     if (contactIds == false) return;

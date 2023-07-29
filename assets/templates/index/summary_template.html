@@ -102,6 +102,7 @@
     <dialog type="modal" id="add-board" class="big-modal">
         <div class="add-board-content row">
             <div class="add-board-header column">
+                <img src="/Join/assets/img/icons/logo_white.svg">
                 <h1 data-lang="add-board">New Board</h1>
                 <h3 data-lang="add-board-subtext">Projects that change the world!</h3>
             </div>
@@ -114,12 +115,23 @@
                 <div class="inp-wrapper gap-10 column">
                     <div class="inp-container radius-10">
                         <input type="text" name="" id="" data-lang-placeholder="add-categories">
-                        <div class="grid-center">
-                            <img src="/Join/assets/img/icons/colour.png" width="20">
+                        <div class="inp-buttons row gap-10">
+                            <button onclick="clearInput()">
+                                <img src="/Join/assets/img/icons/close.svg" width="20">
+                            </button>
+                            <div class="vertical-line"></div>
+                            <button onclick="addBoardCategory()">
+                                <img src="/Join/assets/img/icons/check_black.svg" width="20">
+                            </button>
                         </div>
                     </div>
                     <div class="categories-container">
-                        <div class="task-category" style="--clr: green;">Sales</div>
+                        <div class="task-category" style="--clr: green;">
+                            <span>Sales</span>
+                            <button onclick="deleteCategory()">
+                                <img src="/Join/assets/img/icons/close_white.svg" alt="">
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="">Add Collaborators</div>

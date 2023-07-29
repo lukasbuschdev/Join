@@ -268,7 +268,7 @@
 
 .add-board-content > div {
     height: 100%;
-    padding: 15px;
+    padding: 66px 46px;
 }
 
 .add-board {
@@ -283,12 +283,56 @@
     gap: 12px;
 }
 
+.add-board-header img {
+    width: 55px;
+}
+
+.add-board-header h3::after {
+    content: '';
+    display: block;
+    background: var(--clr-blue);
+    height: 3px;
+    width: 90px;
+    margin-top: 12px;
+}
+
 .add-board-data {
     justify-content: center;
     background-color: white;
     flex-grow: 1;
 }
 
+.add-board-data .inp-buttons button {
+    height: 20px;
+}
+
+.add-board-data input:placeholder-shown + .inp-buttons {
+    display: none;
+}
+
+.vertical-line {
+    height: 20px;
+    width: 1px;
+    background-color: var(--clr-placeholder);
+}
+
 dialog#add-board .task-category{
-    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+}
+
+dialog#add-board .task-category button {
+    height: 20px;
+    border-radius: 50%;
+    transition: background-color var(--transition-fast);
+}
+
+dialog#add-board .task-category button img {
+    height: 100%;
+}
+
+dialog#add-board .task-category button:hover {
+    background-color: #00000040;
 }

@@ -4,7 +4,6 @@ class BaseClass {
 
     setProperty = (property, value) => {
         this[property] = value;
-        log(this)
         this.update();
     }
 

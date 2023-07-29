@@ -8,12 +8,10 @@ if (LOCAL_getData('rememberMe') == 'false') {
 }
 
 const checkLogin = () => {
-    // log(LOCAL_getData('loggedIn'), true, 'true')
     if (LOCAL_getData('loggedIn') == 'false') {
         goTo('login', {search: '', reroute: true});
     }
 }
-
 
 window.addEventListener("popstate", (e) => {
     $(`#${currentDirectory().replace('_','-')}`)?.click();
@@ -33,7 +31,7 @@ const loadContent = async () => {
     }
     if (currentDirectory() !== id) goTo(id)
     initTextLoadAnimationOvserver();
-    initMenus();
+    resetMenus();
 }
 
 const initTextLoadAnimationOvserver = () => {
