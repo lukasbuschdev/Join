@@ -6,6 +6,18 @@
     <div class="add-task-rows column">
         <div class="inputs row gap-30">
             <div class="add-task-single-row">
+                <div class="drp">
+                    <span data-lang="assigned-to">Board</span>
+                    <div class="drp-wrapper">
+                        <div data-lang="select-board" class="drp-title" onclick="this.toggleDropDown()">Select board</div>
+                        <div class="drp-option-wrapper">
+                            <div class="drp-contacts" id="drp-board-container">
+                                <!--Add contacts here!-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="column">
                     <span data-lang="title">Title</span>
                     <textarea name="title" id="title" placeholder="Enter a title"></textarea>
@@ -23,26 +35,7 @@
                         <div class="drp-option-wrapper">
                             <div class="drp-contacts">
                                 <div class="drp-option" onclick="this.toggleActive()"></div>
-                                <div class="drp-option" onclick="this.toggleActive()"></div>
                             </div>
-                            <div class="drp-invite" data-lang="assigned-invite"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="drp">
-                    <span data-lang="assigned-to">Assigned to</span>
-                    <div class="drp-wrapper">
-                        <div data-lang="select-contacts-to-asign" class="drp-title" onclick="this.toggleDropDown()">Select contacts to assign</div>
-                        <div class="drp-option-wrapper">
-                            <div class="drp-you" data-lang="assigned-you">You</div>
-                            <div class="drp-contacts">
-                                <!--Add contacts here!-->
-                            
-                                <div class="drp-option" onclick="this.toggleActive()">Maximilian Pisser</div>
-                                <div class="drp-option" onclick="this.toggleActive()">Antoine Burtz</div>
-                            </div>
-                            <div class="drp-invite" data-lang="assigned-invite">Invite new contact</div>
                         </div>
                     </div>
                 </div>
@@ -51,9 +44,23 @@
             <div class="line"></div>
     
             <div class="add-task-single-row gap-45">
+                <div class="drp">
+                    <span data-lang="assigned-to">Assigned to</span>
+                    <div class="drp-wrapper">
+                        <div data-lang="select-contacts-to-asign" class="drp-title" onclick="this.toggleDropDown()">Select contacts to assign</div>
+                        <div class="drp-option-wrapper">
+                            <div class="drp-you" data-lang="assigned-you">You</div>
+                            <div class="drp-contacts" id="drp-collab-container">
+                                <!--Add contacts here!-->
+                            </div>
+                            <div class="drp-invite" data-lang="assigned-invite">Invite new contact</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="calender" class="column">
                     <span data-lang="due-date">Due date</span>
-                    <textarea name="date" id="date" class="padding-textarea"></textarea>
+                    <textarea name="date" id="date" class="padding-textarea" placeholder="dd/mm/yyyy"></textarea>
                 </div>
     
                 <div id="priority" class="column">
