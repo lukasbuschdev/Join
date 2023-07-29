@@ -1,0 +1,58 @@
+{
+    "title-summary": "Join - Überblick",
+    "title-board": "Join - Tafel",
+    "title-add_task": "Join - Aufgabe hinzufügen",
+    "title-contacts": "Join - Kontakte",
+    "title-legal_notice": "Join - Rechtliches",
+
+    "summary": "Überblick",
+    "add-task": "Neue Aufgabe",
+    "find-task": "Aufgabe finden",
+    "contacts": "Kontakte",
+    "legal-notice": "Rechtliches",
+
+    "to-do": "Ausstehend",
+    "awaiting-feedback": "Warte auf Rückmeldung",
+    "in-progress": "In Arbeit",
+    "done": "Abgeschlossen",
+
+    "header-kanban": "Kanban Projektmanager",
+
+    "summary-subtext": "Alles an einem Ort",
+    "add-board": "Neue Tafel",
+    "add-board-subtext": "Projekte, die die Welt verändern!",
+    "add-categories": "Kategorien hinzufügen",
+
+    "heading-add-task": "Aufgabe hinzufügen",
+    "title": "Titel",
+    "description": "Beschreibung",
+    "category": "Kategorie",
+    "select-task-category": "Wähle eine Kategorie",
+    "assigned-to": "Hinzufügen zu",
+    "select-contacts-to-asign": "Kontakte zum hinzufügen auswählen",
+    "assigned-you": "Du",
+    "assigned-invite": "Neuen Kontakt einladen",
+    "due-date": "Fällig bis",
+    "priority": "Priorität",
+    "subtasks": "Aufgabe",
+    "subtask1": "Unteraufgabe",
+
+
+    "btn-create-task": "Aufgabe erstellen",
+    "btn-cancel": "Abbrechen",
+    "btn-new-contact": "Kontakt hinzufügen",
+    "btn-add-contact": "Kontakt hinzufügen",
+
+    "header": "Kontakte",
+    "sub-header": "Besser mit einem Team",
+
+    "contact-info": "Kontaktinformation",
+    "edit-contact": "Kontakt bearbeiten",
+    "phone": "Telefon",
+
+    "board": "Tafel",
+
+
+    "add-contact-heading": "Neuer Kontakt",
+    "add-contact-subheading": "Aufgaben, besser im Team!"
+}
