@@ -111,27 +111,6 @@ input {
     cursor: pointer;
 }
 
-.error {
-    width: 100%;
-    padding: 0 21px;
-    font-size: 16px;
-    color: var(--clr-orange);
-    display: grid;
-    grid-template-rows: 0fr;
-    opacity: 0;
-    transition: 100ms;
-}
-
-.error.active {
-    margin-top: 10px;
-    grid-template-rows: 1fr;
-    opacity: 1;
-}
-
-.error > span {
-    overflow: hidden;
-}
-
 .eye {
     height: 25px;
     object-fit: contain;
@@ -175,12 +154,6 @@ input {
     width: 13.5px;
     height: 12.5px;
     display: block;
-}
-
-.btn-container {
-    display: flex;
-    gap: 35px;
-    margin: auto; 
 }
 
 .btn-container button {

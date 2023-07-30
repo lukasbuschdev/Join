@@ -302,8 +302,17 @@
     flex-grow: 1;
 }
 
+.add-board-data .btn-container {
+    margin-top: auto;
+    margin-left: auto;
+}
+
 .add-board-data .inp-buttons button {
     height: 20px;
+}
+
+.add-board-data input:placeholder-shown + .inp-buttons {
+    display: none;
 }
 
 .add-board-data input:placeholder-shown + .inp-buttons {
@@ -316,11 +325,48 @@
     background-color: var(--clr-placeholder);
 }
 
+dialog#add-board .categories-container {
+    margin-top: 10px;
+}
+
+dialog#add-board .category-colors {
+    margin-top: 15px;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: var(--transition-fast);
+}
+
+dialog#add-board .category-colors.active {
+    grid-template-rows: 1fr;
+}
+
+dialog#add-board .category-colors.active > div {
+    padding: 5px 0;
+}
+
+dialog#add-board .category-colors > div {
+    overflow: hidden;
+}
+
+dialog#add-board .category-colors > div > div {
+    width: 20px;
+    aspect-ratio: 1;
+    border-radius: 9999px;
+    border: 2px solid white;
+    background-color: var(--clr);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+dialog#add-board .category-colors > div > div.active {
+    box-shadow: 0px 4px 4px #00000040;
+}
+
 dialog#add-board .task-category{
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 4px 10px;
+    gap: 8px;
+    padding: 10px 15px;
 }
 
 dialog#add-board .task-category button {

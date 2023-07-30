@@ -30,10 +30,6 @@ textarea {
     overflow: hidden;
 }
 
-span {
-    line-height: 120%;
-}
-
 .line {
     height: 495px;
     width: 1px;

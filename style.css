@@ -83,6 +83,11 @@ button.bg-dark {
     font-weight: 700;
 }
 
+.btn-container {
+    display: flex;
+    gap: 35px;
+}
+
 .btn {
     border-radius: 8px;
     transition: var(--transition-fast);
@@ -586,6 +591,27 @@ dialog {
     min-width: fit-content;
     max-width: 422px;
     width: 100%;
+}
+
+.error {
+    width: 100%;
+    padding: 0 21px;
+    font-size: 16px;
+    color: var(--clr-orange);
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: 100ms;
+}
+
+.error.active {
+    margin-top: 10px;
+    grid-template-rows: 1fr;
+    opacity: 1;
+}
+
+.error > span {
+    overflow: hidden;
 }
 
 /* DISPLAY */
