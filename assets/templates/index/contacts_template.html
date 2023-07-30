@@ -33,7 +33,9 @@
             </div>
 
             <div class="add-contact-field column">
-                <img onclick="closeAddContact()" class="close" src="/Join/assets/img/icons/close.svg" alt="Close">
+                <button onclick="closeAddContact()" class="close-btn grid-center">
+                    <img class="close" src="/Join/assets/img/icons/close_blue.svg" alt="Close">
+                </button>
 
                 <div class="search-result-container row gap-25">
                     <div class="user-img-container" data-img="false">
@@ -47,10 +49,6 @@
                 </div>    
 
                 <div class="add-contact-btns row gap-15">
-                    <button class="btn btn-secondary btn-cancel txt-normal">
-                        <span data-lang="btn-cancel" onclick="closeAddContact()">Cancel</span>
-                    </button>
-
                     <button class="btn btn-primary btn-check txt-normal txt-700">
                         <span data-lang="btn-add-contact">Add Contact</span>
                     </button>

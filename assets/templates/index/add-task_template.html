@@ -20,12 +20,12 @@
                 
                 <div class="column">
                     <span data-lang="title">Title</span>
-                    <textarea name="title" id="title" placeholder="Enter a title"></textarea>
+                    <textarea name="title" id="title" placeholder="Enter a title" data-lang-placeholder="title-placeholder"></textarea>
                 </div>
     
                 <div class="column">
                     <span data-lang="description">Description</span>
-                    <textarea name="description" id="description" placeholder="Enter a description"></textarea>
+                    <textarea name="description" id="description" placeholder="Enter a description" data-lang-placeholder="description-placeholder"></textarea>
                 </div>
     
                 <div class="drp">
@@ -60,7 +60,7 @@
 
                 <div id="calender" class="column">
                     <span data-lang="due-date">Due date</span>
-                    <textarea name="date" id="date" class="padding-textarea" placeholder="dd/mm/yyyy"></textarea>
+                    <textarea name="date" id="date" class="padding-textarea" placeholder="dd/mm/yyyy" data-lang-placeholder="due-date-placeholder"></textarea>
                 </div>
     
                 <div id="priority" class="column">
@@ -85,10 +85,6 @@
     </div>
 
     <div class="flex-right">
-        <button class="btn btn-secondary btn-cancel txt-normal">
-            <span data-lang="btn-cancel" onclick="closeAddTaskModal()">Cancel</span>
-        </button>
-
         <button class="btn btn-primary btn-check txt-normal txt-700">
             <span data-lang="btn-create-task">Create Task</span>
         </button>
