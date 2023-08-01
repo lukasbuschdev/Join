@@ -1,58 +1,62 @@
 {
-    "title-summary": "Join - Überblick",
-    "title-board": "Join - Tafel",
-    "title-add_task": "Join - Aufgabe hinzufügen",
-    "title-contacts": "Join - Kontakte",
-    "title-legal_notice": "Join - Rechtliches",
+    "title-summary": "Join - Resumen",
+    "title-board": "Join - Pizarrón",
+    "title-add_task": "Join - Agregar tarea",
+    "title-contacts": "Join - Contactos",
+    "title-legal_notice": "Join - Aviso legal",
 
-    "summary": "Überblick",
-    "add-task": "Neue Aufgabe",
-    "find-task": "Aufgabe finden",
-    "contacts": "Kontakte",
-    "legal-notice": "Rechtliches",
+    "summary": "Resumen",
+    "add-task": "Agregar tarea",
+    "find-task": "Encontrar tarea",
+    "contacts": "Contactos",
+    "legal-notice": "Aviso legal",
 
-    "to-do": "Ausstehend",
-    "awaiting-feedback": "Warte auf Rückmeldung",
-    "in-progress": "In Arbeit",
-    "done": "Abgeschlossen",
+    "to-do": "Hacer",
+    "awaiting-feedback": "En espera de retroalimentación",
+    "in-progress": "En curso",
+    "done": "Hecho",
 
-    "header-kanban": "Kanban Projektmanager",
+    "header-kanban": "Gerente de proyectos Kanban",
 
-    "summary-subtext": "Alles an einem Ort",
-    "add-board": "Neue Tafel",
-    "add-board-subtext": "Projekte, die die Welt verändern!",
-    "add-categories": "Kategorien hinzufügen",
+    "summary-subtext": "Todo en pocas palabras",
+    "add-board": "Nuevo pizarrón",
+    "add-board-subtext": "¡Proyectos que cambian el mundo!",
+    "add-categories": "Añadir categoría",
 
-    "heading-add-task": "Aufgabe hinzufügen",
-    "title": "Titel",
-    "description": "Beschreibung",
-    "category": "Kategorie",
-    "select-task-category": "Wähle eine Kategorie",
-    "assigned-to": "Hinzufügen zu",
-    "select-contacts-to-asign": "Kontakte zum hinzufügen auswählen",
-    "assigned-you": "Du",
-    "assigned-invite": "Neuen Kontakt einladen",
-    "due-date": "Fällig bis",
-    "priority": "Priorität",
-    "subtasks": "Aufgabe",
-    "subtask1": "Unteraufgabe",
-
-
-    "btn-create-task": "Aufgabe erstellen",
-    "btn-cancel": "Abbrechen",
-    "btn-new-contact": "Kontakt hinzufügen",
-    "btn-add-contact": "Kontakt hinzufügen",
-
-    "header": "Kontakte",
-    "sub-header": "Besser mit einem Team",
-
-    "contact-info": "Kontaktinformation",
-    "edit-contact": "Kontakt bearbeiten",
-    "phone": "Telefon",
-
-    "board": "Tafel",
+    "heading-add-task": "Agregar tarea",
+    "select-board": "Seleccionar pizarrón",
+    "title": "Título",
+    "title-placeholder": "Ingrese el título",
+    "description": "Descripción",
+    "description-placeholder": "Ingrese una descripción",
+    "category": "Categoría",
+    "select-task-category": "Seleccione una categoría",
+    "assigned-to": "Asignado a",
+    "select-contacts-to-asign": "Seleccionar contactos para asignar",
+    "assigned-you": "Tú",
+    "assigned-invite": "Invitar a un nuevo contacto",
+    "due-date": "Fecha de vencimiento",
+    "due-date-placeholder": "dd/mm/aaaa",
+    "priority": "Prioridad",
+    "subtasks": "Tarea",
+    "subtask1": "Subtarea",
 
 
-    "add-contact-heading": "Add contact",
-    "add-contact-subheading": "Tasks are better with a team!"
+    "btn-create-task": "Crear tarea",
+    "btn-cancel": "Cancelar",
+    "btn-new-contact": "Añadir nuevo contacto",
+    "btn-add-contact": "Añadir nuevo contacto",
+
+    "header": "Contactos",
+    "sub-header": "Mejor con un equipo",
+
+    "contact-info": "Información del contacto",
+    "edit-contact": "Editar contacto",
+    "phone": "Celular",
+
+    "board": "Pizarrón",
+
+
+    "add-contact-heading": "Nuevo contacto",
+    "add-contact-subheading": "¡Las tareas son mejores con un equipo!"
 }
