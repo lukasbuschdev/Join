@@ -78,13 +78,12 @@ function clearResult() {
 const getInput = debounce(async function () {
     let input = $('#input-name');
     const userId = currentUserId();
-    const {contacts} = await REMOTE_getData(`users/${userId}`);
 
     if(input.value.length >= 3) {
         const allUsers = await REMOTE_getData('users');
     
         const filteredUsers = Object.values(allUsers).filter(
-            user => (user.name.toLowerCase().includes(input.value.toLowerCase()) && !(userId == user.id) && !(contacts.includes(`${user.id}`)))
+            user => (user.name.toLowerCase().includes(input.value.toLowerCase()) && !(userId == user.id) && !(USER.contacts.includes(`${user.id}`)))
         );
     
         const sortedUsers = filteredUsers.sort(

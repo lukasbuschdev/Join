@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/Join/index/add_task.css">
     <link rel="stylesheet" href="/Join/index/contacts.css">
 
+    <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
     <script src="/Join/js/utilities.js"></script>
     <script src="/Join/js/prototype_extensions.js"></script>
     <script src="/Join/js/script.js"></script>
@@ -25,6 +26,7 @@
     <script src="/Join/js/email.class.js"></script>
     <script src="/Join/js/board.class.js"></script>
     <script src="/Join/js/task.class.js"></script>
+    <script src="/Join/js/notify.class.js"></script>
     <script src="/Join/js/mail_templates.js"></script>
     <script src="/Join/js/language.js"></script>
     <script src="/Join/js/setup.js" defer></script>
@@ -35,6 +37,7 @@
     <script src="/Join/index/contacts.js"></script>
     <script src="/Join/index/add_task.js"></script>
     <script src="/Join/assets/templates/index/task.template.js"></script>
+    <script src="/Join/assets/templates/index/notification.template.js"></script>
 </head>
 <body data-title="title-summary" onload="init()">
 
@@ -75,13 +78,30 @@
             <img src="/Join/assets/img/icons/help.svg">
         </button>
 
-        <div class="user-img-container" data-img="false" data-user-data="color">
+        <div class="user-img-container" data-img="false" data-user-data="color" onclick="openAccountPanel()">
+            <div id="user-notifications-btn" class="circle"></div>
             <span data-user-data="initials"></span>
             <img class="user-img" src="/Join/assets/img/icons/user_img_gray.svg" alt="" data-user-data="img">
         </div>
     </header>
 
     <div id="content" include-template="/Join/assets/templates/index/summary_template.html"></div>
-    
+
+    <dialog id="account-panel" class="big-modal">
+        <div class="row">
+            <div id="account-panel-options" class="column gap-20" type="menu">
+                <button id="notifications-btn" class="txt-normal" type="option" onclick="loadAccountPanelContent()">
+                    <span>Notifications</span>
+                </button>
+                <button id="edit-account-btn" class="txt-normal" type="option" onclick="loadAccountPanelContent()">
+                    <span>Edit Account</span>
+                </button>
+                <button id="settings-btn" class="txt-normal" type="option" onclick="loadAccountPanelContent()">
+                    <span>Settings</span>
+                </button>
+            </div>
+            <div id="account-panel-content"></div>
+        </div>
+    </dialog>
 </body>
 </html>

@@ -21,7 +21,9 @@
     "summary-subtext": "Alles an einem Ort",
     "add-board": "Neue Tafel",
     "add-board-subtext": "Projekte, die die Welt verändern!",
-    "add-categories": "Kategorie hinzufügen",
+    "add-board-categories": "Kategorie hinzufügen",
+    "add-board-collaborators": "Mitwirkende hinzufügen",
+    "add-board-create": "Tafel erstellen",
 
     "heading-add-task": "Aufgabe hinzufügen",
     "select-board": "Wähle eine Tafel",

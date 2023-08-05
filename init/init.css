@@ -111,6 +111,10 @@ input {
     cursor: pointer;
 }
 
+.inp-wrapper {
+    max-width: 422px;
+}
+
 .eye {
     height: 25px;
     object-fit: contain;

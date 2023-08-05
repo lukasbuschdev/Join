@@ -35,13 +35,3 @@ const togglePasswordVisibility = () => {
     passwordInput.type == 'password' ? passwordInput.type = 'text' : passwordInput.type = 'password';
     eye.src = eye.src.includes('show.png') ? '../assets/img/icons/hide.png' : '../assets/img/icons/show.png';
 }
-
-const throwErrors = (...params) => {
-    params.forEach(({identifier, bool}) => {
-        const errorContainer = $(`#${identifier}`);
-        const inputWrapper = errorContainer.closest('.inp-wrapper').$('.inp-container');
-
-        errorContainer.classList.toggle('active', bool);
-        inputWrapper.classList.toggle('active', bool);
-    });
-}

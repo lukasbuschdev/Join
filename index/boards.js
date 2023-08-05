@@ -8,7 +8,7 @@ const renderTasks = async () => {
     const board = await REMOTE_getData(`boards/${boardId}`, true);
     if (!board) return;
     for await (const task of Object.values(board.tasks)) {
-        $(`#${task.type}`).innerHTML += await taskTemplate(task);
+        $(`#${task.type}`).innerHTML += taskTemplate(task);
     };
 }
 

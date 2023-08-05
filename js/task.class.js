@@ -34,8 +34,8 @@ class Task extends BaseClass {
     }
 
     assignTo = async (userId) => {
-        const collaborators = await REMOTE_getData(`boards/${this.boardId}/collaborators`);
-        if (!collaborators.includes(userId)) return error('user not in collaborators!');
+        const collaborators = BOARDS[this.boardId].collaborators;
+        if (!(collaborators.includes(userId)) && userId !== USER.id) return error('user not in collaborators!');
         if (this.assignedTo.includes(userId)) return error('user already assigned!')
         this.assignedTo.push(userId);
         return this.update();
@@ -44,14 +44,4 @@ class Task extends BaseClass {
     update = () => {
         return REMOTE_setData(`boards/${this.boardId}/tasks`, {[this.id]: this});
     }
-}
-
-const newTask = { // hier rein müssen dann die input werte von add Task
-    type: "awaiting-feedback",
-    category: "design",
-    title: "Bla Bla Bla...",
-    priority: "medium",
-    assignedTo: ['1689153888103', '1689153951244'],
-    dueDate: "20.09.2023",
-    subTasks: []
 }

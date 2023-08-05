@@ -16,3 +16,5 @@ RewriteRule ^board$  index/index.html [L]
 RewriteRule ^add-task$  index/index.html [L]
 RewriteRule ^contacts$  index/index.html [L]
 RewriteRule ^legal_notice$  index/index.html [L]
+
+Header set Access-Control-Allow-Origin "*:*"

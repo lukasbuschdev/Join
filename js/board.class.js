@@ -7,12 +7,7 @@ class Board extends BaseClass {
         ["date-of-creation"]: dateOfCreation = Date.now().toString(),
         ["date-of-last-edit"]: dateOfLastEdit = Date.now().toString(),
         tasks = {},
-        categories = {
-            "Design": "#FF7A00",
-            "Media": "#FFC701",
-            "Sales": "#FC71FF",
-            "Backoffice": "#1FD7C1"
-        }
+        categories = {}
     }) {
         super();
         this.name = name;
@@ -35,24 +30,13 @@ class Board extends BaseClass {
         return task;
     }
 
-    getTasks = async (taskIds) => {
-        let allTasks = await REMOTE_getData(`boards/${this.id}/tasks`);
-        if (taskIds) {
-            allTasks = Object.values(allTasks).filter(
-                task => {
-                    log(task.id, taskIds.includes(task.id))
-                    return taskIds.includes(task.id);
-                }
-            ).map(
-                task => new Task(task)
-            );        
-        }
-        return allTasks;
+    getTasks = (taskIds) => {
+        let allTasks = BOARDS[this.id].tasks;
+        return allTasks.map(task => new Task(task));
     }
     
     addCollaborator = async (collaboratorId) => {
-        const contacts = await REMOTE_getData(`users/${currentUserId()}/contacts`);
-        if (!contacts.includes(collaboratorId)) return error('collaboratorId not in contacts!');
+        if (!USER.contacts.includes(collaboratorId)) return error('collaboratorId not in contacts!');
         this.collaborators.push(collaboratorId);
         return this.update();
     }

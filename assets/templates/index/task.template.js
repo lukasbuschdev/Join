@@ -1,7 +1,7 @@
-const taskTemplate = async ({boardId, id, title, description, assignedTo, category, color, priority, subTasks}) => {
+const taskTemplate = ({boardId, id, title, description, assignedTo, category, color, priority, subTasks}) => {
     let assignedAccounts = [];
-    for await (const assignedToId of assignedTo) {
-        const {name, color: userColor} = await REMOTE_getData(`users/${assignedToId}`);
+    for (const assignedToId of assignedTo) {
+        const {name, color: userColor} = CONTACTS[assignedToId] ?? USER;
         assignedAccounts.push({name, color: userColor});
     }    
     return /*html*/`

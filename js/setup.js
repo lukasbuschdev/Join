@@ -43,12 +43,12 @@ const initMenus = () => {
     });
 }
 
-const redirect = async () => {
-    const userData = await getCurrentUserData();
-    if (!userData && searchParams().has('redirected') == false) {
-        // goTo('../init/init.html?redirected');
-    }
-}
+// const redirect = async () => {
+//     const userData = await getCurrentUserData();
+//     if (!userData && searchParams().has('redirected') == false) {
+//         // goTo('../init/init.html?redirected');
+//     }
+// }
 
 let inactivityTimer;
 const addInactivityTimer = (minutes = 5) => {
@@ -72,8 +72,8 @@ const initInactivity = () => {
 //     }
 // )
 
-const renderUserData = async () => {
-    const { name, img, color } = await getCurrentUser();
+const renderUserData = () => {
+    const { name, img, color } = USER;
     $$('[data-user-data]').for(
         (userField) => {
             const dataType = userField.dataset.userData;
@@ -102,7 +102,7 @@ const renderColor = (userField, color) => {
 
 initMenus();
 LANG_load();
-REMOTE_clearVerifications();
+// REMOTE_clearVerifications();
 if (currentDirectory() == "index") {
     // const uid = currentUserId();
     // loadUserData(uid);

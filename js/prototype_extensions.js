@@ -18,6 +18,29 @@ Array.prototype.toObject = function (keys) {
     return this.reduce((total, current, i) => { return {...total, [keys[i]]: current }}, {});
 }
 
+Object.prototype.filter = function (cb) {
+    let newObj = {};
+    Object.entries(this).filter(([key, value]) =>
+        {
+            if (cb(value) == true) {
+                newObj[key] = value;
+                return true;
+            }
+        }
+    );
+    return newObj;
+}
+
+Object.prototype.map = function(cb){
+    let newObj = {};
+    Object.entries(this).for(([key, value]) =>
+        {
+            newObj[key] = cb(value);
+        }
+    );
+    return newObj;
+}
+
 String.prototype.convert = function () {
     return this.replaceAll(/[A-Z]/g, i => `-${i.toLowerCase()}`);
 }
@@ -125,7 +148,12 @@ Math.roundTo = function (nbr, decimals) {
 
 HTMLElement.prototype.renderItems = function (items, templateFunction) {
     // this.innerHTML = '';
+
+    const docFrag = document.createDocumentFragment();
     items.for(item => {
-        this.innerHTML += templateFunction(item);
-    })
+        const newItem = document.createElement('div');
+        newItem.innerHTML = templateFunction(item);
+        docFrag.append(...newItem.childNodes);
+    });
+    this.appendChild(docFrag);
 }

@@ -1,20 +1,13 @@
-const initSummary = () => {
+const initSummary = async () => {
     renderBoards();
 }
 
 const renderBoards = async () => {
-    const { boards: userBoards } = await getCurrentUser();
-    if (userBoards == undefined) return;
-    let boards = [];
-    for await (const boardId of userBoards) {
-        const board = await REMOTE_getData(`boards/${boardId}`);
-        boards.push(board); 
-    }
     const activeBoardIndex = SESSION_getData('activeBoardIndex') ?? 0;
     $('#summary-data .content').classList.remove('d-none');
 
     $('.summary-selection-boards').innerHTML = '';
-    $('.summary-selection-boards').renderItems(boards, summarySelectionTemplate);
+    $('.summary-selection-boards').renderItems(Object.values(BOARDS), summarySelectionTemplate);
 
     setTimeout(()=>$$('.summary-selection-boards button')[activeBoardIndex].click(), 0);
 }
@@ -26,8 +19,8 @@ const summarySelectionTemplate = (board) => {
     `
 }
 
-const loadBoardSummary = async (boardId) => {
-    const board = await REMOTE_getData(`boards/${boardId}`);
+const loadBoardSummary = (boardId) => {
+    const board = BOARDS[boardId];
     const {tasks} = board;
     const tasksInBoard = Object.values(tasks).length;
     const tasksInProgress = Object.values(tasks).filter(({type}) => type == "in-progress").length;
@@ -130,7 +123,107 @@ const createBoardModal = () => {
     $('#add-board').openModal();
 }
 
-// const clearInput = () => {
-//     const input = event.currentTarget.parentElement.previousElementSibling;
-//     input.value = '';
-// }
+const addBoardCategory = () => {
+    const title = $('#add-board-categories input').value;
+    const color = $('.category-color.active').style.getPropertyValue('--clr');
+    const titleValidity = title.length > 10;
+    throwErrors({identifier: "name-to-long", bool: titleValidity});
+    if (titleValidity) return;
+
+    $('.categories-container').innerHTML += addBoardCategoryTemplate(title, color);
+    $('#add-board-categories input').value = '';
+    
+    // const 
+}
+
+const addBoardCategoryTemplate = (title, color) => {
+    return /*html*/`
+        <div class="task-category" style="--clr: ${color};">
+            <span>${title}</span>
+            <button onclick="removeBoardCategory()">
+                <img src="/Join/assets/img/icons/close_white.svg" alt="">
+            </button>
+        </div>
+    `
+}
+
+const removeBoardCategory = () => {
+    event.currentTarget.parentElement.remove();
+}
+
+const clearCategoryInput = () => {
+    event.currentTarget.parentElement.previousElementSibling.value = ''
+    const title = $('#add-board-categories input').value;
+    const titleValidity = title.length > 10;
+    throwErrors({identifier: "name-to-long", bool: titleValidity});
+}
+
+const createNewBoard = async () => {
+    const boardName = $('#add-board-title input').value.replaceAll(' ', '-');
+
+    let categories = {};
+    $$('.task-category').for(
+        category => {
+            const color = category.style.getPropertyValue('--clr');
+            const name = category.$('span').innerText;
+            categories[name] = color;
+        }
+    );
+    
+    // const boardData = {
+        //     name: boardName,
+        //     categories
+        // };
+        // const user = await getCurrentUser(true);
+        // const newBoard = await user.addBoard(boardData);
+
+        $$('.collaborator-invitation').for(
+            invite => {
+                const id = invite.dataset.id;
+                const notification = new Notify({
+                    recipient: id,
+                    boardInvite: {
+                        ownerName: USER.name,
+                        boardName: boardName,
+                        boardId: '1234567'
+                    }
+                });
+                notification.send();
+            }
+        )
+}
+
+const toggleDrp = () => {
+    const drp = $('.add-board-data .drp');
+    const sortedContacts = Object.values(CONTACTS).sort((a, b) => (a.name > b.name) ? 1 : -1);
+    drp.innerHTML = ''
+    drp.renderItems(sortedContacts, contactDropdownTemplate);
+    
+}
+
+const filterDrp = debounce(() => {
+    
+    const drp = $('.add-board-data .drp');
+    const filter = $('#add-board-collaborators input').value;
+    // if (!filter) return
+    const sortedContacts = Object.values(CONTACTS).sort((a, b) => (a.name > b.name) ? 1 : -1);
+    const filteredContacts = sortedContacts.filter(
+        ({name}) => name.toLowerCase().includes(filter.toLowerCase())
+    );
+    drp.innerHTML = ''
+    drp.renderItems(filteredContacts, contactDropdownTemplate);
+});
+
+const contactDropdownTemplate = ({name, color}) => {
+    return /*html*/`
+        <div class="contact row">
+            <div class="user-img-container" style="--user-clr: ${color};">
+                <span>${name.slice(0, 2).toUpperCase()}</span>
+            </div>
+            <div>${name}</div>
+            <button class="grid-center">
+                <img src="/Join/assets/img/icons/btn_plus.svg" alt="">
+            </button>
+        </div>
+    `
+}

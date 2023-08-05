@@ -106,51 +106,73 @@
                 <h1 data-lang="add-board">New Board</h1>
                 <h3 data-lang="add-board-subtext">Projects that change the world!</h3>
             </div>
-            <div class="add-board-data column gap-25">
-                <div class="inp-wrapper column">
+            <div class="add-board-data column gap-35">
+                <button onclick="this.closest('dialog').closeModal()" class="close-btn grid-center">
+                    <img class="close" src="/Join/assets/img/icons/close_blue.svg" alt="Close">
+                </button>
+                <div class="inp-wrapper column txt-600" id="add-board-title">
                     <div class="inp-container radius-10">
                         <input type="text" name="" id="" data-lang-placeholder="title">
                     </div>
                 </div>
-                <div class="inp-wrapper column">
-                    <div class="inp-container radius-10">
-                        <input type="text" name="" id="" data-lang-placeholder="add-categories">
-                        <div class="inp-buttons row gap-10">
-                            <button onclick="this.parentElement.previousElementSibling.value = ''">
-                                <img src="/Join/assets/img/icons/close.svg" width="20">
-                            </button>
-                            <div class="vertical-line"></div>
-                            <button onclick="addBoardCategory()">
-                                <img src="/Join/assets/img/icons/check_black.svg" width="20">
-                            </button>
+                <div class="categories-collaborators row gap-25">
+                    <div class="inp-wrapper column" id="add-board-categories">
+                        <div class="inp-container radius-10">
+                            <input type="text" name="" id="" data-lang-placeholder="add-board-categories">
+                            <div class="inp-buttons row gap-10">
+                                <button onclick="clearCategoryInput()">
+                                    <img src="/Join/assets/img/icons/close.svg" width="20">
+                                </button>
+                                <div class="vertical-line"></div>
+                                <button onclick="addBoardCategory()">
+                                    <img src="/Join/assets/img/icons/check_black.svg" width="20">
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="category-colors">
-                        <div class="row gap-25" type="menu">
-                            <div type="option" style="--clr: #8AA4FF"></div>
-                            <div type="option" style="--clr: #FF0000"></div>
-                            <div type="option" style="--clr: #2AD300"></div>
-                            <div type="option" style="--clr: #FF8A00"></div>
-                            <div type="option" style="--clr: #E200BE"></div>
-                            <div type="option" style="--clr: #0038FF"></div>
+                        <div class="category-colors">
+                            <div class="row gap-25" type="menu">
+                                <div class="category-color active" type="option" style="--clr: #8AA4FF"></div>
+                                <div class="category-color" type="option" style="--clr: #1FD7C1"></div>
+                                <div class="category-color" type="option" style="--clr: #2AD300"></div>
+                                <div class="category-color" type="option" style="--clr: #FF8A00"></div>
+                                <div class="category-color" type="option" style="--clr: #E200BE"></div>
+                                <div class="category-color" type="option" style="--clr: #0038FF"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="categories-container">
-                        <div class="task-category" style="--clr: green;">
-                            <span>Sales</span>
-                            <button onclick="deleteCategory()">
-                                <img src="/Join/assets/img/icons/close_white.svg" alt="">
-                            </button>
+                        <div class="error" id="name-to-long">
+                            <span>Name too long!</span>
                         </div>
+                        <div class="categories-container row"><div class="task-category" style="--clr: #1FD7C1;">
+                                <span>Sales</span>
+                                <button onclick="removeBoardCategory()">
+                                    <img src="/Join/assets/img/icons/close_white.svg" alt="">
+                                </button>
+                            </div></div>
                     </div>
-                    <div class="error" id="wrong-password">
-                        <span data-lang="wrong-password">Wrong Password!</span>
+                    <div class="inp-wrapper column" id="add-board-collaborators">
+                        <div class="inp-container radius-10">
+                            <input type="text" placeholder="Add Collaborators" data-lang-placeholder="add-board-collaborators" name="" id="" onfocus="toggleDrp()" oninput="filterDrp()">
+                            <div class="inp-buttons row gap-10">
+                                <button onclick="clearCategoryInput()">
+                                    <img src="/Join/assets/img/icons/close.svg" width="20">
+                                </button>
+                                <div class="vertical-line"></div>
+                                <button onclick="addBoardCollaborator()">
+                                    <img src="/Join/assets/img/icons/check_black.svg" width="20">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="drp-container">
+                            <div class="drp"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="">Add Collaborators</div>
+                <div>
+                    <div class="collaborator-invitation" data-id="1689153951244">invite contact: Lukas</div>
+                </div>
                 <div class="btn-container row">
-                    <button class="btn btn-primary btn-check txt-normal txt-700">
-                        <span>Create Board</span>
+                    <button class="btn btn-primary btn-check txt-normal txt-700" onclick="createNewBoard()">
+                        <span data-lang="add-board-create">Create Board</span>
                     </button>
                 </div>
             </div>

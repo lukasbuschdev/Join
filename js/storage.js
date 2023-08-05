@@ -26,6 +26,7 @@ const REMOTE_upload = async (directory, data) => {
     // log(data);
     // return;
 
+    getUser();
     return fetch(STORAGE_URL, {
         method: 'POST',
         body: JSON.stringify(payload)
@@ -44,9 +45,9 @@ const REMOTE_getData = async (path, methods) => {
 
     const data = await REMOTE_download(directory);
     if(!data) return;
-
-    if (parse(`${JSON.stringify(data)}${pathSelector}`)) {
-        const result = parse(`${JSON.stringify(data)}${pathSelector}`);
+    
+    const result = parse(`${JSON.stringify(data)}${pathSelector}`);
+    if (result) {
         if (pathArray.at(-2) == "users") return (methods) ? new User(result) : removeMethods(new User(result));
         else if (pathArray.at(-2) == "boards") return (methods) ? new Board(result) : removeMethods(new Board(result));
         else if (pathArray.at(-2) == "tasks") return (methods) ? new Task(result) : removeMethods(new Task(result));
@@ -123,12 +124,12 @@ const REMOTE_updateUsers = async () => {
     let updatedUsersObject = {};
 
     let updatedUsers = allUsers.map(
-        user => new User(user).userData
+        user => new User(user)
     );
 
     updatedUsers.for(
-        user => updatedUsersObject[user.id] = user
-    )
+        user => updatedUsersObject[user.id] = removeMethods(user)
+    );
 
     return await REMOTE_upload('users', updatedUsersObject);
 }
@@ -220,22 +221,28 @@ const getCurrentUser = async (methods) => {
     return REMOTE_getData(`users/${uid}`, methods);
 }
 
-const loadUserData = async () => {
-    const allUsers = await REMOTE_getData("users");
-    const uid = currentUserId();
-    const user = (uid) ? allUsers[uid] : allUsers.guest;
-    setUserColor(user?.color);
-    setUserImg(user?.img, user.name);
+const getUser = async () => {
+    USER = await getCurrentUser(true);
 }
 
-const setUserColor = (color) => {
-    if (color) $('.user-img-container').style.setProperty('--user-clr', color);
+const getBoards = async () => {
+    const allBoards = await REMOTE_getData('boards');
+    for await (const boardId of USER.boards) {
+        BOARDS[boardId] = new Board(allBoards[boardId]); 
+    }
 }
 
-const setUserImg = (img, name) => {
-    const imgContainer = $('.user-img');
-    imgContainer.src = img ?? "";
-    if (!img) $('header .user-img-container > *').innerText = name.slice(0, 2).toUpperCase();
+const getContacts = async () => {
+    const allUsers = await REMOTE_getData('users');
+    USER.contacts.for(
+        contactId => CONTACTS[contactId] = allUsers[contactId]
+    )
 }
 
-// BOARDS
+// NOTIFICATIONS
+
+// const checkNotifications = async () => {
+//     USER.notifications.for(
+
+//     )
+// }

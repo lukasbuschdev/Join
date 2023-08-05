@@ -27,6 +27,16 @@ const addNavToggleBtns = () => {
   );
 };
 
+const throwErrors = (...params) => {
+  params.forEach(({identifier, bool}) => {
+      const errorContainer = $(`#${identifier}`);
+      const inputWrapper = errorContainer.closest('.inp-wrapper').$('.inp-container');
+
+      errorContainer.classList.toggle('active', bool);
+      inputWrapper.classList.toggle('active', bool);
+  });
+}
+
 const notification = async (message) => {
   await new Promise(resolve => {
     const el = document.createElement('dialog');

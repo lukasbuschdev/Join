@@ -299,7 +299,8 @@
 .add-board-data {
     justify-content: center;
     background-color: white;
-    flex-grow: 1;
+    width: 60%;
+    position: relative;
 }
 
 .add-board-data .btn-container {
@@ -315,8 +316,94 @@
     display: none;
 }
 
-.add-board-data input:placeholder-shown + .inp-buttons {
-    display: none;
+#add-board-title input::placeholder {
+    font-weight: 400;
+}
+
+.add-board-data #add-board-collaborators:focus-within .inp-container {
+    border-radius: 10px 10px 0 0;
+    border-width: 1px 1px 0 1px;
+}
+
+.add-board-data .inp-wrapper .drp-container {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows var(--transition-fast);
+    overflow: hidden;
+}
+
+.add-board-data .drp .user-img-container {
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.add-board-data .drp .contact {
+    gap: 10px;
+}
+
+.add-board-data .drp .contact button {
+    margin-left: auto;
+    border-radius: 9999px;
+    height: 25px;
+    aspect-ratio: 1;
+    transition: var(--transition-fast);
+}
+
+.add-board-data .drp .contact button:hover {
+    background-color: var(--clr-dark);
+}
+
+.add-board-data .drp .contact button:hover img {
+    filter: unset;
+}
+
+.add-board-data .drp .contact img {
+    width: 50%;
+    filter: invert(1);
+}
+
+.add-board-data .inp-wrapper:not(:focus-within) .drp-container {
+    grid-template-rows: 0fr;
+}
+
+.add-board-data .inp-wrapper:not(:focus-within) .drp {
+    border: none;
+}
+
+.add-board-data .inp-wrapper .drp {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+    border: 1px solid var(--clr-placeholder);
+    overflow: auto;
+    max-height: 200px;
+}
+
+.add-board-data:has(#add-board-title input:placeholder-shown) .btn-primary {
+    pointer-events: none;
+    font-weight: 500;
+    filter: invert(1);
+}
+
+#add-board-categories:has(input:not(:placeholder-shown)) .category-colors {
+    grid-template-rows: 1fr;
+}
+
+#add-board-categories:has(input:not(:placeholder-shown)) .category-colors > div {
+    padding: 5px 0;
+}
+
+.categories-collaborators {
+    align-items: flex-start;
+}
+
+.categories-collaborators > * {
+    flex-basis: 50%;
 }
 
 .vertical-line {
@@ -326,29 +413,32 @@
 }
 
 dialog#add-board .categories-container {
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+dialog#add-board .categories-container:not(:empty) {
     margin-top: 10px;
 }
 
 dialog#add-board .category-colors {
-    margin-top: 15px;
     display: grid;
     grid-template-rows: 0fr;
+    align-items: start;
+    overflow: hidden;
     transition: var(--transition-fast);
 }
 
 dialog#add-board .category-colors.active {
+    margin-top: 15px;
     grid-template-rows: 1fr;
-}
-
-dialog#add-board .category-colors.active > div {
-    padding: 5px 0;
 }
 
 dialog#add-board .category-colors > div {
     overflow: hidden;
 }
 
-dialog#add-board .category-colors > div > div {
+dialog#add-board .category-color {
     width: 20px;
     aspect-ratio: 1;
     border-radius: 9999px;
@@ -365,8 +455,11 @@ dialog#add-board .category-colors > div > div.active {
 dialog#add-board .task-category{
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 8px;
     padding: 10px 15px;
+    flex-grow: 1;
+    max-width: 70%;
 }
 
 dialog#add-board .task-category button {

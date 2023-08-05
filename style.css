@@ -440,7 +440,6 @@ h4 {
     grid-template-areas: 'a';
     outline: var(--outline-thickness) solid var(--user-clr);
     position: relative;
-    overflow: hidden;
     aspect-ratio: 1;
     flex-shrink: 0;
     transition: --text-clr var(--transition-fast);
@@ -511,6 +510,12 @@ dialog {
 
 .big-modal.active {
     translate: 0 0;
+}
+
+.circle {
+    width: var(--diameter);
+    aspect-ratio: 1;
+    border-radius: 9999px;
 }
 
 .dlg-notification {
@@ -588,8 +593,10 @@ dialog {
 }
 
 .inp-wrapper {
-    min-width: fit-content;
-    max-width: 422px;
+    width: 100%;
+}
+
+.inp-wrapper input {
     width: 100%;
 }
 

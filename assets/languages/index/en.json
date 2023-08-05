@@ -21,7 +21,9 @@
     "summary-subtext": "Everything in a nutshell",
     "add-board": "New Board",
     "add-board-subtext": "Projects that change the world!",
-    "add-categories": "Add category",
+    "add-board-categories": "Add category",
+    "add-board-collaborators": "Mitwirkende hinzufügen",
+    "add-board-create": "Create Board",
 
     "heading-add-task": "Add Task",
     "select-board": "Select board",

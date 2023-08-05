@@ -1,8 +1,8 @@
 class User extends Account {
-    constructor(userData, methods){
+    constructor(userData){
         super(userData);
         this.password = userData.password;
-        this.color = userData.color ?? "";
+        this.color = userData.color ?? '#D1D1D1';
     }
 
     setPicture = async (img) => await this.setProperty("img", img);
@@ -94,11 +94,46 @@ class User extends Account {
         if (typeof boardData !== "object") return;
         boardData.owner = this.id;
         const board = new Board(boardData);
+        board.collaborators = ['1689153951244', '1689154024008'];
+        
         await board.update();
+        const allUsers = await REMOTE_getData('users');
+        const collaborators = Object.values(allUsers).filter(
+            ({id}) => board.collaborators.includes(`${id}`)
+        ).map(
+            collaborator => new User(collaborator)
+        );
+        log(collaborators)
+        collaborators.for(
+            collaborator => {
+                const allBoards = collaborator.boards;
+                collaborator.setProperty('boards', [...allBoards, board.id]);
+            }
+        )
         this.boards.push(board.id);
         this.update();
         return board;
     }
 
     getBoard = async (boardId) => await REMOTE_getData(`boards/${boardId}`, true);
+
+    getContacts = async () => {
+        const allUsers = await REMOTE_getData('users');
+        return this.contacts.map(
+            contactId => allUsers[contactId]
+        );
+    }
+
+    sendNotification = async (to, type) => {
+        if (!(type == "friendRequest" || type == "boardInvite" || type == "taskAssignment")) return error(
+            `type '${type}' invalid! type may be one of: 'friendRequest', 'boardInvite', 'taskAssignment'`
+        )
+        if (to == this.id) return error('invalid recipient!');
+        const recipient = await REMOTE_getData(`users/${to}`, true);
+        const allNotifications = recipient.getPropertyValue('notifications');
+        return recipient.setProperty('notifications', [{
+            type,
+            from: this.id
+        }, ...allNotifications]);
+    }
 }
