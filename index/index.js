@@ -5,34 +5,42 @@ let SOCKET;
 let notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wav');
 
 const init = async () => {
-
     checkLogin();
     await getUser();
     await getBoards();
-    await getContacts();
     initWebsocket();
-    $(`#${currentDirectory().replace('_','-')}`).click();
+    $(`#${currentDirectory().replace('_','-')}`)?.click();
     renderUserData();
-    // checkNotifications();
+    checkNotifications();
 }
+
 if (LOCAL_getData('rememberMe') == 'false') {
     window.addEventListener("beforeunload", () => LOCAL_setData('loggedIn', false))
+}
+
+const checkNotifications = () => {
+    log('checking...')
+    const notificationCount = Object.values(USER.notifications).length;
+    const notificationCounters = $$('.notifications-counter');
+
+    notificationCounters.for(counter => counter.classList.toggle('d-none', !notificationCount));
+    document.title = (notificationCount) ? `(${notificationCount}) ${document.title}` : document.title.split(') ')[1] ?? document.title; 
+    if (!notificationCount) return
+    notificationCounters.for(counter => counter.innerText = notificationCount);
 }
 
 const initWebsocket = () => {
     SOCKET = io("wss://join-websocket.onrender.com", {
         query: {
             uid: USER.id
-        },
-        // headers: {
-        //     "Acces-Control-Allow-Origin": "https://tarik-uyan.developerakademie.net"
-        // },
+        }
     });
 
     SOCKET.on('message', async () => {
         console.log(`Your received a new Notification!`);
         notifySound.play();
         await getUser();
+        checkNotifications();
     });
 }
 
@@ -86,6 +94,22 @@ const loadNotifications = () => {
     const container = $('#notifications-content');
     container.innerHTML = ''
     container.renderItems(Object.values(USER.notifications), notificationTemplate);
+};
+
+const acceptBoardInvite = async (boardId, notificationId) => {
+    await REMOTE_setData(`users/${currentUserId()}/boards`, boardId);
+    await REMOTE_setData(`boards/${boardId}/collaborators`, USER.id);
+    await getBoards();
+    await removeNotification(notificationId);
+    notification('board-joined');
+}
+
+const removeNotification = async (notificationId) => {
+    delete USER.notifications[notificationId];
+    await USER.update();
+    await getUser();
+    $(`.notification[data-id="${notificationId}"]`).remove();
+    checkNotifications();
 }
 
 const initTextLoadAnimationOvserver = () => {

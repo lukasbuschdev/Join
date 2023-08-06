@@ -54,7 +54,7 @@ const REMOTE_getData = async (path, methods) => {
         else return result;
 
     } else {
-        console.error(`subdirectory '${path}' not found!`);
+        error(`subdirectory '${path}' not found!`);
         return undefined;
     }
 }
@@ -71,20 +71,31 @@ const REMOTE_setData = async (targetPath, upload) => {
         }
         currentObj = currentObj[directory];
     }
-    Object.assign(currentObj, upload);
+    if (Array.isArray(currentObj)) {
+        if (Array.isArray(upload)) {
+            currentObj.splice(0, currentObj.length, ...upload);
+        }
+        else if (currentObj.indexOf(upload !== -1)) currentObj.push(upload);
+    } else Object.assign(currentObj, upload);
+    // return log(currentObj)s
     return REMOTE_upload(directories[0], data);
 }
 
 
 
 const REMOTE_removeData = async (path) => {
+    if (!path.includes('/')) return error('can only remove subdirectory!');
     const directory = path.slice(0, path.lastIndexOf('/'));
     const item = path.slice(path.lastIndexOf('/') + 1);
     let data = await REMOTE_getData(directory);
     if (!data) return;
-    delete data[item];
-    if (!path.includes('/')) return error('can only remove subdirectory!');
-    return REMOTE_upload(directory, data);
+    if (Array.isArray(data)) {
+        data = data.toSpliced(data.indexOf(item), 1);
+        return REMOTE_setData(directory, data);
+    } else {
+        delete data[item];
+        return REMOTE_upload(path.split('/')[0], data);
+    };
 }
 
 const REMOTE_clearVerifications = async () => {
@@ -223,6 +234,10 @@ const getCurrentUser = async (methods) => {
 
 const getUser = async () => {
     USER = await getCurrentUser(true);
+    const allUsers = await REMOTE_getData('users');
+    USER.contacts.for(
+        contactId => CONTACTS[contactId] = allUsers[contactId]
+    );
 }
 
 const getBoards = async () => {
@@ -230,13 +245,6 @@ const getBoards = async () => {
     for await (const boardId of USER.boards) {
         BOARDS[boardId] = new Board(allBoards[boardId]); 
     }
-}
-
-const getContacts = async () => {
-    const allUsers = await REMOTE_getData('users');
-    USER.contacts.for(
-        contactId => CONTACTS[contactId] = allUsers[contactId]
-    )
 }
 
 // NOTIFICATIONS

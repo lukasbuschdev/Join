@@ -71,7 +71,8 @@ class User extends Account {
     }
 
     update = async () => {
-        return await REMOTE_setData('users', {[this.id]: this});
+        await REMOTE_setData('users', {[this.id]: this});
+        return getUser();
     }
 
     generateVerificationCode = () => {
@@ -94,24 +95,10 @@ class User extends Account {
         if (typeof boardData !== "object") return;
         boardData.owner = this.id;
         const board = new Board(boardData);
-        board.collaborators = ['1689153951244', '1689154024008'];
         
         await board.update();
-        const allUsers = await REMOTE_getData('users');
-        const collaborators = Object.values(allUsers).filter(
-            ({id}) => board.collaborators.includes(`${id}`)
-        ).map(
-            collaborator => new User(collaborator)
-        );
-        log(collaborators)
-        collaborators.for(
-            collaborator => {
-                const allBoards = collaborator.boards;
-                collaborator.setProperty('boards', [...allBoards, board.id]);
-            }
-        )
         this.boards.push(board.id);
-        this.update();
+        await this.update();
         return board;
     }
 

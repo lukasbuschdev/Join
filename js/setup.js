@@ -9,11 +9,6 @@ const goTo = (directory, options) => {
 }
 const currentUserId = () => (searchParams().get('uid') == null) ? undefined : `${searchParams().get('uid')}`;
 
-// $$('div[include-template]').for(container => {
-//     container.includeTemplate();
-//     LANG_load();
-// });
-
 const menuOptionInitator = new MutationObserver(
     mutation => {
         initMenus();
@@ -42,13 +37,6 @@ const initMenus = () => {
         )
     });
 }
-
-// const redirect = async () => {
-//     const userData = await getCurrentUserData();
-//     if (!userData && searchParams().has('redirected') == false) {
-//         // goTo('../init/init.html?redirected');
-//     }
-// }
 
 let inactivityTimer;
 const addInactivityTimer = (minutes = 5) => {
@@ -102,9 +90,3 @@ const renderColor = (userField, color) => {
 
 initMenus();
 LANG_load();
-// REMOTE_clearVerifications();
-if (currentDirectory() == "index") {
-    // const uid = currentUserId();
-    // loadUserData(uid);
-    // initInactivity();
-}

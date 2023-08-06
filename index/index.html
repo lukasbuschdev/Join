@@ -29,8 +29,8 @@
     <script src="/Join/js/notify.class.js"></script>
     <script src="/Join/js/mail_templates.js"></script>
     <script src="/Join/js/language.js"></script>
-    <script src="/Join/js/setup.js" defer></script>
     
+    <script src="/Join/js/setup.js" defer></script>
     <script src="/Join/index/index.js"></script>    
     <script src="/Join/index/boards.js"></script>
     <script src="/Join/index/summary.js"></script>
@@ -79,24 +79,28 @@
         </button>
 
         <div class="user-img-container" data-img="false" data-user-data="color" onclick="openAccountPanel()">
-            <div id="user-notifications-btn" class="circle"></div>
+            <div class="notifications-counter circle flex-center d-none"></div>
             <span data-user-data="initials"></span>
             <img class="user-img" src="/Join/assets/img/icons/user_img_gray.svg" alt="" data-user-data="img">
         </div>
     </header>
 
-    <div id="content" include-template="/Join/assets/templates/index/summary_template.html"></div>
+    <div id="content"></div>
 
     <dialog id="account-panel" class="big-modal">
         <div class="row">
             <div id="account-panel-options" class="column gap-20" type="menu">
-                <button id="notifications-btn" class="txt-normal" type="option" onclick="loadAccountPanelContent()">
+                <button id="notifications-btn" class="txt-normal row gap-15" type="option" onclick="loadAccountPanelContent()">
+                    <div id="notification-icon">
+                        <img src="/Join/assets/img/icons/bell.png" alt="">
+                        <div class="notifications-counter circle flex-center d-none"></div>
+                    </div>
                     <span>Notifications</span>
                 </button>
-                <button id="edit-account-btn" class="txt-normal" type="option" onclick="loadAccountPanelContent()">
+                <button id="edit-account-btn" class="txt-normal row gap-15" type="option" onclick="loadAccountPanelContent()">
                     <span>Edit Account</span>
                 </button>
-                <button id="settings-btn" class="txt-normal" type="option" onclick="loadAccountPanelContent()">
+                <button id="settings-btn" class="txt-normal row gap-15" type="option" onclick="loadAccountPanelContent()">
                     <span>Settings</span>
                 </button>
             </div>

@@ -1,11 +1,9 @@
 class Notify {
     constructor(notification) {
-        this.id = Date.now();
-        this.recipientId = notification.recipient;
-        this.type = Object.keys(notification)[1];
-        Object.entries(notification[this.type]).for(
+        Object.entries(notification).for(
             ([key, value]) => this[key] = value
         );
+        this.id = `${Date.now()}`;
     }
 
     send = async () => {

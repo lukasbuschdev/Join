@@ -95,14 +95,6 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     --outline-thickness: 0px;
 }
 
-#user-notifications-btn {
-    --diameter: 15px;
-    position: absolute;
-    inset: -2px -2px auto auto;
-    background-color: red;
-    z-index: 1;
-}
-
 .close-btn {
     position: absolute;
     height: 28px;
@@ -156,13 +148,10 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     padding: 10px;
     width: 100%;
     color: black;
-    display: flex;
     justify-content: center;
+    align-items: center;
     width: calc(100% - 20px);
     transition: var(--transition-fast);
-}
-
-#account-panel-options button span {
     position: relative;
 }
 
@@ -175,25 +164,58 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     color: var(--clr-blue);
 }
 
-#notifications-btn span::before {
+.notifications-counter {
+    --diameter: 18px;
     position: absolute;
-    left: -45px;
-    content: '1';
+    inset: -5px -5px auto auto;
+    background-color: rgb(204, 0, 0);
+    z-index: 1;
     font-size: 12px;
     font-weight: 600;
-    display: grid;
-    place-items: center;
-    width: 25px;
-    height: 25px;
-    border-radius: 999px;
-    background-color: rgb(204, 0, 0);
     color: white;
+}
+
+#notification-icon {
+    position: relative;
 }
 
 #account-panel-content {
     flex-grow: 1;
     height: 100%;
     background-color: white;
+    padding: 2rem;
+}
+
+#account-panel-content > div {
+    height: 100%;
+}
+
+#account-panel-options > button.active img {
+    filter: invert(1);
+}
+
+#notification-icon img {
+    width: 30px;
+    height: 30px;
+}
+
+#notifications-content {
+    overflow: auto;
+}
+
+.notification {
+    width: 100%;
+    border: 1px solid var(--clr-placeholder);
+    padding: 15px 20px;
+}
+
+.notification .btn {
+    padding: 5px 15px;
+    height: fit-content;
+}
+
+.notification .btn-container .btn-secondary{
+    margin-left: auto;
 }
 
 @media (max-width: 800px) {

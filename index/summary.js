@@ -170,36 +170,34 @@ const createNewBoard = async () => {
         }
     );
     
-    // const boardData = {
-        //     name: boardName,
-        //     categories
-        // };
-        // const user = await getCurrentUser(true);
-        // const newBoard = await user.addBoard(boardData);
+    const boardData = {
+        name: boardName,
+        categories
+    };
+    const user = await getCurrentUser(true);
+    const newBoard = await user.addBoard(boardData);
 
-        $$('.collaborator-invitation').for(
-            invite => {
-                const id = invite.dataset.id;
-                const notification = new Notify({
-                    recipient: id,
-                    boardInvite: {
-                        ownerName: USER.name,
-                        boardName: boardName,
-                        boardId: '1234567'
-                    }
-                });
-                notification.send();
-            }
-        )
-}
+    $$('.collaborator-invitation').for(
+        invite => {
+            const id = invite.dataset.id;
+            const notification = new Notify({
+                recipientId: id,
+                type: "boardInvite",
+                ownerName: USER.name,
+                boardName: newBoard.name,
+                boardId: newBoard.id
+            });
+            notification.send();
+        }
+    );
+};
 
 const toggleDrp = () => {
     const drp = $('.add-board-data .drp');
     const sortedContacts = Object.values(CONTACTS).sort((a, b) => (a.name > b.name) ? 1 : -1);
     drp.innerHTML = ''
     drp.renderItems(sortedContacts, contactDropdownTemplate);
-    
-}
+};
 
 const filterDrp = debounce(() => {
     

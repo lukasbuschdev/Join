@@ -1,5 +1,5 @@
 class Account extends BaseClass {
-    constructor({ id = Date.now(), name, email, img = "", color, loggedIn = 'false', boards = [], contacts = [], phone = 'N/A', friendRequests = [], notifications = [] }) {
+    constructor({ id = `${Date.now()}`, name, email, img = "", color, loggedIn = 'false', boards = [], contacts = [], phone = 'N/A', friendRequests = [], notifications = [] }) {
         super();
         this.name = name;
         this.id = `${id}`;

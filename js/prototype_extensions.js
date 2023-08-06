@@ -82,6 +82,8 @@ HTMLDialogElement.prototype.closeModal = function () {
     if (this.classList.contains('big-modal')) {
         this.addEventListener('transitionend', () => this.close(), {once: true});
         this.classList.remove('active');
+    } else {
+        this.close();
     }
     this.removeEventListener('mousedown', closeHandler);
 }
@@ -92,12 +94,17 @@ HTMLDialogElement.prototype.showNotification = function () {
         event.currentTarget.removeEventListener('animationend', completionHandler)
     }, { once: true });
     this.$('.notification').addEventListener('animationend', completionHandler = ()=>{
-        event.currentTarget.removeEventListener('animationcancel', abortHandler)
+        event.currentTarget.removeEventListener('animationcancel', abortHandler);
         event.currentTarget.classList.remove('anim-notification');
+        log('closing');
         this.closeModal();
-    }, { once: true })
-    
+    }, { once: true });
 }
+
+HTMLElement.prototype.LANG_load = function() {
+    this.$$('[data-lang]').for(element => element.innerText = LANG[element.dataset.lang]);
+    this.$$('[data-lang-placeholder]').for(input => input.placeholder = LANG[input.dataset.langPlaceholder])
+};
 
 HTMLElement.prototype.toggleDropDown = function () {
     if (!this.closest('.drp-wrapper')) return;

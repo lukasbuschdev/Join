@@ -37,8 +37,8 @@ const throwErrors = (...params) => {
   });
 }
 
-const notification = async (message) => {
-  await new Promise(resolve => {
+const notification = (message) => {
+  return new Promise(resolve => {
     const el = document.createElement('dialog');
     $('body').append(el);
 
@@ -53,7 +53,7 @@ const notification = async (message) => {
     $('.dlg-notification').openModal();
     $('.dlg-notification').addEventListener("close", () => {
       resolve();
-    });
+    }, {once: true});
   });
 }
 

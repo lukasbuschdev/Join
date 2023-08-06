@@ -289,6 +289,10 @@ h4 {
     border-radius: 10px;
 }
 
+.radius-15 {
+    border-radius: 15px;
+}
+
 .radius-20 {
     border-radius: 20px;
 }
@@ -310,6 +314,12 @@ h4 {
 .column {
     display: flex;
     flex-direction: column;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .gap-10 {
@@ -514,7 +524,7 @@ dialog {
 
 .circle {
     width: var(--diameter);
-    aspect-ratio: 1;
+    height: var(--diameter);
     border-radius: 9999px;
 }
 

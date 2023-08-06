@@ -1,17 +1,20 @@
+let LANG;
+
 const currentLang = () => LOCAL_getData('lang') ?? navigator.language.slice(0, 2) ?? "en-US"
 
 const LANG_load = async (lang = currentLang()) => {
     let langDirectory = 'index';
-    if (currentDirectory() == 'signup' ||
-        currentDirectory() == 'login' ||
-        currentDirectory() == 'create_account' ||
-        currentDirectory() == 'forgot_password' ||
-        currentDirectory() == 'reset_password') langDirectory = 'init';
+    const dir = currentDirectory();
+    if (dir == 'signup' ||
+        dir == 'login' ||
+        dir == 'create_account' ||
+        dir == 'forgot_password' ||
+        dir == 'reset_password') langDirectory = 'init';
     // lang = "de";
-    const languages = await (await fetch(`/Join/assets/languages/${langDirectory}/${lang}.json`)).json();
-    document.title = languages[`title-${currentDirectory()}`];
-    $$('[data-lang]').forEach(element => element.innerText = languages[element.dataset.lang]);
-    $$('[data-lang-placeholder]').forEach(input => input.placeholder = languages[input.dataset.langPlaceholder])
+    LANG = await (await fetch(`/Join/assets/languages/${langDirectory}/${lang}.json`)).json();
+    document.title = document.title.replace(/(?<=\) ).*/g, LANG[`title-${dir}`]);
+    $$('[data-lang]').for(element => element.innerText = LANG[element.dataset.lang]);
+    $$('[data-lang-placeholder]').for(input => input.placeholder = LANG[input.dataset.langPlaceholder]);
 }
 
 const LANG_set = (lang) => {
