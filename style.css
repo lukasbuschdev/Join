@@ -402,13 +402,20 @@ h4 {
     overflow: hidden;
 }
 
-.drp-wrapper div:not(.drp-contacts):not(.drp-option-wrapper) {
+.drp-wrapper .drp-option, 
+.drp-wrapper .drp-title,
+.drp-wrapper .drp-you {
     padding: 13px 21px;
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     height: 51px;
+}
+
+.drp-option-wrapper .user-img-container {
+    height: 35px;
+    width: 35px;
+    font-size: 1rem;
 }
 
 .drp-wrapper div:not(.drp-contacts):not(.drp-option-wrapper):not(.drp-title):hover {
@@ -421,10 +428,20 @@ h4 {
 
 .drp-title::after {
     content: url(./assets/img/icons/dropdown.svg);
+    margin-left: auto;
+}
+
+.drp-option {
+    gap: 25px;
+}
+
+.drp-option:last-of-type {
+    border-radius: 0 0 10px 10px;
 }
 
 .drp-option::after {
     content: url(./assets/img/icons/check_button.svg);
+    margin-left: auto;
 }
 
 .drp-option.active::after {

@@ -30,6 +30,21 @@ textarea {
     overflow: hidden;
 }
 
+#drp-board-container, 
+#drp-categories, 
+#drp-collaborators {
+    max-height: 153px;
+    overflow-y: auto;
+}
+
+#drp-board-container .drp-option::after {
+    content: '';
+}
+
+#drp-categories .drp-option::after {
+    content: '';
+}
+
 .line {
     height: 495px;
     width: 1px;

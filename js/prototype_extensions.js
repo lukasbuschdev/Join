@@ -31,6 +31,10 @@ Object.prototype.filter = function (cb) {
     return newObj;
 }
 
+Object.prototype.for = function (cb) {
+    Object.values(this).for(cb);
+}
+
 Object.prototype.map = function(cb){
     let newObj = {};
     Object.entries(this).for(([key, value]) =>
@@ -136,12 +140,13 @@ HTMLElement.prototype.LANG_load = function() {
 };
 
 HTMLElement.prototype.toggleDropDown = function () {
-    if (!this.closest('.drp-wrapper')) return;
-    this.closest('.drp-wrapper').toggleActive();
-    document.addEventListener('click', closeHandler = () => {
-        if (this.closest('.drp-wrapper').contains(event.target)) return;
-        this.closest('.drp-wrapper').toggleActive();
-        document.removeEventListener('click', closeHandler);
+    const drpWrapper = this.closest('.drp-wrapper');
+    if (!drpWrapper) return;
+    drpWrapper.toggleActive();
+    window.addEventListener('click', closeHandler = () => {
+        if (drpWrapper.contains(event.target)) return;
+        drpWrapper.toggleActive();
+        window.removeEventListener('click', closeHander);
     })
 };
 
