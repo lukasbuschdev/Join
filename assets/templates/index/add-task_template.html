@@ -33,8 +33,8 @@
                     <div class="drp-wrapper">
                         <div data-lang="select-task-category" class="drp-title" onclick="this.toggleDropDown()">Select task category</div>
                         <div class="drp-option-wrapper">
-                            <div class="drp-contacts">
-                                <div class="drp-option" onclick="this.toggleActive()"></div>
+                            <div class="drp-contacts" id="drp-categories">
+                                <!--Add contacts here!-->
                             </div>
                         </div>
                     </div>
@@ -48,12 +48,11 @@
                     <span data-lang="assigned-to">Assigned to</span>
                     <div class="drp-wrapper">
                         <div data-lang="select-contacts-to-asign" class="drp-title" onclick="this.toggleDropDown()">Select contacts to assign</div>
-                        <div class="drp-option-wrapper">
+                        <div class="drp-option-wrapper" id="drp-collaborators">
                             <div class="drp-you" data-lang="assigned-you">You</div>
                             <div class="drp-contacts" id="drp-collab-container">
                                 <!--Add contacts here!-->
                             </div>
-                            <div class="drp-invite" data-lang="assigned-invite">Invite new contact</div>
                         </div>
                     </div>
                 </div>
@@ -85,7 +84,7 @@
     </div>
 
     <div class="flex-right">
-        <button class="btn btn-primary btn-check txt-normal txt-700">
+        <button onclick="addTask()" class="btn btn-primary btn-check txt-normal txt-700">
             <span data-lang="btn-create-task">Create Task</span>
         </button>
     </div>

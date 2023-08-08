@@ -322,7 +322,7 @@ dialog#add-board .category-colors > div {
     overflow: hidden;
 }
 
-dialog#add-board .category-color {
+.category-color {
     width: 20px;
     aspect-ratio: 1;
     border-radius: 9999px;

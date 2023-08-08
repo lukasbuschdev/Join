@@ -72,7 +72,7 @@ const loadContent = async () => {
         initBoard();
     } else if (id == "add-task") {
         initAddTask();
-    };
+    }
     if (currentDirectory() !== id) goTo(id)
     initTextLoadAnimationOvserver();
     initMenus();
