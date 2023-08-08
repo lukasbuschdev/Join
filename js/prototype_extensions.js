@@ -142,10 +142,11 @@ HTMLElement.prototype.LANG_load = function() {
 HTMLElement.prototype.toggleDropDown = function () {
     if (!this.closest('.drp-wrapper')) return;
     this.closest('.drp-wrapper').toggleActive();
-    document.addEventListener('click', closeHandler = () => {
+    const functionName = Date.now();
+    document.addEventListener('click', window[functionName] = () => {
         if (this.closest('.drp-wrapper').contains(event.target)) return;
         this.closest('.drp-wrapper').toggleActive();
-        document.removeEventListener('click', closeHandler);
+        document.removeEventListener('click', window[functionName]);
     })
 };
 
