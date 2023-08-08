@@ -29,7 +29,7 @@ function renderCategories(selectedBoard) {
         drpContainer.innerHTML += /*html*/ `
             <div class="drp-option row" data-color="${color}" onclick="this.toggleActive()">
                 <span>${name}</span>
-
+                <div class="category-color" style="--clr: ${color}"></div>
             </div>
         `;    
     })
@@ -53,21 +53,3 @@ function renderAssignToContacts(selectedBoard) {
         `;    
     })
 }
-
-
-
-
-
-
-// function addTask() {
-//     const boardId = $('').;
-//     const = $('').;
-//     const = $('').;
-//     const = $('').;
-//     const = $('').;
-//     const = $('').;
-//     const = $('').;
-//     const = $('').;
-//     const = $('').;
-//     const = $('').;
-// }
