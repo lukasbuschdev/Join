@@ -147,6 +147,7 @@ HTMLElement.prototype.toggleDropDown = function () {
         if (this.closest('.drp-wrapper').contains(event.target)) return;
         this.closest('.drp-wrapper').toggleActive();
         document.removeEventListener('click', window[functionName]);
+        delete window[functionName];
     })
 };
 
