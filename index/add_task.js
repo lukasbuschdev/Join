@@ -39,8 +39,6 @@ function renderAssignToContacts(selectedBoard) {
     const drpContainer = $('#drp-collab-container');
     drpContainer.innerHTML = '';
 
-    console.log(selectedBoard);
-
     selectedBoard.collaborators.for(collaboratorId => {
         const collaborator = CONTACTS[collaboratorId];
         if (collaborator == USER.id) return;
