@@ -31,6 +31,10 @@ Object.prototype.filter = function (cb) {
     return newObj;
 }
 
+Object.prototype.for = function (cb) {
+    Object.values(this).for(cb);
+};
+
 Object.prototype.map = function(cb){
     let newObj = {};
     Object.entries(this).for(([key, value]) =>
@@ -142,7 +146,7 @@ HTMLElement.prototype.toggleDropDown = function () {
         if (this.closest('.drp-wrapper').contains(event.target)) return;
         this.closest('.drp-wrapper').toggleActive();
         document.removeEventListener('click', closeHandler);
-    })
+    }, {once: true});
 };
 
 HTMLElement.prototype.toggleActive = function () {

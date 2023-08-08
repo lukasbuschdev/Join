@@ -30,7 +30,7 @@ class Board extends BaseClass {
         return task;
     }
 
-    getTasks = (taskIds) => {
+    getTasks = () => {
         let allTasks = BOARDS[this.id].tasks;
         return allTasks.map(task => new Task(task));
     }

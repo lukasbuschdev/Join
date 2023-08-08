@@ -70,7 +70,9 @@ const loadContent = async () => {
         initContacts();
     } else if (id == "board") {
         initBoard();
-    }
+    } else if (id == "add-task") {
+        initAddTask();
+    };
     if (currentDirectory() !== id) goTo(id)
     initTextLoadAnimationOvserver();
     initMenus();

@@ -78,7 +78,8 @@ const createNewBoard = async () => {
     
     const boardData = {
         name: boardName,
-        categories
+        categories,
+        collaborators: [USER.id]
     };
     const user = await getCurrentUser(true);
     const newBoard = await user.addBoard(boardData);
