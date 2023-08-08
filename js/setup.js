@@ -30,18 +30,20 @@ const resetMenus = () => {
 
 const initMenus = () => {
     $$('[type = "menu"]').for(menu => {
-        menu.$$('[type = "option"]').for(
-            button => button.addEventListener('click', () => menu.$$('[type = "option"]').for(
+        const allButtons = menu.$$('[type = "option"]');
+        allButtons.for(
+            button => {
+                button.addEventListener('click', () => allButtons.for(
                 button => button.classList.toggle('active', button == event.currentTarget)
-            ))
-        )
+            ))}
+        );
     });
 }
 
 let inactivityTimer;
 const addInactivityTimer = (minutes = 5) => {
     inactivityTimer = setTimeout(()=>{
-        goTo('../init/init.html?expired');
+        goTo('login', {search: '?expired', reroute: true});
     }, minutes * 60 * 1000)
 }
 

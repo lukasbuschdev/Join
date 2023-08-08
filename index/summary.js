@@ -2,121 +2,29 @@ const initSummary = async () => {
     renderBoards();
 }
 
-const renderBoards = async () => {
-    const activeBoardIndex = SESSION_getData('activeBoardIndex') ?? 0;
-    $('#summary-data .content').classList.remove('d-none');
-
-    $('.summary-selection-boards').innerHTML = '';
-    $('.summary-selection-boards').renderItems(Object.values(BOARDS), summarySelectionTemplate);
-
-    setTimeout(()=>$$('.summary-selection-boards button')[activeBoardIndex].click(), 0);
+const renderBoards = () => {
+    const selection = $('#summary-selection');
+    // selection.innerHTML = '';
+    // selection.renderItems(Object.values(BOARDS), boardSelectionTemplate);
 }
 
-const summarySelectionTemplate = (board) => {
-    const {name, id} = board;
-    return /*html*/`
-    <button class="" name="${name}" type="option" onclick="selectBoardSummary('${id}')">${name.replaceAll('-',' ')}</button>
-    `
+const boardSelectionTemplate = ({name, id}) => {
+    return /*html*/`<button type="option" onclick="renderBoard(${id})">${name}</button>`;
 }
 
-const loadBoardSummary = (boardId) => {
-    const board = BOARDS[boardId];
-    const {tasks} = board;
-    const tasksInBoard = Object.values(tasks).length;
-    const tasksInProgress = Object.values(tasks).filter(({type}) => type == "in-progress").length;
-    const tasksAwaitingFeeback = Object.values(tasks).filter(({type}) => type == "awaiting-feedback").length;
-    const tasksToDo = Object.values(tasks).filter(({type}) => type == "to-do").length;
-    const tasksDone = Object.values(tasks).filter(({type}) => type == "done").length;
-
-    $('#tasks-in-board h1').innerText = tasksInBoard;
-    $('#tasks-in-progress h1').innerText = tasksInProgress;
-    $('#tasks-awaiting-feedback h1').innerText = tasksAwaitingFeeback;
-    $('#tasks-to-do h1').innerText = tasksToDo;
-    $('#tasks-done h1').innerText = tasksDone;
-}
-
-const incrementBoard = (direction) => {
-    if (direction == 1 && $('.summary-selection-boards button.centered').nextElementSibling == null) return
-    else if (direction == -1 && $('.summary-selection-boards button.centered').previousElementSibling == null) return
-    scrollSummarySelection(direction);
-}
-
-const scrollSummarySelection = (direction) => {
-    const centeredBtn = $('.summary-selection-boards button.centered');
-    if (direction == 1) {
-        centeredBtn.nextElementSibling.classList.add('centered');
-        centeredBtn.classList.remove('centered');
-    } else if (direction == -1) {
-        centeredBtn.previousElementSibling.classList.add('centered');
-        centeredBtn.classList.remove('centered');
-    }
-
-    $('.summary-selection-boards button.centered').style.scrollSnapAlign = 'unset';
-    $('.summary-selection-boards').scrollBy(175 * direction, 0)
-    setTimeout(() => {
-        $('.summary-selection-boards button.centered').style.scrollSnapAlign = '';
-    }, 200);
-
-    setArrowVisibility([...centeredBtn.parentElement.$$('button')].indexOf(centeredBtn), $$('.summary-selection-boards button').length);
-}
-
-const scrollSummaryContent = (direction) => {
-    const content = $('.summary-content');
-    content.classList.remove('scroll-snap');
-    const startingX = content.scrollLeft;
-    const deltaP = (direction > 0) ? 0 : content.scrollWidth - content.offsetWidth;
-    content.style.scrollBehavior = "auto";
-    content.scrollLeft = deltaP;
-
-    content.style.scrollBehavior = "smooth";
-    content.scrollLeft = startingX;
-    setTimeout(()=>{
-        content.classList.add('scroll-snap');
-    }, 500)
-}
-
-const selectBoardSummary = (id) => {
-    const button = event.currentTarget;
-    let buttonIndex;
-    let centeredBtnIndex;
-    let activeBtnIndex;
-
-    if (!(button.parentElement.$('button.centered'))) button.classList.toggle('centered');
-    const buttons = button.parentElement.$$('button');
-    buttons.for((btn, i) => {
-        if (btn == button) buttonIndex = i;
-        if (btn.classList.contains('centered')) centeredBtnIndex = i;
-        if (btn.classList.contains('active')) activeBtnIndex = i;
-    });
-
-    if (buttonIndex == activeBtnIndex) return;
-    SESSION_setData('activeBoardIndex', buttonIndex);
-    
-    let direction;
-    if (buttonIndex > activeBtnIndex) direction = 1;
-    else if (buttonIndex < activeBtnIndex) direction = -1;
-
-    if (direction !== undefined) {
-        if (!(buttonIndex == centeredBtnIndex)) {
-            scrollSummarySelection(direction)
-        }
-        scrollSummaryContent(direction);
-    }
-    loadBoardSummary(id);
-}
-
-const setArrowVisibility = (buttonIndex, boardsLength) => {
-    log(buttonIndex, boardsLength)
-    const [leftArrow, rightArrow] = $$('.summary-selection-arrows');
-    // const [leftGrid, rightGrid] = $$('.summary-grid:not(#summary-data)');
-
-    [leftArrow, rightArrow].for(container => container.show());
-
-    if (buttonIndex == 0) {
-        leftArrow.hide()
-    } else if (buttonIndex == boardsLength - 1) {
-        rightArrow.hide();
-    }
+const renderBoard = (id) => {
+    const tasks = Object.values(BOARDS[id].tasks);
+    const tasksInBoard = tasks.length;
+    const tasksInProgress = tasks.filter(({type})=> type == "in-progress").length;
+    const tasksAwaitingFeedback = tasks.filter(({type})=> type == "awaiting-feedback").length;
+    const tasksToDo = tasks.filter(({type})=> type == "to-do").length;
+    const tasksDone = tasks.filter(({type})=> type == "done").length;
+    const boardButtons = $$('#summary-data button');
+    boardButtons[0].$('h1').innerText = tasksInBoard;
+    boardButtons[1].$('h1').innerText = tasksInProgress;
+    boardButtons[2].$('h1').innerText = tasksAwaitingFeedback;
+    boardButtons[4].$('h1').innerText = tasksToDo;
+    boardButtons[5].$('h1').innerText = tasksDone;
 }
 
 const createBoardModal = () => {
@@ -132,8 +40,6 @@ const addBoardCategory = () => {
 
     $('.categories-container').innerHTML += addBoardCategoryTemplate(title, color);
     $('#add-board-categories input').value = '';
-    
-    // const 
 }
 
 const addBoardCategoryTemplate = (title, color) => {
@@ -176,6 +82,7 @@ const createNewBoard = async () => {
     };
     const user = await getCurrentUser(true);
     const newBoard = await user.addBoard(boardData);
+    notification('board-added');
 
     $$('.collaborator-invitation').for(
         invite => {

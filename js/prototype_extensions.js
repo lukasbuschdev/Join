@@ -49,6 +49,7 @@ HTMLElement.prototype.includeTemplate = async function(url = this.getAttribute('
     if (!url) return;
     const template = await (await fetch(url)).text();
     this.innerHTML = template;
+    this.$$('[data-shadow]').for(scrollContainer => scrollContainer.addScrollShadow());
     LANG_load();
 }
 
@@ -101,6 +102,34 @@ HTMLDialogElement.prototype.showNotification = function () {
     }, { once: true });
 }
 
+let shadowObservers = {};
+
+HTMLElement.prototype.addScrollShadow = function () {
+    const [direction, color] = this.dataset.shadow.split('/');
+    const shadowWrapper = document.createElement('div');
+    shadowWrapper.classList.add('scroll-shadow');
+    shadowWrapper.style.setProperty('--direction', (direction == "ud") ? 'to bottom' : 'to right');
+    shadowWrapper.style.setProperty('--clr', color);
+    shadowWrapper.innerHTML = this.outerHTML;
+    this.replaceWith(shadowWrapper);
+    log(shadowWrapper.classList.value)
+    shadowWrapper.addScrollShadowObserver();
+};
+
+HTMLElement.prototype.addScrollShadowObserver = function () {
+    if (!this.classList.contains('scroll-shadow')) return error('not a srcoll-shadow container!');
+    const scrollContainer = this.children[0];
+    const newId = Object.values(shadowObservers).length;
+
+    this.dataset.observerId = newId;
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+        log(entry, entry.isIntersecting);
+    }, {root: scrollContainer});
+    intersectionObserver.observe(scrollContainer.children[0]);
+    intersectionObserver.observe([...scrollContainer.children].at(-1));
+    shadowObservers[newId] = intersectionObserver;
+}
+
 HTMLElement.prototype.LANG_load = function() {
     this.$$('[data-lang]').for(element => element.innerText = LANG[element.dataset.lang]);
     this.$$('[data-lang-placeholder]').for(input => input.placeholder = LANG[input.dataset.langPlaceholder])
@@ -114,11 +143,11 @@ HTMLElement.prototype.toggleDropDown = function () {
         this.closest('.drp-wrapper').toggleActive();
         document.removeEventListener('click', closeHandler);
     })
-}
+};
 
 HTMLElement.prototype.toggleActive = function () {
     this.classList.toggle('active');
-}
+};
 
 HTMLElement.prototype.updatePosition = function (x = 0, y = 0) {
     if (!this.style.getPropertyValue('--x')) return

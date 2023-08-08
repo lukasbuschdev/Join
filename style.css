@@ -468,7 +468,7 @@ h4 {
 
 .user-img-container img:not([src=""]) {
     width: calc(100% - calc(var(--outline-thickness) * 2));
-    height: calc(100% - calc(var(--outline-thickness) * 2));
+    aspect-ratio: 1;
     object-fit: cover;
     border-radius: inherit;
 }

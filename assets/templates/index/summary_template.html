@@ -8,95 +8,69 @@
     </div>
 
     <div class="summary-body column">
-        <div class="summary-selection row">
-            <button class="summary-selection-arrows d-none" onclick="incrementBoard(-1)"></button>
-            <div class="summary-selection-boards row" type="menu">
+        <div id="summary-content" class="flex-center">
+            <div id="summary-selection" class="column gap-15" type="menu" data-shadow="ud/var(--clr-bg-light)">
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
+                <button type="option" onclick="">Peter</button>
             </div>
-            <button class="summary-selection-arrows d-none" onclick="incrementBoard(1)"></button>
-        </div>
-
-        <div class="summary-content-wrapper">
-            <div class="summary-content-shadow"></div>
-            <div class="summary-content scroll-snap row txt-normal">
-                <div class="summary-grid column d-none">
-    
-                    <div class="row">
-                        <div class="summary-btn"></div>
-                        <div class="summary-btn"></div>
-                        <div class="summary-btn"></div>
-                    </div>
-    
-                    <div class="row">
-                        <div class="summary-btn big"></div>
-                    </div>
-    
-                    <div class="row">
-                        <div class="summary-btn"></div>
-                        <div class="summary-btn"></div>
-                    </div>
+            <div id="summary-data" class="column gap-30">
+                <div class="row gap-30">
+                    <button class="summary-btn">
+                        <h1>1</h1>
+                        <span>Tasks in Board</span>
+                    </button>
+                    <button class="summary-btn">
+                        <h1>1</h1>
+                        <span>Tasks in Progress</span>
+                    </button>
+                    <button class="summary-btn">
+                        <h1>1</h1>
+                        <span>Awaiting Feedback</span>
+                    </button>
                 </div>
-                <div id="summary-data" class="summary-grid column">
-                    <!-- <div id="add-board"><h2>Add Board</h2></div> -->
-                    <div class="content column d-none">
-                        <div class="row">
-                            <button id="tasks-in-board" class="summary-btn column">
-                                <h1>&nbsp;</h1>
-                                <span>Tasks in<br>Board</span>
-                            </button>
-                            <button id="tasks-in-progress" class="summary-btn column">
-                                <h1>&nbsp;</h1>
-                                <span>Tasks in<br>Progress</span>
-                            </button>
-                            <button id="tasks-awaiting-feedback" class="summary-btn column">
-                                <h1>&nbsp;</h1>
-                                <span>Awaiting<br>Feedback</span>
-                            </button>
-                        </div>
-        
-                        <div class="row">
-                            <button id="tasks-urgent" class="summary-btn big row">
-                                <span></span>
-                                <span>Urgent</span>
-                            </button>
-                        </div>
-        
-                        <div class="row">
-                            <button id="tasks-to-do" class="summary-btn row">
-                                <div class="column">
-                                    <h1>&nbsp;</h1>
-                                    <span>To-do</span>
-                                </div>
-                            </button>
-                            <button id="tasks-done" class="summary-btn row">
-                                <div class="column">
-                                    <h1>&nbsp;</h1>
-                                    <span>Done</span>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
+                <div class="row gap-30">
+                    <button class="summary-btn">
+                        <h1>1</h1>
+                        <span>Tasks</span>
+                    </button>
                 </div>
-                <div class="summary-grid column d-none">
-    
-                    <div class="row">
-                        <div class="summary-btn"></div>
-                        <div class="summary-btn"></div>
-                        <div class="summary-btn"></div>
-                    </div>
-    
-                    <div class="row">
-                        <div class="summary-btn big"></div>
-                    </div>
-    
-                    <div class="row">
-                        <div class="summary-btn"></div>
-                        <div class="summary-btn"></div>
-                    </div>
+                <div class="row gap-30">
+                    <button class="summary-btn">
+                        <h1>1</h1>
+                        <span>To-do</span>
+                    </button>
+                    <button class="summary-btn">
+                        <h1>1</h1>
+                        <span>Done</span>
+                    </button>
                 </div>
             </div>
         </div>
-
-
+        <div class="summary-placeholder grid-center gap-35">
+            <img src="/Join/assets/img/icons/logo.svg" alt="">
+            <div class="btn-container flex-center">
+                <h3>No boards yet?</h3>
+                <button class="add-board btn btn-primary btn-add-task txt-normal txt-700" onclick="createBoardModal()">
+                    <span data-lang="add-board">Add board</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <dialog type="modal" id="add-board" class="big-modal">

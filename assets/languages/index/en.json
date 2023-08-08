@@ -24,7 +24,8 @@
     "add-board-categories": "Add category",
     "add-board-collaborators": "Mitwirkende hinzufügen",
     "add-board-create": "Create Board",
-    "board-joined": "Tafel beigetreten!",
+    "board-joined": "Board Joined!",
+    "board-created": "Board created!",
 
     "heading-add-task": "Add Task",
     "select-board": "Select board",

@@ -139,7 +139,7 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     position: absolute;
     right: 0;
     display: block;
-    width: 1px;
+    width: 2px;
     height: 90%;
     background: linear-gradient(to bottom, white, var(--clr-placeholder) 20% 80%, white);
 }
