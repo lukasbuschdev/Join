@@ -2,7 +2,7 @@
     --grid-width: 580px;
 }
 
-.summary-wrapper {
+#summary-wrapper {
     height: 100%;
     padding: 2vh 4rem;
 }
@@ -67,10 +67,12 @@
 
 .scroll-shadow {
     position: relative;
+    overflow: hidden;
 }
 
 .scroll-shadow::before,
 .scroll-shadow::after {
+    transition: opacity var(--transition-fast);
     content: '';
     position: absolute;
     width: 100%;
@@ -78,6 +80,7 @@
     background: linear-gradient(var(--direction), var(--clr), transparent);
     pointer-events: none;
     opacity: 0;
+    z-index: 9999;
 }
 
 .scroll-shadow::before {
@@ -110,18 +113,21 @@
     box-shadow: 0px 0px 4px 0px #0000001A;
     font-weight: 600;
     font-size: 1.5rem;
-    transition: var(--transition-fast);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     flex-shrink: 0;
 }
 
+#summary-wrapper button {
+    transition: var(--transition-fast);
+}
+
 #summary-selection button:not(.active) {
     margin-right: 10px;
 }
 
-#summary-selection button:hover {
+#summary-wrapper button:hover {
     background-color: var(--clr-dark);
     color: white;
 }

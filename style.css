@@ -394,6 +394,7 @@ h4 {
     grid-template-rows: 51px 0fr;
     transition: var(--transition-fast);
     background-color: white;
+    overflow: hidden;
 }
 .drp-wrapper.active {
     grid-template-rows: 51px 1fr;
@@ -418,7 +419,8 @@ h4 {
     font-size: 1rem;
 }
 
-.drp-wrapper div:not(.drp-contacts):not(.drp-option-wrapper):not(.drp-title):hover {
+.drp-wrapper .drp-option:hover,
+.drp-wrapper .drp-you:hover {
     background-color: var(--clr-placeholder);
 }
 

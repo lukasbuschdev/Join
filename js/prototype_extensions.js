@@ -135,7 +135,7 @@ HTMLElement.prototype.addScrollShadowObserver = function () {
             }
         })
     }, {root: scrollContainer, threshold: 1});
-    scrollContainer.$$('* > *:first-of-type, * > *:last-of-type').for(container => intersectionObserver.observe(container));
+    scrollContainer.$$('* > *:first-of-type, * > *:last-of-type:not(:first-of-type)').for(container => intersectionObserver.observe(container));
     shadowObservers[newId] = intersectionObserver;
 }
 
