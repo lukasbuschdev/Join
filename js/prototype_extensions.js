@@ -126,11 +126,16 @@ HTMLElement.prototype.addScrollShadowObserver = function () {
     const newId = Object.values(shadowObservers).length;
 
     this.dataset.observerId = newId;
-    const intersectionObserver = new IntersectionObserver(([entry]) => {
-        log(entry, entry.isIntersecting);
-    }, {root: scrollContainer});
-    intersectionObserver.observe(scrollContainer.children[0]);
-    intersectionObserver.observe([...scrollContainer.children].at(-1));
+    const intersectionObserver = new IntersectionObserver((entries) => {
+        entries.for(entry => {
+            if (scrollContainer.scrollHeight !== scrollContainer.offsetHeight ||
+                scrollContainer.scrollWidth !== scrollContainer.offsetWidth) {
+                if (!entry.target.previousElementSibling) this.style.setProperty('--shadow-before', (entry.intersectionRatio !== 1) ? '1' : '0');
+                if (!entry.target.nextElementSibling) this.style.setProperty('--shadow-after', (entry.intersectionRatio !== 1) ? '1' : '0');
+            }
+        })
+    }, {root: scrollContainer, threshold: 1});
+    scrollContainer.$$('* > *:first-of-type, * > *:last-of-type').for(container => intersectionObserver.observe(container));
     shadowObservers[newId] = intersectionObserver;
 }
 

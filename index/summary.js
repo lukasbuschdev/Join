@@ -4,8 +4,8 @@ const initSummary = async () => {
 
 const renderBoards = () => {
     const selection = $('#summary-selection');
-    // selection.innerHTML = '';
-    // selection.renderItems(Object.values(BOARDS), boardSelectionTemplate);
+    selection.innerHTML = '';
+    selection.renderItems(Object.values(BOARDS), boardSelectionTemplate);
 }
 
 const boardSelectionTemplate = ({name, id}) => {

@@ -73,18 +73,20 @@
 .scroll-shadow::after {
     content: '';
     position: absolute;
-    display: block;
     width: 100%;
     height: 50px;
     background: linear-gradient(var(--direction), var(--clr), transparent);
     pointer-events: none;
+    opacity: 0;
 }
 
 .scroll-shadow::before {
+    opacity: var(--shadow-before, 0);
     top: 0;
 }
 
 .scroll-shadow::after {
+    opacity: var(--shadow-after, 0);
     scale: 1 -1;
     bottom: 0;
 }
