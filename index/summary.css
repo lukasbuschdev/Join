@@ -75,12 +75,22 @@
     transition: opacity var(--transition-fast);
     content: '';
     position: absolute;
-    width: 100%;
-    height: 50px;
     background: linear-gradient(var(--direction), var(--clr), transparent);
     pointer-events: none;
     opacity: 0;
     z-index: 9999;
+}
+
+.scroll-shadow.ud::before,
+.scroll-shadow.ud::after {
+    width: 100%;
+    height: var(--thickness, 20px);
+}
+
+.scroll-shadow.lr::before,
+.scroll-shadow.lr::after {
+    height: 100%;
+    width: var(--thickness, 20px);
 }
 
 .scroll-shadow::before {

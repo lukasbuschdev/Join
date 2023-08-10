@@ -37,7 +37,15 @@ function renderCategories(selectedBoard) {
 
 function renderAssignToContacts(selectedBoard) {
     const drpContainer = $('#drp-collab-container');
+    const assignToUser = document.createElement('div');
+    assignToUser.innerHTML = /*html*/`
+        <div class="drp-option" onclick="selectCollaborator(${USER.id})">
+            <div class="user-img-container grid-center" style="--user-clr: ${USER.color}">${USER.name.slice(0, 2).toUpperCase()}</div>
+            <span data-lang="assigned-you"></span>
+        </div>`;
     drpContainer.innerHTML = '';
+    assignToUser.LANG_load();
+    drpContainer.append(assignToUser.children[0]);
 
     selectedBoard.collaborators.for(collaboratorId => {
         const collaborator = CONTACTS[collaboratorId];

@@ -53,6 +53,7 @@ HTMLElement.prototype.includeTemplate = async function(url = this.getAttribute('
     if (!url) return;
     const template = await (await fetch(url)).text();
     this.innerHTML = template;
+    shadowObservers = {};
     this.$$('[data-shadow]').for(scrollContainer => scrollContainer.addScrollShadow());
     LANG_load();
 }
@@ -109,14 +110,15 @@ HTMLDialogElement.prototype.showNotification = function () {
 let shadowObservers = {};
 
 HTMLElement.prototype.addScrollShadow = function () {
-    const [direction, color] = this.dataset.shadow.split('/');
+    const [direction, color, thickness] = this.dataset.shadow.split('/');
     const shadowWrapper = document.createElement('div');
     shadowWrapper.classList.add('scroll-shadow');
+    shadowWrapper.classList.add(direction);
     shadowWrapper.style.setProperty('--direction', (direction == "ud") ? 'to bottom' : 'to right');
     shadowWrapper.style.setProperty('--clr', color);
+    shadowWrapper.style.setProperty('--thickness', thickness);
     shadowWrapper.innerHTML = this.outerHTML;
     this.replaceWith(shadowWrapper);
-    log(shadowWrapper.classList.value)
     shadowWrapper.addScrollShadowObserver();
 };
 
@@ -127,16 +129,23 @@ HTMLElement.prototype.addScrollShadowObserver = function () {
 
     this.dataset.observerId = newId;
     const intersectionObserver = new IntersectionObserver((entries) => {
-        entries.for(entry => {
-            if (scrollContainer.scrollHeight !== scrollContainer.offsetHeight ||
-                scrollContainer.scrollWidth !== scrollContainer.offsetWidth) {
-                if (!entry.target.previousElementSibling) this.style.setProperty('--shadow-before', (entry.intersectionRatio !== 1) ? '1' : '0');
-                if (!entry.target.nextElementSibling) this.style.setProperty('--shadow-after', (entry.intersectionRatio !== 1) ? '1' : '0');
-            }
+        entries.for(({target, intersectionRatio}) => {
+            if (!target.previousElementSibling) this.style.setProperty('--shadow-before', (intersectionRatio !== 1) ? '1' : '0');
+            if (!target.nextElementSibling) this.style.setProperty('--shadow-after', (intersectionRatio !== 1) ? '1' : '0');
         })
     }, {root: scrollContainer, threshold: 1});
-    scrollContainer.$$('* > *:first-of-type, * > *:last-of-type:not(:first-of-type)').for(container => intersectionObserver.observe(container));
     shadowObservers[newId] = intersectionObserver;
+
+    const observe = (target) => {
+        const observer = shadowObservers[this.dataset.observerId];
+        observer.disconnect();
+        target.$$('*:first-of-type:not(:last-of-type), *:last-of-type:not(:first-of-type)').for(container => observer.observe(container));
+    }
+    observe(scrollContainer);
+    const mutationObserver = new MutationObserver(([{target}]) => {
+        observe(target);
+    });
+    mutationObserver.observe(scrollContainer, {subtree: true, childList: true});
 }
 
 HTMLElement.prototype.LANG_load = function() {
