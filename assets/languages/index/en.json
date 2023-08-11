@@ -26,6 +26,12 @@
     "add-board-create": "Create Board",
     "board-joined": "Board Joined!",
     "board-created": "Board created!",
+    "tasks-in-board": "Tasks in Board",
+    "tasks-in-progress": "Tasks in Progress",
+    "tasks-awaiting-feedback": "Awaiting Feedback",
+    "tasks-urgent": "Urgent",
+    "tasks-deadline": "Upcoming Deadline",
+    "tasks-done": "Done",
 
     "heading-add-task": "Add Task",
     "select-board": "Select board",

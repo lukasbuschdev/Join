@@ -26,7 +26,6 @@ const REMOTE_upload = async (directory, data) => {
     // log(data);
     // return;
 
-    getUser();
     return fetch(STORAGE_URL, {
         method: 'POST',
         body: JSON.stringify(payload)
@@ -77,7 +76,6 @@ const REMOTE_setData = async (targetPath, upload) => {
         }
         else if (currentObj.indexOf(upload !== -1)) currentObj.push(upload);
     } else Object.assign(currentObj, upload);
-    // return log(currentObj)s
     return REMOTE_upload(directories[0], data);
 }
 
@@ -203,7 +201,8 @@ const SESSION_setData = (key, value) => {
 }
 
 const SESSION_getData = (key) => {
-    const data = sessionStorage.getItem(key)
+    let data = sessionStorage.getItem(key);
+    if (typeof Number(data) == 'number') data = Number(data);
     return (!(data == 'undefined')) ? data : undefined;
 }
 
@@ -233,6 +232,7 @@ const getCurrentUser = async (methods) => {
 }
 
 const getUser = async () => {
+    log('updating user...');
     USER = await getCurrentUser(true);
     const allUsers = await REMOTE_getData('users');
     USER.contacts.for(
@@ -241,16 +241,9 @@ const getUser = async () => {
 }
 
 const getBoards = async () => {
+    log('updating boards...');
     const allBoards = await REMOTE_getData('boards');
     for await (const boardId of USER.boards) {
         BOARDS[boardId] = new Board(allBoards[boardId]); 
     }
 }
-
-// NOTIFICATIONS
-
-// const checkNotifications = async () => {
-//     USER.notifications.for(
-
-//     )
-// }

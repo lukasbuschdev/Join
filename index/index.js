@@ -7,7 +7,6 @@ let notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wa
 const init = async () => {
     checkLogin();
     await getUser();
-    await getBoards();
     initWebsocket();
     $(`#${currentDirectory().replace('_','-')}`)?.click();
     renderUserData();
@@ -35,6 +34,16 @@ const initWebsocket = () => {
             uid: USER.id
         }
     });
+
+    SOCKET.io.on('error', e => {
+        SOCKET.close();
+        // SOCKET = null;
+        SOCKET.io.on('connection', e => {
+            log('reconnected!')
+        })
+        setTimeout(initWebsocket, 1 * 60 * 1000);
+    });
+
 
     SOCKET.on('message', async () => {
         console.log(`Your received a new Notification!`);

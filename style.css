@@ -369,14 +369,33 @@ h4 {
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
-    background-color: var(--clr-light);
-    border-radius: 999px;
+    width: 12px;
+    /* background-color: var(--clr-light); */
+    /* border-radius: 999px; */
 }
 
 ::-webkit-scrollbar-thumb {
     background-color: var(--clr-placeholder);
+    border: 2px solid transparent;
+    width: 4px;
     border-radius: 999px;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-button:single-button {
+    display: block;
+    background-size: 10px;
+    background-repeat: no-repeat;
+}
+
+::-webkit-scrollbar-button:single-button:vertical:decrement {
+    background-position: center;
+    background-image: url(/Join/assets/img/icons/scroll_up.svg);
+}
+
+::-webkit-scrollbar-button:single-button:vertical:increment {
+    background-position: center;
+    background-image: url(/Join/assets/img/icons/scroll_down.svg);
 }
 
 /* DROPDOWN */
@@ -396,9 +415,11 @@ h4 {
     background-color: white;
     overflow: hidden;
 }
+
 .drp-wrapper.active {
     grid-template-rows: 51px 1fr;
 }
+
 .drp-option-wrapper{
     overflow: hidden;
 }
@@ -424,6 +445,10 @@ h4 {
     background-color: var(--clr-placeholder);
 }
 
+.drp-wrapper > .inp-container {
+    border: none;
+}
+
 .drp-invite {
     border-radius: 0 0 10px 10px;
 }
@@ -433,12 +458,12 @@ h4 {
     margin-left: auto;
 }
 
-.drp-option {
-    gap: 25px;
+.drp-contacts {
+    overflow-x: hidden;
 }
 
-.drp-option:last-of-type {
-    border-radius: 0 0 10px 10px;
+.drp-option {
+    gap: 25px;
 }
 
 .drp-option::after {
@@ -595,6 +620,7 @@ dialog {
     border: 1px solid var(--clr-placeholder);
     display: flex;
     justify-content: space-between;
+    min-height: 51px;
     transition: border-color var(--transition-fast);
 }
 

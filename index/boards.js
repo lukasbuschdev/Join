@@ -115,4 +115,5 @@ const changeTaskType = async (taskElement, newType) => {
     const [boardId, taskId] = taskElement.dataset.id.split('/');
     const task = await REMOTE_getData(`boards/${boardId}/tasks/${taskId}`, true);
     await task.setProperty('type', newType);
+    await getBoards();
 }

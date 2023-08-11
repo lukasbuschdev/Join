@@ -129,9 +129,9 @@ HTMLElement.prototype.addScrollShadowObserver = function () {
 
     this.dataset.observerId = newId;
     const intersectionObserver = new IntersectionObserver((entries) => {
-        entries.for(({target, intersectionRatio}) => {
-            if (!target.previousElementSibling) this.style.setProperty('--shadow-before', (intersectionRatio !== 1) ? '1' : '0');
-            if (!target.nextElementSibling) this.style.setProperty('--shadow-after', (intersectionRatio !== 1) ? '1' : '0');
+        entries.for(({target, isIntersecting}) => {
+            if (!target.previousElementSibling) this.style.setProperty('--shadow-before', (isIntersecting) ? '0' : '1');
+            if (!target.nextElementSibling) this.style.setProperty('--shadow-after', (isIntersecting) ? '0' : '1');
         })
     }, {root: scrollContainer, threshold: 1});
     shadowObservers[newId] = intersectionObserver;
@@ -139,7 +139,9 @@ HTMLElement.prototype.addScrollShadowObserver = function () {
     const observe = (target) => {
         const observer = shadowObservers[this.dataset.observerId];
         observer.disconnect();
-        target.$$('*:first-of-type:not(:last-of-type), *:last-of-type:not(:first-of-type)').for(container => observer.observe(container));
+        const targets = target.$$(':scope > :first-of-type:not(:last-of-type), :scope > :last-of-type:not(:first-of-type)');
+        if (target.children.length < 3) return;
+        targets.for(container => observer.observe(container));
     }
     observe(scrollContainer);
     const mutationObserver = new MutationObserver(([{target}]) => {
