@@ -9,7 +9,7 @@
                 <div class="drp">
                     <span data-lang="assigned-to">Board</span>
                     <div class="drp-wrapper">
-                        <div data-lang="select-board" class="drp-title" onclick="this.toggleDropDown()">Select board</div>
+                        <div data-lang="select-board" id="selected-board" class="drp-title" onclick="this.toggleDropDown()">Select board</div>
                         <div class="drp-option-wrapper" data-shadow="ud/white/10px">
                             <div class="drp-contacts" id="drp-board-container">
                                 <!--Add contacts here!-->
@@ -20,18 +20,18 @@
                 
                 <div class="column">
                     <span data-lang="title">Title</span>
-                    <textarea name="title" id="title" placeholder="Enter a title" data-lang-placeholder="title-placeholder"></textarea>
+                    <textarea name="title" id="title" oninput="getTitle()" placeholder="Enter a title" data-lang-placeholder="title-placeholder"></textarea>
                 </div>
     
                 <div class="column">
                     <span data-lang="description">Description</span>
-                    <textarea name="description" id="description" placeholder="Enter a description" data-lang-placeholder="description-placeholder"></textarea>
+                    <textarea name="description" id="description" oninput="getDescription()" placeholder="Enter a description" data-lang-placeholder="description-placeholder"></textarea>
                 </div>
     
                 <div class="drp">
                     <span data-lang="category">Category</span>
                     <div class="drp-wrapper">
-                        <div data-lang="select-task-category" class="drp-title" onclick="this.toggleDropDown()">Select task category</div>
+                        <div data-lang="select-task-category" id="select-task-category" class="drp-title" onclick="this.toggleDropDown()">Select task category</div>
                         <div class="drp-option-wrapper" data-shadow="ud/white/10px">
                             <div class="drp-contacts" id="drp-categories">
                                 <!--Add contacts here!-->
@@ -58,15 +58,15 @@
 
                 <div id="calender" class="column">
                     <span data-lang="due-date">Due date</span>
-                    <textarea name="date" id="date" class="padding-textarea" placeholder="dd/mm/yyyy" data-lang-placeholder="due-date-placeholder"></textarea>
+                    <textarea name="date" oninput="getDueDate()" id="date" class="padding-textarea" placeholder="dd/mm/yyyy" data-lang-placeholder="due-date-placeholder"></textarea>
                 </div>
     
                 <div id="priority" class="column">
                     <span data-lang="priority">Prio</span>
                     <div class="btn-priority" type="menu">
-                        <button class="btn btn-secondary width-btn txt-normal" type="option"><span style="--prio_icon: url(/Join/assets/img/icons/prio_urgent.svg)">Urgent</span></button>
-                        <button class="btn btn-secondary width-btn txt-normal" type="option"><span style="--prio_icon: url(/Join/assets/img/icons/prio_medium.svg)">Medium</span></button>
-                        <button class="btn btn-secondary width-btn txt-normal" type="option"><span style="--prio_icon: url(/Join/assets/img/icons/prio_low.svg)">Low</span></button>
+                        <button class="btn btn-secondary prio-btn txt-normal" onclick="checkPriority(this)" type="option"><span style="--prio_icon: url(/Join/assets/img/icons/prio_urgent.svg)">Urgent</span></button>
+                        <button class="btn btn-secondary prio-btn txt-normal" onclick="checkPriority(this)" type="option"><span style="--prio_icon: url(/Join/assets/img/icons/prio_medium.svg)">Medium</span></button>
+                        <button class="btn btn-secondary prio-btn txt-normal" onclick="checkPriority(this)" type="option"><span style="--prio_icon: url(/Join/assets/img/icons/prio_low.svg)">Low</span></button>
                     </div>
                 </div>
     
