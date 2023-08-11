@@ -9,16 +9,24 @@ function renderBoardIds() {
     BOARDS.for(board => {
         drpContainer.innerHTML += /*html*/ `
             <div class="drp-option" onclick="selectBoard(${board.id})">${board.name}</div>
-            `;    
-    })
+        `;    
+    });
 }
 
 function selectBoard(boardId) {
     const selectedBoard = BOARDS[boardId];
     event.currentTarget.toggleDropDown();
     
+    renderSelectedBoard(selectedBoard);
     renderCategories(selectedBoard);
     renderAssignToContacts(selectedBoard);
+}
+
+function renderSelectedBoard(selectedBoard) {
+    const selectedBoardField = $('#selected-board');
+    const selectedBoardName = selectedBoard.name;
+
+    selectedBoardField.innerText = selectedBoardName;
 }
 
 function renderCategories(selectedBoard) {
@@ -27,12 +35,18 @@ function renderCategories(selectedBoard) {
 
     Object.entries(selectedBoard.categories).for(([name, color]) => {
         drpContainer.innerHTML += /*html*/ `
-            <div class="drp-option row" data-color="${color}" onclick="this.toggleActive()">
+            <div class="drp-option row" id="category" data-color="${color}" onclick="this.toggleActive()">
                 <span>${name}</span>
                 <div class="category-color" style="--clr: ${color}"></div>
             </div>
         `;    
-    })
+    });
+
+    const category = $('#category');
+
+    category.addEventListener('click', function() {
+        getSelectedCategory(selectedBoard);
+    });
 }
 
 function renderAssignToContacts(selectedBoard) {
@@ -42,7 +56,9 @@ function renderAssignToContacts(selectedBoard) {
         <div class="drp-option" onclick="selectCollaborator(${USER.id})">
             <div class="user-img-container grid-center" style="--user-clr: ${USER.color}">${USER.name.slice(0, 2).toUpperCase()}</div>
             <span data-lang="assigned-you"></span>
-        </div>`;
+        </div>
+    `;
+
     drpContainer.innerHTML = '';
     assignToUser.LANG_load();
     drpContainer.append(assignToUser.children[0]);
@@ -57,5 +73,34 @@ function renderAssignToContacts(selectedBoard) {
                 <span>${collaborator.name}</span>
             </div>
         `;    
-    })
+    });
+}
+
+function getTitle() {
+    const title = $('#title');
+    console.log(title.value);
+}
+
+function getDescription() {
+    const description = $('#description');
+    console.log(description.value);
+}
+
+function getSelectedCategory(selectedBoard) {
+    const categories = selectedBoard.categories;
+    const selectedCategory = Object.keys(categories);
+    const selected = $('#select-task-category');
+
+    selected.innerHTML = selectedCategory;
+    log(selectedCategory);
+}
+
+function getDueDate() {
+    const date = $('#date');
+    log(date.value);
+}
+
+function checkPriority(clickedButton) {
+    const buttonText = clickedButton.querySelector('span').innerText;
+    console.log(buttonText.toLowerCase());
 }

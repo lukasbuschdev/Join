@@ -205,6 +205,10 @@ textarea {
         max-height: 490px;
         overflow-y: scroll;
     }
+
+    .add-task-heading {
+        padding: 20px 0;
+    }
 }
 
 
