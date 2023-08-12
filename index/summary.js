@@ -27,10 +27,16 @@ const renderBoard = () => {
     const tasksToDo = tasks.filter(({type}) => type == "to-do").length;
     const tasksDone = tasks.filter(({type}) => type == "done").length;
     const tasksUrgent = tasks.filter(({priority}) => priority == "urgent").length;
-    const upcomingDeadline = (tasksInBoard) ? tasks.map(({dueDate}) => {
-        const [day, month, year] = dueDate.split('/');
-        return new Date(year, Number(month) - 1, day);
-    }).sort()[0].toLocaleDateString(currentLang(), {year: 'numeric', month: 'long', day: 'numeric'}) : undefined;
+    
+    const now = new Date();
+    const upcomingDeadline = (tasksInBoard) ? tasks
+        .map(({dueDate}) => {
+            const [day, month, year] = dueDate.split('/');
+            return new Date(year, Number(month) - 1, day);
+        })
+        .filter(date => date > now)
+        .sort()[0]
+        .toLocaleDateString(currentLang(), {year: 'numeric', month: 'long', day: 'numeric'}) : undefined;
     const boardButtons = $$('#summary-data button');
     boardButtons[0].$('h1').innerText = tasksInBoard;
     boardButtons[1].$('h1').innerText = tasksInProgress;
