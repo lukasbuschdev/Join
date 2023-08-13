@@ -1,15 +1,13 @@
-const initBoard = () => {
+const initBoard = async () => {
+    await getBoards();
+    await getAllUsers();
     renderTasks();
 }
 
-const renderTasks = async () => {
-    const [boardId] = await REMOTE_getData(`users/${currentUserId()}/boards`) ?? [undefined];
-    if (!boardId) return;
-    const board = await REMOTE_getData(`boards/${boardId}`, true);
-    if (!board) return;
-    for await (const task of Object.values(board.tasks)) {
-        $(`#${task.type}`).innerHTML += taskTemplate(task);
-    };
+const renderTasks = async (boardId = SESSION_getData('activeBoard')) => {
+    const {tasks} = BOARDS[boardId];
+    for (const task of Object.values(tasks)) $(`#${task.type}`).innerHTML += taskTemplate(task);
+    await $('#tasks').LANG_load();
 }
 
 const addTaskModal = async () => {
@@ -30,8 +28,11 @@ const addDragAndDrop = () => {
         offsetY: event.clientY - y
     }
 
+    task.addEventListener('mouseup', fullscreenHandler = () => renderFullscreenTask(task.dataset.id), {once: true});
+
     const clickTimeout = setTimeout(() => {
         task.classList.add('active');
+        task.removeEventListener('mouseup', fullscreenHandler, {once: true});
     }, 200);
 
     const dragHandler = () => taskDragger(startingPosition)
@@ -47,6 +48,16 @@ const addDragAndDrop = () => {
         clearTimeout(clickTimeout);
     }, { once: true });
 }
+
+const renderFullscreenTask = (ids) => {
+    if (event.which !== 1) return;
+    const modal = $('#fullscreen-task-modal');
+    const [boardId, taskId] = ids.split('/');
+    const taskData = BOARDS[boardId].tasks[taskId];
+    modal.innerHTML = fullscreenTaskTemplate(taskData);
+    modal.LANG_load();
+    modal.openModal();
+};
 
 const taskDragger = throttle(({ startingX, startingY }) => {
     const task = event.currentTarget;
@@ -84,19 +95,19 @@ const taskDropper = ({ pageX, pageY }, task, { offsetX, offsetY }) => {
             y < pageY && pageY < (y + height)) {
             taskWrapper.classList.remove('placeholder');
             task.updatePosition();
+            const previousParent = task.parentElement;  // Experimental
             taskWrapper.append(task);
+            previousParent.innerHTML = previousParent.innerHTML.trim();  // Experimental
             changeTaskType(task, taskWrapper.id)
             const { x, y } = task.getBoundingClientRect();
             const deltaX = (pageX - parseInt(x)) - parseInt(offsetX);
             const deltaY = (pageY - parseInt(y)) - parseInt(offsetY);
             task.updatePosition(deltaX, deltaY);
         }
-    })
-    const start = Date.now()
+    });
     task.classList.add('drop-transition');
     task.addEventListener("transitionend", () => {
         task.classList.remove('drop-transition');
-        log(Date.now() - start)
     }, { once: true });
     task.updatePosition();
 }

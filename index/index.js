@@ -1,3 +1,4 @@
+let ALL_USERS;
 let USER;
 let BOARDS = {};
 let CONTACTS = {};

@@ -171,7 +171,7 @@
     overflow: auto;
 }
 
-#summary-selection button {
+#summary-selection > button {
     padding: 8px 20px;
     border-radius: 15px;
     background-color: white;
@@ -179,19 +179,29 @@
     font-weight: 600;
     font-size: 1.5rem;
     flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
 }
 
-#summary-selection button:not(.active) {
+#summary-selection > button > .circle img {
+    height: 100%;
+}
+
+#summary-selection > button:not(.active) span {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+#summary-selection > button:not(.active) .circle {
+    display: none;
 }
 
 #summary-wrapper button {
     transition: var(--transition-fast);
 }
 
-#summary-selection button:not(.active) {
+#summary-selection > button:not(.active) {
     margin-right: 10px;
 }
 
@@ -200,7 +210,7 @@
     color: white;
 }
 
-#summary-selection button.active {
+#summary-selection > button.active {
     background-color: var(--clr-active);
     color: white;
 }

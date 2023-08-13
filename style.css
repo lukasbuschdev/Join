@@ -324,6 +324,14 @@ h4 {
     align-items: center;
 }
 
+.gap-5 {
+    gap: 5px;
+}
+
+.gap-8 {
+    gap: 8px;
+}
+
 .gap-10 {
     gap: 10px;
 }

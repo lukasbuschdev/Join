@@ -238,12 +238,17 @@ const getUser = async () => {
     USER.contacts.for(
         contactId => CONTACTS[contactId] = allUsers[contactId]
     );
-}
+};
 
 const getBoards = async () => {
     log('updating boards...');
+    if (USER.boards == []) return;
     const allBoards = await REMOTE_getData('boards');
     for await (const boardId of USER.boards) {
         BOARDS[boardId] = new Board(allBoards[boardId]); 
-    }
+    };
+};
+
+const getAllUsers = async () => {
+    ALL_USERS = await REMOTE_getData('users');
 }

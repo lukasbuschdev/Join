@@ -42,6 +42,7 @@
     "category": "Category",
     "select-task-category": "Select task category",
     "assigned-to": "Assigned to",
+    "assigned-you-parentheses": "(You)",
     "select-contacts-to-asign": "Select contacts to asign",
     "assigned-you": "You",
     "assigned-invite": "Invite new contact",

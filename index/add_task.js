@@ -1,4 +1,5 @@
-function initAddTask() {
+async function initAddTask() {
+    await getBoards();
     renderBoardIds();
 }
 
