@@ -36,17 +36,11 @@ function renderCategories(selectedBoard) {
 
     Object.entries(selectedBoard.categories).for(([name, color]) => {
         drpContainer.innerHTML += /*html*/ `
-            <div class="drp-option row" id="category" data-color="${color}" onclick="this.toggleActive()">
+            <div class="drp-option row" id="category" data-color="${color}" onclick="this.toggleActive(), getSelectedCategory('${name}')">
                 <span>${name}</span>
                 <div class="category-color" style="--clr: ${color}"></div>
             </div>
         `;    
-    });
-
-    const category = $('#category');
-
-    category.addEventListener('click', function() {
-        getSelectedCategory(selectedBoard);
     });
 }
 
@@ -87,13 +81,10 @@ function getDescription() {
     console.log(description.value);
 }
 
-function getSelectedCategory(selectedBoard) {
-    const categories = selectedBoard.categories;
-    const selectedCategory = Object.keys(categories);
+function getSelectedCategory(category) {
     const selected = $('#select-task-category');
-
-    selected.innerHTML = selectedCategory;
-    log(selectedCategory);
+    selected.innerHTML = category;
+    log(category);
 }
 
 function getDueDate() {
