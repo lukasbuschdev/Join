@@ -1,5 +1,7 @@
+let ALL_USERS;
 let USER;
 let BOARDS = {};
+let SELECTED_BOARD;
 let CONTACTS = {};
 let SOCKET;
 let notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wav');

@@ -23,9 +23,16 @@ const progressTemplate =  (subTasks) => {
     const finishedSubtasks = subTasks.filter( ({done}) => done);
     const progress = (finishedSubtasks == false) ? 0 : Math.roundTo(finishedSubtasks.length / subTasks.length, 2);
     return (subTasks.length == 0) ? '' :
-    `<div class="task-progress txt-tiny">
-        <div class="task-progress-bar" style="--progress: ${progress}"></div>
-        <div class="task-progress-counter"><span>${finishedSubtasks.length} / ${subTasks.length}</span> Done</div>
+    /*html*/`
+    <div class="column gap-5 txt-tiny">
+        <span data-lang="subtasks"></span>
+        <div class="task-progress">
+            <div class="task-progress-bar" style="--progress: ${progress}"></div>
+            <div class="task-progress-counter">
+                <span>${finishedSubtasks.length} / ${subTasks.length}
+                </span>
+            </div>
+        </div>
     </div>`
 }
 
@@ -33,9 +40,16 @@ const assignedToTemplate = (assignedAccounts) => {
     let template = '';
     for (let i = 0; i < assignedAccounts.length; i++){
         const {color, name} = assignedAccounts[i];
-        template += `<div class="task-assigned-to"><div style="--user-clr: ${(color !== "") ? color : '#D1D1D1'};">${name.slice(0, 2).toUpperCase()}</div></div>`
+        template += /*html*/`
+            <div class="task-assigned-to">
+                <div style="--user-clr: ${(color !== "") ? color : '#D1D1D1'};">${name.slice(0, 2).toUpperCase()}</div>
+            </div>
+        `;
         if (assignedAccounts.length > 3 && i == 1) {
-            template += `<div class="task-assigned-to"><div style="--user-clr: var(--clr-dark);">+${assignedAccounts.length - 2}</div></div>`;
+            template += /*html*/`
+                <div class="task-assigned-to">
+                    <div style="--user-clr: var(--clr-dark);">+${assignedAccounts.length - 2}</div>
+                </div>`;
             break;
         };
     }

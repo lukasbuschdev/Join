@@ -324,6 +324,14 @@ h4 {
     align-items: center;
 }
 
+.gap-5 {
+    gap: 5px;
+}
+
+.gap-8 {
+    gap: 8px;
+}
+
 .gap-10 {
     gap: 10px;
 }
@@ -616,6 +624,32 @@ dialog {
 }
 
 /* INPUT */
+
+
+input[type="checkbox"] {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    padding: unset;
+    cursor: pointer;
+    background: url(/Join/assets/img/icons/checkbox-unchecked.svg);
+    background-size: contain;
+}
+
+input[type="checkbox"]:checked {
+    background-image: url(/Join/assets/img/icons/checkbox-checked.svg);
+}
+
+/* input[type="checkbox"]:checked::before {
+    background-color: transparent;
+    position: absolute;
+    top: -2.5px;
+    left: 3px;
+    content: url(/Join/assets/img/icons/checkbox-check.svg);
+    width: 13.5px;
+    height: 12.5px;
+    display: block;
+} */
 
 .inp-container {
     padding: 13px 21px;

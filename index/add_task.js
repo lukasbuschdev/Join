@@ -1,4 +1,5 @@
-function initAddTask() {
+async function initAddTask() {
+    await getBoards();
     renderBoardIds();
 }
 
@@ -19,6 +20,8 @@ function selectBoard(boardId) {
     event.currentTarget.toggleDropDown();
     // log(selectedBoard);
     
+    SELECTED_BOARD = selectedBoard;
+
     renderSelectedBoard(selectedBoard);
     renderCategories(selectedBoard);
     renderAssignToContacts(selectedBoard);

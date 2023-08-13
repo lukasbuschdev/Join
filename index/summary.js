@@ -5,6 +5,10 @@ const initSummary = async () => {
 
 const renderBoards = () => {
     const selection = $('#summary-selection');
+    if (USER.boards.length == 0) {
+        $('#summary-content').classList.toggle('d-none');
+        return;
+    };
     selection.innerHTML = '';
     selection.renderItems(Object.values(BOARDS), boardSelectionTemplate);
     initMenus();
@@ -15,7 +19,13 @@ const renderBoards = () => {
 }
 
 const boardSelectionTemplate = ({name, id}) => {
-    return /*html*/`<button type="option" data-id="${id}" onclick="renderBoard()">${name.replaceAll('-',' ')}</button>`;
+    return /*html*/`
+        <button class="row" type="option" data-id="${id}" onclick="renderBoard()">
+            <span>${name.replaceAll('-',' ')}</span>
+            <div class="circle grid-center">
+                <img src="/Join/assets/img/icons/edit.svg" alt="">
+            </div>
+        </button>`;
 }
 
 const renderBoard = () => {

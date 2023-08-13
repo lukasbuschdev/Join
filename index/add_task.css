@@ -127,7 +127,7 @@ textarea {
     align-items: center;
 } 
 
-.btn-priority button span::after {
+.priority::after {
     content: var(--prio_icon);
 }
 

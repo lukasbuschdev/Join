@@ -44,11 +44,12 @@
     "assigned-to": "Hinzufügen zu",
     "select-contacts-to-asign": "Kontakte zum hinzufügen auswählen",
     "assigned-you": "Du",
+    "assigned-you-parentheses": "(Du)",
     "assigned-invite": "Neuen Kontakt einladen",
     "due-date": "Fällig bis",
     "due-date-placeholder": "TT/MM/JJJJ",
     "priority": "Priorität",
-    "subtasks": "Aufgabe",
+    "subtasks": "Unteraufgaben",
     "subtask1": "Unteraufgabe",
 
 
