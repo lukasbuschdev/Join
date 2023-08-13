@@ -199,3 +199,7 @@
     background-size: 80%;
     scale: .8;
 }
+
+.fullscreen-subtask {
+    padding: 6px 16px;
+}

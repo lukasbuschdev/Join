@@ -18,6 +18,8 @@ function selectBoard(boardId) {
     const selectedBoard = BOARDS[boardId];
     event.currentTarget.toggleDropDown();
     
+    SELECTED_BOARD = selectedBoard;
+
     renderSelectedBoard(selectedBoard);
     renderCategories(selectedBoard);
     renderAssignToContacts(selectedBoard);

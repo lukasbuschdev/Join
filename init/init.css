@@ -133,33 +133,6 @@ input {
     gap: 20px;
 }
 
-.remember-me input {
-    --bg: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%);
-    position: relative;
-    background-image: url(../assets/img/icons/checkbox-unchecked.svg), var(--bg);
-    background-size: contain;
-    border-radius: 3px;
-    width: 16px;
-    height: 16px;
-    padding: unset;
-}
-
-.remember-me input:checked {
-    border: unset;
-    background-image: url(../assets/img/icons/checkbox-checked.svg), var(--bg);
-}
-
-.remember-me input:checked::before {
-    background-color: inherit;
-    position: absolute;
-    top: -2.5px;
-    left: 3px;
-    content: url(../assets/img/icons/checkbox-check.svg);
-    width: 13.5px;
-    height: 12.5px;
-    display: block;
-}
-
 .btn-container button {
     height: 51px;
     padding: 4px 16px;

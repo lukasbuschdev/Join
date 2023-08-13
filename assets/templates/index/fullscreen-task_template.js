@@ -1,4 +1,4 @@
-const fullscreenTaskTemplate = ({boardId, category, color, title, description, priority, dueDate, assignedTo, subTasks}) => {
+const fullscreenTaskTemplate = ({category, color, title, description, priority, dueDate, assignedTo, subTasks}) => {
     return /*html*/`
         <div>
             <button onclick="this.closest('dialog').closeModal()" class="close-btn grid-center">
@@ -57,8 +57,8 @@ const fullscreenTaskSubTasks = (subTasks) => {
     let template = '';
     subTasks.for(
         ({name, done}) => template += /*html*/`
-            <div class="edit-task-subtask row gap-20">
-                <div class="edit-task-subtask-checkbox" data-done="'${done}'"></div>
+            <div class="fullscreen-subtask row gap-15">
+                <input type="checkbox" data-done="'${done}'" onchange="changeSubtaskDoneState()">
                 <span class="txt-small">${name}</span>
             </div>
         `

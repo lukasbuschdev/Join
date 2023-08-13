@@ -247,6 +247,7 @@ const getBoards = async () => {
     for await (const boardId of USER.boards) {
         BOARDS[boardId] = new Board(allBoards[boardId]); 
     };
+    SELECTED_BOARD = BOARDS[SESSION_getData('activeBoard')] ?? BOARDS[Object.keys(BOARDS)[0]];
 };
 
 const getAllUsers = async () => {
