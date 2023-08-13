@@ -15,7 +15,9 @@ function renderBoardIds() {
 
 function selectBoard(boardId) {
     const selectedBoard = BOARDS[boardId];
+    SELECTED_BOARD = selectedBoard;
     event.currentTarget.toggleDropDown();
+    // log(selectedBoard);
     
     renderSelectedBoard(selectedBoard);
     renderCategories(selectedBoard);
@@ -72,26 +74,42 @@ function renderAssignToContacts(selectedBoard) {
 
 function getTitle() {
     const title = $('#title');
-    console.log(title.value);
+    return title.value;
+    // console.log(title.value);
 }
 
 function getDescription() {
     const description = $('#description');
-    console.log(description.value);
+    return description.value;
+    // console.log(description.value);
 }
 
 function getSelectedCategory(category) {
     const selected = $('#select-task-category');
     selected.innerHTML = category;
-    log(category);
+    // log(category);
 }
 
 function getDueDate() {
     const date = $('#date');
-    log(date.value);
+    return date.value;
+    // log(date.value);
 }
 
 function checkPriority(clickedButton) {
-    const buttonText = clickedButton.querySelector('span').innerText;
-    console.log(buttonText.toLowerCase());
+    const buttonText = clickedButton.querySelector('span');
+    return buttonText.innerText.toLowerCase();
+    // console.log(buttonText.toLowerCase());
+}
+
+function addTask() {
+    const title = getTitle();
+    const description = getDescription();
+    const category = getSelectedCategory(boards);
+    // const collaborator = ;
+    const dueDate = getDueDate();
+    const priority = checkPriority();
+    // const subtask = ;
+
+    log(SELECTED_BOARD, title, description, category, dueDate, priority);
 }
