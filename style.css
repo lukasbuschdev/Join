@@ -52,6 +52,10 @@ input, textarea {
     background-color: white;
 }
 
+:is(input, textarea):focus-within {
+    border-color: var(--clr-blue)
+}
+
 button, a {
     cursor: pointer;
 }
@@ -67,10 +71,6 @@ input:-webkit-autofill:focus {
 
 input::placeholder {
     color: var(--clr-placeholder);
-}
-
-.d-none {
-    display: none !important;
 }
 
 button.active {
@@ -379,14 +379,12 @@ h4 {
 }
 
 ::-webkit-scrollbar {
-    width: 12px;
-    /* background-color: var(--clr-light); */
-    /* border-radius: 999px; */
+    width: 30px;
 }
 
 ::-webkit-scrollbar-thumb {
     background-color: var(--clr-placeholder);
-    border: 2px solid transparent;
+    border: 11px solid transparent;
     width: 4px;
     border-radius: 999px;
     background-clip: content-box;
@@ -563,11 +561,11 @@ dialog {
     border: unset;
     padding: unset;
     overflow: hidden;
+    background: none;
 }
 
 .big-modal {
     border-radius: 30px;
-    background: none;
     transition: translate 300ms ease-in-out;
     translate: 100vw 0;
 }
@@ -623,6 +621,16 @@ dialog {
     }
 }
 
+.confirmation-dialog {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px 35px;
+}
+
+.confirmation-dialog .btn-container {
+    margin-left: auto;
+}
+
 /* INPUT */
 
 
@@ -636,20 +644,9 @@ input[type="checkbox"] {
     background-size: contain;
 }
 
-input[type="checkbox"]:checked {
+input[type="checkbox"][checked="true"] {
     background-image: url(/Join/assets/img/icons/checkbox-checked.svg);
 }
-
-/* input[type="checkbox"]:checked::before {
-    background-color: transparent;
-    position: absolute;
-    top: -2.5px;
-    left: 3px;
-    content: url(/Join/assets/img/icons/checkbox-check.svg);
-    width: 13.5px;
-    height: 12.5px;
-    display: block;
-} */
 
 .inp-container {
     padding: 13px 21px;

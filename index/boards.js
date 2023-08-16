@@ -49,25 +49,95 @@ const addDragAndDrop = () => {
     }, { once: true });
 }
 
+
+
 const renderFullscreenTask = (ids) => {
     if (event.which !== 1) return;
     const modal = $('#fullscreen-task-modal');
     const [boardId, taskId] = ids.split('/');
     const taskData = BOARDS[boardId].tasks[taskId];
-    modal.innerHTML = fullscreenTaskTemplate(taskData);
+    SELECTED_TASK = new Task(taskData);
+    modal.$('#fullscreen-task').innerHTML = fullscreenTaskTemplate(taskData);
     modal.LANG_load();
     modal.openModal();
+    modal.addEventListener('close', saveHandler(), {once: true});
 };
 
-const changeSubtaskDoneState = () => {
-    const state = event.currentTarget.checked;
-
+const saveHandler = () => {
+    const initialTask = _.cloneDeep(removeMethods(SELECTED_TASK));
+    return () => {
+        saveTaskChanges(initialTask);
+    }
 }
 
+const saveTaskChanges = (initialTask) => {
+    const updatedTask = removeMethods(SELECTED_TASK);
 
+    const differences = getJsonChanges(updatedTask, initialTask);
+    log(differences)
+    if (Object.values(differences).length > 0) {
+        // updateTaskUi();
+        SELECTED_TASK.update();
+        log('difference')
+    }
+    else log('no difference');
+};
 
+const getJsonChanges = (newJson, oldJson) => {
+    let differences = {};
+    for (const key in newJson) {
+        if (typeof newJson[key] == "function") continue;
+        if (typeof newJson[key] == "object") {
+            if (_.isEqual(newJson[key], oldJson[key]) == false) differences[key] = newJson[key];
+        }
+        else if (newJson[key] !== oldJson[key]) differences[key] = newJson[key];
+    };
+    return differences;
+};
 
+const changeSubtaskDoneState = async (subTaskName) => {
+    const subTaskCheckBox = event.currentTarget;
+    const isChecked = (subTaskCheckBox.getAttribute('checked') == "true") ? true : false;
+    subTaskCheckBox.setAttribute('checked', (isChecked) ? 'false' : 'true');
 
+    let subTaskIndex;
+    for(let i = 0; i < SELECTED_TASK.subTasks.length; i++) {
+        if (SELECTED_TASK.subTasks[i].name == subTaskName) {
+            subTaskIndex = i;
+            break;
+        };
+    };
+    SELECTED_TASK.subTasks[subTaskIndex].done = !isChecked;
+};
+
+const updateTaskUi = () => {
+    const current = SELECTED_TASK.subTasks.filter(({done}) => done == true).length;
+    const total = SELECTED_TASK.subTasks.length;
+    const taskContainer = $(`[data-id="${SELECTED_TASK.boardId}/${SELECTED_TASK.id}"]`);
+    taskContainer.$('.task-progress-bar').style.setProperty('--progress', `${current/total}`);
+    taskContainer.$('.task-progress-counter span').innerText = `${current} / ${total}`;
+};
+
+const editTaskInitializer = () => {
+    const editTaskContainer = $('#edit-task');
+    editTaskContainer.innerHTML = editTaskTemplate(SELECTED_TASK);
+    editTaskContainer.LANG_load();
+    editTaskContainer.initMenus();
+    editTaskContainer.$('.fullscreen-content').addScrollShadow();
+
+    toggleFullscreenState();
+
+    const saveTaskButton = $('#save-task');
+    // saveTaskButton.addEventListener('click', saveHandler(), {once: true});
+};
+
+const toggleFullscreenState = () => {
+    $$('#fullscreen-task-modal :is(#fullscreen-task, #edit-task)').for(section => {
+        section.initMenus();
+        section.classList.toggle('d-none');
+        if (section.id == "edit-task" && section.classList.contains('d-none')) section.innerHTML = '';
+    });
+};
 
 const taskDragger = throttle(({ startingX, startingY }) => {
     const task = event.currentTarget;
@@ -82,7 +152,7 @@ const taskDragger = throttle(({ startingX, startingY }) => {
     task.style.setProperty('--x', event.pageX - startingX);
     task.style.setProperty('--y', event.pageY - startingY);
     checkPlaceholder(event);
-}, 10)
+}, 10);
 
 const checkPlaceholder = ({pageX, pageY}) => {
     $$('#tasks > div').for(taskWrapper => {
@@ -120,6 +190,13 @@ const taskDropper = ({ pageX, pageY }, task, { offsetX, offsetY }) => {
         task.classList.remove('drop-transition');
     }, { once: true });
     task.updatePosition();
+}
+
+const changeTaskType = async (taskElement, newType) => {
+    const [boardId, taskId] = taskElement.dataset.id.split('/');
+    const task = await REMOTE_getData(`boards/${boardId}/tasks/${taskId}`, true);
+    await task.setProperty('type', newType);
+    await getBoards();
 }
 
 const setTransitionSpeed = (el, deltaX, deltaY) => {

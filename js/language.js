@@ -1,8 +1,9 @@
 let LANG;
 
-const currentLang = () => LOCAL_getData('lang') ?? navigator.language.slice(0, 2) ?? "en-US"
+const currentLang = () => LOCAL_getData('lang') ?? navigator.language.slice(0, 2) ?? "en-US";
 
 const LANG_load = async (lang = currentLang()) => {
+    log('adding lang')
     let langDirectory = 'index';
     const dir = currentDirectory();
     if (dir == 'signup' ||
@@ -12,9 +13,11 @@ const LANG_load = async (lang = currentLang()) => {
         dir == 'reset_password') langDirectory = 'init';
     // lang = "de";
     LANG = await (await fetch(`/Join/assets/languages/${langDirectory}/${lang}.json`)).json();
-    document.title = document.title.replace(/(?<=\) ).*/g, LANG[`title-${dir}`]);
+    const notificationCount = document.title.match(/(\(\d+\) )?/)[0];
+    document.title = `${notificationCount}${LANG[`title-${dir}`]}`;
     $$('[data-lang]').for(element => element.innerText = LANG[element.dataset.lang]);
     $$('[data-lang-placeholder]').for(input => input.placeholder = LANG[input.dataset.langPlaceholder]);
+    $$('[data-lang-empty]').for(element => element.dataset.type = LANG[element.dataset.langEmpty]);
 }
 
 const LANG_set = (lang) => {

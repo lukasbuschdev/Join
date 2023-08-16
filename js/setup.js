@@ -11,7 +11,7 @@ const currentUserId = () => (searchParams().get('uid') == null) ? undefined : `$
 
 const menuOptionInitator = new MutationObserver(
     mutation => {
-        initMenus();
+        $('body').initMenus();
     }
 );
 
@@ -20,24 +20,12 @@ const mutationObserverOptions = {
     subTree: true
 };
 
-const resetMenus = () => {
+const resetMenus = function () {
     menuOptionInitator.disconnect();
-    $$('[type = "menu"]').for(menu => {
+    this.$$('[type = "menu"]').for(menu => {
             menuOptionInitator.observe(menu, mutationObserverOptions)
         }
     )
-}
-
-const initMenus = () => {
-    $$('[type = "menu"]').for(menu => {
-        const allButtons = menu.$$('[type = "option"]');
-        allButtons.for(
-            button => {
-                button.addEventListener('click', () => allButtons.for(
-                button => button.classList.toggle('active', button == event.currentTarget)
-            ))}
-        );
-    });
 }
 
 let inactivityTimer;
@@ -90,5 +78,5 @@ const renderColor = (userField, color) => {
 
 // redirect();
 
-initMenus();
+$('body').initMenus();
 LANG_load();

@@ -11,7 +11,6 @@ const renderBoards = () => {
     };
     selection.innerHTML = '';
     selection.renderItems(Object.values(BOARDS), boardSelectionTemplate);
-    initMenus();
     const activeBoard = SESSION_getData('activeBoard') ?? Object.keys(BOARDS)[0];
     const activeBoardButton = $(`#summary-selection [data-id="${activeBoard}"]`);
     activeBoardButton.click();
@@ -45,7 +44,8 @@ const renderBoard = () => {
             return new Date(year, Number(month) - 1, day);
         })
         .filter(date => date > now)
-        .sort()[0]
+        .sort()
+        .at(-1)
         .toLocaleDateString(currentLang(), {year: 'numeric', month: 'long', day: 'numeric'}) : undefined;
     const boardButtons = $$('#summary-data button');
     boardButtons[0].$('h1').innerText = tasksInBoard;

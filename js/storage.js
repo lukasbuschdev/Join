@@ -232,7 +232,7 @@ const getCurrentUser = async (methods) => {
 }
 
 const getUser = async () => {
-    log('updating user...');
+    // log('updating user...');
     USER = await getCurrentUser(true);
     const allUsers = await REMOTE_getData('users');
     USER.contacts.for(
@@ -241,7 +241,7 @@ const getUser = async () => {
 };
 
 const getBoards = async () => {
-    log('updating boards...');
+    // log('updating boards...');
     if (USER.boards == []) return;
     const allBoards = await REMOTE_getData('boards');
     for await (const boardId of USER.boards) {
@@ -251,5 +251,6 @@ const getBoards = async () => {
 };
 
 const getAllUsers = async () => {
-    ALL_USERS = await REMOTE_getData('users');
-}
+    const allUsers = await REMOTE_getData('users');
+    ALL_USERS = allUsers.map(user => new Account(user));
+};

@@ -20,9 +20,9 @@ Array.prototype.toObject = function (keys) {
 
 Object.prototype.filter = function (cb) {
     let newObj = {};
-    Object.entries(this).filter(([key, value]) =>
+    Object.entries(this).filter(([key, value], index) =>
         {
-            if (cb(value) == true) {
+            if (cb(value, index) == true) {
                 newObj[key] = value;
                 return true;
             }
@@ -55,7 +55,17 @@ HTMLElement.prototype.includeTemplate = async function(url = this.getAttribute('
     this.innerHTML = template;
     shadowObservers = {};
     this.$$('[data-shadow]').for(scrollContainer => scrollContainer.addScrollShadow());
-    LANG_load();
+}
+
+HTMLElement.prototype.initMenus = function () {
+    this.$$('[type = "menu"]').for(menu => {
+        const allButtons = menu.$$('[type = "option"]');
+        allButtons.for(button => {
+                button.addEventListener('click', () => allButtons.for(
+                button => button.classList.toggle('active', button == event.currentTarget)
+            ))}
+        );
+    });
 }
 
 HTMLElement.prototype.$ = function (sel) {
@@ -72,26 +82,35 @@ HTMLDialogElement.prototype.openModal = function () {
         this.classList.add('active');
     };
     this.inert = false;
-    this.addEventListener('mousedown', closeHandler = () => {
-        if (this.$('div').contains(event.target)) return;
+
+    const handlerId = Date.now();
+    this.addEventListener('mousedown', window[handlerId] = () => {
+        if (event.which == 3) return;
+        if (![...this.$$(':scope > div')]
+        .every(container => !container.contains(event.target))) return;
+        if (this.id == "fullscreen-task-modal") return confirmation('delete-task', () => this.closeModal(handlerId));
+        
         this.$('.notification')?.classList.remove('anim-notification');
-        this.closeModal();
+        this.closeModal(handlerId);
         this.inert = true;
     });
+
     if (this.classList.contains('dlg-notification')) {
         this.showNotification();
-    }
-    initMenus();
+    };
+    this.$$('[data-shadow]')?.for(scrollContainer => scrollContainer.addScrollShadow());
+    this.initMenus();
+    this.LANG_load();
 }
 
-HTMLDialogElement.prototype.closeModal = function () {
+HTMLDialogElement.prototype.closeModal = function (handlerId) {
     if (this.classList.contains('big-modal')) {
         this.addEventListener('transitionend', () => this.close(), {once: true});
         this.classList.remove('active');
     } else {
         this.close();
     }
-    this.removeEventListener('mousedown', closeHandler);
+    this.removeEventListener('mousedown', window[handlerId]);
 }
 
 HTMLDialogElement.prototype.showNotification = function () {
@@ -110,6 +129,7 @@ HTMLDialogElement.prototype.showNotification = function () {
 let shadowObservers = {};
 
 HTMLElement.prototype.addScrollShadow = function () {
+    if (!this.classList.contains('shadow-container') && !this.$('.shadow-container')) return;
     const [direction, color, thickness] = this.dataset.shadow.split('/');
     const shadowWrapper = document.createElement('div');
     shadowWrapper.classList.add('scroll-shadow');
@@ -124,7 +144,7 @@ HTMLElement.prototype.addScrollShadow = function () {
 
 HTMLElement.prototype.addScrollShadowObserver = function () {
     if (!this.classList.contains('scroll-shadow')) return error('not a srcoll-shadow container!');
-    const scrollContainer = this.children[0];
+    const scrollContainer = this.$('.shadow-container');
     const newId = Object.values(shadowObservers).length;
 
     this.dataset.observerId = newId;
@@ -132,15 +152,19 @@ HTMLElement.prototype.addScrollShadowObserver = function () {
         entries.for(({target, isIntersecting}) => {
             if (!target.previousElementSibling) this.style.setProperty('--shadow-before', (isIntersecting) ? '0' : '1');
             if (!target.nextElementSibling) this.style.setProperty('--shadow-after', (isIntersecting) ? '0' : '1');
-        })
-    }, {root: scrollContainer, threshold: 1});
+        });
+    }, {root: scrollContainer.parentElement, threshold: .98});
     shadowObservers[newId] = intersectionObserver;
 
     const observe = (target) => {
         const observer = shadowObservers[this.dataset.observerId];
         observer.disconnect();
-        const targets = target.$$(':scope > :first-of-type:not(:last-of-type), :scope > :last-of-type:not(:first-of-type)');
-        if (target.children.length < 3) return;
+        const children = [...target.children]
+        if (children.length == 0) return;
+        const targets = [children[0]];
+        if (children.length > 1) {
+            targets.push(children.at(-1));
+        }
         targets.for(container => observer.observe(container));
     }
     observe(scrollContainer);

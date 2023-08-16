@@ -119,6 +119,7 @@
 .scroll-shadow {
     position: relative;
     overflow: hidden;
+    display: flex;
 }
 
 .scroll-shadow::before,
@@ -130,6 +131,10 @@
     pointer-events: none;
     opacity: 0;
     z-index: 9999;
+}
+
+.scroll-shadow.ud {
+    flex-direction: column;
 }
 
 .scroll-shadow.ud::before,

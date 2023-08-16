@@ -43,7 +43,7 @@ class Board extends BaseClass {
     
     addCategory = async (name, color) => {
         this.categories[name] = color;
-        return this.update;
+        return this.update();
     }
 
     getCollaborators = async () => {
