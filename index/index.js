@@ -9,6 +9,7 @@ let notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wa
 const init = async () => {
     checkLogin();
     await getUser();
+    await getAllUsers();
     initWebsocket();
     $(`#${currentDirectory().replace('_','-')}`)?.click();
     renderUserData();

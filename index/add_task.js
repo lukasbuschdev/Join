@@ -40,7 +40,7 @@ function renderCategories(selectedBoard) {
 
     Object.entries(selectedBoard.categories).for(([name, color]) => {
         drpContainer.innerHTML += /*html*/ `
-            <div class="drp-option row" id="category" data-color="${color}" onclick="this.toggleActive(), getSelectedCategory('${name}')">
+            <div class="drp-option row" id="category" data-color="${color}" onclick="this.toggleActive(), renderSelectedCategory('${name}')">
                 <span>${name}</span>
                 <div class="category-color" style="--clr: ${color}"></div>
             </div>
@@ -53,7 +53,7 @@ function renderAssignToContacts(selectedBoard) {
     const assignToUser = document.createElement('div');
     assignToUser.innerHTML = /*html*/`
         <div class="drp-option" onclick="selectCollaborator(${USER.id})">
-            <div class="user-img-container grid-center" style="--user-clr: ${USER.color}">${USER.name.slice(0, 2).toUpperCase()}</div>
+            <div class="user-img-container grid-center" style="--user-clr: ${USER.color}"><span>${USER.name.slice(0, 2).toUpperCase()}</span><img src="${USER.img}"></div>
             <span data-lang="assigned-you"></span>
         </div>
     `;
@@ -62,57 +62,147 @@ function renderAssignToContacts(selectedBoard) {
     assignToUser.LANG_load();
     drpContainer.append(assignToUser.children[0]);
 
-    selectedBoard.collaborators.for(collaboratorId => {
+    selectedBoard.collaborators.forEach(collaboratorId => {
         const collaborator = CONTACTS[collaboratorId];
         if (collaborator == USER.id) return;
-        if(!collaborator) return;
-        drpContainer.innerHTML += /*html*/ `
+        if (!collaborator) return;
+
+        const collaboratorOption = document.createElement('div');
+        collaboratorOption.innerHTML = /*html*/ `
             <div class="drp-option" onclick="selectCollaborator(${collaborator.id})">
-                <div class="user-img-container grid-center" style="--user-clr: ${collaborator.color}">${collaborator.name.slice(0, 2).toUpperCase()}</div>
+                <div class="user-img-container grid-center" style="--user-clr: ${collaborator.color}"><span>${collaborator.name.slice(0, 2).toUpperCase()}</span><img src="${collaborator.img}"></div>
                 <span>${collaborator.name}</span>
             </div>
-        `;    
+        `;
+
+        drpContainer.append(collaboratorOption.children[0]);
     });
+}
+
+let selectedCollaborators = [];
+
+function selectCollaborator(collaboratorId) {
+    const index = selectedCollaborators.indexOf(collaboratorId.toString());
+
+    if (index === -1) {
+        selectedCollaborators.push(collaboratorId.toString());
+    } else {
+        selectedCollaborators.splice(index, 1);
+    }
+
+    renderSelectedCollaborators();
+}
+
+function renderSelectedCollaborators() {
+    const selectedCollabsContainer = $('#selected-collaborators');
+    selectedCollabsContainer.innerHTML = '';
+
+    selectedCollaborators.for((collaboratorId) => {
+        const users = ALL_USERS[collaboratorId];
+
+        selectedCollabsContainer.innerHTML += /*html*/ `
+            <div class="user-img-container grid-center" style="--user-clr: ${users.color}">
+                <span>${(users.name).slice(0, 2).toUpperCase()}</span>
+                <img src="${users.img}">
+            </div>
+        `;
+    })
 }
 
 function getTitle() {
     const title = $('#title');
-    return title.value;
+    
+    if(title.value == '') {
+        error('No title entered.');
+    } else {
+        return title.value;
+    }
     // console.log(title.value);
 }
 
 function getDescription() {
     const description = $('#description');
-    return description.value;
+    
+    if(description.value == '') {
+        error('No description entered.');
+    } else {
+        return description.value;
+    }
     // console.log(description.value);
 }
 
-function getSelectedCategory(category) {
+function renderSelectedCategory(category) {
     const selected = $('#select-task-category');
-    selected.innerHTML = category;
+    event.currentTarget.toggleDropDown();
+    return selected.innerHTML = category;
     // log(category);
+}
+
+function getSelectedCategory() {
+    const category = $('#select-task-category');
+
+    if(category.innerHTML == '') {
+        error('No category selected.');
+    } else {
+        return category.innerText;
+    }
 }
 
 function getDueDate() {
     const date = $('#date');
-    return date.value;
+
+    if(date.value == '') {
+        error('No due date entered.');
+    } else {
+        return date.value;
+    }
     // log(date.value);
 }
 
-function checkPriority(clickedButton) {
-    const buttonText = clickedButton.querySelector('span');
-    return buttonText.innerText.toLowerCase();
-    // console.log(buttonText.toLowerCase());
+function checkPriority() {
+    const activeButton = $('.btn-priority button.active');
+    
+    if (activeButton) {
+        return activeButton.$('.priority').textContent.toLowerCase();
+    } else {
+        return error("No active button found.");
+    }
 }
 
 function addTask() {
+    const taskId = Date.now().toString(); 
     const title = getTitle();
     const description = getDescription();
-    const category = getSelectedCategory(boards);
-    // const collaborator = ;
+    const category = getSelectedCategory();
     const dueDate = getDueDate();
     const priority = checkPriority();
     // const subtask = ;
 
-    log(SELECTED_BOARD, title, description, category, dueDate, priority);
+    // log('Selected Board is:', SELECTED_BOARD);
+    // log('New board ID is:', taskId);
+    // log('Entered Title is:', title);
+    // log('Entered description is:', description);
+    // log('Selected category is:', category);
+    // log('Selected collaborators are:', selectedCollaborators);
+    // log('Entered due date is:', dueDate);
+    // log('Selected prriority is:', priority);
+
+    createNewTask(SELECTED_BOARD, taskId, title, description, category, selectedCollaborators, dueDate, priority);
 }
+
+function createNewTask(SELECTED_BOARD, taskId, title, 
+    description, category, selectedCollaborators, 
+    dueDate, priority) {
+
+        const newTask = {
+            title: title,
+            description: description,
+            category: category,
+            assignedTo: selectedCollaborators,
+            dueDate: dueDate,
+            priority: priority,
+        }
+
+        SELECTED_BOARD.addTask(newTask);
+        // console.log(newTask);
+    }

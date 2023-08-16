@@ -49,6 +49,23 @@ textarea {
     content: unset;
 }
 
+#selected-collaborators {
+    box-sizing: border-box;
+    padding: 10px;
+    max-height: 50px;
+    width: 100%;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#selected-collaborators .user-img-container {
+    height: 35px;
+    width: 35px;
+}
+
 .line {
     height: 495px;
     width: 1px;
