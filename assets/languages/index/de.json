@@ -1,7 +1,7 @@
 {
     "title-summary": "Join - Überblick",
     "title-board": "Join - Tafel",
-    "title-add_task": "Join - Aufgabe hinzufügen",
+    "title-add-task": "Join - Aufgabe hinzufügen",
     "title-contacts": "Join - Kontakte",
     "title-legal_notice": "Join - Rechtliches",
 
@@ -15,6 +15,7 @@
     "awaiting-feedback": "Warte auf Rückmeldung",
     "in-progress": "In Arbeit",
     "done": "Abgeschlossen",
+    "no-tasks": "Keine Aufgabe",
 
     "header-kanban": "Kanban Projektmanager",
 
@@ -29,7 +30,7 @@
     "tasks-in-board": "Aufgaben insgesamt",
     "tasks-in-progress": "Aufgaben in Arbeit",
     "tasks-awaiting-feedback": "Warten auf Feedback",
-    "tasks-urgent": "Dringend",
+    "urgent": "Dringend",
     "tasks-deadline": "Anstehende Frist",
     "tasks-done": "Fertig",
 
@@ -49,8 +50,12 @@
     "due-date": "Fällig bis",
     "due-date-placeholder": "TT/MM/JJJJ",
     "priority": "Priorität",
+    "medium": "Mittel",
+    "low": "Niedrig",
     "subtasks": "Unteraufgaben",
     "subtask1": "Unteraufgabe",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
 
 
     "btn-create-task": "Aufgabe erstellen",
@@ -69,5 +74,9 @@
 
 
     "add-contact-heading": "Neuer Kontakt",
-    "add-contact-subheading": "Aufgaben, besser im Team!"
+    "add-contact-subheading": "Aufgaben, besser im Team!",
+
+    "confirmation-delete-task": "Are you sure you want do delete this task?",
+    "yes": "Ja",
+    "no": "Nein"
 }

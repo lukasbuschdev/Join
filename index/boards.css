@@ -28,7 +28,7 @@
 }
 
 #tasks > div:empty::before {
-    content: 'No Tasks To do';
+    content: attr(data-type);
     display: block;
     width: 100%;
     text-align: center;
@@ -123,6 +123,7 @@
 }
 
 .task-progress-bar::after {
+    transition: width var(--transition-slow);
     content: '';
     position: absolute;
     top: 0;
@@ -172,15 +173,28 @@
     background: var(--priority) no-repeat center;
 }
 
-#fullscreen-task-modal > div {
+#fullscreen-task-modal :is(#fullscreen-task, #edit-task) {
     background-color: white;
-    width: 525px;
-    padding: 48px 40px;
+    width: 90vw;
+    max-height: 90vh;
+    max-width: 525px;
+    padding: 30px 40px;
+}
+
+
+#fullscreen-task-modal .close-btn {
+    top: -20px;
+    right: -5px;
+}
+
+#fullscreen-task-modal :is(#fullscreen-task, #edit-task) > div {
+    position: relative;
 }
 
 #fullscreen-task-modal .user-img-container {
     width: 35px;
     height: 35px;
+    font-size: 12px;
 }
 
 #fullscreen-task-modal .assigned-to-contact {
@@ -202,4 +216,31 @@
 
 .fullscreen-subtask {
     padding: 6px 16px;
+}
+
+#fullscreen-task-modal .line {
+    height: 27px;
+}
+
+#fullscreen-task .btn-container button:first-of-type::before {
+    translate: 0 2px;
+    content: url(/Join/assets/img/icons/trash.svg);
+}
+
+#fullscreen-task .btn-container button:last-of-type::before {
+    translate: 0 2px;
+    content: url(/Join/assets/img/icons/edit_dark.svg);
+}
+
+#edit-task .btn-check {
+    margin-left: auto;
+}
+
+#fullscreen-task-modal :is(#fullscreen-task, #edit-task) .fullscreen-content {
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+}
+
+.fullscreen-task-subTasks:has(.column:empty) {
+    display: none;
 }

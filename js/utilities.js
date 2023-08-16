@@ -1,7 +1,11 @@
 const log = console.log;
 
-const $ = (selector) => document.querySelector(selector);
-const $$ = (selector) => document.querySelectorAll(selector);
+const $ = function (selector) {
+  return this.document.querySelector(selector)
+};
+const $$ = function (selector) {
+  return this.document.querySelectorAll(selector)
+};
 
 const show = (selector) => $(selector).classList.remove("d-none");
 const hide = (selector) => $(selector).classList.add("d-none");
@@ -271,61 +275,33 @@ const getDeviceData = async () => {
   return {city, country, platform};
 }
 
-removeMethods = (obj) => {
+const removeMethods = (obj) => {
   if (obj.hasOwnProperty("password")) delete obj.password;
   return JSON.parse(JSON.stringify(obj));
 }
 
-// const fetchData = async (url, fetchOptions = {method: "GET", dataType: "json"}) => {
-//   let response;
-//   let data;
+const confirmation = (type, cb) => {
+  if (!LANG[`confirmation-${type}`]) return error('message unknown!');
+  const confirmationContainer = document.createElement('dialog');
+  confirmationContainer.type = "modal";
 
-//   if (method == "GET") {
-//     response = await fetch(url);
-//   } else if (method == "POST") {
-//     response = await fetch(url, fetchOptions);
-    
-//   }
+  confirmationContainer.innerHTML = /*html*/`
+    <div class="confirmation-dialog column gap-10">
+      <span data-lang="confirmation-${type}"></span>
+      <div class="btn-container gap-15">
+        <div class="btn btn-secondary txt-small txt-700" data-lang="no"></div>
+        <div class="btn btn-primary txt-small txt-700" data-lang="yes"></div>
+      </div>
+    </div>
+  `;
+  confirmationContainer.LANG_load();
 
-//   if (response?.ok) {
-//     if (dataType == "json") data = await response.json();
-//     else if (dataType == "text") data = await response.text();
-//   }
-// }
+  confirmationContainer.$('.btn-primary').addEventListener('click', () => {
+    cb();
+    confirmationContainer.closeModal();
+  }, {once: true});
 
-// async function fetch2 (url = '../php/tst.php', options) {
-//   let requestOptions = {
-//     method: options?.method ?? "GET",
-//     load: options?.load ?? undefined,
-//     body: options?.body ?? undefined
-//   }
-//   return await new Promise((resolve, reject) => {
-
-//     const xhr = new XMLHttpRequest();
-//     xhr.open(requestOptions.method, url);
-//     // if (typeof requestOptions.load == "function") xhr.onload = requestOptions.load();
-//     // (!!requestOptions.body && requestOptions.method == "POST") ? xhr.send(requestOptions.body) : xhr.send();
-//     // xhr.responseType = "json";
-
-//     const headerInit = JSON.parse(`{${xhr.getAllResponseHeaders().replaceAll(/[a-z\-]+(?=\:)/g, i => `"${i}"`).replaceAll(/(?<=[^\S\n\r])[^\r]*/g, i => `"${i}"`).replaceAll(/\r\n(?!$)/g, ', ')}}`)
-    
-    
-//     xhr.onload = () => {
-//       const stream = new ReadableStream({
-//         start(controller) {
-//           log('starting')
-//           controller.enqueue(xhr.response);
-//           controller.close();
-//         }
-//       });
-//       const response = new Response(stream, {statusText: xhr.statusText, status: xhr.status, headers: new Headers(headerInit)});
-//       resolve(response);
-//     }
-
-//     xhr.onerror = (e) => {
-//       reject('failed');
-//     }
-
-//     xhr.send();
-//   })
-// }
+  $('body').append(confirmationContainer);
+  confirmationContainer.addEventListener('close', () => confirmationContainer.remove())
+  confirmationContainer.openModal();
+}

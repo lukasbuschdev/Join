@@ -2,6 +2,7 @@ let ALL_USERS;
 let USER;
 let BOARDS = {};
 let SELECTED_BOARD;
+let SELECTED_TASK;
 let CONTACTS = {};
 let SOCKET;
 let notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wav');
@@ -71,22 +72,24 @@ window.addEventListener("popstate", (e) => {
 });
 
 const loadContent = async () => {
-    const {id, classList} = event.currentTarget
-    if (classList.contains('active')) return error('already active!')
+    const {id, classList} = event.currentTarget;
+    if (classList.contains('active')) return error('already active!');
     const url = `/Join/assets/templates/index/${id.replace('_','-')}_template.html`;
-    await $('#content').includeTemplate(url);
+    const content = $('#content');
+    await content.includeTemplate(url);
     if (id == "summary") {
-        initSummary();
+        initTextLoadAnimationOvserver();
+        await initSummary();
     } else if (id == "contacts") {
-        initContacts();
+        await initContacts();
     } else if (id == "board") {
-        initBoard();
+        await initBoard();
     } else if (id == "add-task") {
-        initAddTask();
+        await initAddTask();
     }
     if (currentDirectory() !== id) goTo(id)
-    initTextLoadAnimationOvserver();
-    initMenus();
+    LANG_load();
+    content.initMenus();
 };
 
 const openAccountPanel = () => {

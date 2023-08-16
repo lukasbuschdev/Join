@@ -1,7 +1,7 @@
 {
     "title-summary": "Join - Summary",
     "title-board": "Join - Board",
-    "title-add_task": "Join - Add Task",
+    "title-add-task": "Join - Add Task",
     "title-contacts": "Join - Contacts",
     "title-legal_notice": "Join - Legal notice",
 
@@ -15,6 +15,7 @@
     "awaiting-feedback": "Awaiting Feedback",
     "in-progress": "In Progress",
     "done": "Done",
+    "no-tasks": "No task",
 
     "header-kanban": "Kanban Project Management Tool",
 
@@ -29,7 +30,7 @@
     "tasks-in-board": "Tasks in Board",
     "tasks-in-progress": "Tasks in Progress",
     "tasks-awaiting-feedback": "Awaiting Feedback",
-    "tasks-urgent": "Urgent",
+    "urgent": "Urgent",
     "tasks-deadline": "Upcoming Deadline",
     "tasks-done": "Done",
 
@@ -49,8 +50,12 @@
     "due-date": "Due date",
     "due-date-placeholder": "dd/mm/yyyy",
     "priority": "Prio",
+    "medium": "Medium",
+    "low": "Low",
     "subtasks": "Subtasks",
     "subtask1": "Subtask 1",
+    "edit": "Edit",
+    "delete": "Delete",
 
 
     "btn-create-task": "Create Task",
@@ -68,5 +73,9 @@
     "board": "Board",
 
     "add-contact-heading": "Add contact",
-    "add-contact-subheading": "Tasks are better with a team!"
+    "add-contact-subheading": "Tasks are better with a team!",
+
+    "confirmation-delete-task": "Are you sure you want do delete this task?",
+    "yes": "Ja",
+    "no": "Nein"
 }
