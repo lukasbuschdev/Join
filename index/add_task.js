@@ -106,7 +106,7 @@ function renderSelectedCollaborators() {
                 <img src="${users.img}">
             </div>
         `;
-    })
+    });
 }
 
 function getTitle() {
@@ -170,27 +170,17 @@ function checkPriority() {
 }
 
 function addTask() {
-    const taskId = Date.now().toString(); 
     const title = getTitle();
     const description = getDescription();
     const category = getSelectedCategory();
     const dueDate = getDueDate();
     const priority = checkPriority();
-    // const subtask = ;
+    // const subtask = getSubtask();
 
-    // log('Selected Board is:', SELECTED_BOARD);
-    // log('New board ID is:', taskId);
-    // log('Entered Title is:', title);
-    // log('Entered description is:', description);
-    // log('Selected category is:', category);
-    // log('Selected collaborators are:', selectedCollaborators);
-    // log('Entered due date is:', dueDate);
-    // log('Selected prriority is:', priority);
-
-    createNewTask(SELECTED_BOARD, taskId, title, description, category, selectedCollaborators, dueDate, priority);
+    createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority);
 }
 
-function createNewTask(SELECTED_BOARD, taskId, title, 
+function createNewTask(SELECTED_BOARD, title, 
     description, category, selectedCollaborators, 
     dueDate, priority) {
 
@@ -200,9 +190,57 @@ function createNewTask(SELECTED_BOARD, taskId, title,
             category: category,
             assignedTo: selectedCollaborators,
             dueDate: dueDate,
-            priority: priority,
+            priority: priority
         }
 
         SELECTED_BOARD.addTask(newTask);
         // console.log(newTask);
+}
+
+function clearSubtaskInput() {
+    const subtaskInputContainer = $('.subtasks input');
+    subtaskInputContainer.value = '';
+}
+
+const subtasks = [];
+
+function addSubtask() {
+    const subtaskValue = $('.subtasks input').value;
+
+    const index = subtasks.indexOf(subtaskValue);
+
+    if (index === -1) {
+        subtasks.push(subtaskValue);
+    } else {
+        subtasks.splice(index, 1);
     }
+
+    renderSubtasks();
+    // log(subtasks);
+}
+
+function renderSubtasks() {
+    const subtaskContainer = $('#subtask-container');
+    subtaskContainer.innerHTML = '';
+
+    for(let i = 0; i < subtasks.length; i++) {
+        const subtask = subtasks[i];
+
+        subtaskContainer.innerHTML += /*html*/ `
+            <div class="row single-subtask">
+                <li>${subtask}</li>
+
+                <div class="row gap-10 subtask-edit-delete-btns" id="subtask-edit-delete-btns${i}">
+                    <button class="grid-center" onclick="deleteSubtask(${i})">
+                        <img src="/Join/assets/img/icons/trash.svg" width="20">
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+}
+
+function deleteSubtask(i) {
+    subtasks.splice(i, 1);
+    renderSubtasks();
+}

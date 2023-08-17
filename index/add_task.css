@@ -165,6 +165,46 @@ textarea {
     width: 0;
 }
 
+#subtask-container {
+    width: 100%;
+    height: fit-content;
+    max-height: 120px;
+    overflow: auto;
+    background-color: transparent;
+}
+
+.single-subtask {
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--clr-dark);
+    background-color: transparent;
+    padding: 0 21px;
+    cursor: pointer;
+    border-radius: 10px;
+    height: 30px;
+}
+
+.single-subtask:hover {
+    background-color: var(--clr-subtask);
+}
+
+.single-subtask-active {
+
+}
+
+.subtask-edit-delete-btns {
+    z-index: 999;
+}
+
+.subtask-edit-delete-btns button img {
+    transform: scale(1);
+    transition: var(--transition-fast);
+}
+
+.subtask-edit-delete-btns button:active img {
+    transform: scale(1.1);
+}
 
 #add-task-modal > div {
     width: 1080px;

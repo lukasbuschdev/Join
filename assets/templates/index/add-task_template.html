@@ -73,10 +73,20 @@
     
                 <div class="subtasks column">
                     <span data-lang="subtasks">Subtasks</span>
-                    <textarea name="add-subtask" id="add-subtask" class="padding-textarea"></textarea>
-                    <div class="row">
-                        <input type="checkbox" id="subtask" name="subtask" value="subtask">
-                        <label data-lang="subtask1" for="subtask">Subtask 1</label>
+                    <div class="inp-wrapper column gap-15" id="add-subtask">
+                        <div class="inp-container radius-10">
+                            <input type="text" name="" id="" data-lang-placeholder="add-subtask">
+                            <div class="inp-buttons row gap-10">
+                                <button onclick="clearSubtaskInput()">
+                                    <img src="/Join/assets/img/icons/close.svg" width="20">
+                                </button>
+                                <div class="vertical-line"></div>
+                                <button onclick="addSubtask()">
+                                    <img src="/Join/assets/img/icons/check_black.svg" width="20">
+                                </button>
+                            </div>
+                        </div>
+                        <div id="subtask-container" class="column"></div>
                     </div>
                 </div>
             </div>
