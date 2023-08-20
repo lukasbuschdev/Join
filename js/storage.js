@@ -89,11 +89,10 @@ const REMOTE_removeData = async (path) => {
     if (!data) return;
     if (Array.isArray(data)) {
         data = data.toSpliced(data.indexOf(item), 1);
-        return REMOTE_setData(directory, data);
     } else {
         delete data[item];
-        return REMOTE_upload(path.split('/')[0], data);
     };
+    return REMOTE_upload(directory, data);
 }
 
 const REMOTE_clearVerifications = async () => {

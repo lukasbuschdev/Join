@@ -58,6 +58,14 @@
     "edit": "Edit",
     "delete": "Delete",
 
+    "select-a-board": "Select a board!",
+    "enter-a-title": "Enter a title!",
+    "enter-a-description": "Enter a description!",
+    "select-a-category": "Select a category!",
+    "select-a-collaborator": "Select a collaborator!",
+    "enter-a-dueDate": "Enter a dueDate!",
+    "select-a-priority": "Select a priority!",
+    "enter-a-subtask": "Enter a subtask!",
 
     "btn-create-task": "Create Task",
     "btn-cancel": "Cancel",

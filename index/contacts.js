@@ -194,11 +194,16 @@ function searchResultTemplates({id, img, name, email}) {
 function selectNewContact(id, img, name) {
     let image = $('.user-img-gray');
     let input = $('#input-name');
-    let userImgContainer = image.previousElementSibling;
+    let userImgContainer = $('.user-img-container');
     
     userImgContainer.innerHTML = name.slice(0, 2).toUpperCase();
-    image.src = img;
+    image.setAttribute('src', img);
     input.value = name;
-    const selectedContact = id;
-    console.log(selectedContact);
+
+    // const selectedContact = id;
+    // log(id, img, name);
+}
+
+function addContact() {
+    
 }

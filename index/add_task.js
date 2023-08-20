@@ -1,6 +1,7 @@
 async function initAddTask() {
     await getBoards();
     renderBoardIds();
+    $('.add-task-card').LANG_load();
 }
 
 function renderBoardIds() {
@@ -90,6 +91,13 @@ function selectCollaborator(collaboratorId) {
         selectedCollaborators.splice(index, 1);
     }
 
+    if(selectedCollaborators.length == 0) {
+        document.getElementById('select-a-collaborator').classList.remove('error-inactive');
+        return
+    } else if(selectedCollaborators.length >= 1) {
+        document.getElementById('select-a-collaborator').classList.add('error-inactive');
+    }
+    
     renderSelectedCollaborators();
 }
 
@@ -113,38 +121,46 @@ function getTitle() {
     const title = $('#title');
     
     if(title.value == '') {
-        error('No title entered.');
+        document.getElementById('enter-a-title').classList.remove('error-inactive');
+        document.getElementById('title').classList.add('input-warning');
+        return
     } else {
+        document.getElementById('enter-a-title').classList.add('error-inactive');
+        document.getElementById('title').classList.remove('input-warning');
         return title.value;
     }
-    // console.log(title.value);
 }
 
 function getDescription() {
     const description = $('#description');
     
     if(description.value == '') {
-        error('No description entered.');
+        document.getElementById('enter-a-description').classList.remove('error-inactive');
+        document.getElementById('description').classList.add('input-warning');
+        return
     } else {
+        document.getElementById('enter-a-description').classList.add('error-inactive');
+        document.getElementById('description').classList.remove('input-warning');
         return description.value;
     }
-    // console.log(description.value);
 }
 
 function renderSelectedCategory(category) {
     const selected = $('#select-task-category');
     event.currentTarget.toggleDropDown();
     return selected.innerHTML = category;
-    // log(category);
 }
 
 function getSelectedCategory() {
-    const category = $('#select-task-category');
-
-    if(category.innerHTML == '') {
-        error('No category selected.');
-    } else {
-        return category.innerText;
+    const category = $('#select-task-category').innerText;
+    
+    if(category === 'Select task category') {
+        document.getElementById('select-a-category').classList.remove('error-inactive');
+        // document.getElementById('').classList.remove('input-warning');
+        return
+    } else if(category.length >= 3) {
+        document.getElementById('select-a-category').classList.add('error-inactive');
+        return {valid: true, category: category}; 
     }
 }
 
@@ -152,20 +168,21 @@ function getDueDate() {
     const date = $('#date');
 
     if(date.value == '') {
-        error('No due date entered.');
+        document.getElementById('enter-a-dueDate').classList.remove('error-inactive');
     } else {
+        document.getElementById('enter-a-dueDate').classList.add('error-inactive');
         return date.value;
     }
-    // log(date.value);
 }
 
 function checkPriority() {
     const activeButton = $('.btn-priority button.active');
     
     if (activeButton) {
+        document.getElementById('select-a-priority').classList.add('error-inactive')
         return activeButton.$('.priority').textContent.toLowerCase();
     } else {
-        return error("No active button found.");
+        return document.getElementById('select-a-priority').classList.remove('error-inactive');
     }
 }
 
@@ -175,14 +192,27 @@ function addTask() {
     const category = getSelectedCategory();
     const dueDate = getDueDate();
     const priority = checkPriority();
-    // const subtask = getSubtask();
+    const subtasks = getSubtasks();
+    const addTaskData = [title, description, category, dueDate, priority, subtasks]; 
 
-    createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority);
+
+    if (checkAddTaskInputs(addTaskData)) {
+        return;
+    } else {
+        log(addTaskData);
+        log('I got here!');
+    }
+
+    // createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
+}
+
+function checkAddTaskInputs(addTaskData) {
+    return addTaskData.some(singleInputField => singleInputField === undefined);
 }
 
 function createNewTask(SELECTED_BOARD, title, 
     description, category, selectedCollaborators, 
-    dueDate, priority) {
+    dueDate, priority, subtasks) {
 
         const newTask = {
             title: title,
@@ -190,7 +220,8 @@ function createNewTask(SELECTED_BOARD, title,
             category: category,
             assignedTo: selectedCollaborators,
             dueDate: dueDate,
-            priority: priority
+            priority: priority,
+            subtasks: subtasks
         }
 
         SELECTED_BOARD.addTask(newTask);
@@ -204,19 +235,37 @@ function clearSubtaskInput() {
 
 const subtasks = [];
 
-function addSubtask() {
-    const subtaskValue = $('.subtasks input').value;
+function checkSubtaskInput() {
+    const inputField = $('.subtasks input').value;
+    const inputButtons = document.querySelector('.subtasks .inp-buttons');
 
-    const index = subtasks.indexOf(subtaskValue);
-
-    if (index === -1) {
-        subtasks.push(subtaskValue);
-    } else {
-        subtasks.splice(index, 1);
+    if(inputField.length >= 1) {
+        inputButtons.classList.remove('d-none');
+    } else if(inputField.length == 0) {
+        inputButtons.classList.add('d-none');
     }
+}
 
+function getSubtasks() {
+    if(subtasks.length == 0) {
+        document.getElementById('enter-a-subtask').classList.remove('error-inactive');
+        return 
+    } else if(subtasks.length >= 1) {
+        document.getElementById('enter-a-subtask').classList.add('error-inactive');
+        return subtasks
+    }
+}
+
+function addSubtask() {
+    const subtaskValue = $('.subtasks input');
+    const inputButtons = document.querySelector('.subtasks .inp-buttons');
+
+    subtasks.push(subtaskValue.value);
+    subtaskValue.value = '';
+
+    inputButtons.classList.add('d-none');
+    
     renderSubtasks();
-    // log(subtasks);
 }
 
 function renderSubtasks() {

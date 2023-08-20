@@ -26,7 +26,7 @@ class Board extends BaseClass {
         task.color = this.categories[taskData.category];
         task.boardId = this.id;
         this.tasks[task.id] = task;
-        await this.update();
+        // await this.update();
         return task;
     }
 
