@@ -27,6 +27,7 @@
                     <div class="error-container-relative">
                         <span class="error-inactive error-enter-input" data-lang="enter-a-title" id="enter-a-title">Enter a title!</span>
                         <span class="error-inactive error-enter-input" data-lang="use-letters-only" id="title-letters-only">Please use letters only!</span>
+                        <span class="error-inactive error-enter-input" data-lang="title-too-long" id="title-too-long">Title too long!</span>
                     </div>
                 </div>
     
@@ -80,6 +81,9 @@
                     <div class="error-inactive error-enter-input" id="enter-a-dueDate">
                         <span data-lang="enter-a-dueDate">Enter a due date!</span>
                     </div>
+                    <div class="error-inactive error-enter-input" id="wrong-date-format">
+                        <span data-lang="wrong-date-format">Wrong format!</span>
+                    </div>
                 </div>
     
                 <div id="priority" class="column">
@@ -96,7 +100,7 @@
     
                 <div class="subtasks column">
                     <span data-lang="subtasks">Subtasks</span>
-                    <div class="inp-wrapper column gap-15" id="add-subtask">
+                    <div class="inp-wrapper column gap-10" id="add-subtask">
                         <div class="inp-container radius-10">
                             <input oninput="checkSubtaskInput()" type="text" name="" id="subtask-input" data-lang-placeholder="add-subtask">
                             <div class="d-none inp-buttons row gap-10">
@@ -109,11 +113,12 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="error-container-relative">
+                        <div class="d-none error-container-relative" id="error-container">
                             <span class="error-inactive error-enter-input" data-lang="use-letters-only" id="subtask-letters-only">Please use letters only!</span>
+                            <span class="error-inactive error-enter-input" data-lang="subtask-too-long" id="subtask-too-long">Subtask too long!</span>
                         </div>
-                        <div id="subtask-container" class="column"></div>
                     </div>
+                    <div id="subtask-container" class="column"></div>
                 </div>
             </div>
         </div>

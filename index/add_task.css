@@ -9,6 +9,7 @@
     justify-content: flex-end;
     gap: 10px;
     width: 100%;
+    margin-top: 10px;
 }
 
 .add-task-heading {
@@ -215,13 +216,19 @@ textarea {
 
 /* ERROR CONTAINERS */
 
-.error-container-relative {
+.error-container-inactive {
     position: relative;
+    height: 0;
+    transition: var(--transition-fast);
+}
+
+.error-container-relative {
+    height: 25px;
 }
 
 .error-enter-input {
     width: 100%;
-    height: 30px;
+    height: 25px;
     transform: translateY(0);
     color: var(--clr-orange);
     opacity: 1;
@@ -235,17 +242,11 @@ textarea {
     visibility: hidden;
     transition: var(--transition-fast);
     transform: translateY(-100%);
+    display: none;
 }
 
 .input-warning {
     border-color: var(--clr-orange);
-}
-
-#title-letters-only, 
-#description-letters-only,
-#subtask-letters-only {
-    position: absolute;
-    left: 0;
 }
 
 
