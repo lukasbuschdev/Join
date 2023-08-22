@@ -305,3 +305,24 @@ const confirmation = (type, cb) => {
   confirmationContainer.addEventListener('close', () => confirmationContainer.remove())
   confirmationContainer.openModal();
 }
+
+const dateFormat = (dateString) => {
+  if (typeof dateString !== "string") return false;
+  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(dateString)) return false;
+
+  const [day, month, year] = dateString.split('/');
+  const date = new Date(year, month - 1, day);
+  if (invalidDate(dateString, date)) return false
+  const now = Date.now();
+
+  if (date < now) return false;
+  return true;
+}
+
+const invalidDate = (input, output) => {
+  const [, mI, yI] = input.split('/');
+  const mO = output.getMonth() + 1;
+  const yO = output.getFullYear();
+
+  return !(Number(mI) == mO && Number(yI) == yO);
+}

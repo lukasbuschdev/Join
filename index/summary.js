@@ -114,24 +114,26 @@ const createNewBoard = async () => {
         categories,
         collaborators: [USER.id]
     };
-    const user = await getCurrentUser(true);
     const newBoard = await user.addBoard(boardData);
     $('#add-board').closeModal();
     notification('board-added');
 
-    $$('.collaborators-container .collaborator').for(
-        invite => {
-            const id = invite.dataset.id;
-            const notification = new Notify({
-                recipientId: id,
-                type: "boardInvite",
-                ownerName: USER.name,
-                boardName: newBoard.name,
-                boardId: newBoard.id
-            });
-            notification.send();
-        }
-    );
+    createBoardNotification(newBoard);
+};
+
+const createBoardNotification = ({name, id}) => {
+    const recipients = [...$$('.collaborators-container .invite')].reduce((total, {dataset: {id}}) => {
+        total.push(id);
+        return total;
+    }, []);
+    const notification = new Notify({
+        recipients,
+        type: "boardInvite",
+        ownerName: USER.name,
+        boardName: name,
+        boardId: id
+    });
+    // notification.send();
 };
 
 const toggleDrp = () => {

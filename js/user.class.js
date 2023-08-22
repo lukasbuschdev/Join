@@ -116,11 +116,25 @@ class User extends Account {
             `type '${type}' invalid! type may be one of: 'friendRequest', 'boardInvite', 'taskAssignment'`
         )
         if (to == this.id) return error('invalid recipient!');
-        const recipient = await REMOTE_getData(`users/${to}`, true);
+        const recipient = CONTACTS[to];
         const allNotifications = recipient.getPropertyValue('notifications');
         return recipient.setProperty('notifications', [{
             type,
             from: this.id
         }, ...allNotifications]);
+    }
+
+    newChat = (userIds) => {
+        const recipients = (Array.isArray(userIds)) ? userIds : [userIds];
+        // recipients.for(recipientId => {
+        //     CONTACTS[recipientId].joinChat(newChatId);
+        // });
+        const chat = new Chat({recipients});
+        log(chat);
+    }
+
+    joinChat = (chatId) => {
+        this.chats.push(chatId);
+        // return this.update();
     }
 }

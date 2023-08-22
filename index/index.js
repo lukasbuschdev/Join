@@ -31,36 +31,6 @@ const checkNotifications = () => {
     notificationCounters.for(counter => counter.innerText = notificationCount);
 }
 
-const initWebsocket = () => {
-    SOCKET = io("wss://join-websocket.onrender.com", {
-        query: {
-            uid: USER.id
-        }
-    });
-
-    SOCKET.io.on('error', e => {
-        SOCKET.close();
-        // SOCKET = null;
-        SOCKET.io.on('connection', e => {
-            log('reconnected!')
-        })
-        setTimeout(initWebsocket, 1 * 60 * 1000);
-    });
-
-
-    SOCKET.on('message', async () => {
-        console.log(`Your received a new Notification!`);
-        notifySound.play();
-        await getUser();
-        checkNotifications();
-    });
-}
-
-const sendMessage = (contactId) => {
-    if (!CONTACTS[contactId]) return error(`user '${contactId}' not in contacts!`);
-    SOCKET.emit('message', {recipientId: contactId});
-}
-
 const checkLogin = () => {
     if (LOCAL_getData('loggedIn') == 'false') {
         goTo('login', {search: '', reroute: true});

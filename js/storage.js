@@ -76,6 +76,7 @@ const REMOTE_setData = async (targetPath, upload) => {
         }
         else if (currentObj.indexOf(upload !== -1)) currentObj.push(upload);
     } else Object.assign(currentObj, upload);
+    // return log(data)
     return REMOTE_upload(directories[0], data);
 }
 
@@ -89,11 +90,12 @@ const REMOTE_removeData = async (path) => {
     if (!data) return;
     if (Array.isArray(data)) {
         data = data.toSpliced(data.indexOf(item), 1);
-        return REMOTE_setData(directory, data);
     } else {
         delete data[item];
-        return REMOTE_upload(path.split('/')[0], data);
     };
+    const parentDirectory = directory.slice(0, directory.lastIndexOf('/'));
+    const childDirectory = directory.split('/').at(-1);
+    return REMOTE_setData(parentDirectory, { [childDirectory]: data});
 }
 
 const REMOTE_clearVerifications = async () => {
@@ -236,7 +238,7 @@ const getUser = async () => {
     USER = await getCurrentUser(true);
     const allUsers = await REMOTE_getData('users');
     USER.contacts.for(
-        contactId => CONTACTS[contactId] = allUsers[contactId]
+        contactId => CONTACTS[contactId] = new User(allUsers[contactId])
     );
 };
 
