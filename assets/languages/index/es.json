@@ -49,7 +49,7 @@
     "select-a-collaborator": "¡Seleccionar colaboradores!",
     "enter-a-dueDate": "¡Introduzca una fecha de vencimiento!",
     "select-a-priority": "¡Seleccione una prioridad!",
-    "use-letters-only": "¡Utilice sólo letras!",
+    "use-letters-only": "¡Utilice sólo letras, números y (/-_\")!",
 
     "btn-create-task": "Crear tarea",
     "btn-cancel": "Cancelar",

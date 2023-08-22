@@ -65,7 +65,7 @@
     "select-a-collaborator": "Wählen sie Mitglieder aus!",
     "enter-a-dueDate": "Gib ein Datum an!",
     "select-a-priority": "Wähle eine Priorität!",
-    "use-letters-only": "Nur Buchstaben und (/-_\") als Eingabe erlaubt.",
+    "use-letters-only": "Nur Buchstaben, Zahlen und (/-_\") als Eingabe erlaubt!",
 
     "btn-create-task": "Aufgabe erstellen",
     "btn-cancel": "Abbrechen",

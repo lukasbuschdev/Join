@@ -65,7 +65,7 @@
     "select-a-collaborator": "Select a collaborator!",
     "enter-a-dueDate": "Enter a dueDate!",
     "select-a-priority": "Select a priority!",
-    "use-letters-only": "Please use letters and (/-_\") only!",
+    "use-letters-only": "Use letters, numbers and (/-_\") only!",
 
     "btn-create-task": "Create Task",
     "btn-cancel": "Cancel",
