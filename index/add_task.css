@@ -65,6 +65,11 @@ textarea {
     width: 35px;
 }
 
+.input-collaborator {
+    height: 30px;
+    width: 30px;
+}
+
 .line {
     height: 495px;
     width: 1px;

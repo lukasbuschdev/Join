@@ -4,6 +4,10 @@ async function initAddTask() {
     $('.add-task-card').LANG_load();
 }
 
+const subtasks = [];
+const selectedCollaborators = [];
+
+
 function renderBoardIds() {
     const drpContainer = $('#drp-board-container');
     drpContainer.innerHTML = ''; 
@@ -19,8 +23,7 @@ function selectBoard(boardId) {
     const selectedBoard = BOARDS[boardId];
     SELECTED_BOARD = selectedBoard;
     event.currentTarget.toggleDropDown();
-    // log(selectedBoard);
-    
+
     SELECTED_BOARD = selectedBoard;
 
     renderSelectedBoard(selectedBoard);
@@ -33,6 +36,19 @@ function renderSelectedBoard(selectedBoard) {
     const selectedBoardName = selectedBoard.name;
 
     selectedBoardField.innerText = selectedBoardName;
+}
+
+function checkSelectedBoard() {
+    const boardInput = $('#selected-board').innerText;
+    
+    if(boardInput === 'Select board') {
+        document.getElementById('select-a-board').classList.remove('error-inactive');
+        document.getElementById('drp-wrapper-board').classList.add('input-warning');
+        return
+    } else if(boardInput.length >= 3) {
+        document.getElementById('select-a-board').classList.add('error-inactive');
+        document.getElementById('drp-wrapper-board').classList.remove('input-warning'); 
+    }
 }
 
 function renderCategories(selectedBoard) {
@@ -70,52 +86,69 @@ function renderAssignToContacts(selectedBoard) {
 
         const collaboratorOption = document.createElement('div');
         collaboratorOption.innerHTML = /*html*/ `
-            <div class="drp-option" onclick="selectCollaborator(${collaborator.id})">
+            <div class="drp-option" onclick="selectCollaborator(${collaboratorId})">
                 <div class="user-img-container grid-center" style="--user-clr: ${collaborator.color}"><span>${collaborator.name.slice(0, 2).toUpperCase()}</span><img src="${collaborator.img}"></div>
                 <span>${collaborator.name}</span>
             </div>
         `;
-
+        
         drpContainer.append(collaboratorOption.children[0]);
     });
 }
 
-let selectedCollaborators = [];
-
 function selectCollaborator(collaboratorId) {
     const index = selectedCollaborators.indexOf(collaboratorId.toString());
-
+    
     if (index === -1) {
         selectedCollaborators.push(collaboratorId.toString());
     } else {
         selectedCollaborators.splice(index, 1);
     }
+    renderCollaboratorInput();
+}
 
+function checkSelectedCollaborator() {
     if(selectedCollaborators.length == 0) {
         document.getElementById('select-a-collaborator').classList.remove('error-inactive');
+        document.getElementById('drp-wrapper-collaborator').classList.add('input-warning');
         return
     } else if(selectedCollaborators.length >= 1) {
         document.getElementById('select-a-collaborator').classList.add('error-inactive');
+        document.getElementById('drp-wrapper-collaborator').classList.remove('input-warning');
     }
-    
-    renderSelectedCollaborators();
 }
 
-function renderSelectedCollaborators() {
-    const selectedCollabsContainer = $('#selected-collaborators');
-    selectedCollabsContainer.innerHTML = '';
+function renderCollaboratorInput() {
+    const inputContainerCollaborator = $('#selected-collaborator-input');
+    inputContainerCollaborator.innerHTML = '';
 
     selectedCollaborators.for((collaboratorId) => {
         const users = ALL_USERS[collaboratorId];
 
-        selectedCollabsContainer.innerHTML += /*html*/ `
-            <div class="user-img-container grid-center" style="--user-clr: ${users.color}">
+        inputContainerCollaborator.innerHTML += /*html*/ `
+            <div class="input-collaborator user-img-container grid-center" style="--user-clr: ${users.color}">
                 <span>${(users.name).slice(0, 2).toUpperCase()}</span>
                 <img src="${users.img}">
             </div>
         `;
     });
 }
+
+// function renderSelectedCollaborators() {
+//     const selectedCollabsContainer = $('#selected-collaborators');
+//     selectedCollabsContainer.innerHTML = '';
+
+//     selectedCollaborators.for((collaboratorId) => {
+//         const users = ALL_USERS[collaboratorId];
+
+//         selectedCollabsContainer.innerHTML += /*html*/ `
+//             <div class="user-img-container grid-center" style="--user-clr: ${users.color}">
+//                 <span>${(users.name).slice(0, 2).toUpperCase()}</span>
+//                 <img src="${users.img}">
+//             </div>
+//         `;
+//     });
+// }
 
 function getTitle() {
     const title = $('#title');
@@ -156,10 +189,12 @@ function getSelectedCategory() {
     
     if(category === 'Select task category') {
         document.getElementById('select-a-category').classList.remove('error-inactive');
-        // document.getElementById('').classList.remove('input-warning');
+        document.getElementById('category-drp-wrapper').classList.add('input-warning');
         return
     } else if(category.length >= 3) {
         document.getElementById('select-a-category').classList.add('error-inactive');
+        document.getElementById('category-drp-wrapper').classList.remove('input-warning');
+
         return {valid: true, category: category}; 
     }
 }
@@ -169,8 +204,11 @@ function getDueDate() {
 
     if(date.value == '') {
         document.getElementById('enter-a-dueDate').classList.remove('error-inactive');
+        document.getElementById('date').classList.add('input-warning');
+        return
     } else {
         document.getElementById('enter-a-dueDate').classList.add('error-inactive');
+        document.getElementById('date').classList.remove('input-warning');
         return date.value;
     }
 }
@@ -186,14 +224,22 @@ function checkPriority() {
     }
 }
 
+function getSubtasks() {
+    return subtasks
+}
+
 function addTask() {
+    checkSelectedBoard();
+    checkSelectedCollaborator();
+
     const title = getTitle();
     const description = getDescription();
     const category = getSelectedCategory();
+    const collaborators = selectedCollaborators;
     const dueDate = getDueDate();
     const priority = checkPriority();
     const subtasks = getSubtasks();
-    const addTaskData = [title, description, category, dueDate, priority, subtasks]; 
+    const addTaskData = [title, description, category,collaborators, dueDate, priority, subtasks]; 
 
 
     if (checkAddTaskInputs(addTaskData)) {
@@ -218,6 +264,7 @@ function createNewTask(SELECTED_BOARD, title,
             title: title,
             description: description,
             category: category,
+            collaborators: selectedCollaborators,
             assignedTo: selectedCollaborators,
             dueDate: dueDate,
             priority: priority,
@@ -233,8 +280,6 @@ function clearSubtaskInput() {
     subtaskInputContainer.value = '';
 }
 
-const subtasks = [];
-
 function checkSubtaskInput() {
     const inputField = $('.subtasks input').value;
     const inputButtons = document.querySelector('.subtasks .inp-buttons');
@@ -246,15 +291,15 @@ function checkSubtaskInput() {
     }
 }
 
-function getSubtasks() {
-    if(subtasks.length == 0) {
-        document.getElementById('enter-a-subtask').classList.remove('error-inactive');
-        return 
-    } else if(subtasks.length >= 1) {
-        document.getElementById('enter-a-subtask').classList.add('error-inactive');
-        return subtasks
-    }
-}
+// function getSubtasks() {
+//     if(subtasks.length == 0) {
+//         document.getElementById('enter-a-subtask').classList.remove('error-inactive');
+//         return 
+//     } else if(subtasks.length >= 1) {
+//         document.getElementById('enter-a-subtask').classList.add('error-inactive');
+//         return subtasks
+//     }
+// }
 
 function addSubtask() {
     const subtaskValue = $('.subtasks input');

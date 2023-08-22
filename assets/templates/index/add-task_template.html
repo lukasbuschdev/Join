@@ -8,7 +8,7 @@
             <div class="add-task-single-row">
                 <div class="drp">
                     <span data-lang="assigned-to">Board</span>
-                    <div class="drp-wrapper">
+                    <div class="drp-wrapper" id="drp-wrapper-board">
                         <div data-lang="select-board" id="selected-board" class="drp-title" onclick="this.toggleDropDown()">Select board</div>
                         <div class="drp-option-wrapper" data-shadow="ud/white/10px">
                             <div class="drp-contacts shadow-container" id="drp-board-container">
@@ -39,7 +39,7 @@
     
                 <div class="drp">
                     <span data-lang="category">Category</span>
-                    <div class="drp-wrapper">
+                    <div class="drp-wrapper" id="category-drp-wrapper">
                         <div data-lang="select-task-category" id="select-task-category" class="drp-title" onclick="this.toggleDropDown()">Select task category</div>
                         <div class="drp-option-wrapper" data-shadow="ud/white/10px">
                             <div class="drp-contacts shadow-container" id="drp-categories">
@@ -58,8 +58,8 @@
             <div class="add-task-single-row gap-45">
                 <div class="drp">
                     <span data-lang="assigned-to">Assigned to</span>
-                    <div class="drp-wrapper">
-                        <div data-lang="select-contacts-to-asign" class="drp-title" onclick="this.toggleDropDown()">Select contacts to assign</div>
+                    <div class="drp-wrapper" id="drp-wrapper-collaborator">
+                        <div id="selected-collaborator-input" data-lang="select-contacts-to-asign" class="drp-title" onclick="this.toggleDropDown()">Select contacts to assign</div>
                         <div class="drp-option-wrapper" id="drp-collaborators" data-shadow="ud/white/10px">
                             <div class="drp-contacts shadow-container" id="drp-collab-container">
                                 <!--Add contacts here!-->
@@ -108,9 +108,6 @@
                             </div>
                         </div>
                         <div id="subtask-container" class="column"></div>
-                    </div>
-                    <div class="error-inactive error-enter-input" id="enter-a-subtask">
-                        <span data-lang="enter-a-subtask">Enter a subtask!</span>
                     </div>
                 </div>
             </div>
