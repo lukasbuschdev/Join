@@ -241,7 +241,9 @@ textarea {
     border-color: var(--clr-orange);
 }
 
-#title-letters-only, #description-letters-only {
+#title-letters-only, 
+#description-letters-only,
+#subtask-letters-only {
     position: absolute;
     left: 0;
 }

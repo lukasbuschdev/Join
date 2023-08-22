@@ -6,6 +6,7 @@ async function initAddTask() {
 
 const subtasks = [];
 const selectedCollaborators = [];
+const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_'"0-9]{3,10}$/;
 
 
 function renderBoardIds() {
@@ -136,7 +137,6 @@ function renderCollaboratorInput() {
 
 function getTitle() {
     const title = $('#title').value;
-    const letterRegex = /^[a-zA-Z]+$/;
   
     if (title === '') {
       document.getElementById('enter-a-title').classList.remove('error-inactive');
@@ -156,8 +156,6 @@ function getTitle() {
 
 function getDescription() {
     const description = $('#description').value;
-
-    const letterRegex = /^[a-zA-Z]+$/;
   
     if (description === '') {
       document.getElementById('enter-a-description').classList.remove('error-inactive');
@@ -165,13 +163,14 @@ function getDescription() {
       return;
     } else if (!letterRegex.test(description)) {
         document.getElementById('enter-a-description').classList.add('error-inactive');
-      document.getElementById('description-letters-only').classList.remove('error-inactive');
-      document.getElementById('description').classList.add('input-warning');
+        document.getElementById('description-letters-only').classList.remove('error-inactive');
+        document.getElementById('description').classList.add('input-warning');
       return;
     } else {
-      document.getElementById('description-letters-only').classList.add('error-inactive');
-      document.getElementById('description').classList.remove('input-warning');
-      return description;
+        document.getElementById('description-letters-only').classList.add('error-inactive');
+        document.getElementById('description').classList.remove('input-warning');
+        document.getElementById('enter-a-description').classList.add('error-inactive');
+        return description;
     }
 }
 
@@ -192,7 +191,7 @@ function getSelectedCategory() {
         document.getElementById('select-a-category').classList.add('error-inactive');
         document.getElementById('category-drp-wrapper').classList.remove('input-warning');
 
-        return {valid: true, category: category}; 
+        return category; 
     }
 }
 
@@ -291,8 +290,17 @@ function addSubtask() {
     const subtaskValue = $('.subtasks input');
     const inputButtons = document.querySelector('.subtasks .inp-buttons');
 
-    subtasks.push(subtaskValue.value);
-    subtaskValue.value = '';
+    if(!letterRegex.test(subtaskValue.value)) {
+        document.getElementById('subtask-letters-only').classList.remove('error-inactive');
+        document.getElementById('add-subtask').classList.add('input-warning');
+        return;
+    } else {
+        document.getElementById('subtask-letters-only').classList.add('error-inactive');
+        document.getElementById('add-subtask').classList.remove('input-warning');
+      
+        subtasks.push(subtaskValue.value);
+        subtaskValue.value = '';
+    }
 
     inputButtons.classList.add('d-none');
     
