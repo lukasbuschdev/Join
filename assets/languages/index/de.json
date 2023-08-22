@@ -65,7 +65,7 @@
     "select-a-collaborator": "Wählen sie Mitglieder aus!",
     "enter-a-dueDate": "Gib ein Datum an!",
     "select-a-priority": "Wähle eine Priorität!",
-    "enter-a-subtask": "Füge eine Unteraufgabe hinzu!",
+    "use-letters-only": "Nur Buchstaben als Eingabe erlaubt.",
 
     "btn-create-task": "Aufgabe erstellen",
     "btn-cancel": "Abbrechen",

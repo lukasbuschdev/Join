@@ -91,7 +91,7 @@ function renderAssignToContacts(selectedBoard) {
                 <span>${collaborator.name}</span>
             </div>
         `;
-        
+
         drpContainer.append(collaboratorOption.children[0]);
     });
 }
@@ -134,47 +134,44 @@ function renderCollaboratorInput() {
     });
 }
 
-// function renderSelectedCollaborators() {
-//     const selectedCollabsContainer = $('#selected-collaborators');
-//     selectedCollabsContainer.innerHTML = '';
-
-//     selectedCollaborators.for((collaboratorId) => {
-//         const users = ALL_USERS[collaboratorId];
-
-//         selectedCollabsContainer.innerHTML += /*html*/ `
-//             <div class="user-img-container grid-center" style="--user-clr: ${users.color}">
-//                 <span>${(users.name).slice(0, 2).toUpperCase()}</span>
-//                 <img src="${users.img}">
-//             </div>
-//         `;
-//     });
-// }
-
 function getTitle() {
-    const title = $('#title');
-    
-    if(title.value == '') {
-        document.getElementById('enter-a-title').classList.remove('error-inactive');
-        document.getElementById('title').classList.add('input-warning');
-        return
-    } else {
+    const title = $('#title').value;
+    const letterRegex = /^[a-zA-Z]+$/;
+  
+    if (title === '') {
+      document.getElementById('enter-a-title').classList.remove('error-inactive');
+      document.getElementById('title').classList.add('input-warning');
+      return;
+    } else if (!letterRegex.test(title)) {
         document.getElementById('enter-a-title').classList.add('error-inactive');
-        document.getElementById('title').classList.remove('input-warning');
-        return title.value;
+      document.getElementById('title-letters-only').classList.remove('error-inactive');
+      document.getElementById('title').classList.add('input-warning');
+      return;
+    } else {
+      document.getElementById('title-letters-only').classList.add('error-inactive');
+      document.getElementById('title').classList.remove('input-warning');
+      return title;
     }
 }
 
 function getDescription() {
-    const description = $('#description');
-    
-    if(description.value == '') {
-        document.getElementById('enter-a-description').classList.remove('error-inactive');
-        document.getElementById('description').classList.add('input-warning');
-        return
-    } else {
+    const description = $('#description').value;
+
+    const letterRegex = /^[a-zA-Z]+$/;
+  
+    if (description === '') {
+      document.getElementById('enter-a-description').classList.remove('error-inactive');
+      document.getElementById('description').classList.add('input-warning');
+      return;
+    } else if (!letterRegex.test(description)) {
         document.getElementById('enter-a-description').classList.add('error-inactive');
-        document.getElementById('description').classList.remove('input-warning');
-        return description.value;
+      document.getElementById('description-letters-only').classList.remove('error-inactive');
+      document.getElementById('description').classList.add('input-warning');
+      return;
+    } else {
+      document.getElementById('description-letters-only').classList.add('error-inactive');
+      document.getElementById('description').classList.remove('input-warning');
+      return description;
     }
 }
 
@@ -246,7 +243,6 @@ function addTask() {
         return;
     } else {
         log(addTaskData);
-        log('I got here!');
     }
 
     // createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
@@ -290,16 +286,6 @@ function checkSubtaskInput() {
         inputButtons.classList.add('d-none');
     }
 }
-
-// function getSubtasks() {
-//     if(subtasks.length == 0) {
-//         document.getElementById('enter-a-subtask').classList.remove('error-inactive');
-//         return 
-//     } else if(subtasks.length >= 1) {
-//         document.getElementById('enter-a-subtask').classList.add('error-inactive');
-//         return subtasks
-//     }
-// }
 
 function addSubtask() {
     const subtaskValue = $('.subtasks input');
