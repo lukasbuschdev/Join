@@ -54,9 +54,18 @@
     "low": "Niedrig",
     "subtasks": "Unteraufgaben",
     "subtask1": "Unteraufgabe",
+    "add-subtask": "Unteraufgabe hinzufügen...",
     "edit": "Bearbeiten",
     "delete": "Löschen",
 
+    "select-a-board": "Wähle eine Tafel!",
+    "enter-a-title": "Titel eingeben!",
+    "enter-a-description": "Beschreibung eingeben!",
+    "select-a-category": "Wähle eine Kategorie!",
+    "select-a-collaborator": "Wählen sie Mitglieder aus!",
+    "enter-a-dueDate": "Gib ein Datum an!",
+    "select-a-priority": "Wähle eine Priorität!",
+    "use-letters-only": "Nur Buchstaben, Zahlen und (/-_\") als Eingabe erlaubt!",
 
     "btn-create-task": "Aufgabe erstellen",
     "btn-cancel": "Abbrechen",

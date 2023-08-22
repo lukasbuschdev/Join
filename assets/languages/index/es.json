@@ -38,9 +38,18 @@
     "due-date": "Fecha de vencimiento",
     "due-date-placeholder": "dd/mm/aaaa",
     "priority": "Prioridad",
+    "add-subtask": "Add subtask",
     "subtasks": "Tarea",
     "subtask1": "Subtarea",
 
+    "select-a-board": "¡Seleccionar pizarrón!",
+    "enter-a-title": "¡Introduce un título!",
+    "enter-a-description": "¡Introduce una descripción!",
+    "select-a-category": "¡Seleccione una categoría!",
+    "select-a-collaborator": "¡Seleccionar colaboradores!",
+    "enter-a-dueDate": "¡Introduzca una fecha de vencimiento!",
+    "select-a-priority": "¡Seleccione una prioridad!",
+    "use-letters-only": "¡Utilice sólo letras, números y (/-_\")!",
 
     "btn-create-task": "Crear tarea",
     "btn-cancel": "Cancelar",

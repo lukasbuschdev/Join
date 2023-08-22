@@ -280,11 +280,11 @@
     margin-left: auto;
 }
 
-.add-board-data .inp-buttons button {
+:is(.add-board-data, .subtasks) .inp-buttons button {
     height: 20px;
 }
 
-.add-board-data input:placeholder-shown + .inp-buttons {
+:is(.add-board-data, .subtasks) input:placeholder-shown + .inp-buttons {
     display: none;
 }
 

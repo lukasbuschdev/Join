@@ -9,13 +9,12 @@
     justify-content: flex-end;
     gap: 10px;
     width: 100%;
-    margin-top: 20px;
 }
 
 .add-task-heading {
     width: 100%;
     box-sizing: border-box;
-    padding: 30px 0;
+    padding: 25px 0;
 }
 
 h1 {
@@ -49,8 +48,30 @@ textarea {
     content: unset;
 }
 
+#selected-collaborators {
+    box-sizing: border-box;
+    padding: 10px;
+    max-height: 50px;
+    width: 100%;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#selected-collaborators .user-img-container {
+    height: 35px;
+    width: 35px;
+}
+
+.input-collaborator {
+    height: 30px;
+    width: 30px;
+}
+
 .line {
-    height: 495px;
+    height: 555px;
     width: 1px;
     background-color: #d1d1d1;
 }
@@ -75,7 +96,7 @@ textarea {
     display: grid;
     width: 100%;
     max-width: 400px;
-    gap: 20px;
+    gap: 10px;
 }
 
 .add-task-single-row > div {
@@ -148,11 +169,86 @@ textarea {
     width: 0;
 }
 
+#subtask-container {
+    width: 100%;
+    height: fit-content;
+    max-height: 120px;
+    overflow: auto;
+    background-color: transparent;
+}
+
+.single-subtask {
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--clr-dark);
+    background-color: transparent;
+    padding: 0 21px;
+    cursor: pointer;
+    border-radius: 10px;
+    height: 30px;
+}
+
+.single-subtask:hover {
+    background-color: var(--clr-subtask);
+}
+
+.subtask-edit-delete-btns {
+    z-index: 999;
+}
+
+.subtask-edit-delete-btns button img {
+    transform: scale(1);
+    transition: var(--transition-fast);
+}
+
+.subtask-edit-delete-btns button:active img {
+    transform: scale(1.1);
+}
 
 #add-task-modal > div {
     width: 1080px;
     background-color: white;
 }
+
+
+
+/* ERROR CONTAINERS */
+
+.error-container-relative {
+    position: relative;
+}
+
+.error-enter-input {
+    width: 100%;
+    height: 30px;
+    transform: translateY(0);
+    color: var(--clr-orange);
+    opacity: 1;
+    visibility: visible;
+    transition: var(--transition-fast);
+}
+
+.error-inactive {
+    height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-fast);
+    transform: translateY(-100%);
+}
+
+.input-warning {
+    border-color: var(--clr-orange);
+}
+
+#title-letters-only, 
+#description-letters-only,
+#subtask-letters-only {
+    position: absolute;
+    left: 0;
+}
+
+
 
 /* MOBILE VERSION MAX.-WIDTH 1100px */
 

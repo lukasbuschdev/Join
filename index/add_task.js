@@ -1,7 +1,13 @@
 async function initAddTask() {
     await getBoards();
     renderBoardIds();
+    $('.add-task-card').LANG_load();
 }
+
+const subtasks = [];
+const selectedCollaborators = [];
+const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_'"0-9]{3,10}$/;
+
 
 function renderBoardIds() {
     const drpContainer = $('#drp-board-container');
@@ -18,8 +24,7 @@ function selectBoard(boardId) {
     const selectedBoard = BOARDS[boardId];
     SELECTED_BOARD = selectedBoard;
     event.currentTarget.toggleDropDown();
-    // log(selectedBoard);
-    
+
     SELECTED_BOARD = selectedBoard;
 
     renderSelectedBoard(selectedBoard);
@@ -34,13 +39,26 @@ function renderSelectedBoard(selectedBoard) {
     selectedBoardField.innerText = selectedBoardName;
 }
 
+function checkSelectedBoard() {
+    const boardInput = $('#selected-board').innerText;
+    
+    if(boardInput === 'Select board') {
+        document.getElementById('select-a-board').classList.remove('error-inactive');
+        document.getElementById('drp-wrapper-board').classList.add('input-warning');
+        return
+    } else if(boardInput.length >= 3) {
+        document.getElementById('select-a-board').classList.add('error-inactive');
+        document.getElementById('drp-wrapper-board').classList.remove('input-warning'); 
+    }
+}
+
 function renderCategories(selectedBoard) {
     const drpContainer = $('#drp-categories');
     drpContainer.innerHTML = '';
 
     Object.entries(selectedBoard.categories).for(([name, color]) => {
         drpContainer.innerHTML += /*html*/ `
-            <div class="drp-option row" id="category" data-color="${color}" onclick="this.toggleActive(), getSelectedCategory('${name}')">
+            <div class="drp-option row" id="category" data-color="${color}" onclick="this.toggleActive(), renderSelectedCategory('${name}')">
                 <span>${name}</span>
                 <div class="category-color" style="--clr: ${color}"></div>
             </div>
@@ -53,7 +71,7 @@ function renderAssignToContacts(selectedBoard) {
     const assignToUser = document.createElement('div');
     assignToUser.innerHTML = /*html*/`
         <div class="drp-option" onclick="selectCollaborator(${USER.id})">
-            <div class="user-img-container grid-center" style="--user-clr: ${USER.color}">${USER.name.slice(0, 2).toUpperCase()}</div>
+            <div class="user-img-container grid-center" style="--user-clr: ${USER.color}"><span>${USER.name.slice(0, 2).toUpperCase()}</span><img src="${USER.img}"></div>
             <span data-lang="assigned-you"></span>
         </div>
     `;
@@ -62,57 +80,255 @@ function renderAssignToContacts(selectedBoard) {
     assignToUser.LANG_load();
     drpContainer.append(assignToUser.children[0]);
 
-    selectedBoard.collaborators.for(collaboratorId => {
+    selectedBoard.collaborators.forEach(collaboratorId => {
         const collaborator = CONTACTS[collaboratorId];
         if (collaborator == USER.id) return;
-        if(!collaborator) return;
-        drpContainer.innerHTML += /*html*/ `
-            <div class="drp-option" onclick="selectCollaborator(${collaborator.id})">
-                <div class="user-img-container grid-center" style="--user-clr: ${collaborator.color}">${collaborator.name.slice(0, 2).toUpperCase()}</div>
+        if (!collaborator) return;
+
+        const collaboratorOption = document.createElement('div');
+        collaboratorOption.innerHTML = /*html*/ `
+            <div class="drp-option" onclick="selectCollaborator(${collaboratorId})">
+                <div class="user-img-container grid-center" style="--user-clr: ${collaborator.color}"><span>${collaborator.name.slice(0, 2).toUpperCase()}</span><img src="${collaborator.img}"></div>
                 <span>${collaborator.name}</span>
             </div>
-        `;    
+        `;
+
+        drpContainer.append(collaboratorOption.children[0]);
+    });
+}
+
+function selectCollaborator(collaboratorId) {
+    const index = selectedCollaborators.indexOf(collaboratorId.toString());
+    
+    if (index === -1) {
+        selectedCollaborators.push(collaboratorId.toString());
+    } else {
+        selectedCollaborators.splice(index, 1);
+    }
+    renderCollaboratorInput();
+}
+
+function checkSelectedCollaborator() {
+    if(selectedCollaborators.length == 0) {
+        document.getElementById('select-a-collaborator').classList.remove('error-inactive');
+        document.getElementById('drp-wrapper-collaborator').classList.add('input-warning');
+        return
+    } else if(selectedCollaborators.length >= 1) {
+        document.getElementById('select-a-collaborator').classList.add('error-inactive');
+        document.getElementById('drp-wrapper-collaborator').classList.remove('input-warning');
+    }
+}
+
+function renderCollaboratorInput() {
+    const inputContainerCollaborator = $('#selected-collaborator-input');
+    inputContainerCollaborator.innerHTML = '';
+
+    selectedCollaborators.for((collaboratorId) => {
+        const users = ALL_USERS[collaboratorId];
+
+        inputContainerCollaborator.innerHTML += /*html*/ `
+            <div class="input-collaborator user-img-container grid-center" style="--user-clr: ${users.color}">
+                <span>${(users.name).slice(0, 2).toUpperCase()}</span>
+                <img src="${users.img}">
+            </div>
+        `;
     });
 }
 
 function getTitle() {
-    const title = $('#title');
-    return title.value;
-    // console.log(title.value);
+    const title = $('#title').value;
+  
+    if (title === '') {
+      document.getElementById('enter-a-title').classList.remove('error-inactive');
+      document.getElementById('title').classList.add('input-warning');
+      return;
+    } else if (!letterRegex.test(title)) {
+        document.getElementById('enter-a-title').classList.add('error-inactive');
+      document.getElementById('title-letters-only').classList.remove('error-inactive');
+      document.getElementById('title').classList.add('input-warning');
+      return;
+    } else {
+      document.getElementById('title-letters-only').classList.add('error-inactive');
+      document.getElementById('title').classList.remove('input-warning');
+      return title;
+    }
 }
 
 function getDescription() {
-    const description = $('#description');
-    return description.value;
-    // console.log(description.value);
+    const description = $('#description').value;
+  
+    if (description === '') {
+      document.getElementById('enter-a-description').classList.remove('error-inactive');
+      document.getElementById('description').classList.add('input-warning');
+      return;
+    } else if (!letterRegex.test(description)) {
+        document.getElementById('enter-a-description').classList.add('error-inactive');
+        document.getElementById('description-letters-only').classList.remove('error-inactive');
+        document.getElementById('description').classList.add('input-warning');
+      return;
+    } else {
+        document.getElementById('description-letters-only').classList.add('error-inactive');
+        document.getElementById('description').classList.remove('input-warning');
+        document.getElementById('enter-a-description').classList.add('error-inactive');
+        return description;
+    }
 }
 
-function getSelectedCategory(category) {
+function renderSelectedCategory(category) {
     const selected = $('#select-task-category');
-    selected.innerHTML = category;
-    // log(category);
+    event.currentTarget.toggleDropDown();
+    return selected.innerHTML = category;
+}
+
+function getSelectedCategory() {
+    const category = $('#select-task-category').innerText;
+    
+    if(category === 'Select task category') {
+        document.getElementById('select-a-category').classList.remove('error-inactive');
+        document.getElementById('category-drp-wrapper').classList.add('input-warning');
+        return
+    } else if(category.length >= 3) {
+        document.getElementById('select-a-category').classList.add('error-inactive');
+        document.getElementById('category-drp-wrapper').classList.remove('input-warning');
+
+        return category; 
+    }
 }
 
 function getDueDate() {
     const date = $('#date');
-    return date.value;
-    // log(date.value);
+
+    if(date.value == '') {
+        document.getElementById('enter-a-dueDate').classList.remove('error-inactive');
+        document.getElementById('date').classList.add('input-warning');
+        return
+    } else {
+        document.getElementById('enter-a-dueDate').classList.add('error-inactive');
+        document.getElementById('date').classList.remove('input-warning');
+        return date.value;
+    }
 }
 
-function checkPriority(clickedButton) {
-    const buttonText = clickedButton.querySelector('span');
-    return buttonText.innerText.toLowerCase();
-    // console.log(buttonText.toLowerCase());
+function checkPriority() {
+    const activeButton = $('.btn-priority button.active');
+    
+    if (activeButton) {
+        document.getElementById('select-a-priority').classList.add('error-inactive')
+        return activeButton.$('.priority').textContent.toLowerCase();
+    } else {
+        return document.getElementById('select-a-priority').classList.remove('error-inactive');
+    }
+}
+
+function getSubtasks() {
+    return subtasks
 }
 
 function addTask() {
+    checkSelectedBoard();
+    checkSelectedCollaborator();
+
     const title = getTitle();
     const description = getDescription();
-    const category = getSelectedCategory(boards);
-    // const collaborator = ;
+    const category = getSelectedCategory();
+    const collaborators = selectedCollaborators;
     const dueDate = getDueDate();
     const priority = checkPriority();
-    // const subtask = ;
+    const subtasks = getSubtasks();
+    const addTaskData = [title, description, category,collaborators, dueDate, priority, subtasks]; 
 
-    log(SELECTED_BOARD, title, description, category, dueDate, priority);
+
+    if (checkAddTaskInputs(addTaskData)) {
+        return;
+    } else {
+        log(addTaskData);
+    }
+
+    // createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
+}
+
+function checkAddTaskInputs(addTaskData) {
+    return addTaskData.some(singleInputField => singleInputField === undefined);
+}
+
+function createNewTask(SELECTED_BOARD, title, 
+    description, category, selectedCollaborators, 
+    dueDate, priority, subtasks) {
+
+        const newTask = {
+            title: title,
+            description: description,
+            category: category,
+            collaborators: selectedCollaborators,
+            assignedTo: selectedCollaborators,
+            dueDate: dueDate,
+            priority: priority,
+            subtasks: subtasks
+        }
+
+        SELECTED_BOARD.addTask(newTask);
+        // console.log(newTask);
+}
+
+function clearSubtaskInput() {
+    const subtaskInputContainer = $('.subtasks input');
+    subtaskInputContainer.value = '';
+}
+
+function checkSubtaskInput() {
+    const inputField = $('.subtasks input').value;
+    const inputButtons = document.querySelector('.subtasks .inp-buttons');
+
+    if(inputField.length >= 1) {
+        inputButtons.classList.remove('d-none');
+    } else if(inputField.length == 0) {
+        inputButtons.classList.add('d-none');
+    }
+}
+
+function addSubtask() {
+    const subtaskValue = $('.subtasks input');
+    const inputButtons = document.querySelector('.subtasks .inp-buttons');
+
+    if(!letterRegex.test(subtaskValue.value)) {
+        document.getElementById('subtask-letters-only').classList.remove('error-inactive');
+        document.getElementById('add-subtask').classList.add('input-warning');
+        return;
+    } else {
+        document.getElementById('subtask-letters-only').classList.add('error-inactive');
+        document.getElementById('add-subtask').classList.remove('input-warning');
+      
+        subtasks.push(subtaskValue.value);
+        subtaskValue.value = '';
+    }
+
+    inputButtons.classList.add('d-none');
+    
+    renderSubtasks();
+}
+
+function renderSubtasks() {
+    const subtaskContainer = $('#subtask-container');
+    subtaskContainer.innerHTML = '';
+
+    for(let i = 0; i < subtasks.length; i++) {
+        const subtask = subtasks[i];
+
+        subtaskContainer.innerHTML += /*html*/ `
+            <div class="row single-subtask">
+                <li>${subtask}</li>
+
+                <div class="row gap-10 subtask-edit-delete-btns" id="subtask-edit-delete-btns${i}">
+                    <button class="grid-center" onclick="deleteSubtask(${i})">
+                        <img src="/Join/assets/img/icons/trash.svg" width="20">
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+}
+
+function deleteSubtask(i) {
+    subtasks.splice(i, 1);
+    renderSubtasks();
 }

@@ -22,11 +22,11 @@ class Board extends BaseClass {
 
     addTask = async (taskData) => {
         if (typeof taskData !== "object") return;
-        const task = new Task(taskData, true);
+        const task = new Task(taskData);
         task.color = this.categories[taskData.category];
         task.boardId = this.id;
         this.tasks[task.id] = task;
-        await this.update();
+        // await this.update();
         return task;
     }
 
