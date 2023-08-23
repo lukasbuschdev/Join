@@ -60,12 +60,15 @@
 
     "select-a-board": "Wähle eine Tafel!",
     "enter-a-title": "Titel eingeben!",
+    "title-too-long": "Titel zu lang!",
     "enter-a-description": "Beschreibung eingeben!",
     "select-a-category": "Wähle eine Kategorie!",
     "select-a-collaborator": "Wählen sie Mitglieder aus!",
     "enter-a-dueDate": "Gib ein Datum an!",
+    "wrong-date-format": "Falsches Format!",
     "select-a-priority": "Wähle eine Priorität!",
     "use-letters-only": "Nur Buchstaben, Zahlen und (/-_\") als Eingabe erlaubt!",
+    "subtask-too-long": "Eingabe zu lang!",
 
     "btn-create-task": "Aufgabe erstellen",
     "btn-cancel": "Abbrechen",

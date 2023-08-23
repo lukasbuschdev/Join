@@ -6,7 +6,7 @@ async function initAddTask() {
 
 const subtasks = [];
 const selectedCollaborators = [];
-const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_'"0-9]{3,10}$/;
+const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_'"0-9]+$/;
 
 
 function renderBoardIds() {
@@ -139,39 +139,77 @@ function getTitle() {
     const title = $('#title').value;
   
     if (title === '') {
-      document.getElementById('enter-a-title').classList.remove('error-inactive');
-      document.getElementById('title').classList.add('input-warning');
-      return;
+        titleEmpty();
     } else if (!letterRegex.test(title)) {
-        document.getElementById('enter-a-title').classList.add('error-inactive');
-      document.getElementById('title-letters-only').classList.remove('error-inactive');
-      document.getElementById('title').classList.add('input-warning');
-      return;
+        titleInvalid();
+    } else if(title.length > 15) {
+        titleTooLong();
     } else {
-      document.getElementById('title-letters-only').classList.add('error-inactive');
-      document.getElementById('title').classList.remove('input-warning');
-      return title;
+        titleValid();
+        return title
     }
+}
+
+function titleEmpty() {
+    document.getElementById('enter-a-title').classList.remove('error-inactive');
+    document.getElementById('title').classList.add('input-warning');
+    document.getElementById('title-too-long').classList.add('error-inactive');
+    return
+}
+
+function titleInvalid() {
+    document.getElementById('enter-a-title').classList.add('error-inactive');
+    document.getElementById('title-letters-only').classList.remove('error-inactive');
+    document.getElementById('title').classList.add('input-warning');
+    document.getElementById('title-too-long').classList.add('error-inactive');
+    return
+}
+
+function titleTooLong() {
+    document.getElementById('title').classList.add('input-warning');
+    document.getElementById('title-letters-only').classList.add('error-inactive');
+    document.getElementById('enter-a-title').classList.add('error-inactive');
+    document.getElementById('title').classList.add('input-warning');
+    document.getElementById('title-too-long').classList.remove('error-inactive');
+}
+
+function titleValid() {
+    document.getElementById('title-letters-only').classList.add('error-inactive');
+    document.getElementById('title-too-long').classList.add('error-inactive');
+    document.getElementById('title').classList.remove('input-warning');
 }
 
 function getDescription() {
     const description = $('#description').value;
+    const letterRegexDiscription = /^[A-Za-zäöüßÄÖÜ\-\/_'.,"0-9]{3,150}$/;
   
     if (description === '') {
-      document.getElementById('enter-a-description').classList.remove('error-inactive');
-      document.getElementById('description').classList.add('input-warning');
-      return;
-    } else if (!letterRegex.test(description)) {
-        document.getElementById('enter-a-description').classList.add('error-inactive');
-        document.getElementById('description-letters-only').classList.remove('error-inactive');
-        document.getElementById('description').classList.add('input-warning');
-      return;
+        descriptionEmpty();
+    } else if (!letterRegexDiscription.test(description)) {
+        descriptionInvalid();
     } else {
-        document.getElementById('description-letters-only').classList.add('error-inactive');
-        document.getElementById('description').classList.remove('input-warning');
-        document.getElementById('enter-a-description').classList.add('error-inactive');
+        descriptionValid();
         return description;
     }
+}
+
+function descriptionEmpty() {
+    document.getElementById('enter-a-description').classList.remove('error-inactive');
+    document.getElementById('description').classList.add('input-warning');
+    return;
+}
+
+function descriptionInvalid() {
+    document.getElementById('enter-a-description').classList.add('error-inactive');
+    document.getElementById('description').classList.add('input-warning');
+    document.getElementById('description-letters-only').classList.remove('error-inactive');
+    return;
+}
+
+function descriptionValid() {
+    document.getElementById('description-letters-only').classList.add('error-inactive');
+    document.getElementById('enter-a-description').classList.add('error-inactive');
+    document.getElementById('description').classList.remove('input-warning');
 }
 
 function renderSelectedCategory(category) {
@@ -184,29 +222,54 @@ function getSelectedCategory() {
     const category = $('#select-task-category').innerText;
     
     if(category === 'Select task category') {
-        document.getElementById('select-a-category').classList.remove('error-inactive');
-        document.getElementById('category-drp-wrapper').classList.add('input-warning');
-        return
+        noCategorySelected();
     } else if(category.length >= 3) {
-        document.getElementById('select-a-category').classList.add('error-inactive');
-        document.getElementById('category-drp-wrapper').classList.remove('input-warning');
-
+        categorySelected();
         return category; 
     }
+}
+
+function noCategorySelected() {
+    document.getElementById('select-a-category').classList.remove('error-inactive');
+    document.getElementById('category-drp-wrapper').classList.add('input-warning');
+    return
+}
+
+function categorySelected() {
+    document.getElementById('select-a-category').classList.add('error-inactive');
+    document.getElementById('category-drp-wrapper').classList.remove('input-warning');
 }
 
 function getDueDate() {
     const date = $('#date');
 
     if(date.value == '') {
-        document.getElementById('enter-a-dueDate').classList.remove('error-inactive');
-        document.getElementById('date').classList.add('input-warning');
-        return
-    } else {
-        document.getElementById('enter-a-dueDate').classList.add('error-inactive');
-        document.getElementById('date').classList.remove('input-warning');
+        dateEmpty();
+    } else if(!dateFormat(date.value)) {
+        dateWrongFormat();
+    } else if(dateFormat(date.value)) {
+        dateValid();
         return date.value;
     }
+}
+
+function dateEmpty() {
+    document.getElementById('enter-a-dueDate').classList.remove('error-inactive');
+    document.getElementById('date').classList.add('input-warning');     
+    return
+}
+
+function dateWrongFormat() {
+    document.getElementById('enter-a-dueDate').classList.add('error-inactive');
+    document.getElementById('date').classList.add('input-warning');     
+    document.getElementById('wrong-date-format').classList.remove('error-inactive');
+    return
+}
+
+function dateValid() {
+    document.getElementById('enter-a-dueDate').classList.add('error-inactive');
+    document.getElementById('date').classList.remove('input-warning');
+    document.getElementById('wrong-date-format').classList.add('error-inactive');
 }
 
 function checkPriority() {
@@ -237,14 +300,13 @@ function addTask() {
     const subtasks = getSubtasks();
     const addTaskData = [title, description, category,collaborators, dueDate, priority, subtasks]; 
 
-
     if (checkAddTaskInputs(addTaskData)) {
         return;
     } else {
         log(addTaskData);
+        clearAllInputs();
+        // createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
     }
-
-    // createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
 }
 
 function checkAddTaskInputs(addTaskData) {
@@ -291,20 +353,38 @@ function addSubtask() {
     const inputButtons = document.querySelector('.subtasks .inp-buttons');
 
     if(!letterRegex.test(subtaskValue.value)) {
-        document.getElementById('subtask-letters-only').classList.remove('error-inactive');
-        document.getElementById('add-subtask').classList.add('input-warning');
-        return;
+        subtaskInvalid();
+    } else if(subtaskValue.value.length > 30) {
+        subtaskTooLong();
     } else {
-        document.getElementById('subtask-letters-only').classList.add('error-inactive');
-        document.getElementById('add-subtask').classList.remove('input-warning');
-      
+        subtaskValid();
         subtasks.push(subtaskValue.value);
         subtaskValue.value = '';
     }
-
-    inputButtons.classList.add('d-none');
-    
+    inputButtons.classList.add('d-none');   
     renderSubtasks();
+}
+
+function subtaskInvalid() {
+    document.getElementById('error-container').classList.remove('d-none');
+    document.getElementById('subtask-letters-only').classList.remove('error-inactive');
+    document.getElementById('add-subtask').classList.add('input-warning');
+    return
+}
+
+function subtaskTooLong() {
+    document.getElementById('error-container').classList.remove('d-none');
+    document.getElementById('add-subtask').classList.add('input-warning');
+    document.getElementById('subtask-letters-only').classList.add('error-inactive');
+    document.getElementById('subtask-too-long').classList.remove('error-inactive');
+    return 
+}
+
+function subtaskValid() {
+    document.getElementById('subtask-letters-only').classList.add('error-inactive');
+    document.getElementById('subtask-too-long').classList.add('error-inactive');
+    document.getElementById('add-subtask').classList.remove('input-warning');
+    document.getElementById('error-container').classList.add('d-none');
 }
 
 function renderSubtasks() {
@@ -313,22 +393,48 @@ function renderSubtasks() {
 
     for(let i = 0; i < subtasks.length; i++) {
         const subtask = subtasks[i];
-
-        subtaskContainer.innerHTML += /*html*/ `
-            <div class="row single-subtask">
-                <li>${subtask}</li>
-
-                <div class="row gap-10 subtask-edit-delete-btns" id="subtask-edit-delete-btns${i}">
-                    <button class="grid-center" onclick="deleteSubtask(${i})">
-                        <img src="/Join/assets/img/icons/trash.svg" width="20">
-                    </button>
-                </div>
-            </div>
-        `;
+        subtaskContainer.innerHTML += renderSubtaskTemplate(subtask, i);
     }
+}
+
+function renderSubtaskTemplate(subtask, i) {
+    return /*html*/ `
+        <div class="row single-subtask">
+            <li>${subtask}</li>
+            <div class="row gap-10 subtask-edit-delete-btns" id="subtask-edit-delete-btns${i}">
+                <button class="grid-center" onclick="deleteSubtask(${i})">
+                    <img src="/Join/assets/img/icons/trash.svg" width="20">
+                </button>
+            </div>
+        </div>
+    `;
 }
 
 function deleteSubtask(i) {
     subtasks.splice(i, 1);
     renderSubtasks();
+}
+
+function clearAllInputs() {
+    $('#title').value = '';
+    $('#description').value = '';
+    $('#date').value = '';
+    subtasks = getSubtasks();
+    subtasks = [];
+    resetPriorityButton();
+    // $('').value = '';
+    // $('').value = '';
+    // $('').value = '';
+    // $('').value = '';
+    // $('').value = '';
+}
+
+function resetPriorityButton() {
+    const buttons = $$('.btn-priority button');
+
+    buttons.for((button) => {
+        if(buttons.classList.contains('active')) {
+            button.classList.remove('active');
+        }
+    });
 }
