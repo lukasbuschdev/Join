@@ -16,6 +16,7 @@
     "in-progress": "In Arbeit",
     "done": "Abgeschlossen",
     "no-tasks": "Keine Aufgabe",
+    "task-deleted": "Task deleted!",
 
     "header-kanban": "Kanban Projektmanager",
 

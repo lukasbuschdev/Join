@@ -203,7 +203,7 @@ const SESSION_setData = (key, value) => {
 
 const SESSION_getData = (key) => {
     let data = sessionStorage.getItem(key);
-    if (typeof Number(data) == 'number') data = Number(data);
+    // if (typeof Number(data) == 'number') data = Number(data);
     return (!(data == 'undefined')) ? data : undefined;
 }
 

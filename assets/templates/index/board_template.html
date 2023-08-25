@@ -24,7 +24,7 @@
             <button class="btn btn-plus" onclick="addTaskModal()"></button>
         </div>
     </div>
-    <div id="tasks" class="">
+    <div id="tasks" class="shadow-container" data-shadow="ud/var(--clr-bg-light)/20px">
         <div id="to-do" data-lang-empty="no-tasks" data-type=""></div>
         <div id="awaiting-feedback" data-lang-empty="no-tasks" data-type=""></div>
         <div id="in-progress" data-lang-empty="no-tasks" data-type=""></div>
@@ -35,7 +35,7 @@
         <div include-template="/Join/assets/templates/index/add-task_template.html"></div>
     </dialog>
 
-    <dialog id="fullscreen-task-modal" type="modal" class="big-modal">
+    <dialog id="fullscreen-task-modal" type="modal" class="big-modal" static="false">
         <div id="fullscreen-task" class="column"></div>
         <div id="edit-task" class="column d-none" data-shadow="ud/white/40px"></div>
     </dialog>
