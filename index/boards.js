@@ -162,7 +162,7 @@ const taskDragger = throttle(({ startingX, startingY }) => {
     if (waitForMovement) return;
 
     if (taskNotActive) {
-        // task.classList.add('active');
+        task.classList.add('active');
         taskNotActive = false;
     };
 
