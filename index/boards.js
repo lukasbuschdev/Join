@@ -4,7 +4,7 @@ const initBoard = async () => {
     renderTasks();
 }
 
-const renderTasks = (boardId = SESSION_getData('activeBoard')) => {
+const renderTasks = (boardId = SESSION_getData('activeBoard') ?? Object.keys(BOARDS)[0]) => {
     const {tasks} = BOARDS[boardId];
     for (const task of Object.values(tasks)) $(`#${task.type}`).innerHTML += taskTemplate(task);
     const tasksContainer = $('#tasks');

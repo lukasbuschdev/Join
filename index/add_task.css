@@ -220,6 +220,12 @@ textarea {
 
 }
 
+.edit-btn-active {
+    background: white;
+    border-radius: 0;
+    border-bottom: 2px solid var(--clr-blue);
+}
+
 
 
 /* ERROR CONTAINERS */

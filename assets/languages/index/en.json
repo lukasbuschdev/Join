@@ -31,7 +31,6 @@
     "tasks-in-board": "Tasks in Board",
     "tasks-in-progress": "Tasks in Progress",
     "tasks-awaiting-feedback": "Awaiting Feedback",
-    "urgent": "Urgent",
     "tasks-deadline": "Upcoming Deadline",
     "tasks-done": "Done",
 
@@ -51,6 +50,7 @@
     "due-date": "Due date",
     "due-date-placeholder": "dd/mm/yyyy",
     "priority": "Prio",
+    "urgent": "Urgent",
     "medium": "Medium",
     "low": "Low",
     "subtasks": "Subtasks",
@@ -58,6 +58,7 @@
     "add-subtask": "Add subtask",
     "edit": "Edit",
     "delete": "Delete",
+    "task-created": "Task created!",
 
     "select-a-board": "Select a board!",
     "enter-a-title": "Enter a title!",
