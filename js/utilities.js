@@ -44,20 +44,21 @@ const throwErrors = (...params) => {
 const notification = (message) => {
   return new Promise(resolve => {
     const el = document.createElement('dialog');
+    el.type = "modal";
+    el.classList.value = "dlg-notification";
     $('body').append(el);
 
-    el.outerHTML = /*html*/`
-        <dialog type="modal" class="dlg-notification">
-            <div class="notification grid-center">
-                <span data-lang="${message}"></span>
-            </div>
-        </dialog>
+    el.innerHTML = /*html*/`
+      <div class="notification grid-center">
+          <span data-lang="${message}"></span>
+      </div>
     `
-    LANG_load();
-    $('.dlg-notification').openModal();
-    $('.dlg-notification').addEventListener("close", () => {
+    el.LANG_load();
+    el.openModal();
+    el.addEventListener("close", () => {
       resolve();
-    }, {once: true});
+      el.remove();
+    });
   });
 }
 
@@ -289,7 +290,7 @@ const confirmation = (type, cb) => {
     <div class="confirmation-dialog column gap-10">
       <span data-lang="confirmation-${type}"></span>
       <div class="btn-container gap-15">
-        <div class="btn btn-secondary txt-small txt-700" data-lang="no"></div>
+        <div class="btn btn-secondary txt-small txt-700" data-lang="no" onclick="this.closest('dialog').closeModal()"></div>
         <div class="btn btn-primary txt-small txt-700" data-lang="yes"></div>
       </div>
     </div>

@@ -4,52 +4,17 @@ const initBoard = async () => {
     renderTasks();
 }
 
-const renderTasks = async (boardId = SESSION_getData('activeBoard')) => {
+const renderTasks = (boardId = SESSION_getData('activeBoard')) => {
     const {tasks} = BOARDS[boardId];
     for (const task of Object.values(tasks)) $(`#${task.type}`).innerHTML += taskTemplate(task);
-    await $('#tasks').LANG_load();
+    const tasksContainer = $('#tasks');
+    tasksContainer.LANG_load();
 }
 
 const addTaskModal = async () => {
     await includeTemplate($('#add-task-modal > div'));
     $('#add-task-modal').openModal();
 }
-
-
-let waitForMovement = true;
-let taskNotActive = true;
-const addDragAndDrop = () => {
-    const task = event.currentTarget;
-    const { x, y } = task.getBoundingClientRect();
-    const startingPosition = {
-        startingX: event.pageX,
-        startingY: event.pageY,
-        offsetX: event.clientX - x,
-        offsetY: event.clientY - y
-    }
-
-    task.addEventListener('mouseup', fullscreenHandler = () => renderFullscreenTask(task.dataset.id), {once: true});
-
-    const clickTimeout = setTimeout(() => {
-        task.classList.add('active');
-        task.removeEventListener('mouseup', fullscreenHandler, {once: true});
-    }, 200);
-
-    const dragHandler = () => taskDragger(startingPosition)
-
-    task.addEventListener("mousemove", dragHandler);
-
-    document.addEventListener("mouseup", (event) => {
-        if (!waitForMovement) taskDropper(event, task, startingPosition);
-        task.classList.remove('active');
-        waitForMovement = true;
-        taskNotActive = true;
-        task.removeEventListener("mousemove", dragHandler);
-        clearTimeout(clickTimeout);
-    }, { once: true });
-}
-
-
 
 const renderFullscreenTask = (ids) => {
     if (event.which !== 1) return;
@@ -76,12 +41,25 @@ const saveTaskChanges = (initialTask) => {
     const differences = getJsonChanges(updatedTask, initialTask);
     log(differences)
     if (Object.values(differences).length > 0) {
-        // updateTaskUi();
+        updateTaskUi();
         SELECTED_TASK.update();
         log('difference')
     }
     else log('no difference');
 };
+
+const deleteTask = async () => {
+    const {boardId, id} = SELECTED_TASK;
+    const modal = $('#fullscreen-task-modal');
+    const taskElement = $(`.task[data-id="${boardId}/${id}"]`);
+    const taskContainer = taskElement.parentElement;
+    // await REMOTE_removeData(`boards/${boardId}/tasks/${id}`);
+    modal.removeEventListener('close', saveHandler, {once: true});
+    modal.closeModal();
+    taskElement.remove();
+    taskContainer.innerHTML = taskContainer.innerHTML.trim();
+    notification('task-deleted');
+}
 
 const getJsonChanges = (newJson, oldJson) => {
     let differences = {};
@@ -132,12 +110,51 @@ const editTaskInitializer = () => {
 };
 
 const toggleFullscreenState = () => {
-    $$('#fullscreen-task-modal :is(#fullscreen-task, #edit-task)').for(section => {
+    const fullscreenModal = $('#fullscreen-task-modal')
+    fullscreenModal.$$(':is(#fullscreen-task, #edit-task)').for(section => {
         section.initMenus();
         section.classList.toggle('d-none');
         if (section.id == "edit-task" && section.classList.contains('d-none')) section.innerHTML = '';
     });
+    fullscreenModal.setAttribute('static', (fullscreenModal.getAttribute('static') == "true") ? "false" : "true");
 };
+
+//DRAG & DROP
+
+let waitForMovement = true;
+let taskNotActive = true;
+const addDragAndDrop = () => {
+    const task = event.currentTarget;
+    const { x, y } = task.getBoundingClientRect();
+    const startingPosition = {
+        startingX: event.pageX,
+        startingY: event.pageY,
+        offsetX: event.clientX - x,
+        offsetY: event.clientY - y
+    }
+
+    task.addEventListener('mouseup', fullscreenHandler = () => renderFullscreenTask(task.dataset.id), {once: true});
+
+    const clickTimeout = setTimeout(() => {
+        task.classList.add('active');
+        log('added class!')
+        task.removeEventListener('mouseup', fullscreenHandler, {once: true});
+    }, 200);
+
+    const dragHandler = () => taskDragger(startingPosition)
+
+    task.addEventListener("mousemove", dragHandler);
+
+    document.addEventListener("mouseup", (event) => {
+        if (!waitForMovement) taskDropper(event, task, startingPosition);
+        task.classList.remove('active');
+        // log(task)
+        waitForMovement = true;
+        taskNotActive = true;
+        task.removeEventListener("mousemove", dragHandler);
+        clearTimeout(clickTimeout);
+    }, { once: true });
+}
 
 const taskDragger = throttle(({ startingX, startingY }) => {
     const task = event.currentTarget;
@@ -170,9 +187,11 @@ const checkPlaceholder = ({pageX, pageY}) => {
 
 const taskDropper = ({ pageX, pageY }, task, { offsetX, offsetY }) => {
     $$('#tasks > div').for(taskWrapper => {
+        if (taskWrapper == task.parentElement) return;
         const { x, y, width, height } = taskWrapper.getBoundingClientRect();
         if (x < pageX && pageX < (x + width) &&
             y < pageY && pageY < (y + height)) {
+                log(taskWrapper);
             taskWrapper.classList.remove('placeholder');
             task.updatePosition();
             const previousParent = task.parentElement;  // Experimental
@@ -190,11 +209,12 @@ const taskDropper = ({ pageX, pageY }, task, { offsetX, offsetY }) => {
         task.classList.remove('drop-transition');
     }, { once: true });
     task.updatePosition();
+    log(task)
 }
 
 const changeTaskType = async (taskElement, newType) => {
-    const [boardId, taskId] = taskElement.dataset.id.split('/');
-    const task = await REMOTE_getData(`boards/${boardId}/tasks/${taskId}`, true);
+    const [, taskId] = taskElement.dataset.id.split('/');
+    const task = new Task(SELECTED_BOARD.tasks[taskId]);
     await task.setProperty('type', newType);
     await getBoards();
 }

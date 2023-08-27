@@ -28,7 +28,7 @@ const fullscreenTaskTemplate = ({category, color, title, description, priority, 
         </div>
     </div>
     <div class="btn-container txt-small gap-8">
-        <button class="row gap-8" data-lang="delete" onclick="confirmation('delete-task')">Delete</button>
+        <button class="row gap-8" data-lang="delete" onclick="confirmation('delete-task', deleteTask)">Delete</button>
         <div class="line"></div>
         <button class="row gap-8" onclick="editTaskInitializer()" data-lang="edit">Edit</button>
     </div>

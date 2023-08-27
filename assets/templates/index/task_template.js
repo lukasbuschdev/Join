@@ -25,7 +25,7 @@ const progressTemplate =  (subTasks) => {
     return (subTasks.length == 0) ? '' :
     /*html*/`
     <div class="column gap-5 txt-tiny">
-        <span data-lang="subtasks"></span>
+        <span data-lang="subtasks" style="margin-left: auto;"></span>
         <div class="task-progress">
             <div class="task-progress-bar" style="--progress: ${progress}"></div>
             <div class="task-progress-counter">

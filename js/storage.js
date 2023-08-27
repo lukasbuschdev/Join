@@ -76,7 +76,6 @@ const REMOTE_setData = async (targetPath, upload) => {
         }
         else if (currentObj.indexOf(upload !== -1)) currentObj.push(upload);
     } else Object.assign(currentObj, upload);
-    // return log(data)
     return REMOTE_upload(directories[0], data);
 }
 
@@ -204,7 +203,7 @@ const SESSION_setData = (key, value) => {
 
 const SESSION_getData = (key) => {
     let data = sessionStorage.getItem(key);
-    if (typeof Number(data) == 'number') data = Number(data);
+    // if (typeof Number(data) == 'number') data = Number(data);
     return (!(data == 'undefined')) ? data : undefined;
 }
 

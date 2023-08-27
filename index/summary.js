@@ -11,7 +11,8 @@ const renderBoards = () => {
     };
     selection.innerHTML = '';
     selection.renderItems(Object.values(BOARDS), boardSelectionTemplate);
-    const activeBoard = SESSION_getData('activeBoard') ?? Object.keys(BOARDS)[0];
+    if (!SESSION_getData('activeBoard')) SESSION_setData('activeBoard', Number(Object.keys(BOARDS)[0]));
+    const activeBoard = SESSION_getData('activeBoard');
     const activeBoardButton = $(`#summary-selection [data-id="${activeBoard}"]`);
     activeBoardButton.click();
     activeBoardButton.classList.add('active');
@@ -45,7 +46,7 @@ const renderBoard = () => {
         })
         .filter(date => date > now)
         .sort()
-        .at(-1)
+        .at(0)
         .toLocaleDateString(currentLang(), {year: 'numeric', month: 'long', day: 'numeric'}) : undefined;
     const boardButtons = $$('#summary-data button');
     boardButtons[0].$('h1').innerText = tasksInBoard;
@@ -56,6 +57,7 @@ const renderBoard = () => {
     boardButtons[3].$$(':is(.line, .upcoming-deadline)').for(container => container.classList.toggle('d-none', !upcomingDeadline));
     boardButtons[4].$('h1').innerText = tasksToDo;
     boardButtons[5].$('h1').innerText = tasksDone;
+    boardButtons.for(button => button.onclick = () => $('nav #board').click());
     SESSION_setData('activeBoard', Number(id));
 }
 

@@ -1,6 +1,6 @@
 #board-wrapper {
     width: 100%;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 85px);
     padding: 2vh 4rem;
     display: flex;
     flex-direction: column;
@@ -18,12 +18,13 @@
     gap: 38px;
     flex-grow: 1;
     overflow: auto;
+    scrollbar-gutter: stable;
 }
 
 #tasks > div {
     display: flex;
     flex-direction: column;
-    gap: 38px;
+    gap: 16px;
     position: relative;
 }
 
@@ -47,6 +48,7 @@
     color: var(--clr-dark);
     gap: 38px;
     min-height: 30px;
+    flex-shrink: 0;
 }
 
 .task-header {

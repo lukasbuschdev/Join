@@ -86,9 +86,9 @@ HTMLDialogElement.prototype.openModal = function () {
     const handlerId = Date.now();
     this.addEventListener('mousedown', window[handlerId] = () => {
         if (event.which == 3) return;
+        if (this.getAttribute('static') == "true") return;
         if (![...this.$$(':scope > div')]
         .every(container => !container.contains(event.target))) return;
-        if (this.id == "fullscreen-task-modal") return confirmation('delete-task', () => this.closeModal(handlerId));
         
         this.$('.notification')?.classList.remove('anim-notification');
         this.closeModal(handlerId);
@@ -121,7 +121,6 @@ HTMLDialogElement.prototype.showNotification = function () {
     this.$('.notification').addEventListener('animationend', completionHandler = ()=>{
         event.currentTarget.removeEventListener('animationcancel', abortHandler);
         event.currentTarget.classList.remove('anim-notification');
-        log('closing');
         this.closeModal();
     }, { once: true });
 }
