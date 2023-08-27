@@ -6,7 +6,9 @@ async function initAddTask() {
 
 const subtasks = [];
 const selectedCollaborators = [];
-const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_'"0-9]+$/;
+const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
+
+const newCollabArray = _.cloneDeep(selectedCollaborators);
 
 
 function renderBoardIds() {
@@ -181,7 +183,7 @@ function titleValid() {
 
 function getDescription() {
     const description = $('#description').value;
-    const letterRegexDiscription = /^[A-Za-zäöüßÄÖÜ\-\/_'.,"0-9]{3,150}$/;
+    const letterRegexDiscription = /^[A-Za-zäöüßÄÖÜ\-\/_'., "0-9]{3,150}$/;
   
     if (description === '') {
         descriptionEmpty();
@@ -284,10 +286,12 @@ function checkPriority() {
 }
 
 function getSubtasks() {
-    return subtasks
+    return subtasks.map((subtaskName) => {
+        return {name: subtaskName, done: false}
+    });
 }
 
-function addTask() {
+async function addTask() {
     checkSelectedBoard();
     checkSelectedCollaborator();
 
@@ -303,9 +307,9 @@ function addTask() {
     if (checkAddTaskInputs(addTaskData)) {
         return;
     } else {
-        log(addTaskData);
-        clearAllInputs();
-        // createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
+        await createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
+        $('#content').includeTemplate('/Join/assets/templates/index/add-task_template.html');
+        resetArrays();
     }
 }
 
@@ -313,7 +317,7 @@ function checkAddTaskInputs(addTaskData) {
     return addTaskData.some(singleInputField => singleInputField === undefined);
 }
 
-function createNewTask(SELECTED_BOARD, title, 
+async function createNewTask(SELECTED_BOARD, title, 
     description, category, selectedCollaborators, 
     dueDate, priority, subtasks) {
 
@@ -321,15 +325,13 @@ function createNewTask(SELECTED_BOARD, title,
             title: title,
             description: description,
             category: category,
-            collaborators: selectedCollaborators,
             assignedTo: selectedCollaborators,
             dueDate: dueDate,
             priority: priority,
-            subtasks: subtasks
+            subTasks: subtasks
         }
 
-        SELECTED_BOARD.addTask(newTask);
-        // console.log(newTask);
+        await SELECTED_BOARD.addTask(newTask);
 }
 
 function clearSubtaskInput() {
@@ -397,11 +399,44 @@ function renderSubtasks() {
     }
 }
 
+function editSubtask() {
+    const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
+    const range = document.createRange();
+    const selection = window.getSelection();
+    subtaskInput.focus();
+
+    
+    range.selectNodeContents(subtaskInput);
+    range.collapse(false);
+
+    selection.removeAllRanges();
+    selection.addRange(range);
+}
+
+function saveEditedSubtask(i) {
+    const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
+    subtasks[i] = subtaskInput.innerText;
+
+    const allSaveButtons = $$('.save-edited-subtask-btn');
+
+    allSaveButtons.for((button) => {
+        button.classList.toggle('d-none');
+    });
+}
+
+
 function renderSubtaskTemplate(subtask, i) {
     return /*html*/ `
         <div class="row single-subtask">
-            <li>${subtask}</li>
+            <li contenteditable>${subtask}</li>
             <div class="row gap-10 subtask-edit-delete-btns" id="subtask-edit-delete-btns${i}">
+                <button class="grid-center subtask-edit-btn" onclick="editSubtask()">
+                    <img src="/Join/assets/img/icons/edit_dark.svg" width="20">
+                </button>
+                <button class="grid-center d-none save-edited-subtask-btn" onclick="saveEditedSubtask(${i})">
+                    <img src="/Join/assets/img/icons/check_dark.svg" width="20">
+                </button>
+                <div class="vertical-line"></div>
                 <button class="grid-center" onclick="deleteSubtask(${i})">
                     <img src="/Join/assets/img/icons/trash.svg" width="20">
                 </button>
@@ -415,26 +450,13 @@ function deleteSubtask(i) {
     renderSubtasks();
 }
 
-function clearAllInputs() {
-    $('#title').value = '';
-    $('#description').value = '';
-    $('#date').value = '';
-    subtasks = getSubtasks();
-    subtasks = [];
-    resetPriorityButton();
-    // $('').value = '';
-    // $('').value = '';
-    // $('').value = '';
-    // $('').value = '';
-    // $('').value = '';
+function resetArrays() {
+    selectedCollaborators.length = 0;
+    subtasks.length = 0;
+    log("All arrays cleard!")
 }
 
 function resetPriorityButton() {
     const buttons = $$('.btn-priority button');
-
-    buttons.for((button) => {
-        if(buttons.classList.contains('active')) {
-            button.classList.remove('active');
-        }
-    });
+    buttons.for((button) => button.classList.remove('active'));
 }

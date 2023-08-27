@@ -12,6 +12,7 @@ class Task extends BaseClass {
         this.priority = priority;
         this.subTasks = subTasks;
         this.boardId = boardId;
+        log(this)
     }
     
     changePriority = (priority) => {
