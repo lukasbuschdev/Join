@@ -228,6 +228,10 @@ button.bg-dark {
     color: var(--clr-blue);
 }
 
+.txt-big {
+    font-size: 2rem;
+}
+
 .txt-normal {
     font-size: 1.125rem;
     font-weight: 400;

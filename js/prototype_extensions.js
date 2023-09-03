@@ -10,6 +10,12 @@ Array.prototype.for = function(cb) {
     }
 }
 
+Array.prototype.forAwait = async function(cb) {
+    for (let i = 0; i < this.length; i++){
+        await cb(this[i], i);
+    }
+}
+
 Array.prototype.toObject = function (keys) {
     if (keys.length < this.length) {
         console.error('not enough keys provided!');
