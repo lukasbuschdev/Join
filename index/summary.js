@@ -10,7 +10,12 @@ const renderBoards = () => {
         return;
     };
     selection.innerHTML = '';
-    selection.renderItems(Object.values(BOARDS), boardSelectionTemplate);
+    selection.renderItems(Object.values(BOARDS)
+        .sort(({dateOfLastEdit: a}, {dateOfLastEdit: b}) => {
+            if (a < b) return 1;
+            else if (a > b) return -1;
+            else return 0.
+    }), boardSelectionTemplate);
     if (!SESSION_getData('activeBoard')) SESSION_setData('activeBoard', Number(Object.keys(BOARDS)[0]));
     const activeBoard = SESSION_getData('activeBoard');
     const activeBoardButton = $(`#summary-selection [data-id="${activeBoard}"]`);
