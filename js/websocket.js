@@ -23,9 +23,9 @@ const initWebsocket = () => {
     });
 }
 
-const sendMessage = (contactIds) => {
-    const ids = (Array.isArray(contactIds)) ? contactIds : [contactIds];
+const sendMessage = (recipients) => {
+    const ids = (Array.isArray(recipients)) ? recipients : [recipients];
     // if (!CONTACTS[contactId]) return error(`user '${contactId}' not in contacts!`);
-    if (!contactIds.every(id => CONTACTS.hasOwnProperty(id))) return error(`user not in contacts!`);
-    SOCKET.emit('notification', {to: contactIds});
+    if (!recipients.every(id => CONTACTS.hasOwnProperty(id))) return error(`user not in contacts!`);
+    SOCKET.emit('notification', {to: recipients});
 }

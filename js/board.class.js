@@ -26,7 +26,17 @@ class Board extends BaseClass {
         task.color = this.categories[taskData.category];
         task.boardId = this.id;
         this.tasks[task.id] = task;
-        // await this.update();
+
+        const notification = new Notify({
+            userName: USER.name,
+            recipients: task.assignedTo,
+            type: "assignTo",
+            taskName: task.name,
+            boardName: this.name
+        });
+        notification.send();
+        log()
+        await this.update();
         return task;
     }
 
