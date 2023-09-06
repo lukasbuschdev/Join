@@ -80,6 +80,8 @@
     "header": "Kontakte",
     "sub-header": "Besser mit einem Team",
 
+    "contacts-empty": "Ups, du hast noch keine Kontakte.",
+
     "contact-info": "Kontaktinformation",
     "edit-contact": "Kontakt bearbeiten",
     "phone": "Telefon",
@@ -89,6 +91,7 @@
 
     "add-contact-heading": "Neuer Kontakt",
     "add-contact-subheading": "Aufgaben, besser im Team!",
+    "friendship-request": "Anfrage gesendet!",
 
     "confirmation-delete-task": "Are you sure you want do delete this task?",
     "yes": "Ja",

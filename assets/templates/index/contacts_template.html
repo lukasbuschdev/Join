@@ -1,7 +1,5 @@
 <div class="contacts-wrapper row">
-    <div id="contacts-container" class="contact-list-container gap-15">
-
-    </div>
+    <div id="contacts-container" class="contact-list-container gap-15"></div>
 
     <div class="header-contact column">
         <div class="contacts-header-container row">
@@ -12,7 +10,9 @@
             </div>
         </div>
     
-        <div id="selected-contact-container"></div>
+        <div id="selected-contact-container" class="grid-center">
+            <span id="contacts-empty" class="d-none txt-big txt-blue txt-600" data-lang="contacts-empty">Oops, you don't have any contacts yet.</span>
+        </div>
     </div>
 
     <button onclick="addContactModal()" class="btn btn-primary btn-contact txt-normal txt-700 absolute">
