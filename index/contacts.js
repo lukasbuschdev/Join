@@ -4,6 +4,9 @@ function initContacts () {
 
 async function renderContacts() {
     const contactsData = await getContactsData();
+    if(!contactsData) return noContactsYet();
+    contactsExisting();
+    
     const initialLetters = [...new Set(
         contactsData.map(
             ({name}) => name[0]
@@ -17,6 +20,16 @@ async function renderContacts() {
         const filteredContacts = contactsData.filter(({name}) => name[0] == letter)
         $('#contacts-container').renderItems(filteredContacts, contactListTemplate);
     });
+}
+
+function noContactsYet() {
+    document.getElementById('contacts-empty').classList.remove('d-none');
+    document.getElementById('selected-contact-container').classList.add('grid-center');
+}
+
+function contactsExisting() {
+    document.getElementById('contacts-empty').classList.add('d-none');
+    document.getElementById('selected-contact-container').classList.remove('grid-center');
 }
 
 const contactListLetterTemplate = (letter) => {
@@ -210,7 +223,7 @@ async function addContact() {
     const selectedUserId = selectedUser.dataset.id;
     const userName = USER.name;
 
-    const notification = new Notify({
+    const notificationPrototype = new Notify({
         recipients: [selectedUserId],
         userName,
         userId: USER.id,
@@ -225,5 +238,6 @@ async function addContact() {
     USER.pendingFriendshipRequests.push(selectedUserId);
     await USER.update();
 
-    notification.send();
+    notification('friendship-request');
+    notificationPrototype.send();
 }

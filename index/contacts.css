@@ -15,6 +15,14 @@
     container-type: inline-size;
 }
 
+#contacts-container:empty {
+    display: none;
+}
+
+/* #contacts-empty {
+
+} */
+
 .contact {
     border-radius: 10px;
     padding: 15px 25px;
@@ -93,7 +101,7 @@
 .header-contact {
     height: 100%;
     flex-grow: 1;
-    padding: 60px 40px;
+    padding: 60px 40px 130px;
     gap: 50px;
 }
 
@@ -104,6 +112,7 @@
 
 #selected-contact-container {
     width: 100%;
+    flex-grow: 1;
 }
 
 .absolute {

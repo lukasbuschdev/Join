@@ -7,7 +7,7 @@ const notificationTemplate = (notification) => {
                     <span><b>${userName}</b> has sent you a friendship request!</span>
                 </div>
                 <div class="btn-container gap-10">
-                    <button class="btn btn-secondary txt-small txt-600" onclick="removeFriendshipRequest('${id}')">Decline</button>
+                    <button class="btn btn-secondary txt-small txt-600" onclick="removeFriendshipRequest('${id}', '${userId}')">Decline</button>
                     <button class="btn btn-primary txt-small txt-600" onclick="acceptFriendshipRequest('${userId}', '${id}')">Accept</button>
                 </div>
             </div>
@@ -24,6 +24,18 @@ const notificationTemplate = (notification) => {
                     <button class="btn btn-primary txt-small txt-600" onclick="acceptBoardInvite('${boardId}', '${id}')">Accept</button>
                 </div>
             </div>
-        `
+            `
     }
+}
+
+function removeFriendshipRequest(id, userId) {
+    log(id);
+    log(userId)
+    // removeNotification(id)
+}
+
+function acceptFriendshipRequest(id, userId) {
+    log(id);
+    log(userId)
+    // removeNotification(id)
 }
