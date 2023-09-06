@@ -3,6 +3,7 @@ class User extends Account {
         super(userData);
         this.password = userData.password;
         this.color = userData.color ?? '#D1D1D1';
+        this.pendingFriendshipRequests = userData.pendingFriendshipRequests;
     }
 
     setPicture = async (img) => await this.setProperty("img", img);

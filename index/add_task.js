@@ -44,7 +44,7 @@ function renderSelectedBoard(selectedBoard) {
 function checkSelectedBoard() {
     const boardInput = $('#selected-board').innerText;
     
-    if(boardInput === 'Select board') {
+    if(boardInput === LANG['select-board']) {
         document.getElementById('select-a-board').classList.remove('error-inactive');
         document.getElementById('drp-wrapper-board').classList.add('input-warning');
         return
@@ -223,7 +223,7 @@ function renderSelectedCategory(category) {
 function getSelectedCategory() {
     const category = $('#select-task-category').innerText;
     
-    if(category === 'Select task category') {
+    if(category === LANG['select-task-category']) {
         noCategorySelected();
     } else if(category.length >= 3) {
         categorySelected();
@@ -309,6 +309,7 @@ async function addTask() {
     } else {
         await createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
         $('#content').includeTemplate('/Join/assets/templates/index/add-task_template.html');
+        notification('task-created');
         resetArrays();
     }
 }
@@ -399,12 +400,16 @@ function renderSubtasks() {
     }
 }
 
-function editSubtask() {
+function editSubtask(i) {
     const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
     const range = document.createRange();
     const selection = window.getSelection();
     subtaskInput.focus();
+    subtaskInput.setAttribute('contenteditable', 'true')
 
+    document.querySelector('#single-subtask'+ i).classList.toggle('edit-btn-active');
+    document.querySelector('.subtask-edit-btn'+ i).classList.toggle('d-none');
+    document.querySelector('.save-edited-subtask-btn'+ i).classList.toggle('d-none');
     
     range.selectNodeContents(subtaskInput);
     range.collapse(false);
@@ -416,24 +421,29 @@ function editSubtask() {
 function saveEditedSubtask(i) {
     const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
     subtasks[i] = subtaskInput.innerText;
+    subtaskInput.setAttribute('contenteditable', 'false')
 
     const allSaveButtons = $$('.save-edited-subtask-btn');
 
     allSaveButtons.for((button) => {
         button.classList.toggle('d-none');
     });
+
+    document.querySelector('#single-subtask'+ i).classList.toggle('edit-btn-active');
+    document.querySelector('.subtask-edit-btn'+ i).classList.toggle('d-none');
+    document.querySelector('.save-edited-subtask-btn'+ i).classList.toggle('d-none');
 }
 
 
 function renderSubtaskTemplate(subtask, i) {
     return /*html*/ `
-        <div class="row single-subtask">
-            <li contenteditable>${subtask}</li>
+        <div class="row single-subtask" id="single-subtask${i}">
+            <li>${subtask}</li>
             <div class="row gap-10 subtask-edit-delete-btns" id="subtask-edit-delete-btns${i}">
-                <button class="grid-center subtask-edit-btn" onclick="editSubtask()">
+                <button class="grid-center subtask-edit-btn${i}" onclick="editSubtask(${i})">
                     <img src="/Join/assets/img/icons/edit_dark.svg" width="20">
                 </button>
-                <button class="grid-center d-none save-edited-subtask-btn" onclick="saveEditedSubtask(${i})">
+                <button class="grid-center d-none save-edited-subtask-btn${i}" onclick="saveEditedSubtask(${i})">
                     <img src="/Join/assets/img/icons/check_dark.svg" width="20">
                 </button>
                 <div class="vertical-line"></div>

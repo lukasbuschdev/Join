@@ -78,9 +78,10 @@ function clearResult() {
 const getInput = debounce(async function () {
     let input = $('#input-name');
     const userId = currentUserId();
+    const searchResultContainer = $('#user-search-result').textContent.trim();
 
     if(input.value.length >= 3) {
-        const allUsers = await REMOTE_getData('users');
+        const allUsers = ALL_USERS;
     
         const filteredUsers = Object.values(allUsers).filter(
             user => (user.name.toLowerCase().includes(input.value.toLowerCase()) && !(userId == user.id) && !(USER.contacts.includes(`${user.id}`)))
@@ -100,6 +101,8 @@ const getInput = debounce(async function () {
         setSearchResultStyle();
 
     } else {
+        // if(input.value && searchResultContainer === '')
+        // log('Calling unsetSearchResultStyle()');
         unsetSearchResultStyle();
     }
 }, 200);
@@ -180,7 +183,7 @@ function renderSearchResults(sortedUsers) {
 
 function searchResultTemplates({id, img, name, email}) {
         return /*html*/`
-            <div class="search-result-contact row" id="search-result-contact" onclick="selectNewContact('${id}', '${img}', '${name}')">
+            <div class="search-result-contact row gap-10" id="search-result-contact" onclick="selectNewContact('${id}', '${img}', '${name}')">
                 <div class="contact-img user-img-container" data-img="false">
                     <h3>${name.slice(0, 2).toUpperCase()}</h3>
                     <img src="${img}">
@@ -194,16 +197,33 @@ function searchResultTemplates({id, img, name, email}) {
 function selectNewContact(id, img, name) {
     let image = $('.user-img-gray');
     let input = $('#input-name');
-    let userImgContainer = $('.user-img-container');
+    let userImgContainer = $('.add-contact-field .user-img-container');
     
     userImgContainer.innerHTML = name.slice(0, 2).toUpperCase();
     image.setAttribute('src', img);
     input.value = name;
-
-    // const selectedContact = id;
-    // log(id, img, name);
+    input.dataset.id = id;
 }
 
-function addContact() {
-    
+async function addContact() {
+    const selectedUser = $('#input-name');
+    const selectedUserId = selectedUser.dataset.id;
+    const userName = USER.name;
+
+    const notification = new Notify({
+        recipients: [selectedUserId],
+        userName,
+        userId: USER.id,
+        type: 'friendshipRequest'
+    });
+
+    if(USER.pendingFriendshipRequests.includes(selectedUserId)) {
+        log('Friendship request has already been sent!');
+        return
+    }
+
+    USER.pendingFriendshipRequests.push(selectedUserId);
+    await USER.update();
+
+    notification.send();
 }

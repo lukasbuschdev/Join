@@ -10,7 +10,6 @@ class Account extends BaseClass {
         this.loggedIn = loggedIn;
         this.boards = boards;
         this.contacts = contacts;
-        this.friendRequests = friendRequests;
         this.notifications = notifications;
         this.chats = chats;
     }
