@@ -128,6 +128,8 @@ const createBoardNotification = ({name, id}) => {
         total.push(id);
         return total;
     }, []);
+
+
     const notification = new Notify({
         recipients,
         type: "boardInvite",
@@ -135,7 +137,8 @@ const createBoardNotification = ({name, id}) => {
         boardName: name,
         boardId: id
     });
-    // notification.send();
+    notification.send();
+
 };
 
 const toggleDrp = () => {
