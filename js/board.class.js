@@ -2,10 +2,10 @@ class Board extends BaseClass {
     constructor({
         name,
         owner = currentUserId(),
-        id = Date.now().toString(),
+        id = Date.now(),
         collaborators = [],
-        ["date-of-creation"]: dateOfCreation = Date.now().toString(),
-        ["date-of-last-edit"]: dateOfLastEdit = Date.now().toString(),
+        dateOfCreation = Date.now(),
+        dateOfLastEdit = Date.now(),
         tasks = {},
         categories = {}
     }) {
@@ -61,6 +61,7 @@ class Board extends BaseClass {
     }
 
     update = async () => {
+        log("aaa")
         this.dateOfLastEdit = Date.now();
         await REMOTE_setData(`boards`, {[this.id]: this});
         return getBoards();
