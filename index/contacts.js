@@ -1,4 +1,5 @@
-function initContacts () {
+async function initContacts () {
+    await getUser();
     renderContacts();
 }
 

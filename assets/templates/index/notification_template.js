@@ -8,7 +8,7 @@ const notificationTemplate = (notification) => {
                 </div>
                 <div class="btn-container gap-10">
                     <button class="btn btn-secondary txt-small txt-600" onclick="removeFriendshipRequest('${id}', '${userId}')">Decline</button>
-                    <button class="btn btn-primary txt-small txt-600" onclick="acceptFriendshipRequest('${userId}', '${id}')">Accept</button>
+                    <button class="btn btn-primary txt-small txt-600" onclick="acceptFriendshipRequest('${id}', '${userId}')">Accept</button>
                 </div>
             </div>
         `
@@ -40,14 +40,19 @@ const notificationTemplate = (notification) => {
     }
 }
 
-function removeFriendshipRequest(id, userId) {
-    log(id);
-    log(userId)
-    // removeNotification(id)
+async function removeFriendshipRequest(id, userId) {
+    // log(id);
+    await REMOTE_removeData(`users/${userId}/pendingFriendshipRequests/${USER.id}`);
+    log(userId);
+    return removeNotification(id);
 }
 
-function acceptFriendshipRequest(id, userId) {
-    log(id);
-    log(userId)
-    // removeNotification(id)
+async function acceptFriendshipRequest(id,userId) {
+    log(USER.id);
+    log(userId);
+    
+    await REMOTE_setData(`users/${userId}/contacts`, USER.id);
+    await REMOTE_setData(`users/${USER.id}/contacts`, userId);
+
+    await removeFriendshipRequest(id, userId);
 }

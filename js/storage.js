@@ -87,7 +87,7 @@ const REMOTE_removeData = async (path) => {
     const item = path.slice(path.lastIndexOf('/') + 1);
     let data = await REMOTE_getData(directory);
     if (!data) return;
-    if (Array.isArray(data)) {
+    if (Array.isArray(data) && data.includes(item)) {
         data = data.toSpliced(data.indexOf(item), 1);
     } else {
         delete data[item];
