@@ -7,7 +7,7 @@ class Notify {
     }
 
     send = async () => {
-        await REMOTE_setData(`users/${this.recipientId}/notifications`, {[this.id]: removeMethods(this)});
-        SOCKET.emit('message', {recipientId: this.recipientId});
+        this.recipients.forAwait(recipientId => REMOTE_setData(`users/${recipientId}/notifications`, {[this.id]: removeMethods(this)}));
+        SOCKET.emit('notification', {to: this.recipients});
     };
 }

@@ -21,7 +21,8 @@ if (LOCAL_getData('rememberMe') == 'false') {
     window.addEventListener("beforeunload", () => LOCAL_setData('loggedIn', false))
 }
 
-const checkNotifications = () => {
+const checkNotifications = async () => {
+    await getUser();
     log('checking...')
     const notificationCount = Object.values(USER.notifications).length;
     const notificationCounters = $$('.notifications-counter');

@@ -3,7 +3,6 @@ let LANG;
 const currentLang = () => LOCAL_getData('lang') ?? navigator.language.slice(0, 2) ?? "en-US";
 
 const LANG_load = async (lang = currentLang()) => {
-    log('adding lang')
     let langDirectory = 'index';
     const dir = currentDirectory();
     if (dir == 'signup' ||
