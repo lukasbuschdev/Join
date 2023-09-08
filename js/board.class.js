@@ -29,7 +29,7 @@ class Board extends BaseClass {
 
         const notification = new Notify({
             userName: USER.name,
-            recipients: task.assignedTo,
+            recipients: task.assignedTo.filter(id => id !== USER.id),
             type: "assignTo",
             taskName: task.title,
             boardName: this.name

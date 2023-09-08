@@ -57,7 +57,9 @@ String.prototype.convert = function () {
 
 HTMLElement.prototype.includeTemplate = async function(url = this.getAttribute('include-template') || '') {
     if (!url) return;
+    // log("starting download");
     const template = await (await fetch(url)).text();
+    // log("finished download");
     this.innerHTML = template;
     shadowObservers = {};
     this.$$('[data-shadow]').for(scrollContainer => scrollContainer.addScrollShadow());

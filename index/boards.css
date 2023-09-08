@@ -12,6 +12,10 @@
     margin-left: auto;
 }
 
+#search-task:focus-within {
+    border-color: var(--clr-blue);
+}
+
 #search-task:has(input:not(:placeholder-shown)) button:first-of-type {
     display: none;
 }

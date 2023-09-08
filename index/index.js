@@ -48,9 +48,9 @@ const loadContent = async () => {
     if (classList.contains('active')) return error('already active!');
     const url = `/Join/assets/templates/index/${id.replace('_','-')}_template.html`;
     const content = $('#content');
+    content.classList.add("loading");
     await content.includeTemplate(url);
     if (id == "summary") {
-        initTextLoadAnimationOvserver();
         await initSummary();
     } else if (id == "contacts") {
         await initContacts();
@@ -62,6 +62,7 @@ const loadContent = async () => {
     if (currentDirectory() !== id) goTo(id)
     LANG_load();
     content.initMenus();
+    content.classList.remove("loading");
 };
 
 const openAccountPanel = () => {
@@ -99,17 +100,3 @@ const removeNotification = async (notificationId) => {
     $(`.notification[data-id="${notificationId}"]`).remove();
     checkNotifications();
 }
-
-const initTextLoadAnimationOvserver = () => {
-    $$('#summary-data button').for(
-        button => textLoadAnimationOvserver.observe(button, { characterData: true, childList: true, subtree: true })
-    );
-};
-
-const textLoadAnimationOvserver = new MutationObserver(
-    mutationList => {
-        for (const { type, target } of mutationList) {
-            if (type == "childList" || type == "characterData") target.triggerAnimation('loading');
-        }
-    }
-);

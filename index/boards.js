@@ -1,6 +1,8 @@
 const initBoard = async () => {
+    const start = Date.now();
     await getBoards();
     await getAllUsers();
+    log(`rendering took ${Date.now() - start}ms`)
     renderTasks();
 }
 
@@ -30,7 +32,7 @@ const clearTaskSearch = () => {
 }
 
 const addTaskModal = async () => {
-    await includeTemplate($('#add-task-modal > div'));
+    await $('#add-task-modal > div').includeTemplate();
     renderBoardIds();
     $('#add-task-modal').openModal();
 }
