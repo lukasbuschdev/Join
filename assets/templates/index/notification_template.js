@@ -30,7 +30,7 @@ const notificationTemplate = (notification) => {
         return /*html*/`
             <div class="notification radius-15 column gap-10" data-id="${id}">
                 <div>
-                    <b>${userName}</b> assigned you to the task <b>"${taskName}"</b> in <b>${boardName.replaceAll('-',' ')}</b>!
+                    <b>${userName}</b> assigned you to the task <b>"${taskName}"</b> in <b>"${boardName.replaceAll('-',' ')}"</b>!
                 </div>
                 <div class="btn-container gap-10">
                     <button class="btn btn-secondary txt-small txt-600" onclick="removeNotification('${id}')">Understood</button>

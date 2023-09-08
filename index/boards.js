@@ -31,6 +31,7 @@ const clearTaskSearch = () => {
 
 const addTaskModal = async () => {
     await includeTemplate($('#add-task-modal > div'));
+    renderBoardIds();
     $('#add-task-modal').openModal();
 }
 

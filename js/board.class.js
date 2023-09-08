@@ -31,11 +31,10 @@ class Board extends BaseClass {
             userName: USER.name,
             recipients: task.assignedTo,
             type: "assignTo",
-            taskName: task.name,
+            taskName: task.title,
             boardName: this.name
         });
         notification.send();
-        log()
         await this.update();
         return task;
     }
