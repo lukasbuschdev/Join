@@ -50,7 +50,7 @@ async function removeFriendshipRequest(id, userId) {
 async function acceptFriendshipRequest(id,userId) {
     log(USER.id);
     log(userId);
-    
+
     await REMOTE_setData(`users/${userId}/contacts`, USER.id);
     await REMOTE_setData(`users/${USER.id}/contacts`, userId);
 
