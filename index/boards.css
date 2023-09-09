@@ -8,8 +8,20 @@
     overflow: hidden;
 }
 
-#board-header input {
+#search-task {
     margin-left: auto;
+}
+
+#search-task:focus-within {
+    border-color: var(--clr-blue);
+}
+
+#search-task:has(input:not(:placeholder-shown)) button:first-of-type {
+    display: none;
+}
+
+#search-task:has(input:placeholder-shown) button:last-of-type {
+    display: none;
 }
 
 #tasks {

@@ -1,7 +1,20 @@
 <div id="board-wrapper">
     <div id="board-header" class="row gap-35">
         <h2 data-lang="board">Board</h2>
-        <input type="search" placeholder="Find Task" data-lang-placeholder="find-task">
+            <div id="search-task" class="inp-container gap-10 radius-10">
+                <div class="inp-buttons row gap-10">
+                    <input type="text" placeholder="Find Task" data-lang-placeholder="find-task" oninput="searchTasks()">
+                    <div class="inp-buttons row gap-15">
+                        <div class="vertical-line"></div>
+                        <button class="grid-center" onclick="focusInput()">
+                            <img src="/Join/assets/img/icons/loupe.svg" alt="">
+                        </button>
+                        <button class="grid-center" onclick="clearTaskSearch()">
+                            <img src="/Join/assets/img/icons/close.svg" alt="" width="18" height="18">
+                        </button>
+                    </div>
+                </div>
+            </div>
         <button class="btn btn-primary btn-add-task txt-normal txt-700" onclick="addTaskModal()">
             <span data-lang="add-task">Add task</span>
         </button>

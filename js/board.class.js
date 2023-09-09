@@ -29,13 +29,12 @@ class Board extends BaseClass {
 
         const notification = new Notify({
             userName: USER.name,
-            recipients: task.assignedTo,
+            recipients: task.assignedTo.filter(id => id !== USER.id),
             type: "assignTo",
-            taskName: task.name,
+            taskName: task.title,
             boardName: this.name
         });
         notification.send();
-        log()
         await this.update();
         return task;
     }

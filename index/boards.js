@@ -1,18 +1,39 @@
 const initBoard = async () => {
+    const start = Date.now();
     await getBoards();
     await getAllUsers();
+    log(`rendering took ${Date.now() - start}ms`)
     renderTasks();
 }
 
-const renderTasks = (boardId = SESSION_getData('activeBoard') ?? Object.keys(BOARDS)[0]) => {
+const renderTasks = (filter) => {
+    const boardId = SESSION_getData('activeBoard') ?? Object.keys(BOARDS)[0];
     const {tasks} = BOARDS[boardId];
-    for (const task of Object.values(tasks)) $(`#${task.type}`).innerHTML += taskTemplate(task);
     const tasksContainer = $('#tasks');
+
+    tasksContainer.$$(':scope > div').for(container => container.innerHTML = "");
+    const filteredTasks = (filter) ? Object.values(tasks).filter(task => task.title.includes(filter) || task.description.includes(filter)) : Object.values(tasks);
+    for (const task of filteredTasks) $(`#${task.type}`).innerHTML += taskTemplate(task);
     tasksContainer.LANG_load();
 }
 
+const searchTasks = debounce(() => {
+    const searchInput = $('#search-task input').value;
+    renderTasks(searchInput);
+}, 200);
+
+const focusInput = () => {
+    $('#search-task input').focus();
+}
+
+const clearTaskSearch = () => {
+    $('#search-task input').value = "";
+    renderTasks();
+}
+
 const addTaskModal = async () => {
-    await includeTemplate($('#add-task-modal > div'));
+    await $('#add-task-modal > div').includeTemplate();
+    renderBoardIds();
     $('#add-task-modal').openModal();
 }
 
