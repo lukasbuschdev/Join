@@ -308,7 +308,7 @@ async function addTask() {
         return;
     } else {
         await createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
-        $('#content').includeTemplate('/Join/assets/templates/index/add-task_template.html');
+        $('#content').includeTemplate(`/Join/assets/templates/index/${currentDirectory()}_template.html`);
         notification('task-created');
         resetArrays();
     }
