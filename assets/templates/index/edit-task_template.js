@@ -7,46 +7,82 @@ const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, su
         <div class="column gap-8">
             <span data-lang="title">Title</span>
             <textarea name="title" id="title" placeholder="Enter a title" data-lang-placeholder="title-placeholder">${title}</textarea>
+            <div class="error-container-relative">
+                <span class="error-inactive error-enter-input" data-lang="enter-a-title" id="enter-a-title">Enter a title!</span>
+                <span class="error-inactive error-enter-input" data-lang="use-letters-only" id="title-letters-only">Please use letters only!</span>
+                <span class="error-inactive error-enter-input" data-lang="title-too-long" id="title-too-long">Title too long!</span>
+            </div>
         </div>
 
         <div class="column gap-8">
             <span data-lang="description">Description</span>
             <textarea name="description" id="description" placeholder="Enter a description" data-lang-placeholder="description-placeholder">${description}</textarea>
-        </div>
-
-        <div class="column gap-8">
-            <span data-lang="due-date">Due date</span>
-            <textarea name="date" id="date" class="padding-textarea" placeholder="dd/mm/yyyy" data-lang-placeholder="due-date-placeholder">${dueDate}</textarea>
-        </div>
-
-        <div class="column gap-8">
-            <span data-lang="priority"></span>
-            <div class="btn-priority" type="menu">
-                <button class="btn btn-secondary prio-btn txt-normal${(priority == "urgent")?' active':''}" type="option"><span class="priority" data-lang="urgent" style="--prio_icon: url(/Join/assets/img/icons/prio_urgent.svg)"></span></button>
-                <button class="btn btn-secondary prio-btn txt-normal${(priority == "medium")?' active':''}" type="option"><span class="priority" data-lang="medium" style="--prio_icon: url(/Join/assets/img/icons/prio_medium.svg)"></span></button>
-                <button class="btn btn-secondary prio-btn txt-normal${(priority == "low")?' active':''}" type="option"><span class="priority" data-lang="low" style="--prio_icon: url(/Join/assets/img/icons/prio_low.svg)"></span></button>
+            <div class="error-container-relative">
+                <span class="error-inactive error-enter-input" data-lang="enter-a-description" id="enter-a-description">Enter a description</span>
+                <span class="error-inactive error-enter-input" data-lang="use-letters-only" id="description-letters-only">Please use letters only!</span>
             </div>
         </div>
 
-        <div class="drp">
+        <div id="calender" class="column gap-8">
+            <span data-lang="due-date">Due date</span>
+            <textarea name="date" id="date" class="padding-textarea" placeholder="dd/mm/yyyy" data-lang-placeholder="due-date-placeholder">${dueDate}</textarea>
+            <div class="error-inactive error-enter-input" id="enter-a-dueDate">
+                <span data-lang="enter-a-dueDate">Enter a due date!</span>
+            </div>
+            <div class="error-inactive error-enter-input" id="wrong-date-format">
+                <span data-lang="wrong-date-format">Wrong format!</span>
+            </div>
+        </div>
+
+        <div id="priority" class="column">
+            <span data-lang="priority">Prio</span>
+            <div class="btn-priority" type="menu">
+                <button class="btn btn-secondary prio-btn txt-normal" type="option"><span class="priority ${(priority == 'urgent')?'active':''}" style="--prio_icon: url(/Join/assets/img/icons/prio_urgent.svg)">Urgent</span></button>
+                <button class="btn btn-secondary prio-btn txt-normal" type="option"><span class="priority ${(priority == 'medium')?'active':''}" style="--prio_icon: url(/Join/assets/img/icons/prio_medium.svg)">Medium</span></button>
+                <button class="btn btn-secondary prio-btn txt-normal" type="option"><span class="priority ${(priority == 'low')?'active':''}" style="--prio_icon: url(/Join/assets/img/icons/prio_low.svg)">Low</span></button>
+            </div>
+            <div class="error-inactive error-enter-input" id="select-a-priority">
+                <span data-lang="select-a-priority">Select a priority!</span>
+            </div>
+        </div>
+
+        <div class="drp gap-8">
             <span data-lang="assigned-to">Assigned to</span>
-            <div class="drp-wrapper">
-                <div data-lang="select-contacts-to-asign" class="drp-title" onclick="this.toggleDropDown()">Select contacts to assign</div>
+            <div class="drp-wrapper" id="drp-wrapper-collaborator">
+                <div id="selected-collaborator-input" data-lang="select-collaborators" class="drp-title" onclick="this.toggleDropDown()">Select collaborators</div>
                 <div class="drp-option-wrapper" id="drp-collaborators" data-shadow="ud/white/10px">
-                    <div class="drp-contacts" id="drp-collab-container">
+                    <div class="drp-contacts shadow-container" id="drp-collab-container">
+                        <!--Add contacts here!-->
                     </div>
                 </div>
             </div>
-            ${fullscreenTaskAssignedTo(assignedTo)}
+            <div class="error-inactive error-enter-input" id="select-a-collaborator">
+                <span data-lang="select-a-collaborator">Select a collaborator!</span>
+            </div>
+            <div id="selected-collaborators"></div>
         </div>
 
         <div class="subtasks column gap-8">
             <span data-lang="subtasks">Subtasks</span>
-            <textarea name="add-subtask" id="add-subtask" class="padding-textarea"></textarea>
-            <div class="row">
-                <input type="checkbox" id="subtask" name="subtask" value="subtask">
-                <label data-lang="subtask1" for="subtask">Subtask 1</label>
+            <div class="inp-wrapper column gap-10" id="add-subtask">
+                <div class="inp-container radius-10">
+                    <input oninput="checkSubtaskInput()" type="text" name="" id="subtask-input" data-lang-placeholder="add-subtask">
+                    <div class="d-none inp-buttons row gap-10">
+                        <button onclick="clearSubtaskInput()">
+                            <img src="/Join/assets/img/icons/close.svg" width="20">
+                        </button>
+                        <div class="vertical-line"></div>
+                        <button onclick="addSubtask()">
+                            <img src="/Join/assets/img/icons/check_black.svg" width="20">
+                        </button>
+                    </div>
+                </div>
+                <div class="d-none error-container-relative" id="error-container">
+                    <span class="error-inactive error-enter-input" data-lang="use-letters-only" id="subtask-letters-only">Please use letters only!</span>
+                    <span class="error-inactive error-enter-input" data-lang="subtask-too-long" id="subtask-too-long">Subtask too long!</span>
+                </div>
             </div>
+            <div id="subtask-container" class="column">${allSubtasksTemplate(subTasks)}</div>
         </div>
 
     </div>
@@ -60,3 +96,12 @@ const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, su
     </div>
     `
 }
+
+const allSubtasksTemplate = (subTasks) => subTasks
+    .map(({name}) => name)
+    .reduce(
+        (template, {name}, index) => {
+            template += renderSubtaskTemplate(name, index);
+            return template;
+        }, ''
+    );

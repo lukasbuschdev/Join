@@ -160,7 +160,7 @@ HTMLElement.prototype.addScrollShadowObserver = function () {
             if (!target.previousElementSibling) this.style.setProperty('--shadow-before', (isIntersecting) ? '0' : '1');
             if (!target.nextElementSibling) this.style.setProperty('--shadow-after', (isIntersecting) ? '0' : '1');
         });
-    }, {root: scrollContainer.parentElement, threshold: .98});
+    }, {root: scrollContainer.parentElement, threshold: .99});
     shadowObservers[newId] = intersectionObserver;
 
     const observe = (target) => {

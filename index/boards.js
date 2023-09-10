@@ -1,8 +1,6 @@
 const initBoard = async () => {
-    const start = Date.now();
     await getBoards();
     await getAllUsers();
-    log(`rendering took ${Date.now() - start}ms`)
     renderTasks();
 }
 
@@ -13,7 +11,7 @@ const renderTasks = (filter) => {
 
     tasksContainer.$$(':scope > div').for(container => container.innerHTML = "");
     const filteredTasks = (filter) ? Object.values(tasks).filter(task => task.title.includes(filter) || task.description.includes(filter)) : Object.values(tasks);
-    for (const task of filteredTasks) $(`#${task.type}`).innerHTML += taskTemplate(task);
+    for (const task of filteredTasks) $(`#${task.type}`).innerHTML += taskTemplate(task, filter);
     tasksContainer.LANG_load();
 }
 
