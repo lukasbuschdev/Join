@@ -18,7 +18,7 @@ async function renderContacts() {
 
     initialLetters.for(letter => {
         $('#contacts-container').innerHTML += contactListLetterTemplate(letter);
-        const filteredContacts = contactsData.filter(({name}) => name[0] == letter)
+        const filteredContacts = contactsData.filter(({name}) => name[0] == letter);
         $('#contacts-container').renderItems(filteredContacts, contactListTemplate);
     });
 }
@@ -74,7 +74,7 @@ function closeAddContact() {
 
 function clearInput(){
     let input = $("#input-name");
-      if (input.value !=="") {
+      if (input.value !== "") {
           input.value = "";
       }
 }
@@ -87,6 +87,21 @@ function clearImage() {
 function clearResult() {
     $('#user-search-result').innerHTML = '';
     unsetSearchResultStyle();
+}
+
+function clearCloseAddContact() {
+    let userImgContainer = $('.add-contact-field .user-img-container');
+    // let image = $('.user-img-gray');
+
+    clearInput();
+    clearResult();
+
+    userImgContainer.innerHTML = /*html*/ `
+        <img class="user-img-gray" src="/Join/assets/img/icons/user_img_gray.svg">
+    `;
+    // image.setAttribute('src', "/Join/assets/img/icons/user_img_gray.svg");
+
+    closeAddContact();
 }
 
 const getInput = debounce(async function () {
@@ -241,4 +256,6 @@ async function addContact() {
 
     notification('friendship-request');
     notificationPrototype.send();
+
+    clearCloseAddContact();
 }
