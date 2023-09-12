@@ -41,23 +41,12 @@ const notificationTemplate = (notification) => {
 }
 
 async function removeFriendshipRequest(id, userId) {
-    // log(id);
     await REMOTE_removeData(`users/${userId}/pendingFriendshipRequests/${USER.id}`);
-    // log(userId);
     return removeNotification(id);
 }
 
 async function acceptFriendshipRequest(id, userId) {
-    // log(USER.id);
-    const recipientId = Number(USER.id);
-    // log(Number(recipientId));
-    
-    await REMOTE_setData(`users/${userId}/contacts`, recipientId.toString());
-    await REMOTE_setData(`users/${recipientId}/contacts`, userId.toString());
-
-    // await REMOTE_setData(`users/${userId}/contacts`, recipientId.toString());
-    // await REMOTE_setData(`users/${recipientId}/contacts`, userId.toString());
-
-
+    await REMOTE_setData(`users/${userId}/contacts`, USER.id.toString());
+    USER.contacts.push(userId);
     await removeFriendshipRequest(id, userId);
 }

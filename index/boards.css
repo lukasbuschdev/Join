@@ -253,8 +253,15 @@
 #fullscreen-task-modal :is(#fullscreen-task, #edit-task) .fullscreen-content {
     overflow-y: auto;
     scrollbar-gutter: stable;
+    padding: 15px 0;
 }
 
 .fullscreen-task-subTasks:has(.column:empty) {
     display: none;
+}
+
+.highlight {
+    color: white;
+    background-color: var(--clr-blue);
+    border-radius: 5px;
 }

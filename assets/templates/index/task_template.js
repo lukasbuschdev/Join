@@ -1,4 +1,4 @@
-const taskTemplate = ({boardId, id, title, description, assignedTo, category, priority, subTasks}) => {
+const taskTemplate = ({boardId, id, title, description, assignedTo, category, priority, subTasks}, filter) => {
     let assignedAccounts = [];
     for (const assignedToId of assignedTo) {
         const {name, color: userColor} = CONTACTS[assignedToId] ?? USER;
@@ -7,8 +7,8 @@ const taskTemplate = ({boardId, id, title, description, assignedTo, category, pr
     return /*html*/`
     <div class="task txt-small" onmousedown="addDragAndDrop()" data-id="${boardId}/${id}" style="--x: 0; --y: 0;">
         <div class="task-category" style="--clr: ${BOARDS[boardId].categories[category]};">${category}</div>
-        <div class="task-title txt-700">${title}</div>
-        <div class="task-description">${description}</div>
+        <div class="task-title txt-700">${highlight(title, filter)}</div>
+        <div class="task-description">${highlight(description, filter)}</div>
         ${progressTemplate(subTasks)}
         <div class="task-footer">
             <div class="task-assigned-to">
@@ -18,6 +18,8 @@ const taskTemplate = ({boardId, id, title, description, assignedTo, category, pr
         </div>
     </div>`
 }
+
+const highlight = (string, filter) => string.replaceAll(filter, item => `<span class="highlight">${item}</span>`);
 
 const progressTemplate =  (subTasks) => {
     const finishedSubtasks = subTasks.filter( ({done}) => done);

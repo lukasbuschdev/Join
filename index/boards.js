@@ -1,8 +1,6 @@
 const initBoard = async () => {
-    const start = Date.now();
     await getBoards();
     await getAllUsers();
-    log(`rendering took ${Date.now() - start}ms`)
     renderTasks();
 }
 
@@ -13,7 +11,7 @@ const renderTasks = (filter) => {
 
     tasksContainer.$$(':scope > div').for(container => container.innerHTML = "");
     const filteredTasks = (filter) ? Object.values(tasks).filter(task => task.title.includes(filter) || task.description.includes(filter)) : Object.values(tasks);
-    for (const task of filteredTasks) $(`#${task.type}`).innerHTML += taskTemplate(task);
+    for (const task of filteredTasks) $(`#${task.type}`).innerHTML += taskTemplate(task, filter);
     tasksContainer.LANG_load();
 }
 
@@ -121,14 +119,23 @@ const editTaskInitializer = () => {
     const editTaskContainer = $('#edit-task');
     editTaskContainer.innerHTML = editTaskTemplate(SELECTED_TASK);
     editTaskContainer.LANG_load();
-    editTaskContainer.initMenus();
+    if (SELECTED_TASK.assignedTo) editTaskContainer.$('#selected-collaborator-input').innerHTML = editTaskAssignedTo();
+    renderAssignedContacts();
     editTaskContainer.$('.fullscreen-content').addScrollShadow();
-
+    editTaskContainer.initMenus();
+    
     toggleFullscreenState();
-
+    
     const saveTaskButton = $('#save-task');
     // saveTaskButton.addEventListener('click', saveHandler(), {once: true});
 };
+
+const renderAssignedContacts = () => {
+    renderAssignToContacts();
+    $('.drp-contacts').$$('.drp-option').for(
+        contact => contact.classList.toggle('active', SELECTED_TASK.assignedTo.includes(contact.dataset.id))
+    );
+}
 
 const toggleFullscreenState = () => {
     const fullscreenModal = $('#fullscreen-task-modal')
