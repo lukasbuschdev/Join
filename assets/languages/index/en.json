@@ -1,7 +1,7 @@
 {
     "title-summary": "Join - Summary",
     "title-board": "Join - Board",
-    "title-add-task": "Join - Add Task",
+    "title-add_task": "Join - Add Task",
     "title-contacts": "Join - Contacts",
     "title-legal_notice": "Join - Legal notice",
 
@@ -85,7 +85,7 @@
 
     "contact-info": "Contact Information",
     "edit-contact": "Edit Contact",
-    "phone": "Phone",
+    "phone": "Phone:",
 
     "board": "Board",
 

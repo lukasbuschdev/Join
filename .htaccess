@@ -13,7 +13,7 @@ RewriteRule ^create_account$  init/create_account.html [L]
 
 RewriteRule ^summary$  index/index.html [L]
 RewriteRule ^board$  index/index.html [L]
-RewriteRule ^add-task$  index/index.html [L]
+RewriteRule ^add_task$  index/index.html [L]
 RewriteRule ^contacts$  index/index.html [L]
 RewriteRule ^legal_notice$  index/index.html [L]
 

@@ -3,7 +3,7 @@ const currentDirectory = () => window.location.pathname.split('/').at(-1);
 const goTo = (directory, options) => {
     const search = options?.search ?? location.search;
     const reroute = options?.reroute ?? false; 
-    const newUrl = `/Join/${directory}${search}`;
+    const newUrl = `/Join/${directory.replace('-', '_')}${search}`;
     if (reroute) location.href = newUrl;
     else history.pushState(directory, '', newUrl);
 }

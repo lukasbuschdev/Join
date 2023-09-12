@@ -3,7 +3,7 @@
     "title-board": "Join - Tafel",
     "title-add-task": "Join - Aufgabe hinzufügen",
     "title-contacts": "Join - Kontakte",
-    "title-legal_notice": "Join - Impressum",
+    "title-legal-notice": "Join - Impressum",
 
     "summary": "Überblick",
     "add-task": "Neue Aufgabe",
@@ -85,7 +85,7 @@
 
     "contact-info": "Kontaktinformation",
     "edit-contact": "Kontakt bearbeiten",
-    "phone": "Telefon",
+    "phone": "Telefon:",
 
     "board": "Tafel",
 

@@ -10,7 +10,7 @@ const LANG_load = async (lang = currentLang()) => {
         dir == 'create_account' ||
         dir == 'forgot_password' ||
         dir == 'reset_password') langDirectory = 'init';
-    // lang = "de";
+    
     LANG = await (await fetch(`/Join/assets/languages/${langDirectory}/${lang}.json`)).json();
     const notificationCount = document.title.match(/(\(\d+\) )?/)[0];
     document.title = `${notificationCount}${LANG[`title-${dir}`]}`;

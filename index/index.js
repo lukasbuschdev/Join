@@ -28,7 +28,7 @@ const checkNotifications = async () => {
     const notificationCounters = $$('.notifications-counter');
 
     notificationCounters.for(counter => counter.classList.toggle('d-none', !notificationCount));
-    document.title = `${(notificationCount)?"("+ notificationCount + ") ":""}${LANG[$('[data-title]').dataset.title]}`; 
+    document.title = `${(notificationCount)?`(${notificationCount}) ` :""}${LANG[`title-${currentDirectory()}`]}`; 
     if (!notificationCount) return
     notificationCounters.for(counter => counter.innerText = notificationCount);
 }
