@@ -1,0 +1,10 @@
+.legal-notice-container {
+    padding: 6vh 4rem;
+    width: 100%;
+    gap: 80px;
+}
+
+.legal-notice-segments {
+    height: 50vh;
+    justify-content: space-between;
+}

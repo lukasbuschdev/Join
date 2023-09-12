@@ -3,13 +3,13 @@
     "title-board": "Join - Tafel",
     "title-add-task": "Join - Aufgabe hinzufügen",
     "title-contacts": "Join - Kontakte",
-    "title-legal_notice": "Join - Rechtliches",
+    "title-legal_notice": "Join - Impressum",
 
     "summary": "Überblick",
     "add-task": "Neue Aufgabe",
     "find-task": "Aufgabe finden",
     "contacts": "Kontakte",
-    "legal-notice": "Rechtliches",
+    "legal-notice": "Impressum",
 
     "to-do": "Ausstehend",
     "awaiting-feedback": "Warte auf Rückmeldung",
@@ -96,5 +96,10 @@
 
     "confirmation-delete-task": "Are you sure you want do delete this task?",
     "yes": "Löschen",
-    "no": "Abbrechen"
+    "no": "Abbrechen",
+
+    "legal-notice-heading": "Impressum",
+    "legal-notice-heading-2": "Angaben gemäß § 5 TMG",
+    "legal-notice-heading-3": "Kontakt",
+    "legal-notice-source": "Quelle: "
 }
