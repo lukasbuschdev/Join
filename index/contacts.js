@@ -1,6 +1,6 @@
 async function initContacts () {
     await getUser();
-    renderContacts();
+    return renderContacts();
 }
 
 async function renderContacts() {
@@ -10,13 +10,13 @@ async function renderContacts() {
     
     const initialLetters = [...new Set(
         contactsData.map(
-            ({name}) => name[0]
+            (singleContact) => singleContact.name[0]
         )
     )];
     // log(contactsData)
     $('#contacts-container').innerHTML = '';
 
-    initialLetters.forEach(letter => {
+    initialLetters.for(letter => {
         $('#contacts-container').innerHTML += contactListLetterTemplate(letter);
         const filteredContacts = contactsData.filter(({name}) => name[0] == letter)
         $('#contacts-container').renderItems(filteredContacts, contactListTemplate);

@@ -94,6 +94,6 @@
     "friendship-request": "Anfrage gesendet!",
 
     "confirmation-delete-task": "Are you sure you want do delete this task?",
-    "yes": "Ja",
-    "no": "Nein"
+    "yes": "Löschen",
+    "no": "Abbrechen"
 }
