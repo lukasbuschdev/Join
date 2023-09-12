@@ -76,7 +76,7 @@ const REMOTE_setData = async (targetPath, upload) => {
         }
         else if (currentObj.indexOf(upload !== -1)) currentObj.push(upload);
     } else Object.assign(currentObj, upload);
-    return REMOTE_upload(directories[0], data);
+    return await REMOTE_upload(directories[0], data);
 }
 
 
