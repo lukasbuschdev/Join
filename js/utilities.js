@@ -22,10 +22,10 @@ const toggleActiveBtn = (buttons) => {
 const addNavToggleBtns = () => {
   $$("nav").forEach((navbar) =>
     navbar
-      .querySelectorAll("button")
+      .$$("button")
       .forEach((button) =>
         button.addEventListener("click", () =>
-          toggleActiveBtn(navbar.querySelectorAll("button"))
+          toggleActiveBtn(navbar.$$("button"))
         )
       )
   );

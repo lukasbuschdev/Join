@@ -2,6 +2,7 @@ async function initAddTask() {
     await getBoards();
     renderBoardIds();
     $('.add-task-card').LANG_load();
+    selectedCollaborators.length = 0;
 }
 
 const subtasks = [];
@@ -68,11 +69,11 @@ function renderCategories(selectedBoard) {
     });
 }
 
-function renderAssignToContacts(selectedBoard) {
+function renderAssignToContacts() {
     const drpContainer = $('#drp-collab-container');
     const assignToUser = document.createElement('div');
     assignToUser.innerHTML = /*html*/`
-        <div class="drp-option" onclick="selectCollaborator(${USER.id})">
+        <div class="drp-option" data-id="${USER.id}" onclick="selectCollaborator()">
             <div class="user-img-container grid-center" style="--user-clr: ${USER.color}"><span>${USER.name.slice(0, 2).toUpperCase()}</span><img src="${USER.img}"></div>
             <span data-lang="assigned-you"></span>
         </div>
@@ -82,14 +83,14 @@ function renderAssignToContacts(selectedBoard) {
     assignToUser.LANG_load();
     drpContainer.append(assignToUser.children[0]);
 
-    selectedBoard.collaborators.forEach(collaboratorId => {
+    SELECTED_BOARD.collaborators.forEach(collaboratorId => {
         const collaborator = CONTACTS[collaboratorId];
         if (collaborator == USER.id) return;
         if (!collaborator) return;
 
         const collaboratorOption = document.createElement('div');
         collaboratorOption.innerHTML = /*html*/ `
-            <div class="drp-option" onclick="selectCollaborator(${collaboratorId})">
+            <div class="drp-option" data-id="${collaboratorId}" onclick="selectCollaborator()">
                 <div class="user-img-container grid-center" style="--user-clr: ${collaborator.color}"><span>${collaborator.name.slice(0, 2).toUpperCase()}</span><img src="${collaborator.img}"></div>
                 <span>${collaborator.name}</span>
             </div>
@@ -99,7 +100,9 @@ function renderAssignToContacts(selectedBoard) {
     });
 }
 
-function selectCollaborator(collaboratorId) {
+function selectCollaborator() {
+    event.currentTarget.classList.toggle('active');
+    const collaboratorId = event.currentTarget.dataset.id;
     const index = selectedCollaborators.indexOf(collaboratorId.toString());
     
     if (index === -1) {

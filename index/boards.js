@@ -119,14 +119,23 @@ const editTaskInitializer = () => {
     const editTaskContainer = $('#edit-task');
     editTaskContainer.innerHTML = editTaskTemplate(SELECTED_TASK);
     editTaskContainer.LANG_load();
-    editTaskContainer.initMenus();
+    if (SELECTED_TASK.assignedTo) editTaskContainer.$('#selected-collaborator-input').innerHTML = editTaskAssignedTo();
+    renderAssignedContacts();
     editTaskContainer.$('.fullscreen-content').addScrollShadow();
-
+    editTaskContainer.initMenus();
+    
     toggleFullscreenState();
-
+    
     const saveTaskButton = $('#save-task');
     // saveTaskButton.addEventListener('click', saveHandler(), {once: true});
 };
+
+const renderAssignedContacts = () => {
+    renderAssignToContacts();
+    $('.drp-contacts').$$('.drp-option').for(
+        contact => contact.classList.toggle('active', SELECTED_TASK.assignedTo.includes(contact.dataset.id))
+    );
+}
 
 const toggleFullscreenState = () => {
     const fullscreenModal = $('#fullscreen-task-modal')
