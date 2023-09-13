@@ -41,9 +41,9 @@ const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, su
         <div id="priority" class="column gap-8">
             <span data-lang="priority">Prio</span>
             <div class="btn-priority" type="menu">
-                <button class="btn btn-secondary prio-btn txt-normal ${(priority == 'urgent')?'active':''}" type="option"><span class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_urgent.svg)">Urgent</span></button>
-                <button class="btn btn-secondary prio-btn txt-normal ${(priority == 'medium')?'active':''}" type="option"><span class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_medium.svg)">Medium</span></button>
-                <button class="btn btn-secondary prio-btn txt-normal ${(priority == 'low')?'active':''}" type="option"><span class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_low.svg)">Low</span></button>
+                <button class="btn btn-secondary prio-btn txt-normal ${(priority == 'urgent')?'active':''}" type="option"><span data-lang="urgent" class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_urgent.svg)">Urgent</span></button>
+                <button class="btn btn-secondary prio-btn txt-normal ${(priority == 'medium')?'active':''}" type="option"><span data-lang="medium" class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_medium.svg)">Medium</span></button>
+                <button class="btn btn-secondary prio-btn txt-normal ${(priority == 'low')?'active':''}" type="option"><span data-lang="low" class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_low.svg)">Low</span></button>
             </div>
             <div class="error-inactive error-enter-input" id="select-a-priority">
                 <span data-lang="select-a-priority">Select a priority!</span>

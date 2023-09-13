@@ -58,6 +58,8 @@ const loadContent = async () => {
         await initBoard();
     } else if (id == "add-task") {
         await initAddTask();
+    } else if (id == "privacy") {
+        await initPrivacy();
     }
     if (currentDirectory() !== id) goTo(id)
     LANG_load();

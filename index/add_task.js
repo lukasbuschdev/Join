@@ -2,7 +2,7 @@ async function initAddTask() {
     await getBoards();
     renderBoardIds();
     $('.add-task-card').LANG_load();
-    selectedCollaborators.length = 0;
+    resetArrays();
 }
 
 const subtasks = [];
@@ -466,7 +466,6 @@ function deleteSubtask(i) {
 function resetArrays() {
     selectedCollaborators.length = 0;
     subtasks.length = 0;
-    log("All arrays cleard!")
 }
 
 function resetPriorityButton() {

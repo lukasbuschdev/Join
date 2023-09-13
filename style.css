@@ -104,8 +104,10 @@ button.bg-dark {
     white-space: nowrap;
 }
 
-.btn:hover {
-    box-shadow: 0 4px 4px 0 rgba(0 0 0 / 25%);
+@media (hover: hover) {
+    .btn:hover {
+box-shadow: 0 4px 4px 0 rgba(0 0 0 / 25%);
+}
 }
 
 .btn-primary {
@@ -114,8 +116,10 @@ button.bg-dark {
     padding: 15px;
 }
 
-.btn-primary:hover {
+@media (hover: hover) {
+    .btn-primary:hover {
     background-color: var(--clr-blue);
+}
 }
 
 .btn-primary:active {
@@ -130,9 +134,11 @@ button.bg-dark {
     background-clip: padding-box;
 }
 
-.btn-secondary:hover {
+@media (hover: hover) {
+    .btn-secondary:hover {
     box-shadow: 0 4px 4px 0 rgba(0 0 0 / 25%), inset 0 0 0 2px var(--clr-blue);
     color: var(--clr-blue);
+}
 }
 
 .btn-secondary:active {
@@ -153,10 +159,12 @@ button.bg-dark {
     flex-shrink: 0;
 }
 
-.btn-plus:hover {
+@media (hover: hover) {
+    .btn-plus:hover {
     outline-color: var(--clr-blue);
     background-image: url(./assets/img/icons/btn_plus_blue.svg);
     box-shadow: unset;
+}
 }
 
 .btn-plus:active {
@@ -453,9 +461,11 @@ h4 {
     font-size: 1rem;
 }
 
-.drp-wrapper .drp-option:hover,
+@media (hover: hover) {
+    .drp-wrapper .drp-option:hover,
 .drp-wrapper .drp-you:hover {
     background-color: var(--clr-placeholder);
+}
 }
 
 .drp-wrapper > .inp-container {

@@ -119,8 +119,10 @@ textarea {
     box-shadow: none;
 }
 
-.prio-btn:hover {
+@media (hover: hover) {
+    .prio-btn:hover {
     box-shadow: 0 4px 4px 0 lightgray;
+}
 }
 
 .prio-btn:hover span {
@@ -190,8 +192,10 @@ textarea {
     height: 30px;
 }
 
-.single-subtask:hover {
+@media (hover: hover) {
+    .single-subtask:hover {
     background-color: var(--clr-subtask);
+}
 }
 
 .subtask-edit-delete-btns {

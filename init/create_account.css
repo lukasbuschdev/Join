@@ -6,8 +6,10 @@
     --user-clr: var(--clr-dark);
 }
 
-:is(label[for="choose-image"], #user-color):hover {
+@media (hover: hover) {
+    :is(label[for="choose-image"], #user-color):hover {
     opacity: 1;
+}
 }
 
 #user-name {
@@ -34,12 +36,16 @@ label[for="choose-image"] {
     inset: auto 0 0 auto;
 }
 
-label[for="choose-image"]:hover {
+@media (hover: hover) {
+    label[for="choose-image"]:hover {
     background-color: var(--clr-dark);
 }
+}
 
-label[for="choose-image"].border:hover {
+@media (hover: hover) {
+    label[for="choose-image"].border:hover {
     border: 1px solid white;
+}
 }
 
 #user-color {
@@ -68,8 +74,10 @@ label[for="choose-image"].border:hover {
     transition-property: background-color;
 }
 
-#user-color.active:hover {
+@media (hover: hover) {
+    #user-color.active:hover {
     background-color: var(--clr-dark);
+}
 }
 
 #user-color.active + #accept-user-color.active {
@@ -77,8 +85,10 @@ label[for="choose-image"].border:hover {
     inset: auto 0 0 auto;
 }
 
-#user-color.active + #accept-user-color:hover {
+@media (hover: hover) {
+    #user-color.active + #accept-user-color:hover {
     background-color: var(--clr-dark);
+}
 }
 
 #color-wheel {
