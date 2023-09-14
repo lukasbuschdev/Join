@@ -83,8 +83,10 @@ header {
     padding-left: 35%;
 }
 
-.btn-nav:hover {
+@media (hover: hover) {
+    .btn-nav:hover {
     background-color: var(--clr-active);
+}
 }
 
 .btn-nav span {
@@ -137,8 +139,10 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     transition: all var(--transition-fast);
 }
 
-.close-btn:hover {
+@media (hover: hover) {
+    .close-btn:hover {
     background-color: #e3eeff;
+}
 }
 
 .close {
@@ -192,8 +196,10 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     color: white;
 }
 
-#account-panel-options button:hover {
+@media (hover: hover) {
+    #account-panel-options button:hover {
     color: var(--clr-blue);
+}
 }
 
 .notifications-counter {

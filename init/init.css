@@ -268,10 +268,12 @@ form:has(input:placeholder-shown) button[type="submit"] {
     box-shadow: 0px 0px 4px 0px #0000001A;
 }
 
-.btn-priority:hover {
+@media (hover: hover) {
+    .btn-priority:hover {
     /* padding: 4px 18px; */
     height: 61px;
     /* scale: 1.1; */
+}
 }
 
 .btn-priority span {

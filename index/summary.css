@@ -95,9 +95,11 @@
     background-color: white;
 }
 
-#summary-data .row > button:hover {
+@media (hover: hover) {
+    #summary-data .row > button:hover {
     --scale: 10px;
     box-shadow: 0px 4px 4px 0px #00000040;
+}
 }
 
 #summary-data .line {
@@ -173,8 +175,10 @@
     scrollbar-gutter: stable;
 }
 
-#summary-selection:hover {
+@media (hover: hover) {
+    #summary-selection:hover {
     overflow: auto;
+}
 }
 
 #summary-selection > button {
@@ -305,8 +309,10 @@
     transition: var(--transition-fast);
 }
 
-.add-board-data .inp-wrapper .contact button:hover {
+@media (hover: hover) {
+    .add-board-data .inp-wrapper .contact button:hover {
     background-color: var(--clr-dark);
+}
 }
 
 .add-board-data .inp-wrapper .contact button:hover img {
@@ -406,8 +412,10 @@ dialog#add-board .task-category button img {
     height: 100%;
 }
 
-dialog#add-board .task-category button:hover {
+@media (hover: hover) {
+    dialog#add-board .task-category button:hover {
     background-color: #00000040;
+}
 }
 
 .add-board-data .collaborators-container .user-img-container {

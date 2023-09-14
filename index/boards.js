@@ -1,3 +1,5 @@
+let initialTask;
+
 const initBoard = async () => {
     await getBoards();
     await getAllUsers();
@@ -41,20 +43,25 @@ const renderFullscreenTask = (ids) => {
     const [boardId, taskId] = ids.split('/');
     const taskData = BOARDS[boardId].tasks[taskId];
     SELECTED_TASK = new Task(taskData);
+    initialTask = _.cloneDeep(removeMethods(SELECTED_TASK));
     modal.$('#fullscreen-task').innerHTML = fullscreenTaskTemplate(taskData);
     modal.LANG_load();
     modal.openModal();
-    modal.addEventListener('close', saveHandler(), {once: true});
+    modal.addEventListener('close', saveTaskChanges, {once: true});
 };
 
-const saveHandler = () => {
-    const initialTask = _.cloneDeep(removeMethods(SELECTED_TASK));
-    return () => {
-        saveTaskChanges(initialTask);
-    }
+const editTask = () => {
+    const title = $('#title').value;
+    const description = $('#description').value;
+    const dueDate = $('#date').value;
+    const priority = $('.prio-btn.active span').dataset.lang;
+    const assignedTo = [...$$('.input-collaborator')].reduce(
+        (assignedAccounts, {dataset: {id}}) => assignedAccounts.push(id.toString())
+    );
+    saveTaskChanges(initialTask);
 }
 
-const saveTaskChanges = (initialTask) => {
+const saveTaskChanges = () => {
     const updatedTask = removeMethods(SELECTED_TASK);
 
     const differences = getJsonChanges(updatedTask, initialTask);

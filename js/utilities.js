@@ -327,3 +327,9 @@ const invalidDate = (input, output) => {
 
   return !(Number(mI) == mO && Number(yI) == yO);
 }
+
+const hoverReplaceRegex = () => {
+  const regex = /(.*[^\s][\n]?.*:hover \{[\s\n\S]+?\})/;
+  const replaceString = "@media (hover: hover) {\n    $1\n}";
+  return [regex, replaceString];
+}

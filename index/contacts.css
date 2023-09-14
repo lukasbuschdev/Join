@@ -42,9 +42,11 @@
     }
 }
 
-.contact:hover {
+@media (hover: hover) {
+    .contact:hover {
     background: linear-gradient(180deg, #f9f9f9 0%, #f0f0f0 100%);
     cursor: pointer;
+}
 }
 
 .contact-letter {
@@ -304,9 +306,11 @@
     width: 100%;
 }
 
-.search-result-contact:hover {
+@media (hover: hover) {
+    .search-result-contact:hover {
     background: linear-gradient(180deg, #f9f9f9 0%, #f0f0f0 100%);
     cursor: pointer;
+}
 }
 
 .search-result-contact .user-img-container {
