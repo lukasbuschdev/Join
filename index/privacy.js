@@ -1,3 +1,3 @@
 const initPrivacy = () => {
-    return $('#content').includeTemplate(`/Join/assets/languages/privacy-${currentLang()}`);
+    return $('#content').includeTemplate(`/Join/assets/languages/privacy-${currentLang()}.html`);
 }
