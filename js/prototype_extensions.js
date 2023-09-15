@@ -92,7 +92,7 @@ HTMLDialogElement.prototype.openModal = function () {
     this.inert = false;
 
     const handlerId = Date.now();
-    this.addEventListener('mousedown', window[handlerId] = () => {
+    this.addEventListener('pointerdown', window[handlerId] = () => {
         if (event.which == 3) return;
         if (this.getAttribute('static') == "true") return;
         if (![...this.$$(':scope > div')]
@@ -118,7 +118,7 @@ HTMLDialogElement.prototype.closeModal = function (handlerId) {
     } else {
         this.close();
     }
-    this.removeEventListener('mousedown', window[handlerId]);
+    this.removeEventListener('pointerdown', window[handlerId]);
 }
 
 HTMLDialogElement.prototype.showNotification = function () {

@@ -5,7 +5,7 @@ const taskTemplate = ({boardId, id, title, description, assignedTo, category, pr
         assignedAccounts.push({name, color: userColor});
     };   
     return /*html*/`
-    <div class="task txt-small" onmousedown="addDragAndDrop()" data-id="${boardId}/${id}" style="--x: 0; --y: 0;">
+    <div class="task txt-small" onpointerdown="addDragAndDrop()" data-id="${boardId}/${id}" style="--x: 0; --y: 0;">
         <div class="task-category" style="--clr: ${BOARDS[boardId].categories[category]};">${category}</div>
         <div class="task-title txt-700">${highlight(title, filter)}</div>
         <div class="task-description">${highlight(description, filter)}</div>

@@ -50,15 +50,22 @@ const renderFullscreenTask = (ids) => {
     modal.addEventListener('close', saveTaskChanges, {once: true});
 };
 
-const editTask = () => {
-    const title = $('#title').value;
-    const description = $('#description').value;
-    const dueDate = $('#date').value;
-    const priority = $('.prio-btn.active span').dataset.lang;
-    const assignedTo = [...$$('.input-collaborator')].reduce(
-        (assignedAccounts, {dataset: {id}}) => assignedAccounts.push(id.toString())
-    );
-    saveTaskChanges(initialTask);
+const saveEditedTask = () => {
+    const editedTaskData = {
+        title: $('#title').value,
+        description: $('#description').value,
+        dueDate: $('#date').value,
+        priority: $('.prio-btn.active span').dataset.lang,
+        assignedTo: selectedCollaborators,
+        subTasks: subtasks.map(name => {
+            return {
+                name,
+                done: SELECTED_TASK.subTasks.find(({name: subTaskName}) => subTaskName == name)?.done || false
+            }
+        })
+    }
+    log(editedTaskData);
+    // saveTaskChanges(initialTask);
 }
 
 const saveTaskChanges = () => {
@@ -168,25 +175,23 @@ const addDragAndDrop = () => {
         offsetY: event.clientY - y
     }
 
-    task.addEventListener('mouseup', fullscreenHandler = () => renderFullscreenTask(task.dataset.id), {once: true});
+    task.addEventListener('pointerup', fullscreenHandler = () => renderFullscreenTask(task.dataset.id), {once: true});
 
     const clickTimeout = setTimeout(() => {
         task.classList.add('active');
-        log('added class!')
-        task.removeEventListener('mouseup', fullscreenHandler, {once: true});
+        task.removeEventListener('pointerup', fullscreenHandler, {once: true});
     }, 200);
 
     const dragHandler = () => taskDragger(startingPosition)
+    task.setPointerCapture(event.pointerId);
+    task.addEventListener('pointermove', dragHandler);
 
-    task.addEventListener("mousemove", dragHandler);
-
-    document.addEventListener("mouseup", (event) => {
+    document.addEventListener("pointerup", (event) => {
         if (!waitForMovement) taskDropper(event, task, startingPosition);
         task.classList.remove('active');
-        // log(task)
         waitForMovement = true;
         taskNotActive = true;
-        task.removeEventListener("mousemove", dragHandler);
+        task.removeEventListener("pointermove", dragHandler);
         clearTimeout(clickTimeout);
     }, { once: true });
 }
@@ -244,7 +249,6 @@ const taskDropper = ({ pageX, pageY }, task, { offsetX, offsetY }) => {
         task.classList.remove('drop-transition');
     }, { once: true });
     task.updatePosition();
-    log(task)
 }
 
 const changeTaskType = async (taskElement, newType) => {

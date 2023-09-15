@@ -10,8 +10,8 @@ const goTo = (directory, options) => {
 const currentUserId = () => (searchParams().get('uid') == null) ? undefined : `${searchParams().get('uid')}`;
 
 const menuOptionInitator = new MutationObserver(
-    mutation => {
-        $('body').initMenus();
+    ({target}) => {
+        target.closest('[type = "menu"]]').initMenus();
     }
 );
 
@@ -37,18 +37,12 @@ const addInactivityTimer = (minutes = 5) => {
 
 const initInactivity = () => {
     window.addEventListener("visibilitychange", () => {
-        if (document.visibilityState == "hidden") addInactivityTimer();
-        else clearTimeout(inactivityTimer);
+        if (document.visibilityState == "hidden") {
+            addInactivityTimer();
+            log("added inactivity timer")
+        } else clearTimeout(inactivityTimer);
     });
 }
-
-// const renderObserver = new MutationObserver(
-//     mutation => {
-//         if ("user-data" in mutation.target.dataset) {
-
-//         }
-//     }
-// )
 
 const renderUserData = () => {
     const { name, img, color } = USER;
@@ -76,7 +70,6 @@ const renderColor = (userField, color) => {
     userField.style.setProperty('--user-clr', color);
 };
 
-// redirect();
-
+// initInactivity();
 $('body').initMenus();
 LANG_load();

@@ -8,12 +8,12 @@ const initWebsocket = () => {
     SOCKET.io.on('error', e => {
         SOCKET.close();
         // SOCKET = null;
-        SOCKET.io.on('connection', e => {
-            log('reconnected!')
-        })
         setTimeout(initWebsocket, 1 * 60 * 1000);
     });
-
+    
+    SOCKET.io.on('reconnect', e => {
+        log('reconnected!')
+    })
 
     SOCKET.on('notification', async () => {
         console.log(`Your received a new Notification!`);

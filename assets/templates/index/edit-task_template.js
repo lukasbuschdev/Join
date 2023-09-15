@@ -93,7 +93,7 @@ const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, su
         <button class="btn btn-secondary btn-cancel txt-700 txt-normal" onclick="toggleFullscreenState()">
             <span data-lang="btn-cancel">Cancel</span>
         </button>
-        <button id="save-task" class="btn btn-primary btn-check txt-700 txt-normal">
+        <button id="save-task" class="btn btn-primary btn-check txt-700 txt-normal" onclick="confirmation('save-edited-task', saveEditedTask)">
             <span>OK</span>
         </button>
     </div>

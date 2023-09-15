@@ -84,11 +84,13 @@
     cursor: pointer;
     transition: var(--tr);
     translate: calc(var(--x) * 1px) calc(var(--y) * 1px);
+    touch-action: none;
 }
 
 .task.active {
     rotate: 2.5deg;
     z-index: 1;
+    position: absolute;
 }
 
 .drop-transition {

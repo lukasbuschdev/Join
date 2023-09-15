@@ -94,8 +94,9 @@
     "friendship-request": "Request sent!",
 
     "confirmation-delete-task": "Are you sure you want do delete this task?",
-    "yes": "Delete",
-    "no": "Cancel",
+    "confirm-delete-task": "Delete",
+    "confirmation-save-edited-task": "Save Task changes?",
+    "confirm-save-edited-task": "Save",
 
     "legal-notice-heading": "Legal notice",
     "legal-notice-heading-2": "Information according to § 5 TMG",

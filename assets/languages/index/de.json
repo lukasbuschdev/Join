@@ -94,9 +94,10 @@
     "add-contact-subheading": "Aufgaben, besser im Team!",
     "friendship-request": "Anfrage gesendet!",
 
-    "confirmation-delete-task": "Are you sure you want do delete this task?",
-    "yes": "Löschen",
-    "no": "Abbrechen",
+    "confirmation-delete-task": "Aufgabe Löschen?",
+    "confirm-delete-task": "Löschen",
+    "confirmation-save-edited-task": "Änderungen speichern?",
+    "confirm-save-edited-task": "Speichern",
 
     "legal-notice-heading": "Impressum",
     "legal-notice-heading-2": "Angaben gemäß § 5 TMG",
