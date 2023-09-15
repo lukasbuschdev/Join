@@ -46,7 +46,7 @@ window.addEventListener("popstate", (e) => {
 const loadContent = async () => {
     const {id, classList} = event.currentTarget;
     if (classList.contains('active')) return error('already active!');
-    const url = (id == 'help')? `/Join/assets/languages/help-${currentLang()}.html` : `/Join/assets/templates/index/${id.replace('_','-')}_template.html`;
+    const url = (id == 'help')? `/Join/assets/languages/help-${currentLang()}.html` : (id == 'privacy')? `/Join/assets/languages/privacy-${currentLang()}.html` : `/Join/assets/templates/index/${id.replace('_','-')}_template.html`;
     const content = $('#content');
     content.classList.add("loading");
     await content.includeTemplate(url);
@@ -58,8 +58,6 @@ const loadContent = async () => {
         await initBoard();
     } else if (id == "add-task") {
         await initAddTask();
-    } else if (id == "privacy") {
-        await initPrivacy();
     } else if (id == "help") {
         initHelp();
     }
