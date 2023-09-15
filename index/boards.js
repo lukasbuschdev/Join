@@ -64,7 +64,7 @@ const saveEditedTask = () => {
             }
         })
     }
-    log(editedTaskData);
+    log(getJsonChanges(editedTaskData, initialTask));
     // saveTaskChanges(initialTask);
 }
 

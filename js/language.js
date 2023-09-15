@@ -7,9 +7,9 @@ const LANG_load = async (lang = currentLang()) => {
     const dir = currentDirectory();
     if (dir == 'signup' ||
         dir == 'login' ||
-        dir == 'create_account' ||
-        dir == 'forgot_password' ||
-        dir == 'reset_password') langDirectory = 'init';
+        dir == 'create-account' ||
+        dir == 'forgot-password' ||
+        dir == 'reset-password') langDirectory = 'init';
     
     LANG = await (await fetch(`/Join/assets/languages/${langDirectory}/${lang}.json`)).json();
     const notificationCount = document.title.match(/(\(\d+\) )?/)[0];
