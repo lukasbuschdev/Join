@@ -1,3 +1,3 @@
 const initHelp = () => {
-    return $('#content').includeTemplate(`/Join/assets/languages/help-${currentLang()}.html`);
+    $('nav button.active').classList.remove('active');
 }
