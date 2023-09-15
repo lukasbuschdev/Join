@@ -1,5 +1,5 @@
 // let directories = [];
-const currentDirectory = () => window.location.pathname.split('/').at(-1);
+const currentDirectory = () => window.location.pathname.split('/').at(-1).replace('_','-');
 const goTo = (directory, options) => {
     const search = options?.search ?? location.search;
     const reroute = options?.reroute ?? false; 

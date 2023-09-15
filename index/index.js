@@ -40,7 +40,7 @@ const checkLogin = () => {
 }
 
 window.addEventListener("popstate", (e) => {
-    $(`#${currentDirectory().replace('_','-')}`)?.click();
+    $(`#${currentDirectory()}`)?.click();
 });
 
 const loadContent = async () => {
@@ -61,7 +61,7 @@ const loadContent = async () => {
     } else if (id == "help") {
         initHelp();
     }
-    if (currentDirectory() !== id) goTo(id)
+    if (currentDirectory() !== id) goTo(id);
     LANG_load();
     content.initMenus();
     content.classList.remove("loading");
