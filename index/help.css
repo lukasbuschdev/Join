@@ -1,0 +1,14 @@
+.help-container {
+    padding: 60px 55px 130px;
+    overflow-x: hidden;
+}
+
+.help-container h3 {
+    font-weight: 600;
+}
+
+@media(max-width: 550px) {
+    .help-container {
+        padding: 60px 25px 130px;
+    }
+}

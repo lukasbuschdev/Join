@@ -1,15 +1,18 @@
 {
     "title-summary": "Join - Überblick",
     "title-board": "Join - Tafel",
-    "title-add-task": "Join - Aufgabe hinzufügen",
+    "title-add_task": "Join - Aufgabe hinzufügen",
     "title-contacts": "Join - Kontakte",
-    "title-legal-notice": "Join - Impressum",
+    "title-legal_notice": "Join - Impressum",
+    "title-privacy": "Join - Datenschutz",
+    "title-help": "Join - Hilfe",
 
     "summary": "Überblick",
     "add-task": "Neue Aufgabe",
     "find-task": "Aufgabe finden",
     "contacts": "Kontakte",
     "legal-notice": "Impressum",
+    "privacy": "Datenschutz",
 
     "to-do": "Ausstehend",
     "awaiting-feedback": "Warte auf Rückmeldung",

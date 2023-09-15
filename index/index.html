@@ -15,12 +15,13 @@
     <link rel="stylesheet" href="/Join/index/add_task.css">
     <link rel="stylesheet" href="/Join/index/contacts.css">
     <link rel="stylesheet" href="/Join/index/legal_notice.css">
+    <link rel="stylesheet" href="/Join/index/privacy.css">
+    <link rel="stylesheet" href="/Join/index/help.css">
 
     <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
     <script src="/Join/js/utilities.js"></script>
     <script src="/Join/js/prototype_extensions.js"></script>
-    <script src="/Join/js/script.js"></script>
     <script src="/Join/js/storage.js"></script>
     <script src="/Join/js/base.class.js"></script>
     <script src="/Join/js/account.class.js"></script>
@@ -40,6 +41,8 @@
     <script src="/Join/index/summary.js"></script>
     <script src="/Join/index/contacts.js"></script>
     <script src="/Join/index/add_task.js"></script>
+    <script src="/Join/index/privacy.js"></script>
+    <script src="/Join/index/help.js"></script>
     <script src="/Join/assets/templates/index/task_template.js"></script>
     <script src="/Join/assets/templates/index/fullscreen-task_template.js"></script>
     <script src="/Join/assets/templates/index/edit-task_template.js"></script>
@@ -69,7 +72,11 @@
         </button>
         
         <button id="legal-notice" class="btn-nav txt-small" onclick="loadContent()" type="option">
-            <span style="--img: url(/Join/assets/img/icons/legal-notice.svg)" data-lang="legal-notice">Legal-notice</span>
+            <span data-lang="legal-notice">Legal-notice</span>
+        </button>
+        
+        <button id="privacy" class="btn-nav txt-small" onclick="loadContent()" type="option">
+            <span data-lang="privacy">Privacy</span>
         </button>
     </nav>
 
@@ -80,7 +87,7 @@
             Kanban Project Management Tool
         </div>
         
-        <button id="help">
+        <button id="help" onclick="loadContent()">
             <img src="/Join/assets/img/icons/help.svg">
         </button>
 
