@@ -138,7 +138,12 @@
     width: fit-content;
 }
 
-.contact-name button::before {
+.delete-contact-btn span {
+    font-size: 1rem;
+    color: var(--clr-orange);
+}
+
+.contact-name button:first-of-type::before {
     content: '';
     background: url(../assets/img/icons/plusBlue.svg);
     height: 15px;
