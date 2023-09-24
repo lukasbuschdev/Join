@@ -43,7 +43,9 @@ const REMOTE_getData = async (path, methods) => {
     const pathSelector = pathArray.slice(1).map(directory => `["${directory}"]`).join('');
 
     const data = await REMOTE_download(directory);
-    if(!data) return;
+    if(!data) {
+        return notification('network-error');
+    };
     
     const result = parse(`${JSON.stringify(data)}${pathSelector}`);
     if (result) {

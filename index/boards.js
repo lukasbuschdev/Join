@@ -12,8 +12,10 @@ const renderTasks = (filter) => {
     const tasksContainer = $('#tasks');
 
     tasksContainer.$$(':scope > div').for(container => container.innerHTML = "");
-    const filteredTasks = (filter) ? Object.values(tasks).filter(task => task.title.includes(filter) || task.description.includes(filter)) : Object.values(tasks);
-    for (const task of filteredTasks) $(`#${task.type}`).innerHTML += taskTemplate(task, filter);
+    const filteredTasks = (filter)
+        ? Object.values(tasks).filter(task => task.title.includes(filter) || task.description.includes(filter))
+        : Object.values(tasks);
+    filteredTasks.for(task => $(`#${task.type}`).innerHTML += taskTemplate(task, filter));
     tasksContainer.LANG_load();
 }
 
@@ -63,18 +65,18 @@ const saveEditedTask = () => {
                 done: SELECTED_TASK.subTasks.find(({name: subTaskName}) => subTaskName == name)?.done || false
             }
         })
-    }
-    log(getJsonChanges(editedTaskData, initialTask));
-    // saveTaskChanges(initialTask);
+    }    
+    Object.assign(SELECTED_TASK, editedTaskData);
+    $('#fullscreen-task-modal').closeModal();
+    toggleFullscreenState();
 }
 
 const saveTaskChanges = () => {
     const updatedTask = removeMethods(SELECTED_TASK);
 
     const differences = getJsonChanges(updatedTask, initialTask);
-    log(differences)
     if (Object.values(differences).length > 0) {
-        updateTaskUi();
+        updateTaskUi(differences);
         SELECTED_TASK.update();
         log('difference')
     }
@@ -87,7 +89,7 @@ const deleteTask = async () => {
     const taskElement = $(`.task[data-id="${boardId}/${id}"]`);
     const taskContainer = taskElement.parentElement;
     await REMOTE_removeData(`boards/${boardId}/tasks/${id}`);
-    modal.removeEventListener('close', saveHandler, {once: true});
+    modal.removeEventListener('close', saveTaskChanges, {once: true});
     modal.closeModal();
     taskElement.remove();
     taskContainer.innerHTML = taskContainer.innerHTML.trim();
@@ -121,12 +123,19 @@ const changeSubtaskDoneState = async (subTaskName) => {
     SELECTED_TASK.subTasks[subTaskIndex].done = !isChecked;
 };
 
-const updateTaskUi = () => {
-    const current = SELECTED_TASK.subTasks.filter(({done}) => done == true).length;
-    const total = SELECTED_TASK.subTasks.length;
+const updateTaskUi = ({title = null, description = null, priority = null, assignedTo = null, subTasks = null}) => {
     const taskContainer = $(`[data-id="${SELECTED_TASK.boardId}/${SELECTED_TASK.id}"]`);
-    taskContainer.$('.task-progress-bar').style.setProperty('--progress', `${current/total}`);
-    taskContainer.$('.task-progress-counter span').innerText = `${current} / ${total}`;
+    
+    if (title) taskContainer.$('.task-title').textAnimation(title);
+    if (description) taskContainer.$('.task-description').textAnimation(description);
+    if (priority) taskContainer.$('.task-priority').style.setProperty('--priority', `url(../assets/img/icons/prio_${priority}.svg)`);
+    if (assignedTo) taskContainer.$('.task-assigned-to').innerHTML = assignedToTemplate(assignedTo.map(id => ALL_USERS[id]));
+    if (subTasks) {
+        const currentSubtaskCount = SELECTED_TASK.subTasks.filter(({done}) => done == true).length;
+        const totalSubtaskCount = SELECTED_TASK.subTasks.length;
+        taskContainer.$('.task-progress-counter span').innerText = `${currentSubtaskCount} / ${totalSubtaskCount}`;
+        taskContainer.$('.task-progress-bar').style.setProperty('--progress', `${currentSubtaskCount/totalSubtaskCount}`);
+    }
 };
 
 const editTaskInitializer = () => {

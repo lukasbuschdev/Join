@@ -18,12 +18,11 @@ const init = async () => {
 }
 
 if (LOCAL_getData('rememberMe') == 'false') {
-    window.addEventListener("beforeunload", () => LOCAL_setData('loggedIn', false))
+    window.on("beforeunload", () => LOCAL_setData('loggedIn', false))
 }
 
 const checkNotifications = async () => {
     await getUser();
-    log('checking...')
     const notificationCount = Object.values(USER.notifications).length;
     const notificationCounters = $$('.notifications-counter');
 
@@ -43,28 +42,32 @@ window.addEventListener("popstate", (e) => {
     $(`#${currentDirectory()}`)?.click();
 });
 
+const initFunctions = {
+    "summary": () => initSummary(),
+    "contacts": () => initContacts(),
+    "board": () => initBoard(),
+    "add-task": () => initAddTask(),
+    "help": () => initHelp(),
+}
+
 const loadContent = async () => {
-    const {id, classList} = event.currentTarget;
-    if (classList.contains('active')) return error('already active!');
+    const {id = currentDirectory(), classList} = event?.currentTarget || {};
+    if (classList?.contains('active')) return error('already active!');
     const url = (id == 'help')? `/Join/assets/languages/help-${currentLang()}.html` : (id == 'privacy')? `/Join/assets/languages/privacy-${currentLang()}.html` : `/Join/assets/templates/index/${id.replace('_','-')}_template.html`;
+    
     const content = $('#content');
     content.classList.add("loading");
     await content.includeTemplate(url);
-    if (id == "summary") {
-        await initSummary();
-    } else if (id == "contacts") {
-        await initContacts();
-    } else if (id == "board") {
-        await initBoard();
-    } else if (id == "add-task") {
-        await initAddTask();
-    } else if (id == "help") {
-        initHelp();
-    }
+    content.$(':scope > div').classList.add("o-none");
+
+    if (id in initFunctions) initFunctions[id]();
     if (currentDirectory() !== id) goTo(id);
     LANG_load();
     content.initMenus();
-    content.classList.remove("loading");
+    content.$(':scope > div').classList.remove("o-none");
+    setTimeout(()=>{
+        content.classList.remove('loading');
+    }, 100);
 };
 
 const openAccountPanel = () => {

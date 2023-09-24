@@ -55,6 +55,18 @@ String.prototype.convert = function () {
     return this.replaceAll(/[A-Z]/g, i => `-${i.toLowerCase()}`);
 }
 
+HTMLElement.prototype.on = function (eventType, callback, options = {}) {
+    const remove = () => {
+        try {
+            this.removeEventListener(eventType, cb, options);
+        } catch (e) {
+            log(e);
+        }
+    }
+    const boundCb = callback.bind(this)
+    this.addEventListener(eventType, cb = (event) => boundCb(remove, event), options)
+}
+
 HTMLElement.prototype.includeTemplate = async function(url = this.getAttribute('include-template') || '') {
     if (!url) return;
     // log("starting download");

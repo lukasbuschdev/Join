@@ -297,13 +297,14 @@ const confirmation = (type, cb) => {
   `;
   confirmationContainer.LANG_load();
 
-  confirmationContainer.$('.btn-primary').addEventListener('click', () => {
+  confirmationContainer.$('.btn-primary').on('click', () => {
     cb();
     confirmationContainer.closeModal();
   }, {once: true});
 
   $('body').append(confirmationContainer);
-  confirmationContainer.addEventListener('close', () => confirmationContainer.remove())
+  confirmationContainer.on('close', () => confirmationContainer.remove());
+
   confirmationContainer.openModal();
 }
 
@@ -332,4 +333,14 @@ const hoverReplaceRegex = () => {
   const regex = /(.*[^\s][\n]?.*:hover \{[\s\n\S]+?\})/;
   const replaceString = "@media (hover: hover) {\n    $1\n}";
   return [regex, replaceString];
+}
+
+HTMLElement.prototype.textAnimation = async function (text, speed = 10) {
+  this.innerText = '';
+  let i = 0;
+  const int = setInterval(() => {
+    if (i + 1 == text.length) clearInterval(int);
+    this.textContent += text[i];
+    i++;
+  }, speed);
 }

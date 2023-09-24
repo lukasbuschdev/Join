@@ -107,5 +107,7 @@
     "legal-notice-heading": "Legal notice",
     "legal-notice-heading-2": "Information according to § 5 TMG",
     "legal-notice-heading-3": "Contact",
-    "legal-notice-source": "Source: "
+    "legal-notice-source": "Source: ",
+
+    "network-error": "Network Error!"
 }

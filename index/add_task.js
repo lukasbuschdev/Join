@@ -282,7 +282,7 @@ function checkPriority() {
     
     if (activeButton) {
         document.getElementById('select-a-priority').classList.add('error-inactive')
-        return activeButton.$('.priority').textContent.toLowerCase();
+        return activeButton.$('.priority').dataset.lang;
     } else {
         return document.getElementById('select-a-priority').classList.remove('error-inactive');
     }
