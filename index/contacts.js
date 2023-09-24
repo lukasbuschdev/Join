@@ -7,6 +7,7 @@ async function renderContacts() {
     const contactsData = await getContactsData();
     if(!contactsData) return noContactsYet();
     contactsExisting();
+    log('Got Here 1')
     
     const initialLetters = [...new Set(
         contactsData.map(
@@ -21,15 +22,16 @@ async function renderContacts() {
         const filteredContacts = contactsData.filter(({name}) => name[0] == letter);
         $('#contacts-container').renderItems(filteredContacts, contactListTemplate);
     });
+    log('Got Here 2')
 }
 
 function noContactsYet() {
-    document.getElementById('contacts-empty').classList.remove('d-none');
+    document.getElementById('contacts-empty')?.classList.remove('d-none');
     document.getElementById('selected-contact-container').classList.add('grid-center');
 }
 
 function contactsExisting() {
-    document.getElementById('contacts-empty').classList.add('d-none');
+    document.getElementById('contacts-empty')?.classList.add('d-none');
     document.getElementById('selected-contact-container').classList.remove('grid-center');
 }
 
@@ -38,7 +40,7 @@ const contactListLetterTemplate = (letter) => {
         <div class="contact-letter">
             <span class="txt-normal">${letter}</span>
         </div>
-    `
+    `;
 }
 
 const contactListTemplate = ({img, name, email, id, color}) => {
@@ -163,7 +165,7 @@ function renderSelectedContact(selectedContact) {
     selectedContactContainer.innerHTML = selectedContactTemplate(selectedContact);
 }
 
-function selectedContactTemplate({img, name, email, phone, color}) {
+function selectedContactTemplate({id, img, name, email, phone, color}) {
     return /*html*/`
     <div class="contact-container column">
         <div class="img-name row">
@@ -174,7 +176,14 @@ function selectedContactTemplate({img, name, email, phone, color}) {
 
             <div class="column contact-name">
                 <span>${name}</span>
-                <button data-lang="add-task" class="row" onclick="addTaskModal()">Add Task</button>
+                <div class="row gap-30">
+                    <button data-lang="add-task" class="row" onclick="addTaskModal()">Add Task</button>
+                    <div class="vertical-line"></div>
+                    <button class="delete-contact-btn row gap-10" onclick="deleteContact(${id})">
+                        <span data-lang="delete">Delete</span>
+                        <img src="/Join/assets/img/icons/trash_red.svg" width="20">
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -258,4 +267,18 @@ async function addContact() {
     notificationPrototype.send();
 
     clearCloseAddContact();
+}
+
+async function deleteContact(id) {
+    USER.contacts = USER.contacts.filter(item => item !== id.toString());
+    await USER.update();
+
+    CONTACTS[id].contacts = CONTACTS[id].contacts.filter(item => item !== USER.id);
+    await CONTACTS[id].update();
+
+    $('.contact-container').classList.add('d-none');
+    await renderContacts();
+
+    log(USER.contacts)
+    log(CONTACTS[id].contacts)
 }
