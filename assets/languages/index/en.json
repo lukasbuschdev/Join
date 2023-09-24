@@ -96,6 +96,9 @@
     "add-contact-subheading": "Tasks are better with a team!",
     "friendship-request": "Request sent!",
 
+    "confirmation-delete-contact": "Do you want to delete this Contact?",
+    "confirm-delete-contact": "Delete",
+
     "confirmation-delete-task": "Are you sure you want do delete this task?",
     "confirm-delete-task": "Delete",
     "confirmation-save-edited-task": "Save Task changes?",

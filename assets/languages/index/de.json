@@ -97,6 +97,9 @@
     "add-contact-subheading": "Aufgaben, besser im Team!",
     "friendship-request": "Anfrage gesendet!",
 
+    "confirmation-delete-contact": "Möchtest du diesen Kontakt löschen?",
+    "confirm-delete-contact": "Löschen",
+
     "confirmation-delete-task": "Aufgabe Löschen?",
     "confirm-delete-task": "Löschen",
     "confirmation-save-edited-task": "Änderungen speichern?",

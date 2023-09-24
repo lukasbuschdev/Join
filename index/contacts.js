@@ -4,8 +4,8 @@ async function initContacts () {
 }
 
 async function renderContacts() {
-    const contactsData = await getContactsData();
-    if(!contactsData) return noContactsYet();
+    const contactsData = Object.values(CONTACTS);
+    if(contactsData.length == 0) return noContactsYet();
     contactsExisting();
     log('Got Here 1')
     
@@ -14,7 +14,7 @@ async function renderContacts() {
             (singleContact) => singleContact.name[0]
         )
     )];
-    // log(contactsData)
+    
     $('#contacts-container').innerHTML = '';
 
     initialLetters.for(letter => {
@@ -179,7 +179,7 @@ function selectedContactTemplate({id, img, name, email, phone, color}) {
                 <div class="row gap-30">
                     <button data-lang="add-task" class="row" onclick="addTaskModal()">Add Task</button>
                     <div class="vertical-line"></div>
-                    <button class="delete-contact-btn row gap-10" onclick="deleteContact(${id})">
+                    <button class="delete-contact-btn row gap-10" onclick="confirmation('delete-contact', () => deleteContact(${id}))">
                         <span data-lang="delete">Delete</span>
                         <img src="/Join/assets/img/icons/trash_red.svg" width="20">
                     </button>
@@ -270,11 +270,15 @@ async function addContact() {
 }
 
 async function deleteContact(id) {
+    // log(id)
     USER.contacts = USER.contacts.filter(item => item !== id.toString());
     await USER.update();
 
+    log(id)
+
     CONTACTS[id].contacts = CONTACTS[id].contacts.filter(item => item !== USER.id);
     await CONTACTS[id].update();
+    delete CONTACTS[id];
 
     $('.contact-container').classList.add('d-none');
     await renderContacts();
