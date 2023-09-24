@@ -105,5 +105,7 @@
     "legal-notice-heading": "Impressum",
     "legal-notice-heading-2": "Angaben gemäß § 5 TMG",
     "legal-notice-heading-3": "Kontakt",
-    "legal-notice-source": "Quelle: "
+    "legal-notice-source": "Quelle: ",
+
+    "network-error": "Netzwerkfehler!"
 }

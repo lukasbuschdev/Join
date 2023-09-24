@@ -333,3 +333,13 @@ const hoverReplaceRegex = () => {
   const replaceString = "@media (hover: hover) {\n    $1\n}";
   return [regex, replaceString];
 }
+
+HTMLElement.prototype.textAnimation = async function (text, speed = 10) {
+  this.innerText = '';
+  let i = 0;
+  const int = setInterval(() => {
+    if (i + 1 == text.length) clearInterval(int);
+    this.textContent += text[i];
+    i++;
+  }, speed);
+}

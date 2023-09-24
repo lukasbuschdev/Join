@@ -42,6 +42,7 @@ class Task extends BaseClass {
     }
 
     update = () => {
+        Object.assign(BOARDS[this.boardId].tasks[this.id], this);
         return REMOTE_setData(`boards/${this.boardId}/tasks`, {[this.id]: this});
     }
 }

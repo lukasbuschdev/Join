@@ -60,8 +60,8 @@ class Board extends BaseClass {
     }
 
     update = async () => {
-        log("aaa")
         this.dateOfLastEdit = Date.now();
+        Object.assign(BOARDS[this.id], this);
         await REMOTE_setData(`boards`, {[this.id]: this});
         return getBoards();
     }

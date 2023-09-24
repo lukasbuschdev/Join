@@ -1,3 +1,3 @@
 const initHelp = () => {
-    $('nav button.active').classList.remove('active');
+    $('nav button.active')?.classList.remove('active');
 }
