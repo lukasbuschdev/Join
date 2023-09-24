@@ -51,8 +51,8 @@ const initFunctions = {
 }
 
 const loadContent = async () => {
-    const {id, classList} = event.currentTarget;
-    if (classList.contains('active')) return error('already active!');
+    const {id = currentDirectory(), classList} = event?.currentTarget || {};
+    if (classList?.contains('active')) return error('already active!');
     const url = (id == 'help')? `/Join/assets/languages/help-${currentLang()}.html` : (id == 'privacy')? `/Join/assets/languages/privacy-${currentLang()}.html` : `/Join/assets/templates/index/${id.replace('_','-')}_template.html`;
     
     const content = $('#content');
