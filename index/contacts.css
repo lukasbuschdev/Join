@@ -19,9 +19,9 @@
     display: none;
 }
 
-/* #contacts-empty {
-
-} */
+.close-inactive {
+    display: none;
+}
 
 .contact {
     border-radius: 10px;
@@ -92,6 +92,7 @@
     width: 3px;
     height: 57px;
     border-radius: 999px;
+    margin: 0;
 }
 
 .contacts-header-container span {
@@ -461,6 +462,11 @@
     .contact-name > div {
         gap: 10px;
     }
+
+    .contact .contact-name {
+        font-size: 1.625rem;
+    }
+
 }
 
 
@@ -469,33 +475,44 @@
     #add-contact-modal {
         height: 85%;
     }
-
+    
     #contacts-container {
         width: calc(100%);
         padding: 2rem;
     }
 
     .header-contact {
-        display: none;
-        position: absolute;
         inset: 0;
         gap: 25px;
     }
-
-    .img-name {
-        gap: 10px;
-    }
-
-    .header-contact .user-img-container {
-        height: 80px;
-    }
-
+    
     .add-contact-theme h1 {
         font-size: 3.5rem;
     }
 
     .add-contact-btns {
         justify-content: center;
+    }
+
+    .contact-email {
+        display: flex;
+    }
+
+    .img-name {
+        gap: 60px;
+    }
+    
+    .contacts-header-container {
+        flex-direction: row;
+        gap: 30px;
+    }
+
+    .contacts-header-container h2 {
+        font-size: 4rem;
+    }
+
+    .close-inactive {
+        display: grid;
     }
 }
 
@@ -505,13 +522,34 @@
     .add-contact-theme h1 {
         font-size: 3rem;
     }
-
+    
     .add-contact-theme span {
         font-size: 1.4rem;
     }
-
+    
     .search-contact {
         width: 250px;
+    }
+
+    .contacts-header-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .contacts-header-container h2 {
+        font-size: 4rem;
+    }
+    
+    .contacts-header-container p {
+        height: 40px;
+    }
+    
+    .header-contact .user-img-container {
+        height: 80px;
+    }
+    
+    .img-name {
+        gap: 40px;
     }
 }
 
@@ -521,8 +559,16 @@
     .add-contact-theme h1 {
         font-size: 2.8rem;
     }
-
+    
     .add-contact-theme span {
         font-size: 1.3rem;
+    }
+    
+    .img-name {
+        gap: 20px;
+    }
+
+    .contact .contact-name {
+        font-size: 1.275rem;
     }
 }

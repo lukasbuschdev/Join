@@ -153,6 +153,16 @@ async function selectContact(id) {
     let userData = await getContactsData();
     let selectedContact = userData.find(user => user.id == id);
     renderSelectedContact(selectedContact);
+
+    if (window.innerWidth <= 800) {
+        $('#contacts-container').classList.add('d-none');
+    } else {
+        $('#contacts-container').classList.remove('d-none');
+    }
+}
+
+function closeSelectedContact() {
+    $('#contacts-container').classList.remove('d-none');
 }
 
 function renderSelectedContact(selectedContact) {
