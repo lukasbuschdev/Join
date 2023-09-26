@@ -11,7 +11,7 @@ const notificationTemplate = (notification) => {
                     <button class="btn btn-primary txt-small txt-600" onclick="acceptFriendshipRequest('${id}', '${userId}')">Accept</button>
                 </div>
             </div>
-        `
+        `;
     } else if (notification.type == "boardInvite") {
         const {ownerName, boardName, boardId, id} = notification;
         return /*html*/`

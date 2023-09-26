@@ -14,6 +14,12 @@
     "legal-notice": "Impressum",
     "privacy": "Datenschutz",
 
+    "account-panel-notifications": "Benachrichtigungen",
+    "account-panel-edit-account": "Konto bearbeiten",
+    "account-panel-settings": "Einstellungen",
+
+    "language": "Sprache",
+
     "to-do": "Ausstehend",
     "awaiting-feedback": "Warte auf Rückmeldung",
     "in-progress": "In Arbeit",

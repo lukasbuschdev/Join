@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/Join/index/legal_notice.css">
     <link rel="stylesheet" href="/Join/index/privacy.css">
     <link rel="stylesheet" href="/Join/index/help.css">
+    <link rel="stylesheet" href="/Join/index/settings.css">
 
     <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
@@ -43,6 +44,7 @@
     <script src="/Join/index/add_task.js"></script>
     <script src="/Join/index/privacy.js"></script>
     <script src="/Join/index/help.js"></script>
+    <script src="/Join/index/settings.js"></script>
     <script src="/Join/assets/templates/index/task_template.js"></script>
     <script src="/Join/assets/templates/index/fullscreen-task_template.js"></script>
     <script src="/Join/assets/templates/index/edit-task_template.js"></script>
@@ -108,13 +110,13 @@
                         <img src="/Join/assets/img/icons/bell.png" alt="">
                         <div class="notifications-counter circle flex-center d-none"></div>
                     </div>
-                    <span>Notifications</span>
+                    <span data-lang="account-panel-notifications">Notifications</span>
                 </button>
                 <button id="edit-account-btn" class="txt-normal row gap-15" type="option" onclick="loadAccountPanelContent()">
-                    <span>Edit Account</span>
+                    <span data-lang="account-panel-edit-account">Edit Account</span>
                 </button>
                 <button id="settings-btn" class="txt-normal row gap-15" type="option" onclick="loadAccountPanelContent()">
-                    <span>Settings</span>
+                    <span data-lang="account-panel-settings">Settings</span>
                 </button>
             </div>
             <div id="account-panel-content"></div>

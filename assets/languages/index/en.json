@@ -14,6 +14,12 @@
     "legal-notice": "Legal notice",
     "privacy": "Privacy",
 
+    "account-panel-notifications": "Notifications",
+    "account-panel-edit-account": "Edit account",
+    "account-panel-settings": "Settings",
+
+    "language": "Language",
+
     "to-do": "To do",
     "awaiting-feedback": "Awaiting Feedback",
     "in-progress": "In Progress",
