@@ -29,7 +29,7 @@ header {
 #content {
     background-color: var(--clr-bg-light);
     overflow: auto;
-    scrollbar-gutter: stable;
+    /* scrollbar-gutter: stable; */
     position: relative;
 }
 

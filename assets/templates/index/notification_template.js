@@ -24,7 +24,7 @@ const notificationTemplate = (notification) => {
                     <button class="btn btn-primary txt-small txt-600" onclick="acceptBoardInvite('${boardId}', '${id}')">Accept</button>
                 </div>
             </div>
-            `
+        `;
     } else if (notification.type == "assignTo") {
         const {userName, boardName, taskName, id} = notification;
         return /*html*/`
@@ -36,7 +36,7 @@ const notificationTemplate = (notification) => {
                     <button class="btn btn-secondary txt-small txt-600" onclick="removeNotification('${id}')">Understood</button>
                 </div>
             </div>
-        `
+        `;
     }
 }
 
@@ -49,4 +49,6 @@ async function acceptFriendshipRequest(id, userId) {
     await REMOTE_setData(`users/${userId}/contacts`, USER.id.toString());
     USER.contacts.push(userId);
     await removeFriendshipRequest(id, userId);
+    loadContent();
+    notification('friend-added');
 }
