@@ -13,3 +13,7 @@
 .language-btn:hover {
     transform: scale(1.05);
 }
+
+.settings-content > div {
+    flex-wrap: wrap;
+}

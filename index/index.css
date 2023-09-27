@@ -157,11 +157,11 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 
 #account-panel > div {
     height: 594px;
-    width: 900px;
+    max-width: 900px;
 }
 
 #account-panel-options {
-    width: 30%;
+    width: 250px;
     height: 100%;
     justify-content: center;
     align-items: center;
@@ -227,6 +227,7 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     height: 100%;
     background-color: white;
     padding: 2rem;
+    min-width: 600px;
 }
 
 #account-panel-content > div {
@@ -251,6 +252,8 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     border: 1px solid var(--clr-placeholder);
     padding: 15px 20px;
     justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .notification .btn {
@@ -261,6 +264,14 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 .notification .btn-container .btn-secondary{
     margin-left: auto;
 }
+
+
+@media(max-width: 1000px) {
+    #account-panel-options button span {
+        font-size: 1rem;
+    }
+}
+
 
 @media (max-width: 800px) {
     body {
@@ -314,21 +325,92 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
         align-items: unset;
     }
 
+    #notifications-container h1 {
+        font-size: 3rem;
+        text-align: center;
+    }
+
     #settings-container h1 {
         font-size: 3rem;
+        text-align: center;
+    }
+
+    #settings-content {
+        width: 100%;
+    }
+
+    #settings-content > div{
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    #account-panel > div {
+        flex-direction: column-reverse;
+    }
+
+    #account-panel-options {
+        width: 100%;
+    }
+
+    #account-panel-options button {
+        height: 55px;
+    }
+
+    #account-panel-content {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    #account-panel-options {
+        width: 100%;
+        flex-direction: row;
+        height: unset;
+        padding: 0;
+        gap: 0;
+    }
+
+    #account-panel-options::after {
+        content: none;
     }
 }
 
-@media (max-width: 600px) {
-    /* #account-panel > div {
-        flex-direction: column;
-    } */
 
-    #account-panel-options {
-        width: 200px;
+@media (max-width: 600px) {
+    #notification .btn {
+        font-size: var(--txt-tiny) !important;
+    }
+
+    #account-panel-options button span {
+        display: none;
+    }
+
+    #settings-container h1 {
+        font-size: 2.5rem;
+    }
+
+    #settings-content > div {
+        justify-content: center;
+    }
+
+    #account-panel-options button {
+        height: 40px;
     }
 }
 
 @media (max-width: 400px) {
+    #settings-content > div{
+        justify-content: center;
+    }
 
+    .notifications > div span {
+        font-size: 0.825rem;
+    }
+
+    #notifications-container h1 {
+        font-size: 2rem;
+    }
+
+    #settings-container h1 {
+        font-size: 2rem;
+    }
 }
