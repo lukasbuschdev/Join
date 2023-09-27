@@ -119,7 +119,7 @@ const createNewBoard = async () => {
         categories,
         collaborators: [USER.id]
     };
-    const newBoard = await user.addBoard(boardData);
+    const newBoard = await USER.addBoard(boardData);
     $('#add-board').closeModal();
     notification('board-added');
 

@@ -11,7 +11,7 @@ const currentUserId = () => (searchParams().get('uid') == null) ? undefined : `$
 
 const menuOptionInitator = new MutationObserver(
     ({target}) => {
-        target.closest('[type = "menu"]]').initMenus();
+        target.closest('[type = "menu"]').initMenus();
     }
 );
 
