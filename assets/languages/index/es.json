@@ -116,5 +116,12 @@
     "legal-notice-heading-3": "Contacto",
     "legal-notice-source": "Fuente:",
 
+    "accept": "Aceptar",
+    "decline": "Rechazar",
+    "user-has-sent-friendship-request": " te ha enviado una solicitud de amistad.",
+    "user-invited-you-to-board": " te ha invitado a colaborar en su pizarra.",
+    "assigned-you-to-task": " te asignó a la tarea ",
+    "understood": "Entendido",
+
     "network-error": "Error de Red"
 }

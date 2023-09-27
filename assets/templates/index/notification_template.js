@@ -4,11 +4,11 @@ const notificationTemplate = (notification) => {
         return /*html*/`
             <div class="notification radius-15 row" data-id="${id}">
                 <div>
-                    <span><b>${userName}</b> has sent you a friendship request!</span>
+                    <b>${userName}</b><span data-lang="user-has-sent-friendship-request">has sent you a friendship request!</span>
                 </div>
                 <div class="btn-container gap-10">
-                    <button class="btn btn-secondary txt-small txt-600" onclick="removeFriendshipRequest('${id}', '${userId}')">Decline</button>
-                    <button class="btn btn-primary txt-small txt-600" onclick="acceptFriendshipRequest('${id}', '${userId}')">Accept</button>
+                    <button data-lang="decline" class="btn btn-secondary txt-small txt-600" onclick="removeFriendshipRequest('${id}', '${userId}')">Decline</button>
+                    <button data-lang="accept" class="btn btn-primary txt-small txt-600" onclick="acceptFriendshipRequest('${id}', '${userId}')">Accept</button>
                 </div>
             </div>
         `;
@@ -17,11 +17,11 @@ const notificationTemplate = (notification) => {
         return /*html*/`
             <div class="notification radius-15 row" data-id="${id}">
                 <div>
-                    <b>${ownerName}</b> invited you to collaborate with them on their board <b>${boardName.replaceAll('-',' ')}</b>!
+                    <b>${ownerName}</b> <span data-lang="user-invited-you-to-board">invited you to collaborate with them on their board</span> <b>${boardName.replaceAll('-',' ')}</b>!
                 </div>
                 <div class="btn-container gap-10">
-                    <button class="btn btn-secondary txt-small txt-600" onclick="removeNotification('${id}')">Decline</button>
-                    <button class="btn btn-primary txt-small txt-600" onclick="acceptBoardInvite('${boardId}', '${id}')">Accept</button>
+                    <button data-lang="decline" class="btn btn-secondary txt-small txt-600" onclick="removeNotification('${id}')">Decline</button>
+                    <button data-lang="accept" class="btn btn-primary txt-small txt-600" onclick="acceptBoardInvite('${boardId}', '${id}')">Accept</button>
                 </div>
             </div>
         `;
@@ -30,10 +30,10 @@ const notificationTemplate = (notification) => {
         return /*html*/`
             <div class="notification radius-15 column gap-10" data-id="${id}">
                 <div>
-                    <b>${userName}</b> assigned you to the task <b>"${taskName}"</b> in <b>"${boardName.replaceAll('-',' ')}"</b>!
+                    <b>${userName}</b> <span data-lang="assigned-you-to-task">assigned you to the task</span> <b>"${taskName}"</b> in <b>"${boardName.replaceAll('-',' ')}"</b>!
                 </div>
                 <div class="btn-container gap-10">
-                    <button class="btn btn-secondary txt-small txt-600" onclick="removeNotification('${id}')">Understood</button>
+                    <button data-lang="understood" class="btn btn-secondary txt-small txt-600" onclick="removeNotification('${id}')">Understood</button>
                 </div>
             </div>
         `;

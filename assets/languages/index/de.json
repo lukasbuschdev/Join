@@ -121,5 +121,12 @@
     "legal-notice-heading-3": "Kontakt",
     "legal-notice-source": "Quelle: ",
 
+    "accept": "Annehmen",
+    "decline": "Ablehnen",
+    "user-has-sent-friendship-request": " hat dir eine Freundschaftsanfrage gesendet!",
+    "user-invited-you-to-board": " hat dich eingeladen, mit ihnen an ihrem Board zusammenzuarbeiten. ",
+    "assigned-you-to-task": " hat dich der Aufgabe ",
+    "understood": "Verstanden",
+
     "network-error": "Netzwerkfehler!"
 }

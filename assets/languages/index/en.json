@@ -120,5 +120,12 @@
     "legal-notice-heading-3": "Contact",
     "legal-notice-source": "Source: ",
 
+    "accept": "Accent",
+    "decline": "Decline",
+    "user-has-sent-friendship-request": " has sent you a friendship request!",
+    "user-invited-you-to-board": " invited you to collaborate with them on their board ",
+    "assigned-you-to-task": " assigned you to the task ",
+    "understood": "Understood",
+
     "network-error": "Network Error!"
 }
