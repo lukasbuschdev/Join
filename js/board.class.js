@@ -67,6 +67,7 @@ class Board extends BaseClass {
 
     delete = () => {
         delete BOARDS[this.id];
+        SESSION_removeData('activeBoard');
         return REMOTE_removeData(`boards/${this.id}`);
     }
 }

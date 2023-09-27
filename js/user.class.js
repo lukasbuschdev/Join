@@ -99,7 +99,7 @@ class User extends Account {
         const board = new Board(boardData);
         
         await board.update();
-        this.boards.push(board.id);
+        this.boards.push(`${board.id}`);
         await this.update();
         return board;
     }

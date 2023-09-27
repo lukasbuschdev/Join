@@ -214,6 +214,10 @@ const SESSION_getData = (key) => {
     return (!(data == 'undefined')) ? data : undefined;
 }
 
+const SESSION_removeData = (key) => {
+    sessionStorage.removeItem(key);
+}
+
 // DEV
 
 const getDevUsers = async () => {
