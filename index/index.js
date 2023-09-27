@@ -88,5 +88,5 @@ const loadNotifications = () => {
     const container = $('#notifications-content');
     container.innerHTML = ''
     container.renderItems(Object.values(USER.notifications), notificationTemplate);
-    container.LANG_load();
+    $('#account-panel-content').LANG_load();
 };
