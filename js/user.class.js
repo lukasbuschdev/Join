@@ -72,6 +72,7 @@ class User extends Account {
     }
 
     update = async () => {
+        Object
         await REMOTE_setData('users', {[this.id]: this});
         return getUser();
     }

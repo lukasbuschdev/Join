@@ -5,13 +5,10 @@ const initSummary = async () => {
 
 const renderBoards = () => {
     const selection = $('#summary-selection');
-    if (USER.boards.length == 0) {
-        $('#summary-content').classList.toggle('d-none');
-        return;
-    };
+    if (USER.boards.length == 0) return $('#summary-content').classList.toggle('d-none');
     selection.innerHTML = '';
     selection.renderItems(Object.values(BOARDS)
-        .sort(({dateOfLastEdit: a}, {dateOfLastEdit: b}) => a - b), boardSelectionTemplate);
+        .sort((a, b) => a.dateOfLastEdit - b.dateOfLastEdit), boardSelectionTemplate);
     if (!SESSION_getData('activeBoard')) SESSION_setData('activeBoard', Number(Object.keys(BOARDS)[0]));
     const activeBoard = SESSION_getData('activeBoard');
     const activeBoardButton = $(`#summary-selection [data-id="${activeBoard}"]`);
@@ -102,17 +99,24 @@ const clearCategoryInput = () => {
     throwErrors({identifier: "name-too-long", bool: titleValidity});
 }
 
+const isValidTitle = (titleInput) => /^[a-zA-Z0-9_-]+$/.test(titleInput);
+
 const createNewBoard = async () => {
     const boardName = $('#add-board-title input').value.replaceAll(' ', '-');
+    const titleIsValid = isValidTitle(boardName);
+    if (!titleIsValid) return throwErrors({identifier: 'title', bool: titleIsValid});
 
-    let categories = {};
-    $$('.task-category').for(
-        category => {
-            const color = category.style.getPropertyValue('--clr');
-            const name = category.$('span').innerText;
-            categories[name] = color;
-        }
-    );
+    const collaborators = [...$$('.collaborator')].reduce((total, collaborator) => {
+        total.push(collaborator.dataset.id);
+        return total;
+    }, [])
+
+    const categories = [...$$('.task-category')].reduce((total, category) => {
+        const color = category.style.getPropertyValue('--clr');
+        const name = category.$('span').innerText;
+        total[name] = color;
+        return total;
+    }, {});
     
     const boardData = {
         name: boardName,
@@ -123,18 +127,12 @@ const createNewBoard = async () => {
     $('#add-board').closeModal();
     notification('board-added');
 
-    createBoardNotification(newBoard);
+    createBoardNotification(newBoard, collaborators);
 };
 
-const createBoardNotification = ({name, id}) => {
-    const recipients = [...$$('.collaborators-container .invite')].reduce((total, {dataset: {id}}) => {
-        total.push(id);
-        return total;
-    }, []);
-
-
+const createBoardNotification = ({name, id}, collaborators) => {
     const notification = new Notify({
-        recipients,
+        collaborators,
         type: "boardInvite",
         ownerName: USER.name,
         boardName: name,
@@ -194,4 +192,11 @@ const addCollaborator = (id) => {
 const initEditBoard = (boardId) => {
     const editBoardModal = $('#edit-board-modal');
     editBoardModal.openModal();
+}
+
+const deleteBoard = async (board) => {
+    board.collaborators.forAwait(async collaboratorId => {
+        ALL_USERS[collaboratorId].setProperty('boards', ALL_USERS[collaboratorId].getPropertyValue('boards').remove(collaboratorId));
+    });
+    board.delete();
 }

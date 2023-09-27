@@ -24,6 +24,11 @@ Array.prototype.toObject = function (keys) {
     return this.reduce((total, current, i) => { return {...total, [keys[i]]: current }}, {});
 }
 
+Array.prototype.remove = function (item) {
+    if (!this.includes(item)) return error(`"${item}" is not in this array!`);
+    return this.splice(this.indexOf(item), 1);
+}
+
 Object.prototype.filter = function (cb) {
     let newObj = {};
     Object.entries(this).filter(([key, value], index) =>
