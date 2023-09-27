@@ -12,7 +12,13 @@
     "find-task": "Find Task",
     "contacts": "Contacs",
     "legal-notice": "Legal notice",
-    "privacy": "Datenschutz",
+    "privacy": "Privacy",
+
+    "account-panel-notifications": "Notifications",
+    "account-panel-edit-account": "Edit account",
+    "account-panel-settings": "Settings",
+
+    "language": "Language",
 
     "to-do": "To do",
     "awaiting-feedback": "Awaiting Feedback",
@@ -95,6 +101,10 @@
     "add-contact-heading": "Add contact",
     "add-contact-subheading": "Tasks are better with a team!",
     "friendship-request": "Request sent!",
+    "friend-added": "Contact has been added!",
+
+    "confirmation-delete-contact": "Do you want to delete this Contact?",
+    "confirm-delete-contact": "Delete",
 
     "confirmation-delete-task": "Are you sure you want do delete this task?",
     "confirm-delete-task": "Delete",

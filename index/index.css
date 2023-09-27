@@ -29,7 +29,7 @@ header {
 #content {
     background-color: var(--clr-bg-light);
     overflow: auto;
-    scrollbar-gutter: stable;
+    /* scrollbar-gutter: stable; */
     position: relative;
 }
 
@@ -196,10 +196,15 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     color: white;
 }
 
+#settings-btn img {
+    height: 25px;
+    width: 25px;
+}
+
 @media (hover: hover) {
     #account-panel-options button:hover {
     color: var(--clr-blue);
-}
+    }
 }
 
 .notifications-counter {

@@ -4,8 +4,8 @@ async function initContacts () {
 }
 
 async function renderContacts() {
-    const contactsData = await getContactsData();
-    if(!contactsData) return noContactsYet();
+    const contactsData = Object.values(CONTACTS);
+    if(contactsData.length == 0) return noContactsYet();
     contactsExisting();
     log('Got Here 1')
     
@@ -14,7 +14,7 @@ async function renderContacts() {
             (singleContact) => singleContact.name[0]
         )
     )];
-    // log(contactsData)
+
     $('#contacts-container').innerHTML = '';
 
     initialLetters.for(letter => {
@@ -82,8 +82,10 @@ function clearInput(){
 }
 
 function clearImage() {
-    let image = $('.user-img-gray');
-    image.src = "/Join/assets/img/icons/user_img_gray.svg";
+    let userImgContainer = $('.add-contact-field .user-img-container');
+    userImgContainer.innerHTML = /*html*/ `
+        <img class="user-img-gray" src="/Join/assets/img/icons/user_img_gray.svg">
+    `;
 }
 
 function clearResult() {
@@ -93,7 +95,6 @@ function clearResult() {
 
 function clearCloseAddContact() {
     let userImgContainer = $('.add-contact-field .user-img-container');
-    // let image = $('.user-img-gray');
 
     clearInput();
     clearResult();
@@ -101,7 +102,6 @@ function clearCloseAddContact() {
     userImgContainer.innerHTML = /*html*/ `
         <img class="user-img-gray" src="/Join/assets/img/icons/user_img_gray.svg">
     `;
-    // image.setAttribute('src', "/Join/assets/img/icons/user_img_gray.svg");
 
     closeAddContact();
 }
@@ -109,7 +109,7 @@ function clearCloseAddContact() {
 const getInput = debounce(async function () {
     let input = $('#input-name');
     const userId = currentUserId();
-    const searchResultContainer = $('#user-search-result').textContent.trim();
+    $('#user-search-result').textContent.trim();
 
     if(input.value.length >= 3) {
         const allUsers = ALL_USERS;
@@ -130,10 +130,7 @@ const getInput = debounce(async function () {
     
         renderSearchResults(sortedUsers);
         setSearchResultStyle();
-
     } else {
-        // if(input.value && searchResultContainer === '')
-        // log('Calling unsetSearchResultStyle()');
         unsetSearchResultStyle();
     }
 }, 200);
@@ -154,14 +151,22 @@ function unsetSearchResultStyle() {
 
 async function selectContact(id) {
     let userData = await getContactsData();
-
     let selectedContact = userData.find(user => user.id == id);
     renderSelectedContact(selectedContact);
+
+    if (window.innerWidth <= 800) {
+        $('#contacts-container').classList.add('d-none');
+    } else {
+        $('#contacts-container').classList.remove('d-none');
+    }
+}
+
+function closeSelectedContact() {
+    $('#contacts-container').classList.remove('d-none');
 }
 
 function renderSelectedContact(selectedContact) {
     const selectedContactContainer = $('#selected-contact-container');
-
     selectedContactContainer.innerHTML = selectedContactTemplate(selectedContact);
 }
 
@@ -179,7 +184,7 @@ function selectedContactTemplate({id, img, name, email, phone, color}) {
                 <div class="row gap-30">
                     <button data-lang="add-task" class="row" onclick="addTaskModal()">Add Task</button>
                     <div class="vertical-line"></div>
-                    <button class="delete-contact-btn row gap-10" onclick="deleteContact(${id})">
+                    <button class="delete-contact-btn row gap-10" onclick="confirmation('delete-contact', () => deleteContact(${id}))">
                         <span data-lang="delete">Delete</span>
                         <img src="/Join/assets/img/icons/trash_red.svg" width="20">
                     </button>
@@ -211,7 +216,6 @@ function selectedContactTemplate({id, img, name, email, phone, color}) {
 function renderSearchResults(sortedUsers) {
     const searchResultsContainer = $('#user-search-result');
     searchResultsContainer.innerHTML = '';
-    // log(sortedUsers)
 
     for(let i = 0; i < sortedUsers.length; i++) {
         const user = sortedUsers[i];
@@ -220,24 +224,25 @@ function renderSearchResults(sortedUsers) {
 }
 
 function searchResultTemplates({id, img, name, email}) {
-        return /*html*/`
-            <div class="search-result-contact row gap-10" id="search-result-contact" onclick="selectNewContact('${id}', '${img}', '${name}')">
-                <div class="contact-img user-img-container" data-img="false">
-                    <h3>${name.slice(0, 2).toUpperCase()}</h3>
-                    <img src="${img}">
-                </div>
-                <span class="txt-normal result-name-email">${name}</span>
-                <span class="txt-normal result-name-email mail-clr">${email}</span>
-            </div>   
-        `;
+    return /*html*/`
+        <div class="search-result-contact row gap-10" id="search-result-contact" onclick="selectNewContact('${id}', '${img}', '${name}')">
+            <div class="contact-img user-img-container" data-img="false">
+                <h3>${name.slice(0, 2).toUpperCase()}</h3>
+                <img src="${img}">
+            </div>
+            <span class="txt-normal result-name-email">${name}</span>
+            <span class="txt-normal result-name-email mail-clr">${email}</span>
+        </div>   
+    `;
 }
 
 function selectNewContact(id, img, name) {
     let image = $('.user-img-gray');
     let input = $('#input-name');
     let userImgContainer = $('.add-contact-field .user-img-container');
+    let initials = name.slice(0, 2).toUpperCase();
     
-    userImgContainer.innerHTML = name.slice(0, 2).toUpperCase();
+    userImgContainer.innerHTML = initials;
     image.setAttribute('src', img);
     input.value = name;
     input.dataset.id = id;
@@ -275,10 +280,9 @@ async function deleteContact(id) {
 
     CONTACTS[id].contacts = CONTACTS[id].contacts.filter(item => item !== USER.id);
     await CONTACTS[id].update();
+    delete CONTACTS[id];
 
     $('.contact-container').classList.add('d-none');
     await renderContacts();
-
-    log(USER.contacts)
-    log(CONTACTS[id].contacts)
+    await loadContent();
 }

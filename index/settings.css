@@ -1,0 +1,15 @@
+.lang-img {
+    height: 35px;
+    width: 35px;
+    border-radius: 999px;
+}
+
+.language-btn {
+    transform: scale(1);
+    transition: var(--transition-fast);
+    cursor: pointer;
+}
+
+.language-btn:hover {
+    transform: scale(1.05);
+}
