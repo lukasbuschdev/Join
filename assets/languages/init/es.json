@@ -1,0 +1,58 @@
+{
+    "title-login": "Join - Iniciar sesión",
+    "title-signup": "Join - Registrarse",
+    "title-verify-account": "Join - Verificar cuenta",
+    "title-forgot-password": "Join - Olvidó la contraseña",
+    "title-reset-password": "Join - Restablecer contraseña",
+    "title-create-account": "Join - Editar perfil",
+
+    "email-or-username": "Correo electrónico o nombre de usuario",
+    "email": "Correo electrónico",
+    "name": "Nombre",
+    "password": "Contraseña",
+
+    "forgot-password": "Olvidé mi contraseña",
+    "remember-me": "Recuérdame",
+    "log-in": "Iniciar sesión",
+    "guest-log-in": "Iniciar sesión como invitado",
+    "not-join-user": "¿No eres usuario de Join?",
+    "sign-up": "Registrarse",
+
+    "email-or-username-not-found": "¡Correo electrónico o nombre de usuario no encontrado!",
+    "wrong-password": "Contraseña incorrecta",
+    "invalid-name": "Nombre inválido",
+    "name-in-use": "¡El nombre de usuario ya está en uso!",
+    "invalid-email": "Debe ser un correo electrónico válido",
+    "email-in-use": "Correo electrónico ya en uso",
+    "invalid-password": "La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula y una letra minúscula, así como un dígito",
+    "automatic-signout": "¡Se te desconectó automáticamente!",
+
+    "i-forgot-password": "Olvidé mi contraseña",
+    "dont-worry": "¡No te preocupes! Te enviaremos un correo electrónico con las instrucciones para restablecer tu contraseña.",
+    "send-email": "Enviar correo electrónico",
+    "email-not-found": "¡Correo electrónico desconocido!",
+    "email-sent": "Se ha enviado un correo electrónico a tu dirección",
+
+    "reset-password": "Restablecer tu contraseña",
+    "change-password": "Cambiar la contraseña de tu cuenta",
+    "different-passwords": "¡Contraseñas no coinciden!",
+    "new-password": "Nueva contraseña",
+    "confirm-password": "Confirmar contraseña",
+    "continue": "Continuar",
+    "password-reset": "Contraseña restablecida",
+
+    "verify-account": "Verificar tu cuenta",
+    "check-inbox": "Por favor, verifica tu bandeja de entrada e ingresa el código de verificación a continuación o haz clic en el enlace del correo electrónico",
+    "expires-in": "El código expira en:",
+    "wrong-code": "Código incorrecto!",
+    "code-expired": "Código expirado!",
+    "new-code": "Nuevo código",
+    "confirm": "Confirmar",
+
+    "create-account": "Editar tu perfil",
+    "finish-setup": "Terminar la configuración",
+    "choose-image": "Elegir imagen",
+    "choose-image-info": "Sube tu imagen (opcional)",
+    "phone-number": "Número de teléfono (opcional)",
+    "phone-number-invalid": "Número de teléfono inválido"
+}
