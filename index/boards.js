@@ -3,7 +3,7 @@ let initialTask;
 const initBoard = async () => {
     await getBoards();
     await getAllUsers();
-    renderTasks();
+    return renderTasks();
 }
 
 const renderTasks = (filter) => {

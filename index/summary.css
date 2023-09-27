@@ -422,3 +422,10 @@ dialog#add-board .task-category button img {
     width: 35px;
     height: 35px;
 }
+
+#edit-board {
+    width: 700px;
+    height: 500px;
+    background-color: white;
+    padding: 66px 46px;
+}

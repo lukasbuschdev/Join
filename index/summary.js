@@ -11,11 +11,7 @@ const renderBoards = () => {
     };
     selection.innerHTML = '';
     selection.renderItems(Object.values(BOARDS)
-        .sort(({dateOfLastEdit: a}, {dateOfLastEdit: b}) => {
-            if (a < b) return 1;
-            else if (a > b) return -1;
-            else return 0.
-    }), boardSelectionTemplate);
+        .sort(({dateOfLastEdit: a}, {dateOfLastEdit: b}) => a - b), boardSelectionTemplate);
     if (!SESSION_getData('activeBoard')) SESSION_setData('activeBoard', Number(Object.keys(BOARDS)[0]));
     const activeBoard = SESSION_getData('activeBoard');
     const activeBoardButton = $(`#summary-selection [data-id="${activeBoard}"]`);
@@ -23,13 +19,15 @@ const renderBoards = () => {
     activeBoardButton.classList.add('active');
 }
 
-const boardSelectionTemplate = ({name, id}) => {
+const boardSelectionTemplate = ({name, id, owner}) => {
     return /*html*/`
         <button class="row" type="option" data-id="${id}" onclick="renderBoard()">
             <span>${name.replaceAll('-',' ')}</span>
-            <div class="circle grid-center">
+            ${(owner == USER.id)
+            ? /*html*/`<div class="circle grid-center" onclick="initEditBoard(${id})">
                 <img src="/Join/assets/img/icons/edit.svg" alt="">
-            </div>
+            </div>`
+            : ''}
         </button>`;
 }
 
@@ -191,4 +189,9 @@ const addCollaborator = (id) => {
             </div>
         </button>
     `;
+}
+
+const initEditBoard = (boardId) => {
+    const editBoardModal = $('#edit-board-modal');
+    editBoardModal.openModal();
 }

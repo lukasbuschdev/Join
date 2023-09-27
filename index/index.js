@@ -60,7 +60,7 @@ const loadContent = async () => {
     await content.includeTemplate(url);
     content.$(':scope > div').classList.add("o-none");
 
-    if (id in initFunctions) initFunctions[id]();
+    if (id in initFunctions) await initFunctions[id]();
     if (currentDirectory() !== id) goTo(id);
     LANG_load();
     content.initMenus();
