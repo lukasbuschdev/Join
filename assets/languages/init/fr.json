@@ -1,0 +1,58 @@
+{
+    "title-login": "Join - Connexion",
+    "title-signup": "Join - S'inscrire",
+    "title-verify-account": "Join - Vérifier le Compte",
+    "title-forgot-password": "Join - Mot de passe oublié",
+    "title-reset-password": "Join - Réinitialiser le Mot de passe",
+    "title-create-account": "Join - Modifier le Profil",
+
+    "email-or-username": "Email ou Nom d'utilisateur",
+    "email": "Email",
+    "name": "Nom",
+    "password": "Mot de passe",
+
+    "forgot-password": "J'ai oublié mon mot de passe",
+    "remember-me": "Se souvenir de moi",
+    "log-in": "Se connecter",
+    "guest-log-in": "Connexion en tant qu'invité",
+    "not-join-user": "Pas encore membre de Join ?",
+    "sign-up": "S'inscrire",
+
+    "email-or-username-not-found": "Email ou nom d'utilisateur introuvable !",
+    "wrong-password": "Mot de passe incorrect !",
+    "invalid-name": "Nom invalide",
+    "name-in-use": "Ce nom d'utilisateur est déjà utilisé !",
+    "invalid-email": "Doit être une adresse email valide",
+    "email-in-use": "Cet email est déjà utilisé !",
+    "invalid-password": "Le mot de passe doit comporter au moins 8 caractères et contenir au moins une lettre majuscule, une lettre minuscule et un chiffre",
+    "automatic-signout": "Vous avez été déconnecté automatiquement !",
+
+    "i-forgot-password": "J'ai oublié mon mot de passe",
+    "dont-worry": "Ne vous inquiétez pas ! Nous vous enverrons un email avec les instructions pour réinitialiser votre mot de passe.",
+    "send-email": "Envoyer un email",
+    "email-not-found": "Email inconnu !",
+    "email-sent": "Un email a été envoyé à votre adresse",
+
+    "reset-password": "Réinitialiser votre mot de passe",
+    "change-password": "Changer le mot de passe de votre compte",
+    "different-passwords": "Mots de passe non identiques !",
+    "new-password": "Nouveau mot de passe",
+    "confirm-password": "Confirmer le mot de passe",
+    "continue": "Continuer",
+    "password-reset": "Mot de passe réinitialisé",
+
+    "verify-account": "Vérifier votre Compte",
+    "check-inbox": "Veuillez vérifier votre boîte de réception et entrer le code de vérification ci-dessous ou cliquer sur le lien dans l'email",
+    "expires-in": "Le code expire dans :",
+    "wrong-code": "Code incorrect !",
+    "code-expired": "Code expiré !",
+    "new-code": "Nouveau code",
+    "confirm": "Confirmer",
+
+    "create-account": "Modifier votre Profil",
+    "finish-setup": "Terminer la Configuration",
+    "choose-image": "Choisir une Image",
+    "choose-image-info": "Téléchargez votre image (facultatif)",
+    "phone-number": "Numéro de téléphone (facultatif)",
+    "phone-number-invalid": "Numéro de téléphone invalide !"
+}
