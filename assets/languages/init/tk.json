@@ -1,0 +1,58 @@
+{
+    "title-login": "Join - Giriş",
+    "title-signup": "Join - Üyelik",
+    "title-verify-account": "Join - Hesap Doğrulama",
+    "title-forgot-password": "Join - Şifremi Unuttum",
+    "title-reset-password": "Join - Şifre Sıfırlama",
+    "title-create-account": "Join - Profili Düzenle",
+
+    "email-or-username": "E-posta veya Kullanıcı Adı",
+    "email": "E-posta",
+    "name": "Ad",
+    "password": "Şifre",
+
+    "forgot-password": "Şifremi unuttum",
+    "remember-me": "Beni Hatırla",
+    "log-in": "Giriş Yap",
+    "guest-log-in": "Misafir Girişi",
+    "not-join-user": "Join kullanıcısı değil misiniz?",
+    "sign-up": "Kaydol",
+
+    "email-or-username-not-found": "E-posta veya kullanıcı adı bulunamadı!",
+    "wrong-password": "Hatalı Şifre!",
+    "invalid-name": "Geçersiz Ad",
+    "name-in-use": "Kullanıcı adı zaten kullanılıyor!",
+    "invalid-email": "Geçerli bir e-posta olmalıdır",
+    "email-in-use": "E-posta zaten kullanılıyor!",
+    "invalid-password": "Şifre en az 8 karakter uzunluğunda olmalı ve en az bir büyük harf, bir küçük harf ve bir rakam içermelidir",
+    "automatic-signout": "Otomatik olarak çıkış yaptınız!",
+
+    "i-forgot-password": "Şifremi unuttum",
+    "dont-worry": "Endişelenmeyin! Size şifrenizi sıfırlama talimatlarını içeren bir e-posta göndereceğiz.",
+    "send-email": "E-posta gönder",
+    "email-not-found": "E-posta bulunamadı!",
+    "email-sent": "Bir E-Posta size gönderildi",
+
+    "reset-password": "Şifrenizi Sıfırlayın",
+    "change-password": "Hesap şifrenizi değiştirin",
+    "different-passwords": "Şifreler uyuşmuyor!",
+    "new-password": "Yeni şifre",
+    "confirm-password": "Şifreyi Onayla",
+    "continue": "Devam Et",
+    "password-reset": "Şifre sıfırlandı",
+
+    "verify-account": "Hesabınızı Doğrulayın",
+    "check-inbox": "Lütfen gelen kutunuzu kontrol edin ve aşağıdaki doğrulama kodunu girin veya e-postadaki bağlantıya tıklayın",
+    "expires-in": "Kod süresi doluyor:",
+    "wrong-code": "Yanlış Kod!",
+    "code-expired": "Kod Süresi Doldu!",
+    "new-code": "Yeni Kod",
+    "confirm": "Onayla",
+
+    "create-account": "Profilinizi Düzenle",
+    "finish-setup": "Kurulumu Tamamla",
+    "choose-image": "Resim Seç",
+    "choose-image-info": "Resminizi yükleyin (isteğe bağlı)",
+    "phone-number": "Telefon numarası (isteğe bağlı)",
+    "phone-number-invalid": "Geçersiz telefon numarası!"
+}
