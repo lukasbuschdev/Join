@@ -47,6 +47,7 @@ async function acceptBoardInvite (boardId, notificationId) {
     await getBoards();
     await removeNotification(notificationId);
     notification('board-joined');
+    loadContent();
 }
 
 async function removeNotification (notificationId) {
