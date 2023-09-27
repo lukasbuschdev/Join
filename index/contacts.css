@@ -479,11 +479,16 @@
     #contacts-container {
         width: calc(100%);
         padding: 2rem;
+        z-index: 2;
+    }
+
+    .contacts-wrapper .close-inactive {
+        z-index: 1;
     }
 
     .header-contact {
         inset: 0;
-        gap: 25px;
+        position: absolute;
     }
     
     .add-contact-theme h1 {
@@ -514,6 +519,11 @@
     .close-inactive {
         display: grid;
     }
+
+    .absolute {
+        bottom: 0;
+        margin-bottom: 15px;
+    }
 }
 
 
@@ -537,11 +547,15 @@
     }
 
     .contacts-header-container h2 {
-        font-size: 4rem;
+        font-size: 3rem;
     }
     
     .contacts-header-container p {
         height: 40px;
+    }
+
+    .contacts-header-container span {
+        font-size: 1.5rem;
     }
     
     .header-contact .user-img-container {
@@ -570,5 +584,9 @@
 
     .contact .contact-name {
         font-size: 1.275rem;
+    }
+
+    .contact-name > span {
+        font-size: 1.625rem;
     }
 }

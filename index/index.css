@@ -23,7 +23,7 @@ header {
     gap: 35px;
     padding: 20px 36px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1); 
-    z-index: 1;
+    z-index: 99;
 }
 
 #content {
@@ -157,7 +157,7 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 
 #account-panel > div {
     height: 594px;
-    width: 1025px;
+    width: 900px;
 }
 
 #account-panel-options {
@@ -313,4 +313,22 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
         flex-direction: column;
         align-items: unset;
     }
+
+    #settings-container h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 600px) {
+    /* #account-panel > div {
+        flex-direction: column;
+    } */
+
+    #account-panel-options {
+        width: 200px;
+    }
+}
+
+@media (max-width: 400px) {
+
 }
