@@ -116,5 +116,12 @@
     "legal-notice-heading-3": "İletişim",
     "legal-notice-source": "Kaynak: ",
 
+    "accept": "Kabul Et",
+    "decline": "Reddet",
+    "user-has-sent-friendship-request": " sana arkadaşlık isteği gönderdi ",
+    "user-invited-you-to-board": " seni tahtalarında işbirliği yapmaya davet etti ",
+    "assigned-you-to-task": " size görevi atadı ",
+    "understood": "Anlaşıldı",
+
     "network-error": "Ağ Hatası!"
 }

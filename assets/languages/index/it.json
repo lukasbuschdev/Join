@@ -116,5 +116,12 @@
     "legal-notice-heading-3": "Contatti",
     "legal-notice-source": "Fonte: ",
 
+    "accept": "Accetta",
+    "decline": "Rifiuta",
+    "user-has-sent-friendship-request": " ti ha inviato una richiesta di amicizia!",
+    "user-invited-you-to-board": " ti ha invitato a collaborare nella sua bacheca.",
+    "assigned-you-to-task": " ti ha assegnato al compito ",
+    "understood": "Intenso",
+
     "network-error": "Errore di Rete!"
 }
