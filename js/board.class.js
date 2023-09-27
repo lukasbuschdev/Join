@@ -64,4 +64,9 @@ class Board extends BaseClass {
         await REMOTE_setData(`boards`, {[this.id]: this});
         return getBoards();
     }
+
+    delete = () => {
+        delete BOARDS[this.id];
+        return REMOTE_removeData(`boards/${this.id}`);
+    }
 }

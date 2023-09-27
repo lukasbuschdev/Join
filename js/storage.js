@@ -78,7 +78,7 @@ const REMOTE_setData = async (targetPath, upload) => {
         }
         else if (currentObj.indexOf(upload !== -1)) currentObj.push(upload);
     } else Object.assign(currentObj, upload);
-    return await REMOTE_upload(directories[0], data);
+    return REMOTE_upload(directories[0], data);
 }
 
 
@@ -90,13 +90,18 @@ const REMOTE_removeData = async (path) => {
     let data = await REMOTE_getData(directory);
     if (!data) return;
     if (Array.isArray(data) && data.includes(item)) {
-        data = data.toSpliced(data.indexOf(item), 1);
+        data.splice(data.indexOf(item), 1);
     } else {
         delete data[item];
     };
-    const parentDirectory = directory.slice(0, directory.lastIndexOf('/'));
-    const childDirectory = directory.split('/').at(-1);
-    return REMOTE_setData(parentDirectory, { [childDirectory]: data});
+    if (directory.includes('/')) {
+        const parentDirectory = directory.slice(0, directory.lastIndexOf('/'));
+        const childDirectory = directory.split('/').at(-1);
+        log()
+        return REMOTE_setData(parentDirectory, { [childDirectory]: data});
+    } else {
+        return REMOTE_upload(path.split('/')[0], data);
+    }
 }
 
 const REMOTE_clearVerifications = async () => {

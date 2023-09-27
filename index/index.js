@@ -89,19 +89,3 @@ const loadNotifications = () => {
     container.innerHTML = ''
     container.renderItems(Object.values(USER.notifications), notificationTemplate);
 };
-
-const acceptBoardInvite = async (boardId, notificationId) => {
-    await REMOTE_setData(`users/${currentUserId()}/boards`, boardId);
-    await REMOTE_setData(`boards/${boardId}/collaborators`, USER.id);
-    await getBoards();
-    await removeNotification(notificationId);
-    notification('board-joined');
-}
-
-const removeNotification = async (notificationId) => {
-    delete USER.notifications[notificationId];
-    await USER.update();
-    await getUser();
-    $(`.notification[data-id="${notificationId}"]`).remove();
-    checkNotifications();
-}
