@@ -81,6 +81,7 @@ const loadAccountPanelContent = async () => {
     const templatePath = `/Join/assets/templates/account/${template}.html`;
     await $('#account-panel-content').includeTemplate(templatePath);
     if (template == "notifications") loadNotifications();
+    $('#account-panel-content').LANG_load();
 };
 
 const loadNotifications = () => {
@@ -88,5 +89,4 @@ const loadNotifications = () => {
     const container = $('#notifications-content');
     container.innerHTML = ''
     container.renderItems(Object.values(USER.notifications), notificationTemplate);
-    $('#account-panel-content').LANG_load();
 };
