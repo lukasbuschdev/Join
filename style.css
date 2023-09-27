@@ -752,6 +752,7 @@ input[type="checkbox"][checked="true"] {
 
     .txt-normal {
         font-size: .875rem;
+        line-height: 16.3px;
     }
 
     .btn {
