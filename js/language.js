@@ -20,7 +20,7 @@ const LANG_load = async (lang = currentLang()) => {
 }
 
 const LANG_set = (lang) => {
-    if (!(lang == 'de' || lang == 'en' || lang == 'es')) {
+    if (!(lang == 'de' || lang == 'en' || lang == 'es' || lang == 'fr' || lang == 'it')) {
         return log(error(`${lang} doesn't exist`));
     }
 

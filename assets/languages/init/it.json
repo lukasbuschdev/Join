@@ -1,0 +1,58 @@
+{
+    "title-login": "Join - Login",
+    "title-signup": "Join - Registrazione",
+    "title-verify-account": "Join - Verifica Account",
+    "title-forgot-password": "Join - Password Dimenticata",
+    "title-reset-password": "Join - Reimposta Password",
+    "title-create-account": "Join - Modifica Profilo",
+
+    "email-or-username": "Email o Nome Utente",
+    "email": "Email",
+    "name": "Nome",
+    "password": "Password",
+
+    "forgot-password": "Ho dimenticato la password",
+    "remember-me": "Ricordami",
+    "log-in": "Accedi",
+    "guest-log-in": "Accedi come Ospite",
+    "not-join-user": "Non sei un utente Join?",
+    "sign-up": "Registrati",
+
+    "email-or-username-not-found": "Email o nome utente non trovato!",
+    "wrong-password": "Password errata!",
+    "invalid-name": "Nome non valido",
+    "name-in-use": "Il nome utente è già in uso!",
+    "invalid-email": "Deve essere un'email valida",
+    "email-in-use": "Email già in uso!",
+    "invalid-password": "La password deve contenere almeno 8 caratteri e includere almeno una lettera maiuscola, una lettera minuscola e un numero",
+    "automatic-signout": "Sei stato disconnesso automaticamente!",
+
+    "i-forgot-password": "Ho dimenticato la mia password",
+    "dont-worry": "Nessun problema! Ti invieremo un'email con le istruzioni per reimpostare la tua password.",
+    "send-email": "Invia email",
+    "email-not-found": "Email sconosciuta!",
+    "email-sent": "È stata inviata un'email a te",
+
+    "reset-password": "Reimposta la tua password",
+    "change-password": "Cambia la password del tuo account",
+    "different-passwords": "Password non corrispondenti!",
+    "new-password": "Nuova password",
+    "confirm-password": "Conferma password",
+    "continue": "Continua",
+    "password-reset": "Password reimpostata",
+
+    "verify-account": "Verifica il tuo Account",
+    "check-inbox": "Controlla la tua casella di posta elettronica e inserisci il codice di verifica qui sotto o fai clic sul link nell'email",
+    "expires-in": "Il codice scade tra:",
+    "wrong-code": "Codice errato!",
+    "code-expired": "Codice Scaduto!",
+    "new-code": "Nuovo Codice",
+    "confirm": "Conferma",
+
+    "create-account": "Modifica il tuo Profilo",
+    "finish-setup": "Completamento Configurazione",
+    "choose-image": "Scegli un'Immagine",
+    "choose-image-info": "Carica la tua immagine (opzionale)",
+    "phone-number": "Numero di Telefono (opzionale)",
+    "phone-number-invalid": "Numero di telefono non valido!"
+}
