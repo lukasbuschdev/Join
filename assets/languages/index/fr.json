@@ -50,7 +50,7 @@
     "description": "Description",
     "description-placeholder": "Saisissez une description",
     "category": "Catégorie",
-    "select-task-category": "Sélectionnez la catégorie de la tâche",
+    "select-task-category": "Sélectionnez la catégorie",
     "assigned-to": "Assignée à",
     "assigned-you-parentheses": "(Vous)",
     "select-collaborators": "Sélectionnez des collaborateurs",
@@ -78,7 +78,7 @@
     "enter-a-dueDate": "Saisissez une date d'échéance !",
     "wrong-date-format": "Format de date incorrect !",
     "select-a-priority": "Sélectionnez une priorité !",
-    "use-letters-only": "Utilisez uniquement des lettres, des chiffres et (/-_\") !",
+    "use-letters-only": "Utilisez des lettres, des chiffres et (/-_\") !",
     "subtask-too-long": "Sous-tâche trop longue !",
 
     "btn-create-task": "Créer une Tâche",
