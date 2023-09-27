@@ -278,6 +278,8 @@ textarea {
 
     .add-task-rows .inputs {
         gap: 25px;
+        flex-direction: column;
+        align-items: center;
     }
 }
 
@@ -328,9 +330,25 @@ textarea {
 
 
 
+@media(max-width: 600px) {
+    .add-task-heading {
+        padding: 0;
+    }
+
+    .add-task-heading h2 {
+        font-size: 2.5rem;
+    }
+}
+
+
+
 /* MOBILE VERSION MAX.-WIDTH 500px */
 
 @media(max-width: 500px) {
+    .add-task-heading h2 {
+        font-size: 2.2rem;
+    }
+
     .add-task-card {
         padding: 2vh 1.5rem ;
     }
