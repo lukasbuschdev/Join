@@ -25,7 +25,7 @@ Array.prototype.toObject = function (keys) {
 }
 
 Array.prototype.remove = function (item) {
-    if (!this.includes(item)) return error(`"${item}" is not in this array!`);
+    if (!this.includes(item)) return;
     return this.splice(this.indexOf(item), 1);
 }
 

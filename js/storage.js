@@ -257,7 +257,12 @@ const getBoards = async () => {
     if (USER.boards == []) return;
     const allBoards = await REMOTE_getData('boards');
     for await (const boardId of USER.boards) {
-        BOARDS[boardId] = new Board(allBoards[boardId]); 
+        if (`${boardId}` in allBoards) BOARDS[boardId] = new Board(allBoards[boardId]); 
+        else {
+            USER.boards.remove(`${boardId}`);
+            delete BOARDS[boardId];
+            await USER.update();
+        };
     };
     SELECTED_BOARD = BOARDS[SESSION_getData('activeBoard')] ?? BOARDS[Object.keys(BOARDS)[0]];
 };

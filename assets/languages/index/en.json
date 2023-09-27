@@ -42,6 +42,8 @@
     "tasks-awaiting-feedback": "Awaiting Feedback",
     "tasks-deadline": "Upcoming Deadline",
     "tasks-done": "Done",
+    "delete-board": "Delete board",
+    "board-deleted": "Board deleted!",
 
     "heading-add-task": "Add Task",
     "select-board": "Select board",
@@ -108,6 +110,8 @@
 
     "confirmation-delete-task": "Are you sure you want do delete this task?",
     "confirm-delete-task": "Delete",
+    "confirmation-delete-board": "Are you sure you want to delete this board?",
+    "confirm-delete-board": "Delete",
     "confirmation-save-edited-task": "Save Task changes?",
     "confirm-save-edited-task": "Save",
 

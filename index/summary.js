@@ -12,8 +12,8 @@ const renderBoards = () => {
     if (!SESSION_getData('activeBoard')) SESSION_setData('activeBoard', Number(Object.keys(BOARDS)[0]));
     const activeBoard = SESSION_getData('activeBoard');
     const activeBoardButton = $(`#summary-selection [data-id="${activeBoard}"]`);
-    activeBoardButton.click();
-    activeBoardButton.classList.add('active');
+    activeBoardButton?.click();
+    activeBoardButton?.classList.add('active');
 }
 
 const boardSelectionTemplate = ({name, id, owner}) => {
@@ -30,6 +30,7 @@ const boardSelectionTemplate = ({name, id, owner}) => {
 
 const renderBoard = () => {
     const id = event.currentTarget.dataset.id;
+    SELECTED_BOARD = BOARDS[id];
     const tasks = Object.values(BOARDS[id].tasks);
     const tasksInBoard = tasks.length;
     const tasksInProgress = tasks.filter(({type}) => type == "in-progress").length;
@@ -194,9 +195,14 @@ const initEditBoard = (boardId) => {
     editBoardModal.openModal();
 }
 
-const deleteBoard = async (board) => {
-    board.collaborators.forAwait(async collaboratorId => {
-        await REMOTE_removeData(`users/${collaboratorId}/boards/${board.id}`);
+const deleteBoard = async () => {
+    SELECTED_BOARD.collaborators.forAwait(async collaboratorId => {
+        await REMOTE_removeData(`users/${collaboratorId}/boards/${SELECTED_BOARD.id}`);
     });
-    board.delete();
+    SESSION_removeData('activeBoard');
+    await SELECTED_BOARD.delete();
+    SELECTED_BOARD = Object.values(BOARDS)[0] || undefined;
+    notification('board-deleted');
+    $('#edit-board-modal').closeModal();
+    loadContent();
 }

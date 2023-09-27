@@ -42,6 +42,8 @@
     "tasks-awaiting-feedback": "Warten auf Feedback",
     "tasks-deadline": "Anstehende Frist",
     "tasks-done": "Fertig",
+    "delete-board": "Delete board",
+    "board-deleted": "Tafel gelöscht!",
     
     "heading-add-task": "Aufgabe hinzufügen",
     "select-board": "Wähle eine Tafel",
@@ -109,6 +111,8 @@
 
     "confirmation-delete-task": "Aufgabe Löschen?",
     "confirm-delete-task": "Löschen",
+    "confirmation-delete-board": "Sicher diese Tafel löschen?",
+    "confirm-delete-board": "Löschen",
     "confirmation-save-edited-task": "Änderungen speichern?",
     "confirm-save-edited-task": "Speichern",
 

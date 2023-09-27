@@ -180,7 +180,8 @@ box-shadow: 0 4px 4px 0 rgba(0 0 0 / 25%);
 
 .btn-check span::after,
 .btn-cancel span::after,
-.btn-contact span::after {
+.btn-contact span::after,
+.btn-delete {
     display: block;
 } 
 
@@ -196,8 +197,14 @@ box-shadow: 0 4px 4px 0 rgba(0 0 0 / 25%);
     content: url(./assets/img/icons/btn_cancel.svg);
 }
 
-.btn-cancel:hover span::after {
-    content: url(./assets/img/icons/btn_cancel_blue.svg);
+@media (hover: hover) {
+    .btn-cancel:hover span::after {
+        content: url(./assets/img/icons/btn_cancel_blue.svg);
+    }
+}
+
+.btn-delete span::after {
+    content: url(/Join/assets/img/icons/trash.svg);
 }
 
 .btn-add-task span::after {
