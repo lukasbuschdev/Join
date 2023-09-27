@@ -110,7 +110,7 @@ const createNewBoard = async () => {
     const collaborators = [...$$('.collaborator')].reduce((total, collaborator) => {
         total.push(collaborator.dataset.id);
         return total;
-    }, [])
+    }, []);
 
     const categories = [...$$('.task-category')].reduce((total, category) => {
         const color = category.style.getPropertyValue('--clr');
@@ -127,8 +127,8 @@ const createNewBoard = async () => {
     const newBoard = await USER.addBoard(boardData);
     $('#add-board').closeModal();
     notification('board-added');
-
     createBoardNotification(newBoard, collaborators);
+    loadContent();
 };
 
 const createBoardNotification = ({name, id}, collaborators) => {
