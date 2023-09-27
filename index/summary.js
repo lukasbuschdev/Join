@@ -196,7 +196,7 @@ const initEditBoard = (boardId) => {
 
 const deleteBoard = async (board) => {
     board.collaborators.forAwait(async collaboratorId => {
-        ALL_USERS[collaboratorId].setProperty('boards', ALL_USERS[collaboratorId].getPropertyValue('boards').remove(collaboratorId));
+        await REMOTE_removeData(`users/${collaboratorId}/boards/${board.id}`);
     });
     board.delete();
 }

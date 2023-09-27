@@ -42,7 +42,7 @@ const notificationTemplate = (notification) => {
 
 async function acceptBoardInvite (boardId, notificationId) {
     // await REMOTE_setData(`users/${currentUserId()}/boards`, boardId);
-    await USER.setPropterty([...USER.getPropertyValue('boards'), `${boardId}`]);
+    await USER.setProperty('boards', [...USER.getPropertyValue('boards'), `${boardId}`]);
     await REMOTE_setData(`boards/${boardId}/collaborators`, USER.id);
     await getBoards();
     await removeNotification(notificationId);
