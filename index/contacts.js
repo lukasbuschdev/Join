@@ -64,6 +64,8 @@ function addContactModal() {
     clearImage();
     clearResult();
     modal.openModal();
+
+    modal.addEventListener('close', clearCloseAddContact);
 }
 
 function closeAddTaskModal() {
@@ -102,8 +104,8 @@ function clearCloseAddContact() {
     userImgContainer.innerHTML = /*html*/ `
         <img class="user-img-gray" src="/Join/assets/img/icons/user_img_gray.svg">
     `;
-
-    closeAddContact();
+    log('getting here')
+    userImgContainer.style.setProperty('--user-clr', 'unset');
 }
 
 const getInput = debounce(async function () {
@@ -223,10 +225,10 @@ function renderSearchResults(sortedUsers) {
     }
 }
 
-function searchResultTemplates({id, img, name, email}) {
+function searchResultTemplates({id, img, name, email, color}) {
     return /*html*/`
-        <div class="search-result-contact row gap-10" id="search-result-contact" onclick="selectNewContact('${id}', '${img}', '${name}')">
-            <div class="contact-img user-img-container" data-img="false">
+        <div class="search-result-contact row gap-10" id="search-result-contact" onclick="selectNewContact('${id}', '${img}', '${name}', '${color}')">
+            <div class="contact-img user-img-container" data-img="false" style="--user-clr: ${color}">
                 <h3>${name.slice(0, 2).toUpperCase()}</h3>
                 <img src="${img}">
             </div>
@@ -236,40 +238,21 @@ function searchResultTemplates({id, img, name, email}) {
     `;
 }
 
-function selectNewContact(id, img, name) {
+function selectNewContact(id, img, name, color) {
     clearImage();
     clearInput();
 
-    // let image = document.querySelector('.user-imgcontainer .user-img-gray');
     let input = document.getElementById('input-name');
     let userImgContainer = document.querySelector('.add-contact-field .user-img-container');
     let initials = name.slice(0, 2).toUpperCase();
 
     userImgContainer.innerHTML = img ? `<img src="${img}" alt="${name}">` : initials;
-
+    userImgContainer.style.setProperty('--user-clr', color);
     input.value = name;
     input.dataset.id = id;
 
     clearResult();
 }
-
-
-// function selectNewContact(id, img, name) {
-//     clearImage();
-//     clearInput();
-
-//     let image = $('.user-imgcontainer .user-img-gray');
-//     let input = $('#input-name');
-//     let userImgContainer = $('.add-contact-field .user-img-container');
-//     let initials = name.slice(0, 2).toUpperCase();
-    
-//     userImgContainer.innerHTML = initials;
-//     // image.setAttribute('src', img);
-//     input.value = name;
-//     input.dataset.id = id;
-
-//     clearResult();
-// }
 
 async function addContact() {
     const selectedUser = $('#input-name');
@@ -294,7 +277,8 @@ async function addContact() {
 
     notification(`friendship-request, {name: '${ALL_USERS[selectedUserId].name}'}`);
 
-    clearCloseAddContact();
+    const modal = $('#add-contact-modal');
+    modal.closeModal();
 }
 
 async function deleteContact(id) {
