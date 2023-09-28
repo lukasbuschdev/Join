@@ -6,12 +6,18 @@ const initWebsocket = () => {
     });
 
     SOCKET.io.on('error', e => {
-        SOCKET.close();
-        setTimeout(initWebsocket, 1 * 60 * 1000);
+        log('SOCKET error!')
+        // SOCKET.close();
+        // setTimeout(initWebsocket, 1 * 60 * 1000);
     });
 
     SOCKET.io.on('close', e => {
+        log('SOCKET closed!')
         checkNotifications();
+    })
+
+    SOCKET.io.on('disconnect', e => {
+        log('SOCKET disconnected!')
     })
     
     SOCKET.io.on('reconnect', e => {
