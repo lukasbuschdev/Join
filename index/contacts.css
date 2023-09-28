@@ -411,7 +411,8 @@
     }
 
     .search-result-container > .user-img-container {
-        margin-top: -110px;
+        position: absolute;
+        top: -16%;
     }
 }
 
