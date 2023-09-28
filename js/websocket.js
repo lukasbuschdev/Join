@@ -9,6 +9,10 @@ const initWebsocket = () => {
         SOCKET.close();
         setTimeout(initWebsocket, 1 * 60 * 1000);
     });
+
+    SOCKET.io.on('close', e => {
+        checkNotifications();
+    })
     
     SOCKET.io.on('reconnect', e => {
         log('reconnected!')
