@@ -7,7 +7,6 @@ const initWebsocket = () => {
 
     SOCKET.io.on('error', e => {
         SOCKET.close();
-        // SOCKET = null;
         setTimeout(initWebsocket, 1 * 60 * 1000);
     });
     
@@ -21,6 +20,10 @@ const initWebsocket = () => {
         await getUser();
         checkNotifications();
     });
+
+    SOCKET.on('account-in-use', () => {
+        goTo('login', {reroute: true});
+    })
 }
 
 const sendMessage = (recipients) => {

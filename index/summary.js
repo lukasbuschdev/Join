@@ -133,7 +133,7 @@ const createNewBoard = async () => {
 
 const createBoardNotification = ({name, id}, collaborators) => {
     const notification = new Notify({
-        collaborators,
+        recipients: collaborators,
         type: "boardInvite",
         ownerName: USER.name,
         boardName: name,
@@ -155,7 +155,6 @@ const filterDrp = debounce(() => {
     
     const drp = $('.add-board-data .drp');
     const filter = $('#add-board-collaborators input').value;
-    // if (!filter) return
     const sortedContacts = Object.values(CONTACTS).sort((a, b) => (a.name > b.name) ? 1 : -1);
     const filteredContacts = sortedContacts.filter(
         ({name}) => name.toLowerCase().includes(filter.toLowerCase())
@@ -195,7 +194,7 @@ const initEditBoard = (boardId) => {
     editBoardModal.openModal();
 }
 
-const deleteBoard = async () => {
+const deleteBoard = () => confirmation(`delete-board, {boardName: '${SELECTED_BOARD.name}'}`, async () => {
     SELECTED_BOARD.collaborators.forAwait(async collaboratorId => {
         await REMOTE_removeData(`users/${collaboratorId}/boards/${SELECTED_BOARD.id}`);
     });
@@ -205,4 +204,4 @@ const deleteBoard = async () => {
     notification('board-deleted');
     $('#edit-board-modal').closeModal();
     loadContent();
-}
+})

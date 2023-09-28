@@ -35,13 +35,14 @@
     "add-board-categories": "Add category",
     "add-board-collaborators": "Mitwirkende hinzufügen",
     "add-board-create": "Create Board",
-    "board-joined": "Board Joined!",
+    "board-joined": "Board %boardName% Joined!",
     "board-created": "Board created!",
     "tasks-in-board": "Tasks in Board",
     "tasks-in-progress": "Tasks in Progress",
     "tasks-awaiting-feedback": "Awaiting Feedback",
     "tasks-deadline": "Upcoming Deadline",
     "tasks-done": "Done",
+    "board-added": "Tafel erstellt!",
     "delete-board": "Delete board",
     "board-deleted": "Board deleted!",
 
@@ -102,15 +103,15 @@
 
     "add-contact-heading": "Add contact",
     "add-contact-subheading": "Tasks are better with a team!",
-    "friendship-request": "Request sent!",
-    "friend-added": "Contact has been added!",
+    "friendship-request": "Request sent to %name%!",
+    "friend-added": "Contact %name% has been added!",
 
     "confirmation-delete-contact": "Do you want to delete this Contact?",
     "confirm-delete-contact": "Delete",
 
-    "confirmation-delete-task": "Are you sure you want do delete this task?",
+    "confirmation-delete-task": "Are you sure you want do delete %taskName%?",
     "confirm-delete-task": "Delete",
-    "confirmation-delete-board": "Are you sure you want to delete this board?",
+    "confirmation-delete-board": "Delete %boardName%?",
     "confirm-delete-board": "Delete",
     "confirmation-save-edited-task": "Save Task changes?",
     "confirm-save-edited-task": "Save",
@@ -120,12 +121,13 @@
     "legal-notice-heading-3": "Contact",
     "legal-notice-source": "Source: ",
 
-    "accept": "Accent",
+    "accept": "Accept",
     "decline": "Decline",
-    "user-has-sent-friendship-request": " has sent you a friendship request!",
-    "user-invited-you-to-board": " invited you to collaborate with them on their board ",
-    "assigned-you-to-task": " assigned you to the task ",
+    "user-has-sent-friendship-request": "%ownerName% has sent you a friendship request!",
+    "user-invited-you-to-board": "%ownerName% invited you to collaborate with them on their board %boardName%!",
+    "assigned-you-to-task": "%ownerName% assigned you to %taskName% in %boardName%!",
     "understood": "Understood",
+    "board-nonexistent": "Board %boardName% doesn't exist!",
 
     "network-error": "Network Error!"
 }

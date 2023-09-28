@@ -199,8 +199,7 @@ HTMLElement.prototype.addScrollShadowObserver = function () {
 }
 
 HTMLElement.prototype.LANG_load = function() {
-    this.$$('[data-lang]').for(element => element.innerText = LANG[element.dataset.lang]);
-    this.$$('[data-lang-placeholder]').for(input => input.placeholder = LANG[input.dataset.langPlaceholder])
+    (LANG_load.bind(this))();
 };
 
 HTMLElement.prototype.toggleDropDown = function () {

@@ -36,6 +36,7 @@ class Board extends BaseClass {
         });
         notification.send();
         await this.update();
+        await getBoards();
         return task;
     }
 
@@ -66,6 +67,7 @@ class Board extends BaseClass {
     }
 
     delete = () => {
+        if (USER.id !== this.owner) return error(`not the owner of "${this.name}"!`);
         delete BOARDS[this.id];
         return REMOTE_removeData(`boards/${this.id}`);
     }
