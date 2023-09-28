@@ -1,9 +1,9 @@
 const log = console.log;
 
-const $ = function (selector) {
+window.$ = function (selector) {
   return this.document.querySelector(selector)
 };
-const $$ = function (selector) {
+window.$$ = function (selector) {
   return this.document.querySelectorAll(selector)
 };
 
@@ -282,7 +282,8 @@ const removeMethods = (obj) => {
 }
 
 const confirmation = (type, cb) => {
-  if (!LANG[`confirmation-${type}`]) return error('message unknown!');
+  const dataLang = (type.includes(',')) ? type.slice(0, type.indexOf(',')) : type;
+  if (!LANG[`confirmation-${dataLang}`]) return error('message unknown!');
   const confirmationContainer = document.createElement('dialog');
   confirmationContainer.type = "modal";
 

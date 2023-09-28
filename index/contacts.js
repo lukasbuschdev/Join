@@ -265,11 +265,11 @@ async function addContact() {
         return
     }
 
+    notificationPrototype.send();
     USER.pendingFriendshipRequests.push(selectedUserId);
     await USER.update();
 
-    notification('friendship-request');
-    notificationPrototype.send();
+    notification(`friendship-request, {name: '${ALL_USERS[selectedUserId].name}'}`);
 
     clearCloseAddContact();
 }

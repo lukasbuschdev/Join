@@ -227,11 +227,10 @@ function getSelectedCategory() {
     const category = $('#select-task-category').innerText;
     
     if(category === LANG['select-task-category']) {
-        noCategorySelected();
-    } else if(category.length >= 3) {
-        categorySelected();
-        return category; 
+        return noCategorySelected();
     }
+    categorySelected();
+    return category; 
 }
 
 function noCategorySelected() {
@@ -305,9 +304,10 @@ async function addTask() {
     const dueDate = getDueDate();
     const priority = checkPriority();
     const subtasks = getSubtasks();
-    const addTaskData = [title, description, category,collaborators, dueDate, priority, subtasks]; 
+    const addTaskData = [title, description, category ,collaborators, dueDate, priority, subtasks]; 
 
     if (checkAddTaskInputs(addTaskData)) {
+        log(addTaskData)
         return;
     } else {
         await createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority, subtasks);

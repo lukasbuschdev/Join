@@ -83,8 +83,8 @@ const saveTaskChanges = () => {
     else log('no difference');
 };
 
-const deleteTask = async () => {
-    const {boardId, id} = SELECTED_TASK;
+const deleteTask = () => confirmation(`delete-task, {taskName: '${SELECTED_TASK.title}'}`, async () => {
+    const {boardId, id, name} = SELECTED_TASK;
     const modal = $('#fullscreen-task-modal');
     const taskElement = $(`.task[data-id="${boardId}/${id}"]`);
     const taskContainer = taskElement.parentElement;
@@ -93,8 +93,8 @@ const deleteTask = async () => {
     modal.closeModal();
     taskElement.remove();
     taskContainer.innerHTML = taskContainer.innerHTML.trim();
-    notification('task-deleted');
-}
+    notification(`task-deleted, {taskName: '${name}'}`);
+})
 
 const getJsonChanges = (newJson, oldJson) => {
     let differences = {};

@@ -103,15 +103,15 @@
 
     "add-contact-heading": "Neuer Kontakt",
     "add-contact-subheading": "Aufgaben, besser im Team!",
-    "friendship-request": "Anfrage gesendet!",
-    "friend-added": "Kontakt hinzugefügt!",
+    "friendship-request": "Anfrage gesendet an %name%!",
+    "friend-added": "Kontakt %name% hinzugefügt!",
 
     "confirmation-delete-contact": "Möchtest du diesen Kontakt löschen?",
     "confirm-delete-contact": "Löschen",
 
-    "confirmation-delete-task": "Aufgabe Löschen?",
+    "confirmation-delete-task": "%taskName% Löschen?",
     "confirm-delete-task": "Löschen",
-    "confirmation-delete-board": "Sicher diese Tafel löschen?",
+    "confirmation-delete-board": "%boardName% löschen?",
     "confirm-delete-board": "Löschen",
     "confirmation-save-edited-task": "Änderungen speichern?",
     "confirm-save-edited-task": "Speichern",
@@ -123,10 +123,11 @@
 
     "accept": "Annehmen",
     "decline": "Ablehnen",
-    "user-has-sent-friendship-request": " hat dir eine Freundschaftsanfrage gesendet!",
-    "user-invited-you-to-board": " hat dich eingeladen, mit ihnen an ihrem Board zusammenzuarbeiten. ",
-    "assigned-you-to-task": " hat dich der Aufgabe ",
+    "user-has-sent-friendship-request": "%ownerName% hat dir eine Freundschaftsanfrage gesendet!",
+    "user-invited-you-to-board": "%ownerName% hat dich eingeladen, mit ihnen an der Tafel %boardName% zusammenzuarbeiten!",
+    "assigned-you-to-task": "%ownerName% hat dich %taskName% in %boardName% zugeteilt!",
     "understood": "Verstanden",
+    "board-nonexistent": "Tafel %boardName% existiert nicht!",
 
     "network-error": "Netzwerkfehler!"
 }

@@ -4,11 +4,11 @@ const notificationTemplate = (notification) => {
         return /*html*/`
             <div class="notification radius-15 row" data-id="${id}">
                 <div>
-                    <b>${userName}</b><span data-lang="user-has-sent-friendship-request">has sent you a friendship request!</span>
+                    <span data-lang="user-has-sent-friendship-request, {ownerName: '${userName}'}"></span>
                 </div>
                 <div class="btn-container gap-10">
                     <button data-lang="decline" class="btn btn-secondary txt-small txt-600" onclick="removeFriendshipRequest('${id}', '${userId}')">Decline</button>
-                    <button data-lang="accept" class="btn btn-primary txt-small txt-600" onclick="acceptFriendshipRequest('${id}', '${userId}')">Accept</button>
+                    <button data-lang="accept" class="btn btn-primary txt-small txt-600" onclick="acceptFriendshipRequest('${id}', '${userId}', '${userName}')">Accept</button>
                 </div>
             </div>
         `;
@@ -17,11 +17,11 @@ const notificationTemplate = (notification) => {
         return /*html*/`
             <div class="notification radius-15 row" data-id="${id}">
                 <div>
-                    <b>${ownerName}</b> <span data-lang="user-invited-you-to-board">invited you to collaborate with them on their board</span> <b>${boardName.replaceAll('-',' ')}</b>!
+                    <span data-lang="user-invited-you-to-board, {ownerName: '${ownerName}', boardName: '${boardName.replaceAll('-',' ')}'}"></span>
                 </div>
                 <div class="btn-container gap-10">
                     <button data-lang="decline" class="btn btn-secondary txt-small txt-600" onclick="removeNotification('${id}')">Decline</button>
-                    <button data-lang="accept" class="btn btn-primary txt-small txt-600" onclick="acceptBoardInvite('${boardId}', '${id}')">Accept</button>
+                    <button data-lang="accept" class="btn btn-primary txt-small txt-600" onclick="acceptBoardInvite('${boardId}', '${boardName}', '${id}')">Accept</button>
                 </div>
             </div>
         `;
@@ -30,7 +30,7 @@ const notificationTemplate = (notification) => {
         return /*html*/`
             <div class="notification radius-15 column gap-10" data-id="${id}">
                 <div>
-                    <b>${userName}</b> <span data-lang="assigned-you-to-task">assigned you to the task</span> <b>"${taskName}"</b> in <b>"${boardName.replaceAll('-',' ')}"</b>!
+                    <span data-lang="assigned-you-to-task, {ownerName: '${userName}', taskName: '${taskName}', '${boardName}'}"></span>
                 </div>
                 <div class="btn-container gap-10">
                     <button data-lang="understood" class="btn btn-secondary txt-small txt-600" onclick="removeNotification('${id}')">Understood</button>
@@ -40,13 +40,13 @@ const notificationTemplate = (notification) => {
     }
 }
 
-async function acceptBoardInvite (boardId, notificationId) {
-    // await REMOTE_setData(`users/${currentUserId()}/boards`, boardId);
+async function acceptBoardInvite (boardId, boardName, notificationId) {
+    await removeNotification(notificationId);
+    if (!await REMOTE_getData(`boards/${boardId}`)) return notification(`board-nonexistent, {boardName: '${boardName}'}`);
     await USER.setProperty('boards', [...USER.getPropertyValue('boards'), `${boardId}`]);
     await REMOTE_setData(`boards/${boardId}/collaborators`, USER.id);
     await getBoards();
-    await removeNotification(notificationId);
-    notification('board-joined');
+    notification(`board-joined, {boardName: '${boardName}'}`);
     loadContent();
 }
 
@@ -63,10 +63,10 @@ async function removeFriendshipRequest(id, userId) {
     return removeNotification(id);
 }
 
-async function acceptFriendshipRequest(id, userId) {
+async function acceptFriendshipRequest(id, userId, name) {
     await REMOTE_setData(`users/${userId}/contacts`, USER.id.toString());
     USER.contacts.push(userId);
     await removeFriendshipRequest(id, userId);
     loadContent();
-    notification('friend-added');
+    notification(`friend-added, {name: '${name}'}`);
 }

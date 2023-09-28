@@ -84,7 +84,7 @@ const loadAccountPanelContent = async () => {
     $('#account-panel-content').LANG_load();
 };
 
-const loadNotifications = () => {
+const loadNotifications = async () => {
     if (Object.values(USER.notifications).length == 0) return error('no notifications');
     const container = $('#notifications-content');
     container.innerHTML = ''
