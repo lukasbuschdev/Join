@@ -398,10 +398,6 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 }
 
 @media (max-width: 400px) {
-    #settings-content > div{
-        justify-content: center;
-    }
-
     .notifications > div span {
         font-size: 0.825rem;
     }
