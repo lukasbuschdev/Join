@@ -14,6 +14,7 @@ Array.prototype.forAwait = async function(cb) {
     for (let i = 0; i < this.length; i++){
         await cb(this[i], i);
     }
+    return;
 }
 
 Array.prototype.toObject = function (keys) {

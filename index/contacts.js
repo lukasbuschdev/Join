@@ -223,9 +223,9 @@ function renderSearchResults(sortedUsers) {
     }
 }
 
-function searchResultTemplates({id, img, name, email}) {
+function searchResultTemplates({id, img, name, email, color}) {
     return /*html*/`
-        <div class="search-result-contact row gap-10" id="search-result-contact" onclick="selectNewContact('${id}', '${img}', '${name}')">
+        <div class="search-result-contact row gap-10" id="search-result-contact" onclick="selectNewContact('${id}', '${img}', '${name}', '${color}')">
             <div class="contact-img user-img-container" data-img="false">
                 <h3>${name.slice(0, 2).toUpperCase()}</h3>
                 <img src="${img}">
@@ -236,7 +236,7 @@ function searchResultTemplates({id, img, name, email}) {
     `;
 }
 
-function selectNewContact(id, img, name) {
+function selectNewContact(id, img, name, color) {
     // clearImage();
     // clearInput();
 
@@ -246,6 +246,7 @@ function selectNewContact(id, img, name) {
     let initials = name.slice(0, 2).toUpperCase();
     
     userImgContainer.innerHTML = initials;
+    userImgContainer.style.setProperty('--user-clr', color);
     image.setAttribute('src', img);
     input.value = name;
     input.dataset.id = id;
@@ -259,7 +260,7 @@ async function addContact() {
     const userName = USER.name;
 
     const notificationPrototype = new Notify({
-        recipients: [selectedUserId],
+        recipients: [`${selectedUserId}`],
         userName,
         userId: USER.id,
         type: 'friendshipRequest'
