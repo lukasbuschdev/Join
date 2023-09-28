@@ -237,9 +237,9 @@ function searchResultTemplates({id, img, name, email}) {
 }
 
 function selectNewContact(id, img, name) {
-    clearImage();
-    clearInput();
-    
+    // clearImage();
+    // clearInput();
+
     let image = $('.user-img-gray');
     let input = $('#input-name');
     let userImgContainer = $('.add-contact-field .user-img-container');
@@ -250,7 +250,7 @@ function selectNewContact(id, img, name) {
     input.value = name;
     input.dataset.id = id;
 
-    clearResult();
+    // clearResult();
 }
 
 async function addContact() {
