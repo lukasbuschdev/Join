@@ -12,9 +12,9 @@ const initWebsocket = () => {
     });
 
     SOCKET.io.on('close', e => {
-        log('SOCKET closed!')
+        log('SOCKET closed!', e)
         checkNotifications();
-    })
+    }, e => {log('SOCKET closed2!: ', e)})
 
     SOCKET.io.on('disconnect', e => {
         log('SOCKET disconnected!')
@@ -37,8 +37,6 @@ const initWebsocket = () => {
 }
 
 const sendMessage = (recipients) => {
-    const ids = (Array.isArray(recipients)) ? recipients : [recipients];
-    // if (!CONTACTS[contactId]) return error(`user '${contactId}' not in contacts!`);
-    if (!recipients.every(id => CONTACTS.hasOwnProperty(id))) return error(`user not in contacts!`);
+    if (!recipients.every(id => CONTACTS.hasOwnProperty(id))) return error(`user '${id}' not in contacts!`);
     SOCKET.emit('notification', {to: recipients});
 }
