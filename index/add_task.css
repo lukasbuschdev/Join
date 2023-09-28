@@ -212,8 +212,12 @@ textarea {
 }
 
 #add-task-modal > div {
-    width: 1080px;
+    max-width: 1200px;
     background-color: white;
+}
+
+#add-task-modal .add-task-heading {
+    justify-content: center;
 }
 
 .subtask-edit-btn {
