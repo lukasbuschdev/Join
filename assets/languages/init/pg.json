@@ -1,0 +1,58 @@
+{
+    "title-login": "Join - Login",
+    "title-signup": "Join - Cadastro",
+    "title-verify-account": "Join - Verificar Conta",
+    "title-forgot-password": "Join - Esqueci a Senha",
+    "title-reset-password": "Join - Redefinir Senha",
+    "title-create-account": "Join - Editar Perfil",
+
+    "email-or-username": "Email ou Nome de Usuário",
+    "email": "Email",
+    "name": "Nome",
+    "password": "Senha",
+
+    "forgot-password": "Esqueci minha senha",
+    "remember-me": "Lembrar de Mim",
+    "log-in": "Entrar",
+    "guest-log-in": "Entrar como Convidado",
+    "not-join-user": "Não é um usuário Join?",
+    "sign-up": "Cadastre-se",
+
+    "email-or-username-not-found": "Email ou nome de usuário não encontrado!",
+    "wrong-password": "Senha Incorreta!",
+    "invalid-name": "Nome Inválido",
+    "name-in-use": "Nome de usuário já em uso!",
+    "invalid-email": "Deve ser um email válido",
+    "email-in-use": "Email já em uso!",
+    "invalid-password": "A senha deve ter pelo menos 8 caracteres e conter pelo menos uma letra maiúscula, uma letra minúscula e um dígito",
+    "automatic-signout": "Você foi desconectado automaticamente!",
+
+    "i-forgot-password": "Esqueci minha senha",
+    "dont-worry": "Não se preocupe! Enviaremos um email com as instruções para redefinir sua senha.",
+    "send-email": "Enviar email",
+    "email-not-found": "Email desconhecido!",
+    "email-sent": "Um email foi enviado para você",
+
+    "reset-password": "Redefinir sua senha",
+    "change-password": "Mudar a senha da sua conta",
+    "different-passwords": "Senhas não coincidem!",
+    "new-password": "Nova senha",
+    "confirm-password": "Confirmar senha",
+    "continue": "Continuar",
+    "password-reset": "Senha redefinida",
+
+    "verify-account": "Verificar sua Conta",
+    "check-inbox": "Por favor, verifique sua caixa de entrada e insira o código de verificação abaixo ou clique no link no email",
+    "expires-in": "O código expira em:",
+    "wrong-code": "Código Incorreto!",
+    "code-expired": "Código Expirado!",
+    "new-code": "Novo Código",
+    "confirm": "Confirmar",
+
+    "create-account": "Editar seu Perfil",
+    "finish-setup": "Concluir Configuração",
+    "choose-image": "Escolher Imagem",
+    "choose-image-info": "Faça o upload de sua foto (opcional)",
+    "phone-number": "Número de telefone (opcional)",
+    "phone-number-invalid": "Número de telefone inválido!"
+}
