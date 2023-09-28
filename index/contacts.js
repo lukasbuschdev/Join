@@ -237,21 +237,39 @@ function searchResultTemplates({id, img, name, email}) {
 }
 
 function selectNewContact(id, img, name) {
-    // clearImage();
-    // clearInput();
+    clearImage();
+    clearInput();
 
-    let image = $('.user-img-gray');
-    let input = $('#input-name');
-    let userImgContainer = $('.add-contact-field .user-img-container');
+    // let image = document.querySelector('.user-imgcontainer .user-img-gray');
+    let input = document.getElementById('input-name');
+    let userImgContainer = document.querySelector('.add-contact-field .user-img-container');
     let initials = name.slice(0, 2).toUpperCase();
-    
-    userImgContainer.innerHTML = initials;
-    image.setAttribute('src', img);
+
+    userImgContainer.innerHTML = img ? `<img src="${img}" alt="${name}">` : initials;
+
     input.value = name;
     input.dataset.id = id;
 
-    // clearResult();
+    clearResult();
 }
+
+
+// function selectNewContact(id, img, name) {
+//     clearImage();
+//     clearInput();
+
+//     let image = $('.user-imgcontainer .user-img-gray');
+//     let input = $('#input-name');
+//     let userImgContainer = $('.add-contact-field .user-img-container');
+//     let initials = name.slice(0, 2).toUpperCase();
+    
+//     userImgContainer.innerHTML = initials;
+//     // image.setAttribute('src', img);
+//     input.value = name;
+//     input.dataset.id = id;
+
+//     clearResult();
+// }
 
 async function addContact() {
     const selectedUser = $('#input-name');
