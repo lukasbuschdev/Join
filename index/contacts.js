@@ -271,9 +271,9 @@ async function addContact() {
         return
     }
 
-    notificationPrototype.send();
     USER.pendingFriendshipRequests.push(selectedUserId);
     await USER.update();
+    await notificationPrototype.send();
 
     notification(`friendship-request, {name: '${ALL_USERS[selectedUserId].name}'}`);
 
