@@ -247,6 +247,16 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     overflow: auto;
 }
 
+#notifications-content:not(:empty)+.placeholder{
+    display: none !important;
+}
+
+#notifications-container .placeholder {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
 .notification {
     width: 100%;
     border: 1px solid var(--clr-placeholder);
@@ -263,6 +273,16 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 
 .notification .btn-container .btn-secondary{
     margin-left: auto;
+}
+
+:is(#fullscreen-task, #edit-board) .btn-container button:first-of-type::before {
+    translate: 0 2px;
+    content: url(/Join/assets/img/icons/trash.svg);
+}
+
+#fullscreen-task .btn-container button:last-of-type::before {
+    translate: 0 2px;
+    content: url(/Join/assets/img/icons/edit_dark.svg);
 }
 
 

@@ -318,7 +318,7 @@ const dateFormat = (dateString) => {
   if (invalidDate(dateString, date)) return false
   const now = Date.now();
 
-  if (date < now) return false;
+  if (date < now && date.getDate() !== date.getDate()) return false;
   return date;
 }
 

@@ -115,6 +115,8 @@
     "confirm-delete-board": "Löschen",
     "confirmation-save-edited-task": "Änderungen speichern?",
     "confirm-save-edited-task": "Speichern",
+    
+    "reset-password": "Reset your password",
 
     "legal-notice-heading": "Impressum",
     "legal-notice-heading-2": "Angaben gemäß § 5 TMG",
@@ -128,6 +130,7 @@
     "assigned-you-to-task": "%ownerName% hat dich %taskName% in %boardName% zugeteilt!",
     "understood": "Verstanden",
     "board-nonexistent": "Tafel %boardName% existiert nicht!",
+    "no-notifications": "Keine Benachrichtigungen",
 
     "network-error": "Netzwerkfehler!"
 }
