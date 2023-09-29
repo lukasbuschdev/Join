@@ -111,10 +111,14 @@
 
     "confirmation-delete-task": "Are you sure you want do delete %taskName%?",
     "confirm-delete-task": "Delete",
+    "confirmation-reset-password": "Reset your Password?",
+    "confirm-reset-password": "Reset",
     "confirmation-delete-board": "Delete %boardName%?",
     "confirm-delete-board": "Delete",
     "confirmation-save-edited-task": "Save Task changes?",
     "confirm-save-edited-task": "Save",
+
+    "reset-password": "Reset your password",
 
     "legal-notice-heading": "Legal notice",
     "legal-notice-heading-2": "Information according to § 5 TMG",
@@ -128,6 +132,7 @@
     "assigned-you-to-task": "%ownerName% assigned you to %taskName% in %boardName%!",
     "understood": "Understood",
     "board-nonexistent": "Board %boardName% doesn't exist!",
+    "no-notifications": "No Notifications",
 
     "network-error": "Network Error!"
 }

@@ -126,7 +126,7 @@ HTMLDialogElement.prototype.openModal = function () {
     };
     this.$$('[data-shadow]')?.for(scrollContainer => scrollContainer.addScrollShadow());
     this.initMenus();
-    this.LANG_load();
+    return this.LANG_load();
 }
 
 HTMLDialogElement.prototype.closeModal = function (handlerId) {
@@ -200,7 +200,7 @@ HTMLElement.prototype.addScrollShadowObserver = function () {
 }
 
 HTMLElement.prototype.LANG_load = function() {
-    (LANG_load.bind(this))();
+    return (LANG_load.bind(this))();
 };
 
 HTMLElement.prototype.toggleDropDown = function () {

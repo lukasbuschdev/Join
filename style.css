@@ -397,6 +397,14 @@ h4 {
     place-items: center;
 }
 
+.mla {
+    margin-left: auto;
+}
+
+.mra {
+    margin-right: auto;
+}
+
 .card {
     display: flex;
     flex-direction: column;

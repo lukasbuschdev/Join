@@ -32,7 +32,7 @@ function selectBoard(boardId) {
 
     renderSelectedBoard(selectedBoard);
     renderCategories(selectedBoard);
-    renderAssignToContacts(selectedBoard);
+    renderAssignToContacts();
 }
 
 function renderSelectedBoard(selectedBoard) {

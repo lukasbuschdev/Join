@@ -63,17 +63,10 @@ class User extends Account {
         await this.update();
         goTo('summary', {search: `?uid=${this.id}`, reroute: true});
     }
-    
-    rememberMe = () => {
-        const rememberLogin = $('#remember-me').checked || false;
-        if (rememberLogin == false) return LOCAL_setData('rememberMe', false);
-        LOCAL_setData('rememberMe', true);
-        if ("PasswordCredential" in window) this.setCredentials();
-    }
 
     update = async () => {
-        Object
         await REMOTE_setData('users', {[this.id]: this});
+        if (typeof CONTACTS == "undefined") return;
         return getUser();
     }
 
@@ -89,7 +82,7 @@ class User extends Account {
     codeExpired = () => this.verifyCode.expires < Date.now();
 
     unknownDevice = async (deviceData) => {
-        await this.#sendMail("unknownDevice", deviceData);
+        // await this.#sendMail("unknownDevice", deviceData);
     }
 
     addBoard = async (boardData) => {
@@ -113,30 +106,16 @@ class User extends Account {
         );
     }
 
-    sendNotification = async (to, type) => {
-        if (!(type == "friendRequest" || type == "boardInvite" || type == "taskAssignment")) return error(
-            `type '${type}' invalid! type may be one of: 'friendRequest', 'boardInvite', 'taskAssignment'`
-        )
-        if (to == this.id) return error('invalid recipient!');
-        const recipient = CONTACTS[to];
-        const allNotifications = recipient.getPropertyValue('notifications');
-        return recipient.setProperty('notifications', [{
-            type,
-            from: this.id
-        }, ...allNotifications]);
-    }
-
-    newChat = (userIds) => {
-        const recipients = (Array.isArray(userIds)) ? userIds : [userIds];
-        // recipients.for(recipientId => {
-        //     CONTACTS[recipientId].joinChat(newChatId);
-        // });
-        const chat = new Chat({recipients});
-        log(chat);
-    }
-
-    joinChat = (chatId) => {
-        this.chats.push(chatId);
-        // return this.update();
-    }
+    // sendNotification = async (to, type) => {
+    //     if (!(type == "friendRequest" || type == "boardInvite" || type == "taskAssignment")) return error(
+    //         `type '${type}' invalid! type may be one of: 'friendRequest', 'boardInvite', 'taskAssignment'`
+    //     )
+    //     if (to == this.id) return error('invalid recipient!');
+    //     const recipient = CONTACTS[to];
+    //     const allNotifications = recipient.getPropertyValue('notifications');
+    //     return recipient.setProperty('notifications', [{
+    //         type,
+    //         from: this.id
+    //     }, ...allNotifications]);
+    // }
 }
