@@ -225,9 +225,9 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 #account-panel-content {
     flex-grow: 1;
     height: 100%;
+    min-width: 600px;
     background-color: white;
     padding: 2rem;
-    min-width: 600px;
 }
 
 #account-panel-content > div {
@@ -289,6 +289,10 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 @media(max-width: 1000px) {
     #account-panel-options button span {
         font-size: 1rem;
+    }
+
+    #account-panel-content {
+        min-width: none;
     }
 }
 
@@ -417,16 +421,32 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     }
 }
 
-@media (max-width: 400px) {
-    .notifications > div span {
-        font-size: 0.825rem;
-    }
 
-    #notifications-container h1 {
+@media(max-width: 500px) {
+    #account-panel-content #notifications-container > h1 {
         font-size: 2rem;
     }
 
     #settings-container h1 {
         font-size: 2rem;
+    }
+
+    #notifications-content .btn-container {
+        font-size: 0.825rem;
+    }
+}
+
+
+@media (max-width: 400px) {
+    .notifications > div span {
+        font-size: 0.825rem;
+    }
+
+    #account-panel-content #notifications-container > h1 {
+        font-size: 1.625rem;
+    }
+
+    #settings-container h1 {
+        font-size: 1.625rem;
     }
 }

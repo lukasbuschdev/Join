@@ -174,40 +174,40 @@ function renderSelectedContact(selectedContact) {
 
 function selectedContactTemplate({id, img, name, email, phone, color}) {
     return /*html*/`
-    <div class="contact-container column">
-        <div class="img-name row">
-            <div class="user-img-container" style="--user-clr: ${color}">
-                <h1>${name.slice(0, 2).toUpperCase()}</h1>
-                <img src="${img}" alt="">
-            </div>
-
-            <div class="column contact-name">
-                <span>${name}</span>
-                <div class="row gap-30">
-                    <button data-lang="add-task" class="row" onclick="addTaskModal()">Add Task</button>
-                    <div class="vertical-line"></div>
-                    <button class="delete-contact-btn row gap-10" onclick="confirmation('delete-contact', () => deleteContact(${id}))">
-                        <span data-lang="delete">Delete</span>
-                        <img src="/Join/assets/img/icons/trash_red.svg" width="20">
-                    </button>
+        <div class="contact-container column">
+            <div class="img-name row">
+                <div class="user-img-container" style="--user-clr: ${color}">
+                    <h1>${name.slice(0, 2).toUpperCase()}</h1>
+                    <img src="${img}" alt="">
+                </div>
+    
+                <div class="column contact-name">
+                    <span>${name}</span>
+                    <div class="row gap-30">
+                        <button data-lang="add-task" class="row" onclick="addTaskModal()">Add Task</button>
+                        <div class="vertical-line"></div>
+                        <button class="delete-contact-btn row gap-10" onclick="confirmation('delete-contact', () => deleteContact(${id}))">
+                            <span data-lang="delete">Delete</span>
+                            <img src="/Join/assets/img/icons/trash_red.svg" width="20">
+                        </button>
+                    </div>
                 </div>
             </div>
+    
+            <div class="edit-contact row">
+                <span data-lang="contact-info">Contact Information</span>
+            </div>
+    
+            <div class="mail-container column">
+                <span class="txt-700">E-Mail</span>
+                <a class="email" href="mailto:${email}">${email}</a>                 
+            </div>
+    
+            <div class="phone-container column">
+                <span data-lang="phone" class="txt-700">Phone</span>
+                <a id="phone-number" href="${(phone == 'N/A') ? 'return false;' : 'tel:${phone}'}">${phone}</a>
+            </div>
         </div>
-
-        <div class="edit-contact row">
-            <span data-lang="contact-info">Contact Information</span>
-        </div>
-
-        <div class="mail-container column">
-            <span class="txt-700">E-Mail</span>
-            <a class="email" href="mailto:${email}">${email}</a>                 
-        </div>
-
-        <div class="phone-container column">
-            <span data-lang="phone" class="txt-700">Phone</span>
-            <a id="phone-number" href="${(phone == 'N/A') ? 'return false;' : 'tel:${phone}'}">${phone}</a>
-        </div>
-    </div>
     `;
 }
 
