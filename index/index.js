@@ -73,18 +73,7 @@ const loadContent = async () => {
 const openAccountPanel = async () => {
     $('dialog#account-panel').openModal();
     $('#account-panel-options button.active')?.click();
-    // const modal = $('#account-panel');
-    // modal.addEventListener('click', async () => {
-    //     if(currentDirectory == 'help') {
-    //         return initHelp();
-    //     }
-    //     if(currentDirectory == 'privacy') {
-    //         return await loadAccountPanelContent();
-    //     }
-    //     if(currentDirectory == 'legal-notice') {
-    //         return await loadAccountPanelContent();
-    //     }
-    // });
+    $('#account-panel-options #notifications-btn')?.click();
 };
 
 const loadAccountPanelContent = async () => {

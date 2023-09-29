@@ -238,16 +238,6 @@
     height: 27px;
 }
 
-#fullscreen-task .btn-container button:first-of-type::before {
-    translate: 0 2px;
-    content: url(/Join/assets/img/icons/trash.svg);
-}
-
-#fullscreen-task .btn-container button:last-of-type::before {
-    translate: 0 2px;
-    content: url(/Join/assets/img/icons/edit_dark.svg);
-}
-
 #edit-task .btn-check {
     margin-left: auto;
 }

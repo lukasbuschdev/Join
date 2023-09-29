@@ -48,7 +48,7 @@ const renderBoard = () => {
         .filter(date => date > now)
         .sort()
         .at(0)
-        .toLocaleDateString(currentLang(), {year: 'numeric', month: 'long', day: 'numeric'}) : undefined;
+        ?.toLocaleDateString(currentLang(), {year: 'numeric', month: 'long', day: 'numeric'}) || undefined : undefined;
     const boardButtons = $$('#summary-data button');
     boardButtons[0].$('h1').innerText = tasksInBoard;
     boardButtons[1].$('h1').innerText = tasksInProgress;

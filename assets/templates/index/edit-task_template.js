@@ -53,7 +53,7 @@ const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, su
         <div class="drp gap-8">
             <span data-lang="assigned-to">Assigned to</span>
             <div class="drp-wrapper" id="drp-wrapper-collaborator">
-                <div id="selected-collaborator-input" data-lang="select-collaborators" class="drp-title" onclick="this.toggleDropDown()">${editTaskAssignedTo()}</div>
+                <div id="selected-collaborator-input" data-lang="select-collaborators" class="drp-title" onclick="this.toggleDropDown()"></div>
                 <div class="drp-option-wrapper" id="drp-collaborators" data-shadow="ud/white/10px">
                     <div class="drp-contacts shadow-container" id="drp-collab-container">
                         ${""}

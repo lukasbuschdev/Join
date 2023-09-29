@@ -15,7 +15,7 @@ const renderTasks = (filter) => {
     const filteredTasks = (filter)
         ? Object.values(tasks).filter(task => task.title.includes(filter) || task.description.includes(filter))
         : Object.values(tasks);
-    filteredTasks.for(task => $(`#${task.type}`).innerHTML += taskTemplate(task, filter));
+    filteredTasks.toReversed().for(task => $(`#${task.type}`).innerHTML += taskTemplate(task, filter));
     tasksContainer.LANG_load();
 }
 
@@ -78,7 +78,6 @@ const saveTaskChanges = () => {
     if (Object.values(differences).length > 0) {
         updateTaskUi(differences);
         SELECTED_TASK.update();
-        log('difference')
     }
     else log('no difference');
 };
@@ -138,13 +137,13 @@ const updateTaskUi = ({title = null, description = null, priority = null, assign
     }
 };
 
-const editTaskInitializer = () => {
+const editTaskInitializer = async () => {
     const editTaskContainer = $('#edit-task');
     editTaskContainer.innerHTML = editTaskTemplate(SELECTED_TASK);
-    editTaskContainer.LANG_load();
-    if (SELECTED_TASK.assignedTo) editTaskContainer.$('#selected-collaborator-input').innerHTML = editTaskAssignedTo();
-    renderAssignedContacts();
+    await editTaskContainer.LANG_load();
+    await renderAssignedContacts();
     editTaskContainer.$('.fullscreen-content').addScrollShadow();
+    editTaskContainer.$('#selected-collaborator-input').innerHTML = editTaskAssignedTo();
     editTaskContainer.initMenus();
     
     toggleFullscreenState();
@@ -153,8 +152,9 @@ const editTaskInitializer = () => {
     // saveTaskButton.addEventListener('click', saveHandler(), {once: true});
 };
 
-const renderAssignedContacts = () => {
+const renderAssignedContacts = async () => {
     renderAssignToContacts();
+    await $(`.drp-contacts [data-id="${currentUserId()}"]`)?.LANG_load();
     $('.drp-contacts').$$('.drp-option').for(
         contact => contact.classList.toggle('active', SELECTED_TASK.assignedTo.includes(contact.dataset.id))
     );
@@ -162,7 +162,7 @@ const renderAssignedContacts = () => {
 
 const toggleFullscreenState = () => {
     const fullscreenModal = $('#fullscreen-task-modal')
-    fullscreenModal.$$(':is(#fullscreen-task, #edit-task)').for(section => {
+    fullscreenModal.$$('#fullscreen-task, #edit-task').for(section => {
         section.initMenus();
         section.classList.toggle('d-none');
         if (section.id == "edit-task" && section.classList.contains('d-none')) section.innerHTML = '';

@@ -9,10 +9,16 @@ const logIn = async () => {
         { identifier: 'invalid-email-or-username', bool: user == undefined },
         { identifier: 'wrong-password', bool: !passwordValidity || false },
         );
-    if(!user || !passwordValidity) return console.error(user);
-    user.rememberMe();
-    // await checkDevice(user);
+    if(!user || !passwordValidity) return error(user);
+    rememberMe(user);
     user.logIn();
+}
+
+const rememberMe = (user) => {
+    const rememberLogin = $('#remember-me').getAttribute('checked');
+    if (rememberLogin == 'false') return LOCAL_setData('rememberMe', false);
+    LOCAL_setData('rememberMe', true);
+    if ("PasswordCredential" in window) user.setCredentials();
 }
 
 const rememberLoginDetails = () => {
@@ -20,7 +26,7 @@ const rememberLoginDetails = () => {
         const { email, password } = LOCAL_getItem('remember-me');
         $('#email input').value = email;
         $('#password input').value = password;
-        $('#remember-me').checked = true;
+        $('#remember-me').setAttribute('checked', 'true');
     }
 }
 
@@ -30,15 +36,7 @@ const automaticLogin = async () => {
     );
     if (!("PasswordCredential" in window)) return;
     const cred = await navigator.credentials.get({ password: true }) || false;
-    if (cred == false) return;
+    if (!cred) return;
     const user = await getUser(cred.id);
     user.logIn();
-}
-
-const checkDevice = async (user) => {
-    const savedId = LOCAL_getData('deviceId');
-    if (!savedId) {
-        const deviceData = await getDeviceData();
-        await user.unknownDevice(deviceData);
-    }
 }
