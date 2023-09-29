@@ -73,6 +73,7 @@ const loadContent = async () => {
 const openAccountPanel = () => {
     $('dialog#account-panel').openModal();
     $('#account-panel-options button.active')?.click();
+    $('#account-panel-options #notifications-btn')?.click();
 };
 
 const loadAccountPanelContent = async () => {
