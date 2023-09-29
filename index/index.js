@@ -70,29 +70,6 @@ const loadContent = async () => {
     }, 100);
 };
 
-
-// const openAccountPanel = async () => {
-//     $('dialog#account-panel').openModal();
-//     $('#account-panel-options button.active')?.click();
-//     const modal = $('#account-panel');
-//     modal.addEventListener('click', async () => {
-//         console.log('Current Directory:', currentDirectory());
-//         if (currentDirectory() === 'help') {
-//             console.log('Entering help condition');
-//             return initHelp(currentDirectory());
-//         }
-//         if (currentDirectory() === 'privacy') {
-//             console.log('Entering privacy condition');
-//             return await loadAccountPanelContent();
-//         }
-//         if (currentDirectory() === 'legal-notice') {
-//             console.log('Entering legal-notice condition');
-//             return await loadAccountPanelContent(currentDirectory());
-//         }
-//     });
-// };
-
-
 const openAccountPanel = async () => {
     $('dialog#account-panel').openModal();
     $('#account-panel-options button.active')?.click();
@@ -110,15 +87,15 @@ const openAccountPanel = async () => {
     // });
 };
 
-
-
 const loadAccountPanelContent = async () => {
+    const notificaitionsContent = $('#notifications-content');
     const btn = event.currentTarget;
     const template = btn.id.slice(0, -4);
     const templatePath = `/Join/assets/templates/account/${template}.html`;
     await $('#account-panel-content').includeTemplate(templatePath);
     if (template == "notifications") loadNotifications();
     $('#account-panel-content').LANG_load();
+    if(notificaitionsContent.innerText == '') return noNotificationsYet();
 };
 
 const loadNotifications = async () => {
@@ -127,3 +104,10 @@ const loadNotifications = async () => {
     container.innerHTML = ''
     container.renderItems(Object.values(USER.notifications), notificationTemplate);
 };
+
+function noNotificationsYet() {
+    const notificaitionsContent = $('#notifications-content');
+    notificaitionsContent.innerHTML = /*html*/ `
+        <h3 class="no-notifications" data-lang="no-notifications">You have no notifications!</h3>
+    `;
+}
