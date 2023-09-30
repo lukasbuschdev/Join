@@ -64,6 +64,13 @@ class User extends Account {
         goTo('summary', {search: `?uid=${this.id}`, reroute: true});
     }
 
+    logOut = () => {
+        LOCAL_setData('loggedIn', false);
+        this.loggedIn = 'false';
+        if ("PasswordCredential" in window) navigator.credentials.preventSilentAccess();
+        goTo('login', {reroute: true, search: ''});
+    }
+
     update = async () => {
         await REMOTE_setData('users', {[this.id]: this});
         if (typeof CONTACTS == "undefined") return;

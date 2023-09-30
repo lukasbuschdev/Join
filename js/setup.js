@@ -44,7 +44,7 @@ const initInactivity = () => {
     });
 }
 
-const renderUserData = () => {
+window.renderUserData = function () {
     const { name, img, color } = USER;
     $$('[data-user-data]').for(
         (userField) => {

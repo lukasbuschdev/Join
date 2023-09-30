@@ -1,8 +1,15 @@
 const init = async () => {
-    // $$('#email input, #password input').for(
-    //     input => input.addEventListener('focus', automaticLogin)
-    // )
+    
+    addAutomaticLogin();
     isSessionExpired();
+}
+
+const addAutomaticLogin = () => {
+    const allInputs = $$('input:not([type="checkbox"])');
+    allInputs.for(input => input.addEventListener('click', handler = () => {
+        automaticLogin();
+        allInputs.for(input => input.removeEventListener('click', handler));
+    }))
 }
 
 const isSessionExpired = () => {
@@ -33,5 +40,5 @@ const togglePasswordVisibility = () => {
     const passwordInput = event.currentTarget.previousElementSibling;
     const eye = event.currentTarget.children[0];
     passwordInput.type == 'password' ? passwordInput.type = 'text' : passwordInput.type = 'password';
-    eye.src = eye.src.includes('show.png') ? '../assets/img/icons/hide.png' : '../assets/img/icons/show.png';
+    eye.src = eye.src.includes('show.png') ? '/Join/assets/img/icons/hide.png' : '/Join/assets/img/icons/show.png';
 }

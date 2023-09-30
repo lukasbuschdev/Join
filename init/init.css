@@ -115,6 +115,14 @@ input {
     max-width: 422px;
 }
 
+.inp-wrapper#privacy-wrapper input {
+    width: 16px;
+}
+
+.inp-wrapper#privacy-wrapper > .row {
+    justify-content: center;
+}
+
 .eye {
     height: 25px;
     object-fit: contain;

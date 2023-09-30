@@ -1,1 +1,17 @@
-<button data-lang="reset-password" onclick="confirmation('reset-password', () => goTo('reset_password', {reroute: true}))">Reset Password</button>
+<link rel="stylesheet" href="/Join/init/create_account.css">
+<div id="edit-account-content" class="column gap25">
+    
+    <div class="user-img-container" data-user-data="color" data-img="false" onclick="removeUpload()">
+        <h1 data-user-data="initials"></h1>
+        <img class="user-img" src="" alt="" data-user-data="img">
+        <button id="user-color" onclick="toggleColorPicker()"></button>
+        <button id="accept-user-color"></button>
+        <div id="color-wheel" class="d-none" onclick="pickColor()">
+            <div id="color-cursor"></div>
+        </div>
+        <label class="border" for="choose-image"></label>
+        <input type="file" style="display: none;" id="choose-image" name="user-img" accept="image/*" onchange="submitUpload()">
+    </div>
+    
+    <button data-lang="reset-password" onclick="confirmation('reset-password', () => goTo('reset_password', {reroute: true}))">Reset Password</button>
+</div>

@@ -26,6 +26,8 @@
     "email-in-use": "Email already in use!",
     "invalid-password": "Password must be at least 8 characters long and contain at least one uppercase and lowercase letter and one digit",
     "automatic-signout": "You were autumatically signed out!",
+    "register-privacy": "I accept the Privacy Policy",
+    "accept-privacy-please": "Please accept the Privacy Policy!",
 
     "i-forgot-password": "I forgot my password",
     "dont-worry": "Don't worry! We will send you an email with the instructions to reset your password.",

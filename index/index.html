@@ -37,14 +37,13 @@
     
     <script src="/Join/js/setup.js" defer></script>
     <script src="/Join/js/websocket.js"></script>
-    <script src="/Join/index/index.js"></script>    
+    <script src="/Join/index/index.js"></script>  
+    <script src="/Join/init/create_account.js"></script>  
     <script src="/Join/index/boards.js"></script>
     <script src="/Join/index/summary.js"></script>
     <script src="/Join/index/contacts.js"></script>
     <script src="/Join/index/add_task.js"></script>
-    <script src="/Join/index/privacy.js"></script>
     <script src="/Join/index/help.js"></script>
-    <script src="/Join/index/settings.js"></script>
     <script src="/Join/assets/templates/index/task_template.js"></script>
     <script src="/Join/assets/templates/index/fullscreen-task_template.js"></script>
     <script src="/Join/assets/templates/index/edit-task_template.js"></script>
@@ -119,6 +118,10 @@
                 <button id="settings-btn" class="txt-normal row gap-15" type="option" onclick="loadAccountPanelContent()">
                     <img src="/Join/assets/img/icons/settings.png">    
                     <span data-lang="account-panel-settings">Settings</span>
+                </button>
+                <button id="logout-btn" class="txt-normal row gap-15" onclick="confirmation('logout', () => USER.logOut())">
+                    <img src="/Join/assets/img/icons/logout.png">    
+                    <span data-lang="account-panel-logout">Log out</span>
                 </button>
             </div>
             <div id="account-panel-content"></div>

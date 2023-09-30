@@ -203,6 +203,10 @@ HTMLElement.prototype.LANG_load = function() {
     return (LANG_load.bind(this))();
 };
 
+HTMLElement.prototype.renderUserData = function () {
+    (renderUserData.bind(this))();
+}
+
 HTMLElement.prototype.toggleDropDown = function () {
     if (!this.closest('.drp-wrapper')) return;
     this.closest('.drp-wrapper').toggleActive();

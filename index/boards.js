@@ -147,9 +147,6 @@ const editTaskInitializer = async () => {
     editTaskContainer.initMenus();
     
     toggleFullscreenState();
-    
-    const saveTaskButton = $('#save-task');
-    // saveTaskButton.addEventListener('click', saveHandler(), {once: true});
 };
 
 const renderAssignedContacts = async () => {

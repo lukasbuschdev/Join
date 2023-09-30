@@ -288,7 +288,7 @@ const confirmation = (type, cb) => {
   confirmationContainer.type = "modal";
 
   confirmationContainer.innerHTML = /*html*/`
-    <div class="confirmation-dialog column gap-10">
+    <div class="confirmation-dialog column gap-25">
       <span data-lang="confirmation-${type}"></span>
       <div class="btn-container gap-15">
         <div class="btn btn-secondary txt-small txt-700" data-lang="btn-cancel" onclick="this.closest('dialog').closeModal()"></div>

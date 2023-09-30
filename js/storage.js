@@ -156,7 +156,7 @@ const REMOTE_updateUsers = async () => {
 const getUserByInput = async (input) => {
     const allUsers = await REMOTE_getData('users');
     const [ userData ] = Object.values(allUsers).filter(({ name, email }) => name == input || email == input);
-    return (userData == undefined) ? undefined : new User(userData);
+    return (userData == undefined) ? null : new User(userData);
 }
 
 const getUsersById = async (uids) => {

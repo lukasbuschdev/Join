@@ -17,6 +17,7 @@
     "account-panel-notifications": "Notifications",
     "account-panel-edit-account": "Edit account",
     "account-panel-settings": "Language",
+    "account-panel-logout": "Log out",
 
     "language": "Language",
 
@@ -117,6 +118,8 @@
     "confirm-delete-board": "Delete",
     "confirmation-save-edited-task": "Save Task changes?",
     "confirm-save-edited-task": "Save",
+    "confirmation-logout": "Do you want to log out?",
+    "confirm-logout": "Log out",
 
     "reset-password": "Reset your password",
 
@@ -134,5 +137,7 @@
     "board-nonexistent": "Board %boardName% doesn't exist!",
     "no-notifications": "No Notifications",
 
-    "network-error": "Network Error!"
+    "network-error": "Network Error!",
+    "websocket-disconnect": "Websocket - Connection Error!",
+    "websocket-reconnect": "Websocket - Reconnected!"
 }

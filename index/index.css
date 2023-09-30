@@ -196,7 +196,7 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     color: white;
 }
 
-#settings-btn img {
+:is(#settings-btn, #logout-btn) img {
     height: 25px;
     width: 25px;
 }
@@ -283,6 +283,10 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 #fullscreen-task .btn-container button:last-of-type::before {
     translate: 0 2px;
     content: url(/Join/assets/img/icons/edit_dark.svg);
+}
+
+#account-panel-content .user-img-container{
+    width: 120px;
 }
 
 

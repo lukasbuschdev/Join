@@ -17,6 +17,7 @@
     "account-panel-notifications": "Benachrichtigungen",
     "account-panel-edit-account": "Konto bearbeiten",
     "account-panel-settings": "Sprache",
+    "account-panel-logout": "Abmelden",
 
     "language": "Sprache",
 
@@ -100,7 +101,6 @@
 
     "board": "Tafel",
 
-
     "add-contact-heading": "Neuer Kontakt",
     "add-contact-subheading": "Aufgaben, besser im Team!",
     "friendship-request": "Anfrage gesendet an %name%!",
@@ -115,6 +115,8 @@
     "confirm-delete-board": "Löschen",
     "confirmation-save-edited-task": "Änderungen speichern?",
     "confirm-save-edited-task": "Speichern",
+    "confirmation-logout": "Willst du dich abmelden?",
+    "confirm-logout": "Abmelden",
     
     "reset-password": "Reset your password",
 
@@ -132,5 +134,7 @@
     "board-nonexistent": "Tafel %boardName% existiert nicht!",
     "no-notifications": "Keine Benachrichtigungen",
 
-    "network-error": "Netzwerkfehler!"
+    "network-error": "Netzwerkfehler!",
+    "websocket-disconnect": "Websocket - Verbindungsfehler!",
+    "websocket-reconnect": "Websocket - Verbindung wiederhergestellt!"
 }
