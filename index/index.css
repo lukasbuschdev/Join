@@ -222,6 +222,10 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     position: relative;
 }
 
+.no-notifications {
+    color: var(--clr-blue);
+}
+
 #account-panel-content {
     flex-grow: 1;
     height: 100%;

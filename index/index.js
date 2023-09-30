@@ -77,6 +77,7 @@ const openAccountPanel = async () => {
 };
 
 const loadAccountPanelContent = async () => {
+    const notificaitionsContent = $('#notifications-content');
     const btn = event.currentTarget;
     const template = btn.id.slice(0, -4);
     const templatePath = `/Join/assets/templates/account/${template}.html`;
@@ -84,6 +85,7 @@ const loadAccountPanelContent = async () => {
     if (template == "notifications") loadNotifications();
     if (template == "edit-account") initEditAccount();
     $('#account-panel-content').LANG_load();
+    if(notificaitionsContent.innerText == '') return noNotificationsYet();
 };
 
 const loadNotifications = async () => {
@@ -92,3 +94,10 @@ const loadNotifications = async () => {
     container.innerHTML = ''
     container.renderItems(Object.values(USER.notifications), notificationTemplate);
 };
+
+function noNotificationsYet() {
+    const notificaitionsContent = $('#notifications-content');
+    notificaitionsContent.innerHTML = /*html*/ `
+        <h3 class="no-notifications" data-lang="no-notifications">You have no notifications!</h3>
+    `;
+}
