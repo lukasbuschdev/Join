@@ -409,14 +409,16 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     }
 }
 
+@media(max-width: 650px) {
+    #account-panel-options button span {
+        display: none;
+    }
+}
+
 
 @media (max-width: 600px) {
     #notification .btn {
         font-size: var(--txt-tiny) !important;
-    }
-
-    #account-panel-options button span {
-        display: none;
     }
 
     #settings-container h1 {
@@ -448,7 +450,7 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 }
 
 
-@media (max-width: 400px) {
+@media(max-width: 400px) {
     .notifications > div span {
         font-size: 0.825rem;
     }
@@ -459,5 +461,11 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 
     #settings-container h1 {
         font-size: 1.625rem;
+    }
+}
+
+@media(max-width: 350px) {
+    #account-panel-content {
+        padding: 1.5rem 1rem;
     }
 }
