@@ -224,6 +224,8 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 
 .no-notifications {
     color: var(--clr-blue);
+    align-self: center;
+    margin-top: 25%;
 }
 
 #account-panel-content {
@@ -249,6 +251,7 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 
 #notifications-content {
     overflow: auto;
+    height: 100%;
 }
 
 #notifications-content:not(:empty)+.placeholder{

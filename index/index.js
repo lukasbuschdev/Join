@@ -77,7 +77,6 @@ const openAccountPanel = async () => {
 };
 
 const loadAccountPanelContent = async () => {
-    const notificaitionsContent = $('#notifications-content');
     const btn = event.currentTarget;
     const template = btn.id.slice(0, -4);
     const templatePath = `/Join/assets/templates/account/${template}.html`;
@@ -85,19 +84,21 @@ const loadAccountPanelContent = async () => {
     if (template == "notifications") loadNotifications();
     if (template == "edit-account") initEditAccount();
     $('#account-panel-content').LANG_load();
-    if($('#notifications-content').innerText == '') return noNotificationsYet();
 };
 
 const loadNotifications = async () => {
-    if (Object.values(USER.notifications).length == 0) return;
+    if (Object.values(USER.notifications).length == 0) return noNotificationsYet();
     const container = $('#notifications-content');
     container.innerHTML = ''
     container.renderItems(Object.values(USER.notifications), notificationTemplate);
 };
 
 function noNotificationsYet() {
+    log('No Notifications here!')
     const notificaitionsContent = $('#notifications-content');
+    // notificaitionsContent.style.alignItems = 'center';
+    // notificaitionsContent.style.justifyContent = 'center';
     notificaitionsContent.innerHTML = /*html*/ `
-        <h3 class="no-notifications" data-lang="no-notifications">You have no notifications!</h3>
+        <h3 class="no-notifications txt-center" data-lang="no-notifications">You have no notifications!</h3>
     `;
 }

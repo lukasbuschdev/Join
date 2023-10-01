@@ -19,8 +19,6 @@
     "account-panel-settings": "Language",
     "account-panel-logout": "Log out",
 
-    "no-notifications": "You have no notifications!",
-
     "language": "Language",
 
     "to-do": "To do",
@@ -138,7 +136,7 @@
     "assigned-you-to-task": "%ownerName% assigned you to %taskName% in %boardName%!",
     "understood": "Understood",
     "board-nonexistent": "Board %boardName% doesn't exist!",
-    "no-notifications": "No Notifications",
+    "no-notifications": "You have no Notifications!",
 
     "network-error": "Network Error!",
     "websocket-disconnect": "Websocket - Connection Error!",
