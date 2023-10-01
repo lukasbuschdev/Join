@@ -39,12 +39,8 @@ class User extends Account {
     }
 
     verify = async () => {
-        // await REMOTE_removeData(`verification/${this.id}`);
+        await REMOTE_removeData(`verification/${this.id}`);
         await this.update();
-    }
-
-    forgotPassword = async () => {
-        return await this.#sendMail("passwordReset");
     }
 
     setCredentials = () => {
