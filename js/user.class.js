@@ -3,7 +3,7 @@ class User extends Account {
         super(userData);
         this.password = userData.password;
         this.color = userData.color ?? '#D1D1D1';
-        this.pendingFriendshipRequests = userData.pendingFriendshipRequests;
+        this.pendingFriendshipRequests = userData.pendingFriendshipRequests ?? [];
     }
 
     setPicture = async (img) => await this.setProperty("img", img);
@@ -18,13 +18,13 @@ class User extends Account {
 
     initVerification = async () => {
         this.generateVerificationCode();
-        this.#sendMail("verification");
+        await this.#sendMail("verification");
         await REMOTE_setData('verification', {[this.id]: { verifyCode: this.verifyCode, userData: this }});
-        goTo('/Join/verify_account',`?uid=${this.id}`);
+        goTo('verify_account', {reroute: true, search: `?uid=${this.id}`});
     }
 
     initPasswordReset = () => {
-        this.#sendMail("passwordReset");
+        return this.#sendMail("passwordReset");
     }
 
     #sendMail = async (type, options) => {
@@ -35,11 +35,11 @@ class User extends Account {
         }
         if (typeof options == "object") mailOptions.options = options;
         const mail = new Email(mailOptions);
-        return await mail.send();
+        return mail.send();
     }
 
     verify = async () => {
-        await REMOTE_removeData(`verification/${this.id}`);
+        // await REMOTE_removeData(`verification/${this.id}`);
         await this.update();
     }
 
@@ -64,9 +64,10 @@ class User extends Account {
         goTo('summary', {search: `?uid=${this.id}`, reroute: true});
     }
 
-    logOut = () => {
+    logOut = async () => {
         LOCAL_setData('loggedIn', false);
         this.loggedIn = 'false';
+        await this.update();
         if ("PasswordCredential" in window) navigator.credentials.preventSilentAccess();
         goTo('login', {reroute: true, search: ''});
     }

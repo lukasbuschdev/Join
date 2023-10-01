@@ -47,6 +47,7 @@
     "tasks-done": "Fertig",
     "delete-board": "Tafel löschen",
     "board-deleted": "Tafel gelöscht!",
+    "no-boards": "Noch keine Tafel",
     
     "heading-add-task": "Aufgabe hinzufügen",
     "select-board": "Wähle eine Tafel",

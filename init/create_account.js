@@ -1,6 +1,6 @@
 const initCreateAccount = async () => {
     renderColorWheel();
-    const { name } = await getCurrentUserData();
+    const { name } = await getCurrentUser();
     $('.user-img-container h1').innerText = name.slice(0, 2).toUpperCase();
     $('#user-name').innerText = name;
 }
@@ -14,29 +14,30 @@ const submitUpload = async () => {
     formData.append('user-img', img);
     formData.append('uid', uid)
     
-    const { imageSrc } = await (await fetch('/sJoin/php/uploadImg.php', {
+    const {imageSrc} = await (await fetch('/Join/php/uploadImg.php', {
         method: 'POST',
         body: formData
     })).json();
 
     $('.user-img').src = imageSrc;
     $('.user-img-container').dataset.img = 'true';
-
+    $('[type="file"]').value = '';
     REMOTE_setData(`users/${uid}`, {img: imageSrc});
 }
 
 const removeUpload = async () => {
-    const container = event.currentTarget;
+    const container = $('.user-img-container');
     if (container.dataset.img == 'false') return;
     
     const uid = currentUserId();
     const formData = new FormData();
     formData.append('uid', uid)
-    await fetch('../php/uploadImg.php', {
+    await fetch('/Join/php/uploadImg.php', {
         method: 'POST',
         body: formData
     });
-
+    
+    $('[type="file"]').value = '';
     container.$('img').src = '';
     container.dataset.img = false;
     REMOTE_setData(`users/${uid}`, {img: ""});
@@ -50,12 +51,14 @@ const finishSetup = async () => {
     throwErrors({ identifier: 'invalid-phone-number', bool: (phoneInput == true && !phoneValidity) });
     if (phoneInput !== "" && phoneValidity == false) return
 
-    const user = await getCurrentUser();
+    const user = await getCurrentUser(true);
     const userColor = HSLToHex($('.user-img-container').style.getPropertyValue('--user-clr'));
 
-    if (userColor) user.setColor(userColor);
-    user.setPhoneNumber(phoneInput);
-    // user.logIn();
+    if (userColor) user.color = userColor;
+    if (phoneInput) user.phone = phoneInput;
+    if (userColor) user.color = userColor;
+    await user.update();
+    user.logIn();
 }
 
 const renderColorWheel = () => {
@@ -73,6 +76,7 @@ const renderColorWheel = () => {
 
 const toggleColorPicker = () => {
     event.preventDefault();
+    event.stopPropagation();
     $('#color-wheel').classList.toggle('d-none');
     $('label').classList.toggle('d-none');
     if (event.currentTarget.classList.contains('active') && $('.user-img-container').style.getPropertyValue('--user-clr') == false) {
@@ -94,25 +98,24 @@ const pickColor = () => {
     const userColor = `hsl(${hue}, 100%, ${50 + lightness}%)`
 
     moveColorCursor(offsetX, offsetY, userColor);
-
-    const [r, g, b] = HSLToRGB(hue, 100, 50 + lightness);
-    addAcceptColor(userColor, r, g, b);
+    addAcceptColor(userColor);
 }
 
 const moveColorCursor = (offsetX, offsetY, userColor) => {
-    $('#color-cursor').classList.remove('d-none');
-    $('#color-cursor').style.setProperty('--x', offsetX);
-    $('#color-cursor').style.setProperty('--y', offsetY);
-    $('#color-cursor').style.backgroundColor = userColor;
+    const colorCursor = $('#color-cursor');
+    colorCursor.classList.remove('d-none');
+    colorCursor.style.setProperty('--x', offsetX);
+    colorCursor.style.setProperty('--y', offsetY);
+    colorCursor.style.backgroundColor = userColor;
 }
 
-const addAcceptColor = (userColor, r, g, b) => {
+const addAcceptColor = (userColor) => {
     $('#accept-user-color').classList.add('active');
     $('label').classList.remove('border');
     try {$('#accept-user-color').removeEventListener("click", colorPicker)}catch(e){};
     $('#accept-user-color').addEventListener("click", colorPicker = (event) => {
         event.preventDefault();
         $('.user-img-container').style.setProperty('--user-clr', userColor);
-        event.currentTarget.previousElementSibling.click();
-    });
+        $('#user-color').click();
+    }, {once: true});
 }

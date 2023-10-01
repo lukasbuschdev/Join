@@ -17,9 +17,9 @@ const init = async () => {
     checkNotifications();
 }
 
-// if (LOCAL_getData('rememberMe') == 'false') {
-//     window.on("beforeunload", () => LOCAL_setData('loggedIn', false))
-// }
+if (LOCAL_getData('rememberMe') == 'false') {
+    window.on("beforeunload", () => LOCAL_setData('loggedIn', false))
+}
 
 const checkNotifications = async () => {
     await getUser();
@@ -85,7 +85,7 @@ const loadAccountPanelContent = async () => {
     if (template == "notifications") loadNotifications();
     if (template == "edit-account") initEditAccount();
     $('#account-panel-content').LANG_load();
-    if(notificaitionsContent.innerText == '') return noNotificationsYet();
+    if($('#notifications-content').innerText == '') return noNotificationsYet();
 };
 
 const loadNotifications = async () => {

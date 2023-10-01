@@ -39,9 +39,9 @@
                 </div>
                 
                 <div class="column gap-35">
-                    <div class="user-img-container" data-img="false" onclick="removeUpload()">
+                    <div class="user-img-container" data-img="false">
                         <h1>TU</h1>
-                        <img class="user-img" src="" alt="">
+                        <img class="user-img" src="" alt="" onclick="removeUpload()">
                         <button id="user-color" onclick="toggleColorPicker()"></button>
                         <button id="accept-user-color"></button>
                         <div id="color-wheel" class="d-none" onclick="pickColor()">
@@ -55,20 +55,8 @@
     
                 <p class="txt-normal txt-center" data-lang="choose-image-info"></p>
     
-                <div class="inp-container radius-10">
-                        <div class="inp-wrapper row" id="phone">
-                            <div class="drp txt-small">
-                                <div class="drp-wrapper">
-                                    <div class="drp-title" onclick="this.toggleDropDown()">+43</div>
-                                    <div class="drp-option-wrapper">
-                                        <div class="drp-contacts">
-                                            <div class="drp-option" onclick="this.toggleActive()">+43</div>
-                                            <div class="drp-option" onclick="this.toggleActive()">+49</div>
-                                        </div>
-                                        <div class="drp-invite" data-lang="assigned-invite">Invite new contact</div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="inp-wrapper" id="phone">
+                    <div class="inp-container row radius-10" style="padding: 0 21px 0;">
                         <input type="tel" required name="" class="txt-normal" placeholder="Phone number (optional)" data-lang-placeholder="phone-number">
                         <div class="grid-center">
                             <img src="/Join/assets/img/icons/phone.svg" alt="">

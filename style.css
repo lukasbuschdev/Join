@@ -564,6 +564,7 @@ h4 {
 }
 
 .user-img-container::after {
+    pointer-events: none;
     position: absolute;
     inset: 0;
     border-radius: inherit;
@@ -571,18 +572,19 @@ h4 {
     box-shadow: inset 0 0 0 var(--outline-thickness) var(--text-clr);
 }
 
-.user-img-container[data-img="true"]:hover::before {
+.user-img-container[data-img="true"]:not(:has(:is(#user-color, label):hover)):hover::before {
     content: '';
     position: absolute;
     display: grid;
     z-index: 1;
     width: 3rem;
     aspect-ratio: 1;
-    background: url(../assets/img/icons/btn_cancel.svg) rgba(255, 255, 255, 0.4) center no-repeat;
+    background: url(/Join/assets/img/icons/btn_cancel.svg) rgba(255, 255, 255, 0.4) center no-repeat;
     background-size: 50%;
     filter: invert(1);
     border-radius: 999px;
     cursor: pointer;
+    pointer-events: none;
 }
 
 .user-img-container[data-img="true"] {

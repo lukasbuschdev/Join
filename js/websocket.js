@@ -31,7 +31,7 @@ const initWebsocket = () => {
     });
 
     SOCKET.on('account-in-use', () => {
-        goTo('login', {reroute: true});
+        goTo('login', {reroute: true, search: '?account_in_use'});
     })
 }
 

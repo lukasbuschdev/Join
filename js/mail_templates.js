@@ -48,31 +48,3 @@ const resetPasswordEmailTemplate = ({ id, name }, langData) => {
         </div>
     `
 }
-
-const unknownDeviceEmailTemplate = ({ id, name }, langData, {platform, city, country}) => {
-    return /*html*/`
-        <div style="height: 500px; background-color: #F6F7F8; padding: 30px; font-size: 16px;">
-            <img src="https://tarik-uyan.developerakademie.net/Join/assets/img/icons/logo.svg" alt="" style="width: 75px; margin-bottom: 30px;">
-            <h1>${langData["message-1"]}${name}!</h1>
-            <p>${langData["message-2"]}</p>
-            <p style="font-size: 18px; font-weight: 600;">${platform}<br>${city}, ${country}</p>
-            <p>${langData["message-3"]}</p>
-            <a
-            href="https://tarik-uyan.developerakademie.net/Join/reset_password?uid=${id}"
-            style="
-                background-color: rgb(42,54,71);
-                display: block;
-                padding: 10px 10px;
-                margin-top: 30px;
-                border-radius: 10px;
-                color: white;
-                width: 180px;
-                font-size: 21px;
-                font-weight: 700;
-                text-decoration: none;
-                text-align: center
-            ">${langData["message-4"]}</a>
-            <p>${langData["message-5"]}</p>
-        </div>
-    `
-}

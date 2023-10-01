@@ -8,9 +8,6 @@ class Email {
         if (type == "passwordReset") {
             this.message = resetPasswordEmailTemplate(recipient, langData);
         }
-        if (type == "unknownDevice") {
-            this.message = unknownDeviceEmailTemplate(recipient, langData, options);
-        }
     }
 
     send = async () => {

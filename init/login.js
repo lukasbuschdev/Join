@@ -9,7 +9,7 @@ const logIn = async () => {
         { identifier: 'invalid-email-or-username', bool: user == undefined },
         { identifier: 'wrong-password', bool: !passwordValidity || false },
         );
-    if(!user || !passwordValidity) return error(user);
+    if(!user || !passwordValidity) return;
     rememberMe(user);
     user.logIn();
 }

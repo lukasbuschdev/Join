@@ -34,7 +34,7 @@ const processVerification = async () => {
     event.preventDefault();
     
     const uid = currentUserId();
-    const { verifyCode: { code, expires }} = await REMOTE_getData(`verification/${uid}`);
+    const { verifyCode: { code, expires }, userData} = await REMOTE_getData(`verification/${uid}`);
     
     const inputCode = [...$$('input')].map(input => input.value).join('');
     
@@ -48,8 +48,8 @@ const processVerification = async () => {
     }
     // await REMOTE_removeData(`verification/${newUserdata.id}`);
     const newUser = new User(userData);
-    newUser.verify();
-    goTo(`../init/create_account.html?uid=${this.userData.id}`);
+    await newUser.verify();
+    goTo('create-account', {reroute: true, search: `?uid=${userData.id}`});
 }
 
 const sendNewCode = async () => {

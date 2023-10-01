@@ -48,6 +48,7 @@
     "board-added": "Tafel erstellt!",
     "delete-board": "Delete board",
     "board-deleted": "Board deleted!",
+    "no-boards": "No boards yet",
 
     "heading-add-task": "Add Task",
     "select-board": "Select board",
