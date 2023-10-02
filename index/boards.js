@@ -11,10 +11,11 @@ const renderTasks = (filter) => {
     const {tasks} = BOARDS[boardId];
     const tasksContainer = $('#tasks');
 
-    tasksContainer.$$(':scope > div').for(container => container.innerHTML = "");
+    tasksContainer.$$(':scope > div > div:last-child').for(container => container.innerHTML = "");
     const filteredTasks = (filter)
         ? Object.values(tasks).filter(task => task.title.includes(filter) || task.description.includes(filter))
         : Object.values(tasks);
+        log(filteredTasks)
     filteredTasks.toReversed().for(task => $(`#${task.type}`).innerHTML += taskTemplate(task, filter));
     tasksContainer.LANG_load();
 }
@@ -218,7 +219,7 @@ const taskDragger = throttle(({ startingX, startingY }) => {
 }, 10);
 
 const checkPlaceholder = ({pageX, pageY}) => {
-    $$('#tasks > div').for(taskWrapper => {
+    $$('#tasks > div > div:last-child').for(taskWrapper => {
         const { x, y, width, height } = taskWrapper.getBoundingClientRect();
         if (x < pageX && pageX < (x + width) &&
             y < pageY && pageY < (y + height)) {
@@ -232,8 +233,8 @@ const checkPlaceholder = ({pageX, pageY}) => {
 }
 
 const taskDropper = ({ pageX, pageY }, task, { offsetX, offsetY }) => {
-    $$('#tasks > div').for(taskWrapper => {
-        if (taskWrapper == task.parentElement) return;
+    $$('#tasks > div > div:last-child').for(taskWrapper => {
+        if (taskWrapper == task.parentElement.parentElement) return;
         const { x, y, width, height } = taskWrapper.getBoundingClientRect();
         if (x < pageX && pageX < (x + width) &&
             y < pageY && pageY < (y + height)) {

@@ -8,10 +8,11 @@ if (isset($_POST['uid']))
     $directory = $_SERVER['DOCUMENT_ROOT'] . '/Join/assets/img/userImg/';
     if (isset($_FILES['user-img'])) {
         $file = $_FILES['user-img'];
+        $suffix = $_POST['suffix'];
         $fileName = $file['name'];
         $tempName = $file['tmp_name'];
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
-        $target = $directory . $uid . '.' . $extension;
+        $target = $directory . $uid . '_' . $suffix . '.' . $extension;
     }
     
     $imgDir = scandir($directory);
@@ -20,14 +21,14 @@ if (isset($_POST['uid']))
 
     if ($userImgExists) {
         foreach($userImg as $img) {
-            unlink($directory . $userImg[0]);
+            unlink($directory . $img);
         }
     }
 
     if (isset($file)) {
         move_uploaded_file($tempName, $target); 
         $data = array(
-            'imageSrc'  => '/Join/assets/img/userImg/' . $uid . '.' . $extension
+            'imageSrc'  => '/Join/assets/img/userImg/' . $uid . '_' . $suffix . '.' . $extension
         );
         echo json_encode($data);
     } 

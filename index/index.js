@@ -8,8 +8,8 @@ let SOCKET;
 let notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wav');
 
 const init = async () => {
-    // checkLogin();
     await getUser();
+    checkLogin();
     await getAllUsers();
     initWebsocket();
     $(`#${currentDirectory().replace('_','-')}`)?.click();
@@ -33,7 +33,7 @@ const checkNotifications = async () => {
 }
 
 const checkLogin = () => {
-    if (LOCAL_getData('loggedIn') == 'false') {
+    if (USER.loggedIn == 'false') {
         goTo('login', {search: '', reroute: true});
     }
 }

@@ -65,7 +65,7 @@ function addContactModal() {
     clearResult();
     modal.openModal();
 
-    modal.addEventListener('close', clearCloseAddContact);
+    modal.addEventListener('close', clearCloseAddContact, {once: true});
 }
 
 function closeAddTaskModal() {

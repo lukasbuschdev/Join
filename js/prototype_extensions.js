@@ -183,7 +183,7 @@ HTMLElement.prototype.addScrollShadowObserver = function () {
 
     const observe = (target) => {
         const observer = shadowObservers[this.dataset.observerId];
-        observer.disconnect();
+        observer?.disconnect();
         const children = [...target.children]
         if (children.length == 0) return;
         const targets = [children[0]];
