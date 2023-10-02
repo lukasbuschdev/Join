@@ -414,6 +414,7 @@ form:has(input:placeholder-shown) button[type="submit"] {
     #sign-up {
         height: fit-content;
         flex-direction: column;
+        gap: 15px;
     }
 }
 
