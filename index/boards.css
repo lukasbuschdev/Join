@@ -97,7 +97,7 @@
 
 .task.active {
     rotate: 2.5deg;
-    z-index: 1;
+    z-index: 2;
     /* position: absolute; */
 }
 
@@ -305,12 +305,19 @@
 
 @media (max-width: 800px) {
     #board-wrapper {
-        height: calc(100vh - 165px);
+        height: calc(100dvh - 165px);
     }
 }
 
 @media (max-width: 600px) {
     #tasks {
         --rows: 1;
+    }
+    #board-header {
+        gap: 10px;
+    }
+    #board-wrapper {
+        gap: 10px;
+        padding: 2vh 1rem;
     }
 }

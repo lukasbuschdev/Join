@@ -116,7 +116,8 @@ const addAcceptColor = (userColor) => {
     try {$('#accept-user-color').removeEventListener("click", colorPicker)}catch(e){};
     $('#accept-user-color').addEventListener("click", colorPicker = (event) => {
         event.preventDefault();
-        $('.user-img-container').style.setProperty('--user-clr', userColor);
+        $$('.user-img-container.account').for(button => button.style.setProperty('--user-clr', userColor));
         $('#user-color').click();
+        renderUserData();
     }, {once: true});
 }
