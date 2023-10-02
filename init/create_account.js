@@ -12,7 +12,8 @@ const submitUpload = async () => {
     const uid = currentUserId();
 
     formData.append('user-img', img);
-    formData.append('uid', uid)
+    formData.append('uid', uid);
+    formData.append('suffix', Date.now().toString().slice(-4));
     
     const {imageSrc} = await (await fetch('/Join/php/uploadImg.php', {
         method: 'POST',

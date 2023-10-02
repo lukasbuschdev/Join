@@ -19,29 +19,41 @@
             <span data-lang="add-task">Add task</span>
         </button>
     </div>
-    <div id="tasks-header">
-        <div class="task-header">
-            <h4 data-lang="to-do">To do</h4>
-            <button class="btn btn-plus" onclick="addTaskModal()"></button>
-        </div>
-        <div class="task-header">
-            <h4 data-lang="awaiting-feedback">Awaiting Feedback</h4>
-            <button class="btn btn-plus" onclick="addTaskModal()"></button>
-        </div>
-        <div class="task-header">
-            <h4 data-lang="in-progress">In Progress</h4>
-            <button class="btn btn-plus" onclick="addTaskModal()"></button>
-        </div>
-        <div class="task-header">
-            <h4 data-lang="done">Done</h4>
-            <button class="btn btn-plus" onclick="addTaskModal()"></button>
-        </div>
-    </div>
+
     <div id="tasks" class="shadow-container" data-shadow="ud/var(--clr-bg-light)/20px">
-        <div id="to-do" data-lang-empty="no-tasks" data-type=""></div>
-        <div id="awaiting-feedback" data-lang-empty="no-tasks" data-type=""></div>
-        <div id="in-progress" data-lang-empty="no-tasks" data-type=""></div>
-        <div id="done" data-lang-empty="no-tasks" data-type=""></div>
+
+        <div class="column gap-15">
+            <div class="task-header">
+                <h4 data-lang="to-do">To do</h4>
+                <button class="btn btn-plus" onclick="addTaskModal()"></button>
+            </div>
+            <div id="to-do" data-lang-empty="no-tasks" data-type=""></div>
+        </div>
+
+        <div class="column gap-15">
+            <div class="task-header">
+                <h4 data-lang="awaiting-feedback">Awaiting Feedback</h4>
+                <button class="btn btn-plus" onclick="addTaskModal()"></button>
+            </div>
+            <div id="awaiting-feedback" data-lang-empty="no-tasks" data-type=""></div>
+        </div>
+
+        <div class="column gap-15">
+            <div class="task-header">
+                <h4 data-lang="in-progress">In Progress</h4>
+                <button class="btn btn-plus" onclick="addTaskModal()"></button>
+            </div>
+            <div id="in-progress" data-lang-empty="no-tasks" data-type=""></div>
+        </div>
+
+        <div class="column gap-15">
+            <div class="task-header">
+                <h4 data-lang="done">Done</h4>
+                <button class="btn btn-plus" onclick="addTaskModal()"></button>
+            </div>
+            <div id="done" data-lang-empty="no-tasks" data-type=""></div>
+        </div>
+
     </div>
 
     <dialog id="add-task-modal" type="modal" class="big-modal">

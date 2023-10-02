@@ -25,22 +25,24 @@
 }
 
 #tasks {
+    --rows: 4;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(var(--rows), 1fr);
     gap: 38px;
     flex-grow: 1;
     overflow: auto;
     scrollbar-gutter: stable;
 }
 
-#tasks > div {
+#tasks > div > div:last-child {
     display: flex;
     flex-direction: column;
     gap: 16px;
     position: relative;
+    flex-grow: 1;
 }
 
-#tasks > div:empty::before {
+#tasks > div > div:last-child:empty::before {
     content: attr(data-type);
     display: block;
     width: 100%;
@@ -68,6 +70,12 @@
     justify-content: space-between;
     width: 100%;
     gap: 38px;
+    padding: 5px;
+    height: 51px;
+    position: sticky;
+    top: 0;
+    background-color: var(--clr-bg-light);
+    z-index: 1;
 }
 
 .task {
@@ -90,7 +98,7 @@
 .task.active {
     rotate: 2.5deg;
     z-index: 1;
-    position: absolute;
+    /* position: absolute; */
 }
 
 .drop-transition {
@@ -256,4 +264,53 @@
     color: white;
     background-color: var(--clr-blue);
     border-radius: 5px;
+}
+
+@media (max-width: 1200px) {
+    #tasks {
+        --rows: 3;
+    }
+
+    #board-header button span {
+        font-size: 0;
+        height: 18px;
+        gap: 0;
+    }
+}
+
+@media (max-width: 1000px) {
+    #tasks {
+        --rows: 2;
+    }
+    #board-header {
+        position: relative;
+        flex-wrap: wrap;
+    }
+    #board-header h2 {
+        margin-right: 100%;
+    }
+    #search-task {
+        max-width: 100%;
+        margin: unset;
+    }
+    #board-header > button {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    #board-header input {
+        width: 100%;
+    }
+}
+
+@media (max-width: 800px) {
+    #board-wrapper {
+        height: calc(100vh - 165px);
+    }
+}
+
+@media (max-width: 600px) {
+    #tasks {
+        --rows: 1;
+    }
 }

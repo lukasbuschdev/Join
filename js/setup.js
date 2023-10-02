@@ -46,7 +46,7 @@ const initInactivity = () => {
 
 window.renderUserData = function () {
     const { name, img, color } = USER;
-    $$('[data-user-data]').for(
+    this.$$('[data-user-data]').for(
         (userField) => {
             const dataType = userField.dataset.userData;
             if (dataType == "img") renderImage(userField, img);
