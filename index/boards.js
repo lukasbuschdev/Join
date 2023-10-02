@@ -234,7 +234,7 @@ const checkPlaceholder = ({pageX, pageY}) => {
 
 const taskDropper = ({ pageX, pageY }, task, { offsetX, offsetY }) => {
     $$('#tasks > div > div:last-child').for(taskWrapper => {
-        if (taskWrapper == task.parentElement.parentElement) return;
+        if (taskWrapper == task.parentElement) return;
         const { x, y, width, height } = taskWrapper.getBoundingClientRect();
         if (x < pageX && pageX < (x + width) &&
             y < pageY && pageY < (y + height)) {
@@ -251,6 +251,7 @@ const taskDropper = ({ pageX, pageY }, task, { offsetX, offsetY }) => {
             task.updatePosition(deltaX, deltaY);
         }
     });
+    // task.classList.remove('active');
     task.classList.add('drop-transition');
     task.addEventListener("transitionend", () => {
         task.classList.remove('drop-transition');
