@@ -60,14 +60,21 @@ body {
     }
 }
 
-#sign-up {
+.header-buttons {
     position: absolute;
     display: flex;
-    gap: 35px;
+    gap: 25px;
     align-items: center;
     height: 51px;
     top: 67px;
     right: 114px;
+}
+
+#sign-up {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    height: 51px;
 }
 
 .card {
@@ -188,6 +195,82 @@ form:has(input:placeholder-shown) button[type="submit"] {
     margin-left: 20px;
 }
 
+
+/* LANGUAGE SELECTION */
+
+.language-login {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 0fr 40px;
+    background-color: white;
+    border-radius: 999px;
+    overflow: hidden;
+    transition: var(--transition-fast);
+    box-shadow: 0px 0px 4px 3px rgba(0 0 0 / 4%);
+}
+
+.language-login.active {
+    gap: 15px;
+    padding: 5px 10px;
+    grid-template-columns: 1fr 40px;
+}
+
+.language-selection {
+    overflow: hidden;
+}
+
+.language-login > img {
+    height: 40px;
+    width: 40px;
+    transform: scale(1);
+    transition: var(--transition-fast);
+    cursor: pointer;
+    z-index: 1;
+}
+
+.language-login > img:hover {
+    transform: scale(1.05);
+}
+
+.language-btn {
+    display: grid;
+    place-items: center;
+    transform: scale(1);
+    transition: var(--transition-fast);
+    cursor: pointer;
+}
+
+.language-btn:hover {
+    transform: scale(1.05);
+}
+
+.language-btn img {
+    height: 30px;
+    width: 30px;
+    border-radius: 999px;
+    object-fit: cover;
+}
+
+.veryfiy-account-help {
+    position: absolute;
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    height: fit-content;
+    top: 50px;
+    right: 10%;
+}
+
+
+/* MEDIA QUERIES */
+
+@media(max-width: 950px) {
+    #sign-up .row > span {
+        display: none;
+    }
+}
+
+
 /* MEDIA QUERIES */
 
 @media (max-width: 800px) {
@@ -225,10 +308,13 @@ form:has(input:placeholder-shown) button[type="submit"] {
         margin-top: 15vh;
     }
 
-    .login-options,
-    .btn-container {
+    .login-options {
         height: unset;
         flex-direction: column;
+    }
+
+    .btn-container {
+        height: unset;
     }
     
     .login-options {
@@ -237,7 +323,7 @@ form:has(input:placeholder-shown) button[type="submit"] {
         margin-right: auto;
     }
 
-    #sign-up {
+    .header-buttons {
         position: unset;
         width: 100%;
         justify-content: center;
@@ -247,6 +333,15 @@ form:has(input:placeholder-shown) button[type="submit"] {
     .btn-container {
         min-width: 180px;
         gap: 21px;
+    }
+
+    #sign-up {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .veryfiy-account-help {
+        right: 5%;
     }
 }
 
@@ -294,4 +389,32 @@ form:has(input:placeholder-shown) button[type="submit"] {
 .btn-priority span::after {
     content: var(--icon);
     width: 20px;
+}
+
+/* MEDIA QUERY  */
+
+@media(max-width: 600px) {
+    .header-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+}
+
+
+@media(max-width: 500px) {
+    #sign-up {
+        height: fit-content;
+        flex-direction: column;
+    }
+}
+
+
+@media(max-width: 400px) {
+
+}
+
+
+@media(max-width: 350px) {
+
 }

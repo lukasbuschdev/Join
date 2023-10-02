@@ -42,3 +42,28 @@ const togglePasswordVisibility = () => {
     passwordInput.type == 'password' ? passwordInput.type = 'text' : passwordInput.type = 'password';
     eye.src = eye.src.includes('show.png') ? '/Join/assets/img/icons/hide.png' : '/Join/assets/img/icons/show.png';
 }
+
+function changeLanguageImage() {
+    const selectElement = document.getElementById('language-selection');
+    const selectedValue = selectElement.value;
+    const selectBox = selectElement.parentElement;
+
+    // Define a mapping of language codes to image URLs
+    const languageImages = {
+        en: '/Join/assets/img/icons/english.png',
+        de: '/Join/assets/img/icons/german.png',
+        es: '/Join/assets/img/icons/spanish.png',
+        pg: '/Join/assets/img/icons/portuguese.png',
+        fr: '/Join/assets/img/icons/french.png',
+        it: '/Join/assets/img/icons/italian.png',
+        tk: '/Join/assets/img/icons/turkish.png',
+    };
+
+    // Set the background image based on the selected language
+    selectBox.style.backgroundImage = `url(${languageImages[selectedValue]})`;
+}
+
+
+function toggleLangSelection() {
+    $('.language-login').classList.toggle('active');
+}

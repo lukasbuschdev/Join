@@ -9,6 +9,7 @@ RewriteRule ^reset_password$  init/reset_password.html [L]
 RewriteRule ^forgot_password$  init/forgot_password.html [L]
 RewriteRule ^create_account$  init/create_account.html [L]
 RewriteRule ^privacy_policy$  init/privacy.html [L]
+RewriteRule ^help_me$  init/help.html [L]
 
 # INDEX
 
