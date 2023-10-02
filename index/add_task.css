@@ -217,6 +217,11 @@ textarea {
     background-color: white;
 }
 
+#add-task-modal .add-task-card {
+    height: 650px;
+    overflow: scroll;
+}
+
 #add-task-modal .add-task-heading {
     justify-content: center;
 }
