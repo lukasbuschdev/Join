@@ -59,6 +59,7 @@ const renderBoard = () => {
     boardButtons[4].$('h1').innerText = tasksToDo;
     boardButtons[5].$('h1').innerText = tasksDone;
     boardButtons.for(button => button.onclick = () => $('nav #board').click());
+    $('#summary-selection').classList.remove('active')
     SESSION_setData('activeBoard', Number(id));
 }
 
@@ -165,14 +166,11 @@ const filterDrp = debounce(() => {
 
 const contactDropdownTemplate = ({name, color, id}) => {
     return /*html*/`
-        <div class="contact row gap-15">
+        <div class="contact row gap-15 drp-option" onclick="addCollaborator(${id})">
             <div class="user-img-container" style="--user-clr: ${color};">
                 <span>${name.slice(0, 2).toUpperCase()}</span>
             </div>
             <div>${name}</div>
-            <button class="grid-center" onclick="addCollaborator(${id})">
-                <img src="/Join/assets/img/icons/btn_plus.svg" alt="">
-            </button>
         </div>
     `
 }
@@ -180,6 +178,7 @@ const contactDropdownTemplate = ({name, color, id}) => {
 const addCollaborator = (id) => {
     const {name, color} = CONTACTS[id];
     if ($(`.collaborator[data-id="${id}"]`)) return;
+    this.classList.add('active')
     $('.collaborators-container').innerHTML += /*html*/`
         <button class="collaborator" data-id="1689153951244">
             <div class="user-img-container" style="--user-clr: ${color}">
@@ -205,3 +204,7 @@ const deleteBoard = () => confirmation(`delete-board, {boardName: '${SELECTED_BO
     $('#edit-board-modal').closeModal();
     loadContent();
 })
+
+const toggleBoardSelection = () => {
+    $('#summary-selection').classList.toggle('active');
+}

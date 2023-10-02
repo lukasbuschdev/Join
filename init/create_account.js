@@ -19,14 +19,14 @@ const submitUpload = async () => {
         body: formData
     })).json();
 
-    $('.user-img').src = imageSrc;
-    $('.user-img-container').dataset.img = 'true';
+    $('.account .user-img').src = imageSrc;
+    $('.account.user-img-container').dataset.img = 'true';
     $('[type="file"]').value = '';
     REMOTE_setData(`users/${uid}`, {img: imageSrc});
 }
 
 const removeUpload = async () => {
-    const container = $('.user-img-container');
+    const container = event.currentTarget;
     if (container.dataset.img == 'false') return;
     
     const uid = currentUserId();

@@ -49,6 +49,7 @@
     "delete-board": "Delete board",
     "board-deleted": "Board deleted!",
     "no-boards": "No boards yet",
+    "board-selection": "Tafel auswählen",
 
     "heading-add-task": "Add Task",
     "select-board": "Select board",

@@ -77,7 +77,6 @@ const openAccountPanel = async () => {
 };
 
 const loadAccountPanelContent = async () => {
-    const notificaitionsContent = $('#notifications-content');
     const btn = event.currentTarget;
     const template = btn.id.slice(0, -4);
     const templatePath = `/Join/assets/templates/account/${template}.html`;
@@ -85,8 +84,15 @@ const loadAccountPanelContent = async () => {
     if (template == "notifications") loadNotifications();
     if (template == "edit-account") initEditAccount();
     $('#account-panel-content').LANG_load();
-    if($('#notifications-content').innerText == '') return noNotificationsYet();
+    if($('#notifications-content')?.innerText == '') return noNotificationsYet();
 };
+
+const initEditAccount = () => {
+    const editAccountContent = $('#edit-account-content');
+    editAccountContent.renderUserData();
+    renderColorWheel();
+    if (editAccountContent.$('img').src) editAccountContent.$('.user-img-container').dataset.img = "true"
+}
 
 const loadNotifications = async () => {
     if (Object.values(USER.notifications).length == 0) return;

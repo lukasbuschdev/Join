@@ -16,7 +16,7 @@ const forgotPassword = async () => {
     throwErrors({ identifier: 'email-not-found', bool: !user });
     if (!user) return;
 
-    log(await user.initPasswordReset());
-    // await notification("email-sent");
-    // goTo('login', {reroute: true});
+    await user.initPasswordReset();
+    await notification("email-sent");
+    goTo('login', {reroute: true});
 }
