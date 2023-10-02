@@ -714,7 +714,6 @@ input[type="checkbox"]:checked {
 }
 
 .inp-container.inp-code input {
-    height: 70px;
     aspect-ratio: 1;
     border: 1px solid var(--clr-placeholder);
     font-size: 40px;

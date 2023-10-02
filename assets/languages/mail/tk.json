@@ -1,0 +1,20 @@
+{
+    "verification-subject": "Hesabınızı Doğrulayın",
+    "verification-message-1": "Merhaba, ",
+    "verification-message-2": "Lütfen aşağıdaki düğmeye tıklayın veya Kod'u kullanın ",
+    "verification-message-3": " hesabınızı doğrulamak için.",
+    "verification-message-4": "Doğrula",
+
+    "password-reset-subject": "Şifrenizi Sıfırlayın",
+    "password-reset-message-1": "Merhaba, ",
+    "password-reset-message-2": "Join hesabınızın şifresini değiştirmek için bir istek gönderildi.",
+    "password-reset-message-3": "Şifreyi Sıfırla",
+    "password-reset-message-4": "Eğer bu siz değilseniz, lütfen bize hemen şu adresten ulaşın ",
+
+    "unknown-device-subject": "Bilinmeyen cihaz erişimi",
+    "unknown-device-message-1": "Merhaba, ",
+    "unknown-device-message-2": "Birisi hesabınıza bilinmeyen bir cihazdan giriş yaptı.",
+    "unknown-device-message-3": "Eğer bu siz değilseniz, lütfen şifrenizi en kısa sürede sıfırlayın!",
+    "unknown-device-message-4": "Şifreyi Sıfırla",
+    "unknown-device-message-5": "Eğer bu sizseniz, bu e-postayı sadece görmezden gelebilirsiniz."
+}
