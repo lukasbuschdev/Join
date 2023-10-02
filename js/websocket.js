@@ -29,10 +29,6 @@ const initWebsocket = () => {
         await getUser();
         checkNotifications();
     });
-
-    SOCKET.on('account-in-use', () => {
-        goTo('login', {reroute: true, search: '?account_in_use'});
-    })
 }
 
 const sendMessage = (recipients) => {

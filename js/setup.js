@@ -37,10 +37,8 @@ const addInactivityTimer = (minutes = 5) => {
 
 const initInactivity = () => {
     window.addEventListener("visibilitychange", () => {
-        if (document.visibilityState == "hidden") {
-            addInactivityTimer();
-            log("added inactivity timer")
-        } else clearTimeout(inactivityTimer);
+        if (document.visibilityState == "hidden") return addInactivityTimer();
+        clearTimeout(inactivityTimer);
     });
 }
 
@@ -70,6 +68,6 @@ const renderColor = (userField, color) => {
     userField.style.setProperty('--user-clr', color);
 };
 
-// initInactivity();
+initInactivity();
 $('body').initMenus();
 LANG_load();
