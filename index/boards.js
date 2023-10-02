@@ -9,13 +9,13 @@ const initBoard = async () => {
 const renderTasks = (filter) => {
     const boardId = SESSION_getData('activeBoard') ?? Object.keys(BOARDS)[0];
     const {tasks} = BOARDS[boardId];
+    if (!Object.values(tasks).length) return;
     const tasksContainer = $('#tasks');
 
     tasksContainer.$$(':scope > div > div:last-child').for(container => container.innerHTML = "");
     const filteredTasks = (filter)
         ? Object.values(tasks).filter(task => task.title.includes(filter) || task.description.includes(filter))
         : Object.values(tasks);
-        log(filteredTasks)
     filteredTasks.toReversed().for(task => $(`#${task.type}`).innerHTML += taskTemplate(task, filter));
     tasksContainer.LANG_load();
 }
