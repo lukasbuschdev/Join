@@ -1,0 +1,20 @@
+{
+    "verification-subject": "Verifica il tuo account",
+    "verification-message-1": "Ciao, ",
+    "verification-message-2": "Per favore, clicca il pulsante qui sotto o utilizza il Codice ",
+    "verification-message-3": " per verificare il tuo account.",
+    "verification-message-4": "Verifica",
+
+    "password-reset-subject": "Reimposta la tua password",
+    "password-reset-message-1": "Ciao, ",
+    "password-reset-message-2": "È stata inviata una richiesta per cambiare la password del tuo account Join.",
+    "password-reset-message-3": "Reimposta la password",
+    "password-reset-message-4": "Se non sei stato tu, per favore contattaci immediatamente a ",
+
+    "unknown-device-subject": "Accesso da dispositivo sconosciuto",
+    "unknown-device-message-1": "Ciao, ",
+    "unknown-device-message-2": "Qualcuno ha effettuato l'accesso al tuo account da un dispositivo sconosciuto.",
+    "unknown-device-message-3": "Se non sei stato tu, ti preghiamo di reimpostare la tua password al più presto!",
+    "unknown-device-message-4": "Reimposta la password",
+    "unknown-device-message-5": "Se sei stato tu, ignora semplicemente questa email."
+}

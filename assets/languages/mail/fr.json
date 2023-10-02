@@ -1,0 +1,20 @@
+{
+    "verification-subject": "Vérifiez votre compte",
+    "verification-message-1": "Bonjour, ",
+    "verification-message-2": "Veuillez cliquer sur le bouton ci-dessous ou utilisez le code ",
+    "verification-message-3": " pour vérifier votre compte.",
+    "verification-message-4": "Vérifier",
+
+    "password-reset-subject": "Réinitialisez votre mot de passe",
+    "password-reset-message-1": "Bonjour, ",
+    "password-reset-message-2": "Une demande a été envoyée pour changer le mot de passe de votre compte Join.",
+    "password-reset-message-3": "Réinitialiser le mot de passe",
+    "password-reset-message-4": "Si ce n'était pas vous, veuillez nous contacter immédiatement à l'adresse ",
+
+    "unknown-device-subject": "Accès depuis un appareil inconnu",
+    "unknown-device-message-1": "Bonjour, ",
+    "unknown-device-message-2": "Quelqu'un s'est connecté à votre compte depuis un appareil inconnu.",
+    "unknown-device-message-3": "Si ce n'était pas vous, veuillez réinitialiser votre mot de passe dès que possible !",
+    "unknown-device-message-4": "Réinitialiser le mot de passe",
+    "unknown-device-message-5": "Si c'était vous, ignorez simplement cet e-mail."
+}

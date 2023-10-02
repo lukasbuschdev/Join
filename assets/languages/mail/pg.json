@@ -1,0 +1,20 @@
+{
+    "verification-subject": "Verificar sua Conta",
+    "verification-message-1": "Olá, ",
+    "verification-message-2": "Por favor, clique no botão abaixo ou use o Código ",
+    "verification-message-3": " para verificar sua conta.",
+    "verification-message-4": "Verificar",
+
+    "password-reset-subject": "Redefinir sua senha",
+    "password-reset-message-1": "Olá, ",
+    "password-reset-message-2": "Foi enviada uma solicitação para alterar a senha da sua conta no Join.",
+    "password-reset-message-3": "Redefinir Senha",
+    "password-reset-message-4": "Se isso não foi você, por favor, entre em contato conosco imediatamente em ",
+
+    "unknown-device-subject": "Acesso a partir de um dispositivo desconhecido",
+    "unknown-device-message-1": "Olá, ",
+    "unknown-device-message-2": "Alguém acessou sua conta de um dispositivo desconhecido.",
+    "unknown-device-message-3": "Se não foi você, por favor, redefina sua senha o mais rápido possível!",
+    "unknown-device-message-4": "Redefinir Senha",
+    "unknown-device-message-5": "Se foi você, basta ignorar este e-mail."
+}
