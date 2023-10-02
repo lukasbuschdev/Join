@@ -225,7 +225,7 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 .no-notifications {
     color: var(--clr-blue);
     align-self: center;
-    /* margin-top: 25%; */
+    margin-bottom: 25%;
 }
 
 #account-panel-content {
