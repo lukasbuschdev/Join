@@ -20,14 +20,18 @@ const submitUpload = async () => {
         body: formData
     })).json();
 
-    $('.account .user-img').src = imageSrc;
     $('.account.user-img-container').dataset.img = 'true';
     $('[type="file"]').value = '';
     REMOTE_setData(`users/${uid}`, {img: imageSrc});
+    if (typeof USER !== undefined) {
+        USER.img = imageSrc;
+        renderUserData();
+    }
 }
 
 const removeUpload = async () => {
     const container = event.currentTarget;
+    if (event.target.tagName == "LABEL" || event.target.tagName == "INPUT") return;
     if (container.dataset.img == 'false') return;
     
     const uid = currentUserId();
@@ -117,6 +121,10 @@ const addAcceptColor = (userColor) => {
     $('#accept-user-color').addEventListener("click", colorPicker = (event) => {
         event.preventDefault();
         $$('.user-img-container.account').for(button => button.style.setProperty('--user-clr', userColor));
+        if (typeof USER !== undefined) {
+            USER.color = userColor;
+            USER.update();
+        };
         $('#user-color').click();
         renderUserData();
     }, {once: true});
