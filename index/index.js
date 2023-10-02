@@ -96,12 +96,11 @@ const initEditAccount = () => {
 const loadNotifications = async () => {
     if (Object.values(USER.notifications).length == 0) return noNotificationsYet();
     const container = $('#notifications-content');
-    container.innerHTML = ''
+    container.innerHTML = '';
     container.renderItems(Object.values(USER.notifications), notificationTemplate);
 };
 
 function noNotificationsYet() {
-    log('No Notifications here!')
     const notificaitionsContent = $('#notifications-content');
     notificaitionsContent.style.alignItems = 'center';
     notificaitionsContent.style.justifyContent = 'center';
