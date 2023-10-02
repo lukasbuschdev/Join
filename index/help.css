@@ -7,6 +7,10 @@
     font-weight: 600;
 }
 
+.margin-5 {
+    margin: 5px 0;
+}
+
 @media(max-width: 550px) {
     .help-container {
         padding: 60px 25px 130px;

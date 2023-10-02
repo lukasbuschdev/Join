@@ -19,8 +19,6 @@
     "account-panel-settings": "Sprache",
     "account-panel-logout": "Abmelden",
 
-    "no-notifications": "Du hast keine Benachrichtigungen!",
-
     "language": "Sprache",
 
     "to-do": "Ausstehend",
@@ -136,7 +134,7 @@
     "assigned-you-to-task": "%ownerName% hat dich %taskName% in %boardName% zugeteilt!",
     "understood": "Verstanden",
     "board-nonexistent": "Tafel %boardName% existiert nicht!",
-    "no-notifications": "Keine Benachrichtigungen",
+    "no-notifications": "Du hast keine Benachrichtigungen!",
 
     "network-error": "Netzwerkfehler!",
     "websocket-disconnect": "Websocket - Verbindungsfehler!",
