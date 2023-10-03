@@ -334,7 +334,7 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
         flex: 1;
         width: unset;
         height: 100%;
-        padding: unset;
+        padding: 0 10px;
     }
 
     .btn-nav span {
