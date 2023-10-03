@@ -262,13 +262,22 @@
     }
 }
 
+@media (max-width: 800px) {
+    #summary-data {
+        max-height: calc(calc(100dvh - 165px) * 0.65);
+        gap: 1rem;
+    }
+    #summary-data > .row {
+        gap: 1rem;
+    }
+}
+
 @media (max-width: 600px) {
     #summary-data button {
         border-radius: 20px !important;
     }
     #summary-data {
-        font-size: 10px;
-        gap: 0.5rem;
+        flex-grow: 1;
     }
     #summary-data .summary-btn {
         padding: 0 10px !important;
@@ -278,6 +287,17 @@
     }
     #summary-data .circle {
         --diameter: 45px !important;
+    }
+    .add-board span {
+        font-size: 0;
+        gap: 0;
+    }
+}
+
+@media (max-width: 400px) {
+    #summary-data {
+        font-size: 12px;
+        gap: 0.5rem;
     }
     #summary-data > .row {
         gap: 0.5rem;

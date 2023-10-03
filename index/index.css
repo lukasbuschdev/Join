@@ -431,6 +431,9 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 
 
 @media (max-width: 600px) {
+    nav {
+        padding: unset;
+    }
     #notification .btn {
         font-size: var(--txt-tiny) !important;
     }
@@ -464,6 +467,17 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 
     #edit-account-content h1 {
         font-size: 2rem;
+    }
+
+    nav span {
+        font-size: 0;
+        gap: 0;
+        padding: 0 !important;
+    }
+
+    nav button:not(:is(#privacy, #legal-notice)) {
+        display: grid !important;
+        place-content: center;
     }
 }
 
