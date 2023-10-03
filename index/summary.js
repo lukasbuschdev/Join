@@ -59,8 +59,12 @@ const renderBoard = () => {
     boardButtons[4].$('h1').innerText = tasksToDo;
     boardButtons[5].$('h1').innerText = tasksDone;
     boardButtons.for(button => button.onclick = () => $('nav #board').click());
-    $('#summary-selection').classList.remove('active')
+    $('#summary-selection').classList.remove('active');
     SESSION_setData('activeBoard', Number(id));
+    
+    const summaryHeader = $('.summary-header h2');
+    delete summaryHeader.dataset.lang;
+    summaryHeader.innerText = SELECTED_BOARD.name;
 }
 
 const createBoardModal = async () => {

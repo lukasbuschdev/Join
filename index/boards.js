@@ -1,23 +1,28 @@
 let initialTask;
 
 const initBoard = async () => {
-    await getBoards();
     await getAllUsers();
-    return renderTasks();
+    await getBoards();
+    if (Object.values(BOARDS).length) return renderTasks();
 }
 
-const renderTasks = (filter) => {
+const renderTasks = async (filter) => {
     const boardId = SESSION_getData('activeBoard') ?? Object.keys(BOARDS)[0];
-    const {tasks} = BOARDS[boardId];
+    const {tasks, name} = BOARDS[boardId];
+
+    const boardHeader = $('#board-header h2');
+    delete boardHeader.dataset.lang;
+    boardHeader.innerText = name;
+
     if (!Object.values(tasks).length) return;
     const tasksContainer = $('#tasks');
-
+    
     tasksContainer.$$(':scope > div > div:last-child').for(container => container.innerHTML = "");
     const filteredTasks = (filter)
-        ? Object.values(tasks).filter(task => task.title.includes(filter) || task.description.includes(filter))
-        : Object.values(tasks);
+    ? Object.values(tasks).filter(task => task.title.includes(filter) || task.description.includes(filter))
+    : Object.values(tasks);
     filteredTasks.toReversed().for(task => $(`#${task.type}`).innerHTML += taskTemplate(task, filter));
-    tasksContainer.LANG_load();
+    await tasksContainer.LANG_load();
 }
 
 const searchTasks = debounce(() => {
