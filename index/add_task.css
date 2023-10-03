@@ -15,7 +15,7 @@
 .add-task-heading {
     width: 100%;
     box-sizing: border-box;
-    padding: 25px 0;
+    padding-bottom: 25px;
 }
 
 h1 {

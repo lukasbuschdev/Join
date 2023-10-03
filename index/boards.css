@@ -279,12 +279,16 @@
 }
 
 @media (max-width: 1000px) {
+    #board-wrapper {
+        padding: 2vh 1rem;
+    }
     #tasks {
         --rows: 2;
     }
     #board-header {
         position: relative;
         flex-wrap: wrap;
+        padding-left: 4rem;
     }
     #board-header h2 {
         margin-right: 100%;
@@ -306,6 +310,9 @@
 @media (max-width: 800px) {
     #board-wrapper {
         height: calc(100dvh - 165px);
+    }
+    #board-header {
+        padding: unset;
     }
 }
 

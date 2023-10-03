@@ -203,7 +203,7 @@
         padding: 2vh 1rem 2vh 0;
     }
     .summary-header {
-        padding-left: 1rem;
+        padding-left: 4rem;
     }
     #summary-body {
         margin: unset;
@@ -247,7 +247,7 @@
     }
     .summary-header button {
         position: absolute;
-        inset: 0 0 auto auto;
+        inset: 10px 4rem auto auto;
     }
     .summary-header h2 {
         flex-direction: column;
