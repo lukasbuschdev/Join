@@ -262,6 +262,12 @@
     }
 }
 
+@media(max-width: 900px) {
+    .summary-header button {
+        inset: 10px 0 auto auto;
+    }
+}
+
 @media (max-width: 800px) {
     #summary-data {
         max-height: calc(calc(100dvh - 165px) * 0.65);
@@ -291,6 +297,12 @@
     .add-board span {
         font-size: 0;
         gap: 0;
+    }
+}
+
+@media(max-width: 500px) {
+    .summary-header {
+        padding: 0 0 0 25px;
     }
 }
 
