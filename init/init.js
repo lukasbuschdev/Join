@@ -1,15 +1,5 @@
 const init = async () => {
-    
-    // addAutomaticLogin();
     isSessionExpired();
-}
-
-const addAutomaticLogin = () => {
-    const allInputs = $$('input:not([type="checkbox"])');
-    allInputs.for(input => input.addEventListener('click', handler = () => {
-        automaticLogin();
-        allInputs.for(input => input.removeEventListener('click', handler));
-    }))
 }
 
 const isSessionExpired = () => {

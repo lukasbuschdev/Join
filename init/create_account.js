@@ -54,7 +54,7 @@ const finishSetup = async () => {
     const phoneValidity = validPhone(phoneInput);
     
     throwErrors({ identifier: 'invalid-phone-number', bool: (phoneInput == true && !phoneValidity) });
-    if (phoneInput !== "" && phoneValidity == false) return
+    if (phoneValidity == false) return
 
     const user = await getCurrentUser(true);
     const userColor = HSLToHex($('.user-img-container').style.getPropertyValue('--user-clr'));

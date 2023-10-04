@@ -30,7 +30,7 @@ const notificationTemplate = (notification) => {
         return /*html*/`
             <div class="notification radius-15 column gap-10" data-id="${id}">
                 <div>
-                    <span data-lang="assigned-you-to-task, {ownerName: '${userName}', taskName: '${taskName}', '${boardName}'}"></span>
+                    <span data-lang="assigned-you-to-task, {ownerName: '${userName}', taskName: '${taskName}', boardName: '${boardName}'}"></span>
                 </div>
                 <div class="btn-container gap-10">
                     <button data-lang="understood" class="btn btn-secondary txt-small txt-600" onclick="removeNotification('${id}')">Understood</button>

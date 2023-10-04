@@ -76,6 +76,7 @@ const renderBoard = () => {
     SESSION_setData('activeBoard', Number(id));
     
     if (owner == USER.id) renderBoardEditButton(id);
+    else $('#board-title .circle')?.remove();
 
     const summaryHeader = $('.summary-header h2');
     delete summaryHeader.dataset.lang;
