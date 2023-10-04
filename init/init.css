@@ -201,6 +201,7 @@ form:has(input:placeholder-shown) button[type="submit"] {
 .language-login {
     display: grid;
     align-items: center;
+    justify-content: end;
     grid-template-columns: 0fr 40px;
     background-color: white;
     border-radius: 999px;
