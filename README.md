@@ -4,7 +4,7 @@ link: [Join](https://tarik-uyan.developerakademie.net/Join/login)
 
 Dies ist das Kanban-Projekt "Join" erstellt von **Lukas Busch** und **Tarik Uyan**.
 
-##Features
+## Features
 
 - **Registrierung** mit Verifizierung per Mail
 - **Login** mit optionaler Speicherung der Anmeldedaten
