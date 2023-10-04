@@ -61,7 +61,7 @@ const fullscreenTaskSubTasks = (subTasks) => {
     subTasks.for(
         ({name, done}) => template += /*html*/`
             <div class="fullscreen-subtask row gap-15">
-                <input type="checkbox" data-done="'${done}'" checked="${done}" onchange="changeSubtaskDoneState('${name}')">
+                <input type="checkbox" data-done="'${done}'"${done == true ? 'checked' : ''} onchange="changeSubtaskDoneState('${name}')">
                 <span class="txt-small">${name}</span>
             </div>
         `
