@@ -39,6 +39,7 @@
     "add-board-collaborators": "Add Collaborators",
     "name-too-long": "Name too long!",
     "add-board-create": "Create Board",
+    "edit-board": "Edit Board",
     "board-joined": "Board %boardName% Joined!",
     "board-created": "Board created!",
     "tasks-in-board": "Tasks in Board",
