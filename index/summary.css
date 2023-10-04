@@ -265,7 +265,7 @@
 
     .summary-header > button {
         position: absolute;
-        inset: 10px 4rem auto auto;
+        inset: 10px 0 auto auto;
     }
 
     .summary-header h2 {
