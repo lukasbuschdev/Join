@@ -303,6 +303,9 @@
     :is(.add-board-data, .edit-board-data) {
         padding: 25px !important;
     }
+    dialog:is(#add-board, #edit-board) .task-category {
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 600px) {
@@ -471,7 +474,7 @@
 
 :is(.add-board-data, .edit-board-data) .btn-container {
     margin-top: auto;
-    margin-left: auto;
+    /* margin-left: auto; */
 }
 
 :is(:is(.add-board-data, .edit-board-data), .subtasks) .inp-buttons button {
@@ -510,8 +513,8 @@
 }
 
 :is(.add-board-data, .edit-board-data) .inp-wrapper .contact img {
-    width: 50%;
-    filter: invert(1);
+    /* width: 50%;
+    filter: invert(1); */
 }
 
 :is(.add-board-data, .edit-board-data):has(:is(#add-board-title, #edit-board-title) input:placeholder-shown) .btn-primary {
@@ -626,6 +629,18 @@ dialog:is(#add-board, #edit-board) .task-category button img {
 
 .collaborators-container:not(:empty) {
     margin-top: 20px;
+}
+
+.collaborator.invitation {
+    position: relative;
+}
+
+.collaborator.invitation::after {
+    content: url(/Join/assets/img/icons/mail_dark.svg);
+    position: absolute;
+    inset: -15px -15px auto auto;
+    z-index: 1;
+    scale: .6;
 }
 
 :is(.add-board-data, .edit-board-data) .collaborators-container .user-img-container {

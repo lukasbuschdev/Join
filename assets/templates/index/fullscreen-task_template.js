@@ -1,11 +1,13 @@
-const fullscreenTaskTemplate = ({category, color, title, description, priority, dueDate, assignedTo, subTasks}) => {
+const fullscreenTaskTemplate = ({category, title, description, priority, dueDate, assignedTo, subTasks, boardId}) => {
+    log();
+    const [categoryName = "Default",  categoryColor = "#d1d1d1"] = Object.entries(BOARDS[boardId].categories)?.find(([key]) => key == category) ?? [];
     return /*html*/`
     <div class="fullscreen-content">
         <button onclick="this.closest('dialog').closeModal()" class="close-btn grid-center">
             <img class="close" src="/Join/assets/img/icons/close_blue.svg" alt="Close">
         </button>
         <div class="fullscreen-task-wrapper column gap-25">
-            <div class="task-category txt-normal" style="--clr: ${color}">${category}</div>
+            <div class="task-category txt-normal" style="--clr: ${categoryColor}">${categoryName}</div>
             <h2>${title}</h2>
             <div>${description}</div>
             <div class="row gap-25">

@@ -246,11 +246,15 @@ const getCurrentUser = async (methods) => {
 const getUser = async () => {
     // log('updating user...');
     USER = await getCurrentUser(true);
+    return getContacts();
+};
+
+const getContacts = async () => {
     const allUsers = await REMOTE_getData('users');
     USER.contacts.for(
         contactId => CONTACTS[contactId] = new User(allUsers[contactId])
     );
-};
+}
 
 const getBoards = async () => {
     // log('updating boards...');

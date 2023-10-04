@@ -207,12 +207,7 @@
 
 
 #fullscreen-task-modal .close-btn {
-    top: -20px;
-    right: -5px;
-}
-
-#fullscreen-task-modal :is(#fullscreen-task, #edit-task) > div {
-    position: relative;
+    inset: 20px 20px auto auto;
 }
 
 #fullscreen-task-modal .user-img-container {

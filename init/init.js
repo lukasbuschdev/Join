@@ -1,6 +1,6 @@
 const init = async () => {
     
-    addAutomaticLogin();
+    // addAutomaticLogin();
     isSessionExpired();
 }
 

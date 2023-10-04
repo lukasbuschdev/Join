@@ -294,6 +294,7 @@ function getSubtasks() {
 }
 
 async function addTask() {
+    const dir = currentDirectory();
     checkSelectedBoard();
     checkSelectedCollaborator();
 
@@ -306,15 +307,12 @@ async function addTask() {
     const subtasks = getSubtasks();
     const addTaskData = [title, description, category ,collaborators, dueDate, priority, subtasks]; 
 
-    if (checkAddTaskInputs(addTaskData)) {
-        log(addTaskData)
-        return;
-    } else {
-        await createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
-        $('#content').includeTemplate(`/Join/assets/templates/index/${currentDirectory()}_template.html`);
-        notification('task-created');
-        resetArrays();
-    }
+    if (checkAddTaskInputs(addTaskData)) return;
+    await createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
+    notification('task-created');
+    resetArrays();
+    if (dir == "board") loadContent();
+    else $('#board').click();
 }
 
 function checkAddTaskInputs(addTaskData) {

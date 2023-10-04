@@ -1,12 +1,12 @@
 const taskTemplate = ({boardId, id, title, description, assignedTo, category, priority, subTasks}, filter) => {
-    let assignedAccounts = [];
-    for (const assignedToId of assignedTo) {
+    const assignedAccounts = assignedTo.reduce((total, assignedToId) => {
         const {name, color: userColor} = CONTACTS[assignedToId] ?? USER;
-        assignedAccounts.push({name, color: userColor});
-    };   
+        total.push({name, color: userColor});
+        return total;
+    }, []); 
     return /*html*/`
     <div class="task txt-small" onpointerdown="addDragAndDrop()" data-id="${boardId}/${id}" style="--x: 0; --y: 0;">
-        <div class="task-category" style="--clr: ${BOARDS[boardId].categories[category]};">${category}</div>
+        <div class="task-category" style="--clr: ${BOARDS[boardId].categories[category] ?? "#d1d1d1"};">${Object.keys(SELECTED_BOARD.categories).find(cat => cat == category) ?? "Default"}</div>
         <div class="task-title txt-700">${highlight(title, filter)}</div>
         <div class="task-description">${highlight(description, filter)}</div>
         ${progressTemplate(subTasks)}

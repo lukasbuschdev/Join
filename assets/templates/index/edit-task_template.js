@@ -4,9 +4,6 @@ const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, su
     selectedCollaborators.length = 0;
     assignedTo.for(id => selectedCollaborators.push(id));
     return /*html*/`
-    <button onclick="this.closest('dialog').closeModal()" class="close-btn grid-center">
-        <img class="close" src="/Join/assets/img/icons/close_blue.svg" alt="Close">
-    </button>
     <div class="fullscreen-content column gap-25 shadow-container" data-shadow="ud/white/40px">
         <div class="column gap-8">
             <span data-lang="title">Title</span>

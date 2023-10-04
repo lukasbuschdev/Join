@@ -116,6 +116,8 @@
     "confirmation-delete-contact": "Do you want to delete this Contact?",
     "confirm-delete-contact": "Delete",
 
+    "confirmation-delete-category": "Delete Category?",
+    "confirm-delete-category": "Delete",
     "confirmation-delete-task": "Are you sure you want do delete %taskName%?",
     "confirm-delete-task": "Delete",
     "confirmation-reset-password": "Reset your Password?",
@@ -124,6 +126,8 @@
     "confirm-delete-board": "Delete",
     "confirmation-save-edited-task": "Save Task changes?",
     "confirm-save-edited-task": "Save",
+    "confirmation-save-edited-board": "Save Board changes?",
+    "confirm-save-edited-board": "Save",
     "confirmation-logout": "Do you want to log out?",
     "confirm-logout": "Log out",
 
@@ -142,6 +146,7 @@
     "understood": "Understood",
     "board-nonexistent": "Board %boardName% doesn't exist!",
     "no-notifications": "You have no Notifications!",
+    "board-updated": "%boardName% updated!", 
 
     "network-error": "Network Error!",
     "websocket-disconnect": "Websocket - Connection Error!",

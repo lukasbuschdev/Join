@@ -7,7 +7,8 @@ const initBoard = async () => {
 }
 
 const renderTasks = async (filter) => {
-    const boardId = SESSION_getData('activeBoard') ?? Object.keys(BOARDS)[0];
+    let boardId = SESSION_getData('activeBoard');
+    if (!(boardId in BOARDS)) boardId = Object.keys(BOARDS)[0];
     const {tasks, name} = BOARDS[boardId];
 
     const boardHeader = $('#board-header h2');

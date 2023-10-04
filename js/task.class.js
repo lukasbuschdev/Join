@@ -1,12 +1,11 @@
 class Task extends BaseClass {
-    constructor({ id = Date.now().toString(), type = "to-do", title, description, category = "default", color = "#d1d1d1", assignedTo = [], dueDate, priority, subTasks = [], boardId }) {
+    constructor({ id = Date.now().toString(), type = "to-do", title, description, category = "default", assignedTo = [], dueDate, priority, subTasks = [], boardId }) {
         super();
         this.id = id;
         this.type = type;
         this.title = title;
         this.description = description;
         this.category = category;
-        this.color = color;
         this.assignedTo = assignedTo;
         this.dueDate = dueDate;
         this.priority = priority;

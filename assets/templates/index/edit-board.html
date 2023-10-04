@@ -47,8 +47,9 @@
         <div class="collaborators-container row gap-15"></div>
     </div>
 </div>
-<div class="btn-container row">
-    <div class="btn-container txt-small gap-8 mla">
-        <button class="row gap-8" data-lang="delete" onclick="deleteBoard()">Delete</button>
-    </div>
+<div class="btn-container txt-small gap-8" style="justify-content: space-between;">
+    <button class="row gap-8" data-lang="delete" onclick="deleteBoard()">Delete</button>
+    <button class="btn btn-primary btn-check gap-8 txt-normal txt-700" onclick="confirmation('save-edited-board', saveEditedBoard)">
+        <span data-lang="confirm-save-edited-task"></span>
+    </button>
 </div>

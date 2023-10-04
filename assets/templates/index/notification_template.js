@@ -47,6 +47,7 @@ async function acceptBoardInvite (boardId, boardName, notificationId) {
     await REMOTE_setData(`boards/${boardId}/collaborators`, USER.id);
     await getBoards();
     notification(`board-joined, {boardName: '${boardName}'}`);
+    await getBoards();
     loadContent();
 }
 

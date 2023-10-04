@@ -17,7 +17,7 @@ const renderBoards = () => {
     if (!SESSION_getData('activeBoard')) SESSION_setData('activeBoard', Number(Object.keys(BOARDS)[0]));
 
     const activeBoard = SESSION_getData('activeBoard');
-    const activeBoardButton = $(`#summary-selection [data-id="${activeBoard}"]`);
+    const activeBoardButton = $(`#summary-selection [data-id="${activeBoard}"]`) || $('#summary-selection button');
     activeBoardButton?.click();
     activeBoardButton?.classList.add('active');
 }
@@ -28,7 +28,9 @@ const renderBoardEditButton = (boardId) => {
     /*html*/`<button class="circle grid-center" onclick="initEditBoard(${boardId})">
         <img src="/Join/assets/img/icons/edit.svg" alt="">
     </button>`;
-    $('.summary-header > div').appendChild(btn.children[0]);
+    const summaryHeaderDiv = $('.summary-header > div');
+    summaryHeaderDiv.$('button')?.remove();
+    summaryHeaderDiv.appendChild(btn.children[0]);
 }
 
 const boardSelectionTemplate = ({name, id, owner}) => {
@@ -92,7 +94,6 @@ const addBoardCategory = () => {
     const titleValidity = title.length > 10;
     throwErrors({identifier: "name-too-long", bool: titleValidity});
     if (titleValidity) return;
-
     $('.categories-container').innerHTML += addBoardCategoryTemplate([title, color]);
     $('#add-board-categories input').value = '';
 }
@@ -108,7 +109,7 @@ const addBoardCategoryTemplate = ([title, color]) => {
     `
 }
 
-const removeBoardCategory = () => {
+function removeBoardCategory() {
     event.currentTarget.parentElement.remove();
 }
 
@@ -121,22 +122,25 @@ const clearCategoryInput = () => {
 
 const isValidTitle = (titleInput) => /^[a-zA-Z0-9_-]+$/.test(titleInput);
 
+const getCollaborators = () => [...$$('.collaborator')].reduce((total, collaborator) => {
+    total.push(collaborator.dataset.id);
+    return total;
+}, []);
+
+const getTaskCategories = () => [...$$('.task-category')].reduce((total, category) => {
+    const color = category.style.getPropertyValue('--clr');
+    const name = category.$('span').innerText;
+    total[name] = color;
+    return total;
+}, {});
+
 const createNewBoard = async () => {
     const boardName = $('#add-board-title input').value.replaceAll(' ', '-');
     const titleIsValid = isValidTitle(boardName);
     if (!titleIsValid) return throwErrors({identifier: 'title', bool: titleIsValid});
 
-    const collaborators = [...$$('.collaborator')].reduce((total, collaborator) => {
-        total.push(collaborator.dataset.id);
-        return total;
-    }, []);
-
-    const categories = [...$$('.task-category')].reduce((total, category) => {
-        const color = category.style.getPropertyValue('--clr');
-        const name = category.$('span').innerText;
-        total[name] = color;
-        return total;
-    }, {});
+    const collaborators = getCollaborators();
+    const categories = getTaskCategories();
     
     const boardData = {
         name: boardName,
@@ -151,6 +155,7 @@ const createNewBoard = async () => {
 };
 
 const createBoardNotification = ({name, id}, collaborators) => {
+    if (!collaborators.length) return;
     const notification = new Notify({
         recipients: collaborators,
         type: "boardInvite",
@@ -159,13 +164,13 @@ const createBoardNotification = ({name, id}, collaborators) => {
         boardId: id
     });
     notification.send();
-
 };
 
 const toggleDrp = () => {
     event.currentTarget.toggleDropDown();
-    const drp = $('.add-board-data #drp-collaborators');
-    const sortedContacts = Object.values(CONTACTS).sort((a, b) => (a.name > b.name) ? 1 : -1);
+    const drp = $(':is(.add-board-data, .edit-board-data) #drp-collaborators');
+    const filteredContacts = !!(event.currentTarget.closest('.edit-board-data')) ? Object.values(CONTACTS).filter(({id}) => !(SELECTED_BOARD.collaborators.includes(id))) : Object.values(CONTACTS);
+    const sortedContacts = filteredContacts.sort((a, b) => (a.name > b.name) ? 1 : -1);
     drp.innerHTML = ''
     drp.renderItems(sortedContacts, contactDropdownTemplate);
 };
@@ -182,11 +187,12 @@ const filterDrp = debounce(() => {
     drp.renderItems(filteredContacts, contactDropdownTemplate);
 });
 
-const contactDropdownTemplate = ({name, color, id}) => {
+const contactDropdownTemplate = ({name, color, id, img}) => {
     return /*html*/`
-        <div class="contact row gap-15 drp-option" onclick="addCollaborator(${id})">
+        <div class="contact row gap-15 drp-option ${newBoardCollaborators.includes(id) ? 'active' : ''}" onclick="addCollaborator(${id})">
             <div class="user-img-container" style="--user-clr: ${color};">
                 <span>${name.slice(0, 2).toUpperCase()}</span>
+                <img src="${img}">
             </div>
             <div>${name}</div>
         </div>
@@ -194,7 +200,6 @@ const contactDropdownTemplate = ({name, color, id}) => {
 }
 
 const addCollaborator = (id) => {
-    const {name, color} = CONTACTS[id];
     event.currentTarget.classList.toggle('active');
     if (newBoardCollaborators.includes(`${id}`)) newBoardCollaborators.remove(`${id}`); 
     else newBoardCollaborators.push(`${id}`);
@@ -203,11 +208,12 @@ const addCollaborator = (id) => {
     collabContainer.renderItems(Object.values(CONTACTS).filter(contact => newBoardCollaborators.includes(contact.id)), newBoardCollaboratorTemplate);
 }
 
-const newBoardCollaboratorTemplate = ({name, color, id}) => {
+const newBoardCollaboratorTemplate = ({img, name, color, id}) => {
     return /*html*/`
-    <button class="collaborator" data-id="${id}">
+    <button class="collaborator ${!SELECTED_BOARD.collaborators.includes(id) ? 'invitation' : ''}" data-id="${id}">
         <div class="user-img-container" style="--user-clr: ${color}">
             <span>${name.slice(0, 2).toUpperCase()}</span>
+            <img src="${img}" alt="">
         </div>
     </button>
 `
@@ -217,12 +223,35 @@ const renderEditBoard = () => {
     const {name, collaborators, categories} = SELECTED_BOARD;
     const editBoardContainer = $('.edit-board-data');
     editBoardContainer.$(':scope > h3').innerText = name;
-    editBoardContainer.$('.categories-container').renderItems(Object.entries(categories), addBoardCategoryTemplate)
+    editBoardContainer.$('.categories-container').renderItems(Object.entries(categories), addBoardCategoryTemplate);
+
+    newBoardCollaborators = [...collaborators];
+    editBoardContainer.$('.collaborators-container').renderItems(Object.values(CONTACTS).filter(contact => collaborators.includes(contact.id)), newBoardCollaboratorTemplate);
+}
+
+const saveEditedBoard = async () => {
+    const collaborators = getCollaborators();
+    const categories = getTaskCategories();
+    
+    createBoardNotification(SELECTED_BOARD, collaborators.filter(collabId => !SELECTED_BOARD.collaborators.includes(collabId)));
+    await updateBoardCategories(categories)
+    notification(`board-updated, {boardName: '${SELECTED_BOARD.name}'}`);
+    $('#edit-board').closeModal();
+    return loadContent();
+}
+
+function updateBoardCategories(categories) {
+    if (_.isEqual(categories, SELECTED_BOARD.categories)) return;
+    SELECTED_BOARD.categories = {};
+    Object.entries(categories).for(([name, color]) => SELECTED_BOARD.categories[name] = color);
+    return SELECTED_BOARD.update();
 }
 
 const initEditBoard = async () => {
+    newBoardCollaborators = [];
     const editBoardModal = $('#edit-board');
     await editBoardModal.$('.edit-board-data').includeTemplate('/Join/assets/templates/index/edit-board.html');
+    await getContacts();
     renderEditBoard();
     editBoardModal.openModal();
 }
@@ -237,7 +266,7 @@ const deleteBoard = () => confirmation(`delete-board, {boardName: '${SELECTED_BO
     await SELECTED_BOARD.delete();
     SELECTED_BOARD = Object.values(BOARDS)[0] || undefined;
     notification('board-deleted');
-    $('#edit-board-modal').closeModal();
+    $('#edit-board').closeModal();
     loadContent();
 })
 

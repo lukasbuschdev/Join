@@ -115,12 +115,16 @@
     "confirmation-delete-contact": "Möchtest du diesen Kontakt löschen?",
     "confirm-delete-contact": "Löschen",
 
+    "confirmation-delete-category": "Kategorie Löschen?",
+    "confirm-delete-category": "Delete",
     "confirmation-delete-task": "%taskName% Löschen?",
     "confirm-delete-task": "Löschen",
     "confirmation-delete-board": "%boardName% löschen?",
     "confirm-delete-board": "Löschen",
     "confirmation-save-edited-task": "Änderungen speichern?",
     "confirm-save-edited-task": "Speichern",
+    "confirmation-save-edited-board": "Änderungen speichern?",
+    "confirm-save-edited-board": "Speichern",
     "confirmation-logout": "Willst du dich abmelden?",
     "confirm-logout": "Abmelden",
     
@@ -139,6 +143,7 @@
     "understood": "Verstanden",
     "board-nonexistent": "Tafel %boardName% existiert nicht!",
     "no-notifications": "Du hast keine Benachrichtigungen!",
+    "board-updated": "%boardName% aktualisiert!", 
 
     "network-error": "Netzwerkfehler!",
     "websocket-disconnect": "Websocket - Verbindungsfehler!",

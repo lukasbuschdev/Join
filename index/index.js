@@ -51,7 +51,7 @@ const initFunctions = {
 }
 
 const loadContent = async () => {
-    const {id = currentDirectory(), classList} = event?.currentTarget || {};
+    const {id = currentDirectory(), classList} = (event?.currentTarget.id in initFunctions) ? event?.currentTarget ?? {} : {};
     if (classList?.contains('active')) return error('already active!');
     const url = (id == 'help')? `/Join/assets/languages/help-${currentLang()}.html` : (id == 'privacy')? `/Join/assets/languages/privacy-${currentLang()}.html` : `/Join/assets/templates/index/${id.replace('_','-')}_template.html`;
     
@@ -80,17 +80,18 @@ const loadAccountPanelContent = async () => {
     const btn = event.currentTarget;
     const template = btn.id.slice(0, -4);
     const templatePath = `/Join/assets/templates/account/${template}.html`;
-    await $('#account-panel-content').includeTemplate(templatePath);
+    const accountPanelContent = $('#account-panel-content');
+    await accountPanelContent.includeTemplate(templatePath);
     if (template == "notifications") loadNotifications();
     if (template == "edit-account") initEditAccount();
-    $('#account-panel-content').LANG_load();
+    accountPanelContent.LANG_load();
 };
 
 const initEditAccount = () => {
     const editAccountContent = $('#edit-account-content');
     editAccountContent.renderUserData();
     renderColorWheel();
-    if (editAccountContent.$('img').src) editAccountContent.$('.user-img-container').dataset.img = "true"
+    if (editAccountContent.$('img').src) editAccountContent.$('.user-img-container').dataset.img = "true";
 }
 
 const loadNotifications = async () => {
