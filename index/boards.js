@@ -85,7 +85,6 @@ const saveTaskChanges = () => {
         updateTaskUi(differences);
         SELECTED_TASK.update();
     }
-    else log('no difference');
 };
 
 const deleteTask = () => confirmation(`delete-task, {taskName: '${SELECTED_TASK.title}'}`, async () => {
@@ -243,7 +242,6 @@ const taskDropper = ({ pageX, pageY }, task, { offsetX, offsetY }) => {
         const { x, y, width, height } = taskWrapper.getBoundingClientRect();
         if (x < pageX && pageX < (x + width) &&
             y < pageY && pageY < (y + height)) {
-                log(taskWrapper);
             taskWrapper.classList.remove('placeholder');
             task.updatePosition();
             const previousParent = task.parentElement;  // Experimental
@@ -265,6 +263,10 @@ const taskDropper = ({ pageX, pageY }, task, { offsetX, offsetY }) => {
 }
 
 const changeTaskType = async (taskElement, newType) => {
+    if (newType !== "to-do" &&
+        newType !== "in-progress" &&
+        newType !== "awaiting-feedback" &&
+        newType !== "done") return error(newType);
     const [, taskId] = taskElement.dataset.id.split('/');
     const task = new Task(SELECTED_BOARD.tasks[taskId]);
     await task.setProperty('type', newType);

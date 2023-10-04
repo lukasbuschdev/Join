@@ -1,3 +1,4 @@
+let newBoardCollaborators;
 const initSummary = async () => {
     await getBoards();
     renderBoards();
@@ -5,33 +6,43 @@ const initSummary = async () => {
 
 const renderBoards = () => {
     const selection = $('#summary-selection');
-    if (USER.boards.length == 0) return $('#summary-content').classList.toggle('d-none');
+    if (USER.boards.length == 0) {
+        $('#summary-content').classList.toggle('d-none');
+        $('.summary-header button').classList.toggle('d-none');
+        $('#summary-body').style.margin = "auto";
+        return;
+    }
     selection.innerHTML = '';
-    selection.renderItems(Object.values(BOARDS)
-        .sort((a, b) => a.dateOfLastEdit - b.dateOfLastEdit), boardSelectionTemplate);
+    selection.renderItems(Object.values(BOARDS).sort((a, b) => a.dateOfLastEdit - b.dateOfLastEdit), boardSelectionTemplate);
     if (!SESSION_getData('activeBoard')) SESSION_setData('activeBoard', Number(Object.keys(BOARDS)[0]));
+
     const activeBoard = SESSION_getData('activeBoard');
     const activeBoardButton = $(`#summary-selection [data-id="${activeBoard}"]`);
     activeBoardButton?.click();
     activeBoardButton?.classList.add('active');
 }
 
+const renderBoardEditButton = (boardId) => {
+    const btn = document.createElement('div');
+    btn.innerHTML = 
+    /*html*/`<button class="circle grid-center" onclick="initEditBoard(${boardId})">
+        <img src="/Join/assets/img/icons/edit.svg" alt="">
+    </button>`;
+    $('.summary-header > div').appendChild(btn.children[0]);
+}
+
 const boardSelectionTemplate = ({name, id, owner}) => {
     return /*html*/`
         <button class="row" type="option" data-id="${id}" onclick="renderBoard()">
             <span>${name.replaceAll('-',' ')}</span>
-            ${(owner == USER.id)
-            ? /*html*/`<div class="circle grid-center" onclick="initEditBoard(${id})">
-                <img src="/Join/assets/img/icons/edit.svg" alt="">
-            </div>`
-            : ''}
         </button>`;
 }
 
 const renderBoard = () => {
     const id = event.currentTarget.dataset.id;
     SELECTED_BOARD = BOARDS[id];
-    const tasks = Object.values(BOARDS[id].tasks);
+    const {tasks: tasksObj, owner} = SELECTED_BOARD;
+    const tasks = Object.values(tasksObj);
     const tasksInBoard = tasks.length;
     const tasksInProgress = tasks.filter(({type}) => type == "in-progress").length;
     const tasksAwaitingFeedback = tasks.filter(({type}) => type == "awaiting-feedback").length;
@@ -62,6 +73,8 @@ const renderBoard = () => {
     $('#summary-selection').classList.remove('active');
     SESSION_setData('activeBoard', Number(id));
     
+    if (owner == USER.id) renderBoardEditButton(id);
+
     const summaryHeader = $('.summary-header h2');
     delete summaryHeader.dataset.lang;
     summaryHeader.innerText = SELECTED_BOARD.name;
@@ -69,6 +82,7 @@ const renderBoard = () => {
 
 const createBoardModal = async () => {
     await $('#add-board .add-board-data').includeTemplate('/Join/assets/templates/index/add-board.html');
+    newBoardCollaborators = [];
     $('#add-board').openModal();
 }
 
@@ -79,11 +93,11 @@ const addBoardCategory = () => {
     throwErrors({identifier: "name-too-long", bool: titleValidity});
     if (titleValidity) return;
 
-    $('.categories-container').innerHTML += addBoardCategoryTemplate(title, color);
+    $('.categories-container').innerHTML += addBoardCategoryTemplate([title, color]);
     $('#add-board-categories input').value = '';
 }
 
-const addBoardCategoryTemplate = (title, color) => {
+const addBoardCategoryTemplate = ([title, color]) => {
     return /*html*/`
         <div class="task-category" style="--clr: ${color};">
             <span>${title}</span>
@@ -181,21 +195,39 @@ const contactDropdownTemplate = ({name, color, id}) => {
 
 const addCollaborator = (id) => {
     const {name, color} = CONTACTS[id];
-    if ($(`.collaborator[data-id="${id}"]`)) return;
-    this.classList.add('active')
-    $('.collaborators-container').innerHTML += /*html*/`
-        <button class="collaborator" data-id="1689153951244">
-            <div class="user-img-container" style="--user-clr: ${color}">
-                <span>${name.slice(0, 2).toUpperCase()}</span>
-            </div>
-        </button>
-    `;
+    event.currentTarget.classList.toggle('active');
+    if (newBoardCollaborators.includes(`${id}`)) newBoardCollaborators.remove(`${id}`); 
+    else newBoardCollaborators.push(`${id}`);
+    const collabContainer = $('.collaborators-container');
+    collabContainer.innerHTML = '';
+    collabContainer.renderItems(Object.values(CONTACTS).filter(contact => newBoardCollaborators.includes(contact.id)), newBoardCollaboratorTemplate);
 }
 
-const initEditBoard = (boardId) => {
-    const editBoardModal = $('#edit-board-modal');
+const newBoardCollaboratorTemplate = ({name, color, id}) => {
+    return /*html*/`
+    <button class="collaborator" data-id="${id}">
+        <div class="user-img-container" style="--user-clr: ${color}">
+            <span>${name.slice(0, 2).toUpperCase()}</span>
+        </div>
+    </button>
+`
+}
+
+const renderEditBoard = () => {
+    const {name, collaborators, categories} = SELECTED_BOARD;
+    const editBoardContainer = $('.edit-board-data');
+    editBoardContainer.$(':scope > h3').innerText = name;
+    editBoardContainer.$('.categories-container').renderItems(Object.entries(categories), addBoardCategoryTemplate)
+}
+
+const initEditBoard = async () => {
+    const editBoardModal = $('#edit-board');
+    await editBoardModal.$('.edit-board-data').includeTemplate('/Join/assets/templates/index/edit-board.html');
+    renderEditBoard();
     editBoardModal.openModal();
 }
+
+
 
 const deleteBoard = () => confirmation(`delete-board, {boardName: '${SELECTED_BOARD.name}'}`, async () => {
     SELECTED_BOARD.collaborators.forAwait(async collaboratorId => {
