@@ -7,7 +7,6 @@ async function renderContacts() {
     const contactsData = Object.values(CONTACTS);
     if(contactsData.length == 0) return noContactsYet();
     contactsExisting();
-    log('Got Here 1')
     
     const initialLetters = [...new Set(
         contactsData.map(
@@ -22,7 +21,6 @@ async function renderContacts() {
         const filteredContacts = contactsData.filter(({name}) => name[0] == letter);
         $('#contacts-container').renderItems(filteredContacts, contactListTemplate);
     });
-    log('Got Here 2')
 }
 
 function noContactsYet() {
@@ -104,7 +102,6 @@ function clearCloseAddContact() {
     userImgContainer.innerHTML = /*html*/ `
         <img class="user-img-gray" src="/Join/assets/img/icons/user_img_gray.svg">
     `;
-    log('getting here')
     userImgContainer.style.setProperty('--user-clr', 'unset');
 }
 
@@ -267,7 +264,6 @@ async function addContact() {
     });
 
     if(USER.pendingFriendshipRequests.includes(selectedUserId)) {
-        log('Friendship request has already been sent!');
         return
     }
 
