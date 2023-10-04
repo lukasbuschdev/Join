@@ -115,8 +115,7 @@ const getJsonChanges = (newJson, oldJson) => {
 
 const changeSubtaskDoneState = async (subTaskName) => {
     const subTaskCheckBox = event.currentTarget;
-    const isChecked = (subTaskCheckBox.getAttribute('checked') == "true") ? true : false;
-    subTaskCheckBox.setAttribute('checked', (isChecked) ? 'false' : 'true');
+    const isChecked = (subTaskCheckBox.checked);
 
     let subTaskIndex;
     for(let i = 0; i < SELECTED_TASK.subTasks.length; i++) {
@@ -125,7 +124,7 @@ const changeSubtaskDoneState = async (subTaskName) => {
             break;
         };
     };
-    SELECTED_TASK.subTasks[subTaskIndex].done = !isChecked;
+    SELECTED_TASK.subTasks[subTaskIndex].done = isChecked;
 };
 
 const updateTaskUi = ({title = null, description = null, priority = null, assignedTo = null, subTasks = null}) => {
