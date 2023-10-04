@@ -2,7 +2,7 @@
     <div id="board-header" class="row gap-35">
         <h2 data-lang="board">Board</h2>
             <div id="search-task" class="inp-container gap-10 radius-10">
-                <div class="inp-buttons row gap-10">
+                <div class="inp-buttons row gap-10" style="flex-grow: 1;">
                     <input type="text" placeholder="Find Task" data-lang-placeholder="find-task" oninput="searchTasks()">
                     <div class="inp-buttons row gap-15">
                         <div class="vertical-line"></div>
@@ -37,7 +37,7 @@
             </div>
             <div id="in-progress" data-lang-empty="no-tasks" data-type=""></div>
         </div>
-        
+
         <div class="column gap-15">
             <div class="task-header">
                 <h4 data-lang="awaiting-feedback">Awaiting Feedback</h4>
