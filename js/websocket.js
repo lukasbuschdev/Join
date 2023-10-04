@@ -5,26 +5,15 @@ const initWebsocket = () => {
         }
     });
 
-    SOCKET.io.on('error', e => {
-        log('SOCKET error!')
-    });
-
     SOCKET.io.on('close', e => {
-        log('SOCKET closed!', e)
         notification('websocket-disconnect');
-    })
-
-    SOCKET.io.on('disconnect', e => {
-        log('SOCKET disconnected!')
     })
     
     SOCKET.io.on('reconnect', e => {
-        log('reconnected!')
         notification('websocket-reconnect');
     })
 
     SOCKET.on('notification', async () => {
-        console.log(`Your received a new Notification!`);
         notifySound.play();
         await getUser();
         checkNotifications();

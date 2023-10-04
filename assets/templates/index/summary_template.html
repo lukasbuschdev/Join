@@ -1,6 +1,8 @@
 <div id="summary-wrapper" class="column">
     <div class="summary-header row">
-        <h2 data-lang="summary" class="row">Summary</h2>
+        <div id="board-title" class="row gap-25">
+            <h2 data-lang="summary" class="row">Summary</h2>
+        </div>
         <h3 data-lang="summary-subtext">Everything in a nutshell!</h3>
         <button class="add-board btn btn-primary btn-add-task txt-normal txt-700" onclick="createBoardModal()">
             <span data-lang="add-board">Add board</span>
@@ -79,7 +81,7 @@
         </div>
     </div>
 
-    <dialog type="modal" id="add-board" class="big-modal">
+    <dialog type="modal" id="add-board" class="big-modal" static="false">
         <div class="add-board-content row">
             <div class="add-board-header column">
                 <img src="/Join/assets/img/icons/logo_white.svg">
@@ -90,23 +92,14 @@
             </div>
         </div>
     </dialog>
-
-    <dialog id="edit-board-modal" type="modal" class="big-modal" static="false">
-        <div id="edit-board" class="column gap-25">
-            <h3>Edit Board</h3>
-            <div class="column gap-15">
-                <h4>Categories</h4>
-                <div class="drp-wrapper">
-                    <div class="drp-title">Hello</div>
-                    <div class="drp-contacts"></div>
-                </div>
+    
+    <dialog id="edit-board" type="modal" class="big-modal" static="false">
+        <div class="edit-board-content row">
+            <div class="edit-board-header column">
+                <img src="/Join/assets/img/icons/logo_white.svg">
+                <h1 data-lang="edit-board">Edit Board</h1>
             </div>
-            <div class="column gap-15">
-                <h4>Collaborators</h4>
-                <div class="drp-wrapper" id="drp-wrapper"></div>
-            </div>
-            <div class="btn-container txt-small gap-8 mla">
-                <button class="row gap-8" data-lang="delete" onclick="deleteBoard()">Delete</button>
+            <div class="edit-board-data column gap-35">
             </div>
         </div>
     </dialog>

@@ -18,10 +18,8 @@ async function LANG_load (lang = currentLang()){
     this.$$('[data-lang]').for(element => {
         const dataLang = element.dataset.lang
         if (dataLang.includes(', {')) {
-            log(dataLang)
             const langString = dataLang.split(', {')[0];
             const langOptions = parse(dataLang.slice(dataLang.indexOf(', ') + 2));
-            log(`<span>${LANG[langString].replaceAll(/%\w*%/g, variable => `<b>${langOptions[variable.split('%')[1]]}</b>`)}</span>`)
             element.innerHTML = `<span>${LANG[langString].replaceAll(/%\w*%/g, variable => `<b>${langOptions[variable.split('%')[1]]}</b>`)}</span>`
         } else {
             element.innerText = LANG[element.dataset.lang];
@@ -34,7 +32,7 @@ async function LANG_load (lang = currentLang()){
 
 const LANG_set = (lang) => {
     if (!(lang == 'de' || lang == 'en' || lang == 'es' || lang == 'fr' || lang == 'it' || lang == 'tk' || lang == 'pg')) {
-        return log(error(`${lang} doesn't exist`));
+        return error(`${lang} doesn't exist`);
     }
 
     LOCAL_setData('lang', lang);

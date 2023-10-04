@@ -1,23 +1,28 @@
 let initialTask;
 
 const initBoard = async () => {
-    await getBoards();
     await getAllUsers();
-    return renderTasks();
+    await getBoards();
+    if (Object.values(BOARDS).length) return renderTasks();
 }
 
-const renderTasks = (filter) => {
+const renderTasks = async (filter) => {
     const boardId = SESSION_getData('activeBoard') ?? Object.keys(BOARDS)[0];
-    const {tasks} = BOARDS[boardId];
+    const {tasks, name} = BOARDS[boardId];
+
+    const boardHeader = $('#board-header h2');
+    delete boardHeader.dataset.lang;
+    boardHeader.innerText = name;
+
     if (!Object.values(tasks).length) return;
     const tasksContainer = $('#tasks');
-
+    
     tasksContainer.$$(':scope > div > div:last-child').for(container => container.innerHTML = "");
     const filteredTasks = (filter)
-        ? Object.values(tasks).filter(task => task.title.includes(filter) || task.description.includes(filter))
-        : Object.values(tasks);
+    ? Object.values(tasks).filter(task => task.title.includes(filter) || task.description.includes(filter))
+    : Object.values(tasks);
     filteredTasks.toReversed().for(task => $(`#${task.type}`).innerHTML += taskTemplate(task, filter));
-    tasksContainer.LANG_load();
+    await tasksContainer.LANG_load();
 }
 
 const searchTasks = debounce(() => {
@@ -80,7 +85,6 @@ const saveTaskChanges = () => {
         updateTaskUi(differences);
         SELECTED_TASK.update();
     }
-    else log('no difference');
 };
 
 const deleteTask = () => confirmation(`delete-task, {taskName: '${SELECTED_TASK.title}'}`, async () => {
@@ -238,7 +242,6 @@ const taskDropper = ({ pageX, pageY }, task, { offsetX, offsetY }) => {
         const { x, y, width, height } = taskWrapper.getBoundingClientRect();
         if (x < pageX && pageX < (x + width) &&
             y < pageY && pageY < (y + height)) {
-                log(taskWrapper);
             taskWrapper.classList.remove('placeholder');
             task.updatePosition();
             const previousParent = task.parentElement;  // Experimental
@@ -260,6 +263,10 @@ const taskDropper = ({ pageX, pageY }, task, { offsetX, offsetY }) => {
 }
 
 const changeTaskType = async (taskElement, newType) => {
+    if (newType !== "to-do" &&
+        newType !== "in-progress" &&
+        newType !== "awaiting-feedback" &&
+        newType !== "done") return error(newType);
     const [, taskId] = taskElement.dataset.id.split('/');
     const task = new Task(SELECTED_BOARD.tasks[taskId]);
     await task.setProperty('type', newType);

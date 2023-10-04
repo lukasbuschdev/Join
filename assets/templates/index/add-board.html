@@ -1,11 +1,13 @@
 <div class="inp-wrapper column txt-600" id="add-board-title">
+    <span class="txt-normal" data-lang="title"></span>
     <div class="inp-container radius-10">
         <input type="text" name="" id="" data-lang-placeholder="title">
     </div>
 </div>
 <div class="categories-collaborators column gap-35">
-    <div class="row gap-25">
+    <div class="column" style="width: 100%;">
         <div class="inp-wrapper column" id="add-board-categories">
+            <span class="txt-normal" data-lang="categories"></span>
             <div class="inp-container radius-10">
                 <input type="text" name="" id="" data-lang-placeholder="add-board-categories">
                 <div class="inp-buttons row gap-10">
@@ -35,24 +37,20 @@
         <div class="categories-container row">
         </div>
     </div>
-    <div class="row gap-25">
-        <div class="inp-wrapper">
+    <div class="column" style="width: 100%;">
+        <div class="inp-wrapper column">
+            <span class="txt-normal" data-lang="collaborators"></span>
             <div class="drp-wrapper">
                 <div class="inp-container radius-10">
                     <input data-lang-placeholder="add-board-collaborators" style="height:unset;" onfocus="toggleDrp()">
                 </div>
                 <div class="drp-option-wrapper" data-shadow="ud/white/10px">
-                    <div class="drp-contacts" id="drp-collaborators">
-                        <!--Add contacts here!-->
-                    </div>
+                    <div class="drp-contacts" id="drp-collaborators"></div>
                 </div>
             </div>
         </div>
-        <div class="collaborators-container row gap-15">
-        </div>
+        <div class="collaborators-container row gap-15"></div>
     </div>
-</div>
-<div>
 </div>
 <div class="btn-container row">
     <button class="btn btn-primary btn-check txt-normal txt-700" onclick="createNewBoard()">

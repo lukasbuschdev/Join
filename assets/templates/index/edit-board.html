@@ -1,0 +1,54 @@
+<h3 class="txt-700"></h2>
+<div class="categories-collaborators column gap-35">
+    <div class="column" style="width: 100%;">
+        <div class="inp-wrapper column" id="add-board-categories">
+            <span class="txt-normal" data-lang="categories"></span>
+            <div class="inp-container radius-10">
+                <input type="text" name="" id="" data-lang-placeholder="add-board-categories">
+                <div class="inp-buttons row gap-10">
+                    <button onclick="clearCategoryInput()">
+                        <img src="/Join/assets/img/icons/close.svg" width="20">
+                    </button>
+                    <div class="vertical-line"></div>
+                    <button onclick="addBoardCategory()">
+                        <img src="/Join/assets/img/icons/check_black.svg" width="20">
+                    </button>
+                </div>
+            </div>
+            <div class="category-colors">
+                <div class="row gap-25" type="menu">
+                    <div class="category-color active" type="option" style="--clr: #8AA4FF"></div>
+                    <div class="category-color" type="option" style="--clr: #1FD7C1"></div>
+                    <div class="category-color" type="option" style="--clr: #2AD300"></div>
+                    <div class="category-color" type="option" style="--clr: #FF8A00"></div>
+                    <div class="category-color" type="option" style="--clr: #E200BE"></div>
+                    <div class="category-color" type="option" style="--clr: #0038FF"></div>
+                </div>
+            </div>
+            <div class="error" id="name-too-long">
+                <span data-lang="name-too-long">Name too long!</span>
+            </div>
+        </div>
+        <div class="categories-container row">
+        </div>
+    </div>
+    <div class="column" style="width: 100%;">
+        <div class="inp-wrapper column">
+            <span class="txt-normal" data-lang="collaborators"></span>
+            <div class="drp-wrapper">
+                <div class="inp-container radius-10">
+                    <input data-lang-placeholder="add-board-collaborators" style="height:unset;" onfocus="toggleDrp()">
+                </div>
+                <div class="drp-option-wrapper" data-shadow="ud/white/10px">
+                    <div class="drp-contacts" id="drp-collaborators"></div>
+                </div>
+            </div>
+        </div>
+        <div class="collaborators-container row gap-15"></div>
+    </div>
+</div>
+<div class="btn-container row">
+    <div class="btn-container txt-small gap-8 mla">
+        <button class="row gap-8" data-lang="delete" onclick="deleteBoard()">Delete</button>
+    </div>
+</div>
