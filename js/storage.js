@@ -97,7 +97,6 @@ const REMOTE_removeData = async (path) => {
     if (directory.includes('/')) {
         const parentDirectory = directory.slice(0, directory.lastIndexOf('/'));
         const childDirectory = directory.split('/').at(-1);
-        log()
         return REMOTE_setData(parentDirectory, { [childDirectory]: data});
     } else {
         return REMOTE_upload(path.split('/')[0], data);
@@ -244,7 +243,6 @@ const getCurrentUser = async (methods) => {
 }
 
 const getUser = async () => {
-    // log('updating user...');
     USER = await getCurrentUser(true);
     return getContacts();
 };
@@ -257,7 +255,6 @@ const getContacts = async () => {
 }
 
 const getBoards = async () => {
-    // log('updating boards...');
     if (USER.boards == []) return;
     const allBoards = await REMOTE_getData('boards');
     for await (const boardId of USER.boards) {

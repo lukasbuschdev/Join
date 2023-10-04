@@ -256,7 +256,6 @@ const linearGradient = ([...colors], resolutionFactor = 5) => {
       const c2 = colors[i + 1];
       for (let i = 1; i <= resolution / colors.length; i++) {
         const progress = i / resolutionFactor;
-        log(progress);
         bg.push(`${averageColor(c1, c2, progress)}`);
       }
     }

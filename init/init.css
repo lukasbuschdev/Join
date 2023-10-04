@@ -182,8 +182,6 @@ form:has(input:placeholder-shown) button[type="submit"] {
     filter: invert(1);
 }
 
-/* SIGNUP */
-
 /* VERIFICATION */
 
 #verification input::placeholder {

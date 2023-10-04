@@ -34,7 +34,6 @@ const automaticLogin = async () => {
     if (!("PasswordCredential" in window)) return;
     const cred = await navigator.credentials.get({ password: true }) || false;
     if (!cred) return;
-    log(cred.id)
     const user = await getUserByInput(cred.id);
     user.logIn();
 }

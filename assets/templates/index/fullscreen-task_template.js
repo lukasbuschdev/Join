@@ -1,5 +1,4 @@
 const fullscreenTaskTemplate = ({category, title, description, priority, dueDate, assignedTo, subTasks, boardId}) => {
-    log();
     const [categoryName = "Default",  categoryColor = "#d1d1d1"] = Object.entries(BOARDS[boardId].categories)?.find(([key]) => key == category) ?? [];
     return /*html*/`
     <div class="fullscreen-content">

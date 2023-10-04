@@ -66,7 +66,6 @@ HTMLElement.prototype.on = function (eventType, callback, options = {}) {
         try {
             this.removeEventListener(eventType, cb, options);
         } catch (e) {
-            log(e);
         }
     }
     const boundCb = callback.bind(this)
@@ -75,9 +74,7 @@ HTMLElement.prototype.on = function (eventType, callback, options = {}) {
 
 HTMLElement.prototype.includeTemplate = async function(url = this.getAttribute('include-template') || '') {
     if (!url) return;
-    // log("starting download");
     const template = await (await fetch(url)).text();
-    // log("finished download");
     this.innerHTML = template;
     shadowObservers = {};
     this.$$('[data-shadow]').for(scrollContainer => scrollContainer.addScrollShadow());
