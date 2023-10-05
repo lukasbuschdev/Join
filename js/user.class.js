@@ -55,7 +55,7 @@ class User extends Account {
     logIn = async () => {
         LOCAL_setData('loggedIn', true);
         this.loggedIn = 'true';
-        this.setCredentials();
+        if ("PasswordCredential" in window) this.setCredentials();
         await this.update();
         goTo('summary', {search: `?uid=${this.id}`, reroute: true});
     }
