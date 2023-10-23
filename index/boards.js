@@ -20,7 +20,7 @@ const renderTasks = async (filter) => {
     
     tasksContainer.$$(':scope > div > div:last-child').for(container => container.innerHTML = "");
     const filteredTasks = (filter)
-    ? Object.values(tasks).filter(task => task.title.includes(filter) || task.description.includes(filter))
+    ? Object.values(tasks).filter(task => task.title.toLowerCase().includes(filter).toLowerCase() || task.description.toLowerCase().includes(filter).toLowerCase())
     : Object.values(tasks);
     filteredTasks.toReversed().for(task => $(`#${task.type}`).innerHTML += taskTemplate(task, filter));
     await tasksContainer.LANG_load();

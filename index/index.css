@@ -99,6 +99,8 @@ header {
     position: absolute;
     right: 100%;
     margin-right: 20px;
+    height: 30px;
+    width: 30px;
 }
 
 .btn-nav.active {

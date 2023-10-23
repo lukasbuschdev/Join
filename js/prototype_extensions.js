@@ -189,9 +189,10 @@ HTMLElement.prototype.addScrollShadowObserver = function () {
         }
         targets.for(container => observer.observe(container));
     }
+    
     observe(scrollContainer);
     const mutationObserver = new MutationObserver(([{target}]) => {
-        observe(target);
+        if (target) observe(target);
     });
     mutationObserver.observe(scrollContainer, {subtree: true, childList: true});
 }
