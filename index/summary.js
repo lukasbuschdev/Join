@@ -92,7 +92,7 @@ const createBoardModal = async () => {
 const addBoardCategory = () => {
     const title = $('#add-board-categories input').value;
     const color = $('.category-color.active').style.getPropertyValue('--clr');
-    const titleValidity = title.length > 10;
+    const titleValidity = title.length > 20;
     throwErrors({identifier: "name-too-long", bool: titleValidity});
     if (titleValidity) return;
     $('.categories-container').innerHTML += addBoardCategoryTemplate([title, color]);

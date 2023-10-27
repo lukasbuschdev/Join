@@ -36,8 +36,10 @@ const throwErrors = (...params) => {
       const errorContainer = $(`#${identifier}`);
       const inputWrapper = errorContainer.closest('.inp-wrapper')?.$('.inp-container');
 
+      if (identifier == "invalid-name") log(inputWrapper, bool);
+
       errorContainer.classList.toggle('active', bool);
-      inputWrapper?.classList.toggle('active', bool);
+      inputWrapper?.classList.toggle('active', !!bool);
   });
 }
 
