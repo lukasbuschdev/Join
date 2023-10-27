@@ -96,7 +96,7 @@ header {
 
 .btn-nav span::after {
     content: '';
-    background: var(--var) no-repeat center;
+    background: var(--img) no-repeat center;
     background-size: 95%;
     position: absolute;
     right: 100%;

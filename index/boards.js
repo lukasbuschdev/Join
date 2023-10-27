@@ -207,6 +207,24 @@ const addDragAndDrop = () => {
     }, { once: true });
 }
 
+function checkScroll({pageY}) {
+    const scrollDireciton = pageY < window.innerHeight * 0.3 ? -1 : pageY > window.innerHeight * 0.9 ? 1 : 0;
+    if (scrollDireciton === 0) {
+        if (window.taskScrollInterval) {
+            log('stopping scroll!')
+            clearInterval(window.taskScrollInterval);
+            delete window.taskScrollInterval;
+        }
+        return;
+    }
+    if (window.taskScrollInterval) return;
+    const taskContainer = $('#tasks');
+    log("creating interval")
+    window.taskScrollInterval = setInterval(()=> {
+        taskContainer.scrollBy(0, 2 * scrollDireciton);
+    }, 20);
+}
+
 const taskDragger = throttle(({ startingX, startingY }) => {
     const task = event.currentTarget;
     if (Math.abs(event.pageX - startingX) > 10 || Math.abs(event.pageY - startingY) > 10) waitForMovement = false;
@@ -219,6 +237,8 @@ const taskDragger = throttle(({ startingX, startingY }) => {
 
     task.style.setProperty('--x', event.pageX - startingX);
     task.style.setProperty('--y', event.pageY - startingY);
+
+    checkScroll(event);
     checkPlaceholder(event);
 }, 10);
 
