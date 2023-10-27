@@ -210,12 +210,17 @@ form:has(input:placeholder-shown) button[type="submit"] {
 
 .language-login.active {
     gap: 15px;
-    padding: 5px 10px;
+    padding: 8px 10px;
     grid-template-columns: 1fr 40px;
+}
+
+.language-login.active .language-selection {
+    padding: 0 5px;
 }
 
 .language-selection {
     overflow: hidden;
+    height: 40px;
 }
 
 .language-login > img {
@@ -237,6 +242,12 @@ form:has(input:placeholder-shown) button[type="submit"] {
     transform: scale(1);
     transition: var(--transition-fast);
     cursor: pointer;
+}
+
+.language-btn.active {
+    border: 2px solid var(--clr-blue);
+    border-radius: 999px;
+    padding: 2px;
 }
 
 .language-btn:hover {
