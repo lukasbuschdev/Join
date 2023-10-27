@@ -84,6 +84,7 @@ const loadAccountPanelContent = async () => {
     if (template == "notifications") loadNotifications();
     if (template == "edit-account") initEditAccount();
     accountPanelContent.LANG_load();
+    $('#settings-content').initMenus();
 };
 
 const initEditAccount = () => {

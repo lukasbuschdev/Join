@@ -1,6 +1,8 @@
 const init = async () => {
     isSessionExpired();
+    $('.language-login').initMenus();
 }
+
 
 const isSessionExpired = () => {
     const a = new URLSearchParams(document.location.search);
