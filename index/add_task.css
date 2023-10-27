@@ -1,7 +1,7 @@
 
 .add-task-card {
     padding: 2vh 4rem;
-    width: 1000px;
+    width: 100%;
 }
 
 .flex-right {
@@ -81,6 +81,7 @@ textarea {
     width: 100%;
     height: fit-content;
     gap: 30px;
+    align-items: center;
 }
 
 .add-task-rows .inputs {
@@ -224,14 +225,6 @@ textarea {
 
 #add-task-modal .add-task-heading {
     justify-content: center;
-}
-
-.subtask-edit-btn {
-    
-}
-
-.save-edited-subtask-btn {
-
 }
 
 .edit-btn-active {

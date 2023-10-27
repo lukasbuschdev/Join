@@ -95,12 +95,14 @@ header {
 }
 
 .btn-nav span::after {
-    content: var(--img);
+    content: '';
+    background: var(--var) no-repeat center;
+    background-size: 95%;
     position: absolute;
     right: 100%;
     margin-right: 20px;
-    height: 30px;
-    width: 30px;
+    height: 25px;
+    width: 25px;
 }
 
 .btn-nav.active {
