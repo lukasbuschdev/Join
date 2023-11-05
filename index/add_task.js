@@ -1,6 +1,7 @@
 async function initAddTask() {
     await getBoards();
     renderBoardIds();
+    renderDate();
     $('.add-task-card').LANG_load();
     resetArrays();
 }
@@ -267,11 +268,12 @@ function getFormattedDate() {
     return `${day}/${month}/${year}`;
 }
 
+function renderDate() {
+    $('#date').value = getFormattedDate();
+}
+
 function getDueDate() {
     const date = $('#date');
-    const formattedDate = getFormattedDate();
-
-    // date.value = formattedDate;
 
     if(date.value == '') {
         dateEmpty();
