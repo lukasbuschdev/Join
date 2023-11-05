@@ -9,8 +9,8 @@
 
     <link rel="stylesheet" href="/Join/fonts/fonts.css">
     <link rel="stylesheet" href="/Join/style.css">
-    <link rel="stylesheet" href="/Join/init/init.css">
-    <link rel="stylesheet" href="/Join/init/create_account.css">
+    <link rel="stylesheet" href="/Join/init/init/init.css">
+    <!-- <link rel="stylesheet" href="/Join/init/create_account.css"> -->
 
     <script src="/Join/js/prototype_extensions.js"></script>
     <script src="/Join/js/utilities.js"></script>
@@ -23,11 +23,11 @@
     <script src="/Join/js/language.js"></script>
     <script src="/Join/js/setup.js" defer></script>
 
-    <script src="/Join/init/init.js"></script>
+    <script src="/Join/init/init/init.js"></script>
 
-    <script src="/Join/init/login.js" defer></script>
-    <script src="/Join/init/signup.js" defer></script>
-    <script src="/Join/init/create_account.js" defer></script>
+    <script src="/Join/init/login/login.js" defer></script>
+    <!-- <script src="/Join/init/signup/signup.js" defer></script>
+    <script src="/Join/init/create_account.js" defer></script> -->
 </head>
 <body class="bg-light" onload="init()">
     <div id="logo">
@@ -70,7 +70,7 @@
                         <input type="checkbox" id="remember-me">
                         <label for="remember-me" class="txt-small" data-lang="remember-me">Remember Me</label>
                     </div>
-                    <a href="/Join/forgot_password" class="txt-blue txt-small" data-lang="forgot-password"></a>
+                    <a href="/Join/init/forgot_password/forgot_password.html" class="txt-blue txt-small" data-lang="forgot-password"></a>
                 </div>
         
                 <div class="btn-container">
@@ -122,7 +122,7 @@
                 </div>
                 <div class="row gap-10">
                     <span class="txt-normal" data-lang="not-join-user">Not a Join user?</span>
-                    <a href="/Join/signup" class="btn btn-primary txt-small txt-700" data-lang="sign-up">Sign up</a>
+                    <a href="/Join/init/signup/signup.html" class="btn btn-primary txt-small txt-700" data-lang="sign-up">Sign up</a>
                 </div>
             </div>
         </div>

@@ -8,9 +8,9 @@ async function LANG_load (lang = currentLang()){
     if (dir == 'signup' ||
         dir == 'login' ||
         dir == 'create-account' ||
-        dir == 'forgot-password' ||
-        dir == 'verify-account' ||
-        dir == 'reset-password') langDirectory = 'init';
+        dir == 'forgot_password' ||
+        dir == 'verify_account' ||
+        dir == 'reset_password') langDirectory = 'init';
     
     LANG = await (await fetch(`/Join/assets/languages/${langDirectory}/${lang}.json`)).json();
     const notificationCount = document.title.match(/(\(\d+\) )?/)[0];

@@ -1,5 +1,5 @@
 const initPage = () => {
-    LANG_load();
+    // LANG_load();
 }
 
 const forgotPassword = async () => {
@@ -18,5 +18,5 @@ const forgotPassword = async () => {
 
     await user.initPasswordReset();
     await notification("email-sent");
-    goTo('login', {reroute: true});
+    goTo('init/login/login', {reroute: true});
 }

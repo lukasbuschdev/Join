@@ -57,7 +57,7 @@ class User extends Account {
         this.loggedIn = 'true';
         if ("PasswordCredential" in window) this.setCredentials();
         await this.update();
-        goTo('summary', {search: `?uid=${this.id}`, reroute: true});
+        goTo('index/summary/summary', {search: `?uid=${this.id}`, reroute: true});
     }
 
     logOut = async () => {
@@ -65,7 +65,7 @@ class User extends Account {
         this.loggedIn = 'false';
         await this.update();
         if ("PasswordCredential" in window) navigator.credentials.preventSilentAccess();
-        goTo('login', {reroute: true, search: ''});
+        goTo('init/login/login', {reroute: true, search: ''});
     }
 
     update = async () => {
