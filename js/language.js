@@ -14,7 +14,9 @@ async function LANG_load (lang = currentLang()){
     
     LANG = await (await fetch(`/Join/assets/languages/${langDirectory}/${lang}.json`)).json();
     const notificationCount = document.title.match(/(\(\d+\) )?/)[0];
-    document.title = `${notificationCount}${LANG[`title-${dir}`]}`;
+    if (this === window) {
+        document.title = `${notificationCount}${LANG[`title-${dir.replace('_', '-')}`]}`;
+    }
     this.$$('[data-lang]').for(element => {
         const dataLang = element.dataset.lang
         if (dataLang.includes(', {')) {

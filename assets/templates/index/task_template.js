@@ -14,7 +14,7 @@ const taskTemplate = ({boardId, id, title, description, assignedTo, category, pr
             <div class="task-assigned-to">
                 ${assignedToTemplate(assignedAccounts)}
             </div>
-            <div class="task-priority" data-priority="${priority}" style="--priority: url(../assets/img/icons/prio_${priority}.svg)"></div>
+            <div class="task-priority" data-priority="${priority}" style="--priority: url(/Join/assets/img/icons/prio_${priority}.svg)"></div>
         </div>
     </div>`
 }

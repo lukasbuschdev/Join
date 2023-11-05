@@ -1,0 +1,26 @@
+<dialog id="account-panel" class="big-modal">
+    <div class="row">
+        <div id="account-panel-options" class="column gap-20" type="menu">
+            <button id="notifications-btn" class="txt-normal row gap-15" type="option" onclick="loadAccountPanelContent()">
+                <div id="notification-icon">
+                    <img src="/Join/assets/img/icons/bell.png">
+                    <div class="notifications-counter circle flex-center d-none"></div>
+                </div>
+                <span data-lang="account-panel-notifications">Notifications</span>
+            </button>
+            <button id="edit-account-btn" class="txt-normal row gap-15" type="option" onclick="loadAccountPanelContent()">
+                <img src="/Join/assets/img/icons/edit_dark.svg">    
+                <span data-lang="account-panel-edit-account">Edit Account</span>
+            </button>
+            <button id="settings-btn" class="txt-normal row gap-15" type="option" onclick="loadAccountPanelContent()">
+                <img src="/Join/assets/img/icons/lang.png">    
+                <span data-lang="account-panel-settings">Language</span>
+            </button>
+            <button id="logout-btn" class="txt-normal row gap-15" onclick="confirmation('logout', () => USER.logOut())">
+                <img src="/Join/assets/img/icons/logout.png">    
+                <span data-lang="account-panel-logout">Log out</span>
+            </button>
+        </div>
+        <div id="account-panel-content"></div>
+    </div>
+</dialog>

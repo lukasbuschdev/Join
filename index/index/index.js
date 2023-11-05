@@ -7,12 +7,14 @@ let CONTACTS = {};
 let SOCKET;
 let notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wav');
 
-const init = async () => {
+const init = async (directory) => {
+    await includeTemplates();
     await getUser();
-    checkLogin();
+    // checkLogin();
     await getAllUsers();
+    initFunctions[directory]();
     initWebsocket();
-    $(`#${currentDirectory().replace('_','-')}`)?.click();
+    $(`#${directory}`).classList.add("active");
     renderUserData();
     checkNotifications();
 }
@@ -27,7 +29,7 @@ const checkNotifications = async () => {
     const notificationCounters = $$('.notifications-counter');
 
     notificationCounters.for(counter => counter.classList.toggle('d-none', !notificationCount));
-    document.title = `${(notificationCount)?`(${notificationCount}) ` :""}${LANG[`title-${currentDirectory()}`]}`; 
+    document.title = `${(notificationCount)?`(${notificationCount}) ` :""}${LANG[`title-${currentDirectory().replace('_', '-')}`]}`; 
     if (!notificationCount) return
     notificationCounters.for(counter => counter.innerText = notificationCount);
 }
@@ -46,27 +48,30 @@ const initFunctions = {
     "summary": () => initSummary(),
     "contacts": () => initContacts(),
     "board": () => initBoard(),
-    "add-task": () => initAddTask(),
+    "add_task": () => initAddTask(),
     "help": () => initHelp()
 }
 
-const loadContent = async () => {
-    const id = event ? event.currentTarget.id : currentDirectory();
-    if (event && event.currentTarget.classList.contains('active')) return error('already active!');
-    const url = (id === 'help') ? `/Join/assets/languages/help-${currentLang()}.html` : (id == 'privacy')? `/Join/assets/languages/privacy-${currentLang()}.html` : `/Join/assets/templates/index/${id.replace('_','-')}_template.html`;
-    const content = $('#content');
-    content.classList.add("loading");
-    await content.includeTemplate(url);
-    content.$(':scope > div').classList.add("o-none");
+async function loadContent () {
+    const btn = event.currentTarget;
+    if (currentDirectory() === btn.id) return;
+    goTo(`index/${btn.id}/${btn.id}`);
+    // const id = event ? event.currentTarget.id : currentDirectory();
+    // if (event && event.currentTarget.classList.contains('active')) return error('already active!');
+    // const url = (id === 'help') ? `/Join/assets/languages/help-${currentLang()}.html` : (id == 'privacy')? `/Join/assets/languages/privacy-${currentLang()}.html` : `/Join/assets/templates/index/${id.replace('_','-')}_template.html`;
+    // const content = $('#content');
+    // content.classList.add("loading");
+    // await content.includeTemplate(url);
+    // content.$(':scope > div').classList.add("o-none");
 
-    if (id in initFunctions) await initFunctions[id]();
-    if (currentDirectory() !== id) goTo(id);
-    content.LANG_load();
-    content.initMenus();
-    content.$(':scope > div').classList.remove("o-none");
-    setTimeout(()=>{
-        content.classList.remove('loading');
-    }, 100);
+    // if (id in initFunctions) await initFunctions[id]();
+    // if (currentDirectory() !== id) goTo(id);
+    // content.LANG_load();
+    // content.initMenus();
+    // content.$(':scope > div').classList.remove("o-none");
+    // setTimeout(()=>{
+    //     content.classList.remove('loading');
+    // }, 100);
 };
 
 const openAccountPanel = async () => {
@@ -84,7 +89,7 @@ const loadAccountPanelContent = async () => {
     if (template == "notifications") loadNotifications();
     if (template == "edit-account") initEditAccount();
     accountPanelContent.LANG_load();
-    $('#settings-content').initMenus();
+    accountPanelContent.initMenus();
 };
 
 const initEditAccount = () => {

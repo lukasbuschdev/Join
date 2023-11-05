@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="icon" href="/Join/assets/img/icons/logo.svg">
+
+    <link rel="stylesheet" href="/Join/style.css">
+    <link rel="stylesheet" href="/Join/index/index/settings.css">
+    <link rel="stylesheet" href="/Join/index/index/index.css">
+    <link rel="stylesheet" href="/Join/index/board/board.css">
+    <link rel="stylesheet" href="/Join/fonts/fonts.css">
+
+    <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <script src="/Join/js/prototype_extensions.js"></script>
+    <script src="/Join/js/websocket.js"></script>
+    <script src="/Join/js/base.class.js"></script>
+    <script src="/Join/js/account.class.js"></script>
+    <script src="/Join/js/user.class.js"></script>
+    <script src="/Join/js/task.class.js"></script>
+    <script src="/Join/js/board.class.js"></script>
+    <script src="/Join/js/utilities.js"></script>
+    <script src="/Join/js/storage.js"></script>
+    <script src="/Join/js/email.class.js"></script>
+    <script src="/Join/js/notify.class.js"></script>
+    <script src="/Join/js/mail_templates.js"></script>
+    <script src="/Join/js/language.js"></script>
+    <script src="/Join/assets/templates/index/notification_template.js"></script>
+
+    <script src="/Join/assets/templates/index/task_template.js"></script>
+    <script src="/Join/index/board/board.js"></script>
+    <script src="/Join/index/add_task/add_task.js"></script>
+    <script src="/Join/index/index/index.js"></script>
+
+
+    <script src="/Join/js/setup.js" defer></script>
+</head>
+<body onload="init('board')">
+
+    <nav include-Template="/Join/index/nav/nav.html"></nav>
+
+    <header include-Template="/Join/index/header/header.html"></header>
+
+    <div id="content">
+
+        <div id="board-wrapper">
+            <div id="board-header" class="row gap-35">
+                <h2 data-lang="board">Board</h2>
+                    <div id="search-task" class="inp-container gap-10 radius-10">
+                        <div class="inp-buttons row gap-10" style="flex-grow: 1;">
+                            <input type="text" placeholder="Find Task" data-lang-placeholder="find-task" oninput="searchTasks()">
+                            <div class="inp-buttons row gap-15">
+                                <div class="vertical-line"></div>
+                                <button class="grid-center" onclick="focusInput()">
+                                    <img src="/Join/assets/img/icons/loupe.svg" alt="">
+                                </button>
+                                <button class="grid-center" onclick="clearTaskSearch()">
+                                    <img src="/Join/assets/img/icons/close.svg" alt="" width="18" height="18">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                <button class="btn btn-primary btn-add-task txt-normal txt-700" onclick="addTaskModal()">
+                    <span data-lang="add-task">Add task</span>
+                </button>
+            </div>
+
+            <div id="tasks" class="shadow-container" data-shadow="ud/var(--clr-bg-light)/20px">
+
+                <div class="column gap-15">
+                    <div class="task-header">
+                        <h4 data-lang="to-do">To do</h4>
+                        <button class="btn btn-plus" onclick="addTaskModal()"></button>
+                    </div>
+                    <div id="to-do" data-lang-empty="no-tasks" data-type=""></div>
+                </div>
+
+                <div class="column gap-15">
+                    <div class="task-header">
+                        <h4 data-lang="in-progress">In Progress</h4>
+                        <button class="btn btn-plus" onclick="addTaskModal()"></button>
+                    </div>
+                    <div id="in-progress" data-lang-empty="no-tasks" data-type=""></div>
+                </div>
+
+                <div class="column gap-15">
+                    <div class="task-header">
+                        <h4 data-lang="awaiting-feedback">Awaiting Feedback</h4>
+                        <button class="btn btn-plus" onclick="addTaskModal()"></button>
+                    </div>
+                    <div id="awaiting-feedback" data-lang-empty="no-tasks" data-type=""></div>
+                </div>
+
+                <div class="column gap-15">
+                    <div class="task-header">
+                        <h4 data-lang="done">Done</h4>
+                        <button class="btn btn-plus" onclick="addTaskModal()"></button>
+                    </div>
+                    <div id="done" data-lang-empty="no-tasks" data-type=""></div>
+                </div>
+
+            </div>
+
+            <dialog id="add-task-modal" type="modal" class="big-modal">
+                <div include-template="/Join/index/add_task/add_task.html"></div>
+            </dialog>
+
+            <dialog id="fullscreen-task-modal" type="modal" class="big-modal" static="false">
+                <div id="fullscreen-task" class="column"></div>
+                <div id="edit-task" class="column d-none" data-shadow="ud/white/40px"></div>
+            </dialog>
+
+        </div>
+    </div>
+
+    <div include-template="/Join/index/account_panel/account_panel.html"></div>
+
+</body>
+</html>

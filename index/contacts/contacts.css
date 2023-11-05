@@ -146,7 +146,7 @@
 
 .contact-name button:first-of-type::before {
     content: '';
-    background: url(../assets/img/icons/plusBlue.svg);
+    background: url(/Join/assets/img/icons/plusBlue.svg);
     height: 15px;
     width: 15px;
     margin-right: 13px;

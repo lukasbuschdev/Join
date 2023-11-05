@@ -1,3 +1,7 @@
+body > div {
+    padding: 25px;
+}
+
 .privacy-container {
     padding: 60px 55px 130px;
     overflow-x: hidden;

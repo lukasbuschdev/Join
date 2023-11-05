@@ -20,7 +20,7 @@ const renderTasks = async (filter) => {
     
     tasksContainer.$$(':scope > div > div:last-child').for(container => container.innerHTML = "");
     const filteredTasks = (filter)
-    ? Object.values(tasks).filter(task => task.title.toLowerCase().includes(filter).toLowerCase() || task.description.toLowerCase().includes(filter).toLowerCase())
+    ? Object.values(tasks).filter(task => task.title.toLowerCase().includes(filter.toLowerCase()) || task.description.toLowerCase().includes(filter.toLowerCase()))
     : Object.values(tasks);
     filteredTasks.toReversed().for(task => $(`#${task.type}`).innerHTML += taskTemplate(task, filter));
     await tasksContainer.LANG_load();
@@ -194,7 +194,6 @@ const addDragAndDrop = () => {
     }, 200);
 
     const dragHandler = () => taskDragger(startingPosition)
-    task.setPointerCapture(event.pointerId);
     task.addEventListener('pointermove', dragHandler);
 
     document.addEventListener("pointerup", (event) => {
@@ -207,8 +206,9 @@ const addDragAndDrop = () => {
     }, { once: true });
 }
 
-function checkScroll({pageY}) {
-    const scrollDireciton = pageY < window.innerHeight * 0.3 ? -1 : pageY > window.innerHeight * 0.9 ? 1 : 0;
+function checkScroll({pageY}, task) {
+    const taskContainer = $('#tasks');
+    const scrollDireciton = pageY < window.innerHeight * 0.3 && taskContainer.scrollTop > 0 ? -1 : pageY > window.innerHeight * 0.9 && taskContainer.scrollTop < taskContainer.scrollHeight ? 1 : 0;
     if (scrollDireciton === 0) {
         if (window.taskScrollInterval) {
             log('stopping scroll!')
@@ -218,27 +218,28 @@ function checkScroll({pageY}) {
         return;
     }
     if (window.taskScrollInterval) return;
-    const taskContainer = $('#tasks');
     log("creating interval")
     window.taskScrollInterval = setInterval(()=> {
+        log(`scrolling ${scrollDireciton === 1 ? 'down' : 'up'}`)
         taskContainer.scrollBy(0, 2 * scrollDireciton);
+        task.updatePosition(0, 2 * scrollDireciton);
     }, 20);
 }
 
 const taskDragger = throttle(({ startingX, startingY }) => {
     const task = event.currentTarget;
-    if (Math.abs(event.pageX - startingX) > 10 || Math.abs(event.pageY - startingY) > 10) waitForMovement = false;
+    if (Math.abs(event.pageX - startingX) + Math.abs(event.pageY - startingY) > 10) waitForMovement = false;
     if (waitForMovement) return;
 
     if (taskNotActive) {
         task.classList.add('active');
         taskNotActive = false;
     };
+    checkScroll(event, task);k
 
     task.style.setProperty('--x', event.pageX - startingX);
     task.style.setProperty('--y', event.pageY - startingY);
 
-    checkScroll(event);
     checkPlaceholder(event);
 }, 10);
 
@@ -280,6 +281,10 @@ const taskDropper = ({ pageX, pageY }, task, { offsetX, offsetY }) => {
         task.classList.remove('drop-transition');
     }, { once: true });
     task.updatePosition();
+    if (window.taskScrollInterval) {
+        clearInterval(window.taskScrollInterval);
+        delete window.taskScrollInterval;
+    }
 }
 
 const changeTaskType = async (taskElement, newType) => {

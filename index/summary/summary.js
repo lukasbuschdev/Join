@@ -152,7 +152,7 @@ const createNewBoard = async () => {
     $('#add-board').closeModal();
     notification('board-added');
     createBoardNotification(newBoard, collaborators);
-    loadContent();
+    window.location.href = window.location.href;
 };
 
 const createBoardNotification = ({name, id}, collaborators) => {

@@ -1,11 +1,16 @@
 // let directories = [];
-const currentDirectory = () => window.location.pathname.split('/').at(-1).replace('_','-');
+const currentDirectory = () => window.location.pathname.split('/').at(-1).split('.')[0]
+
 const goTo = (directory, options) => {
-    const search = options?.search ?? location.search;
-    const reroute = options?.reroute ?? false; 
-    const newUrl = `/Join/${directory.replace('-', '_')}${search}`;
-    if (reroute) location.href = newUrl;
-    else history.pushState(directory, '', newUrl);
+    const url = `${window.location.origin}/Join/${directory}.html${(options?.search ?? location.search)}`
+    window.location.href = url;
+    // const search = options?.search ?? location.search;
+    // const reroute = options?.reroute ?? false;
+    // const subDirectory = (directory === "login" || directory === "signup" || directory === "create_account" || directory === "forgot_password" || directory === "help" || directory === "privacy") ? 'init' : 'index';
+    // const newUrl = `/Join/${subDirectory}/${directory.replace('-', '_')}.html${search}`;
+    // log(newUrl)
+    // if (reroute) location.href = newUrl;
+    // else history.pushState(directory, '', newUrl);
 }
 const currentUserId = () => (searchParams().get('uid') == null) ? undefined : `${searchParams().get('uid')}`;
 
@@ -68,6 +73,6 @@ const renderColor = (userField, color) => {
     userField.style.setProperty('--user-clr', color);
 };
 
-initInactivity();
+// initInactivity();
 $('body').initMenus();
 LANG_load();

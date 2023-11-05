@@ -94,15 +94,14 @@ const includeTemplates = async () => {
   $$('[include-template]').forEach(
     async (templateContainer) => await includeTemplate(templateContainer)
   );
-  
-  LANG_load();
   return;
 }
 
 const includeTemplate = async (templateContainer) => {
   const url = templateContainer.getAttribute('include-template');
   const template = await getTemplate(url);
-  templateContainer.innerHTML = template;
+  templateContainer.outerHTML = template;
+  await templateContainer.LANG_load();
   return;
 }
 
