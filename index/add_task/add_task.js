@@ -1,6 +1,7 @@
 async function initAddTask() {
     await getBoards();
     renderBoardIds();
+    renderDate();
     $('.add-task-card').LANG_load();
     resetArrays();
 }
@@ -72,12 +73,7 @@ function renderCategories(selectedBoard) {
 function renderAssignToContacts() {
     const drpContainer = $('#drp-collab-container');
     const assignToUser = document.createElement('div');
-    assignToUser.innerHTML = /*html*/`
-        <div class="drp-option" data-id="${USER.id}" onclick="selectCollaborator()">
-            <div class="user-img-container grid-center" style="--user-clr: ${USER.color}"><span>${USER.name.slice(0, 2).toUpperCase()}</span><img src="${USER.img}"></div>
-            <span data-lang="assigned-you"></span>
-        </div>
-    `;
+    assignToUser.innerHTML = renderSelfToAssign();
 
     drpContainer.innerHTML = '';
     assignToUser.LANG_load();
@@ -89,15 +85,34 @@ function renderAssignToContacts() {
         if (!collaborator) return;
 
         const collaboratorOption = document.createElement('div');
-        collaboratorOption.innerHTML = /*html*/ `
-            <div class="drp-option" data-id="${collaboratorId}" onclick="selectCollaborator()">
-                <div class="user-img-container grid-center" style="--user-clr: ${collaborator.color}"><span>${collaborator.name.slice(0, 2).toUpperCase()}</span><img src="${collaborator.img}"></div>
-                <span>${collaborator.name}</span>
-            </div>
-        `;
+        collaboratorOption.innerHTML = renderCollaboratorsToAssign(collaborator);
 
         drpContainer.append(collaboratorOption.children[0]);
     });
+}
+
+function renderSelfToAssign() {
+    return /*html*/`
+        <div class="drp-option" data-id="${USER.id}" onclick="selectCollaborator()">
+            <div class="user-img-container grid-center" style="--user-clr: ${USER.color}">
+                <span>${USER.name.slice(0, 2).toUpperCase()}</span>
+                <img src="${USER.img}">
+            </div>
+            <span data-lang="assigned-you"></span>
+        </div>
+    `;
+}
+
+function renderCollaboratorsToAssign(collaborator) {
+    return /*html*/ `
+        <div class="drp-option" data-id="${collaborator.id}" onclick="selectCollaborator()">
+            <div class="user-img-container grid-center" style="--user-clr: ${collaborator.color}">
+                <span>${collaborator.name.slice(0, 2).toUpperCase()}</span>
+                <img src="${collaborator.img}">
+            </div>
+            <span>${collaborator.name}</span>
+        </div>
+    `;
 }
 
 function selectCollaborator() {
@@ -242,6 +257,19 @@ function noCategorySelected() {
 function categorySelected() {
     document.getElementById('select-a-category').classList.add('error-inactive');
     document.getElementById('category-drp-wrapper').classList.remove('input-warning');
+}
+
+function getFormattedDate() {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = today.getFullYear();
+  
+    return `${day}/${month}/${year}`;
+}
+
+function renderDate() {
+    $('#date').value = getFormattedDate();
 }
 
 function getDueDate() {
