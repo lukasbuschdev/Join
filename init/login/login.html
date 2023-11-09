@@ -43,7 +43,7 @@
             <form novalidate>
                 <div class="inp-wrapper" id="email">
                     <div class="inp-container radius-10">
-                        <input type="email" required name="" class="txt-normal" placeholder="Email or Username" data-lang-placeholder="email-or-username">
+                        <input type="email" required name="" class="txt-normal" placeholder="Email or Username" data-lang-placeholder="email-or-username" onkeydown="checkKeys()">
                         <div class="grid-center">
                             <img src="/Join/assets/img/icons/mail.svg" alt="">
                         </div>
@@ -55,7 +55,7 @@
         
                 <div class="inp-wrapper" id="password">
                     <div class="inp-container radius-10">
-                        <input type="password" required name="" class="txt-normal" placeholder="Password" data-lang-placeholder="password">
+                        <input type="password" required name="" class="txt-normal" placeholder="Password" data-lang-placeholder="password" onkeydown="checkKeys()">
                         <button class="grid-center" onclick="togglePasswordVisibility()" tabindex="-1">
                             <img src="/Join/assets/img/icons/hide.png" class="eye">
                         </button>

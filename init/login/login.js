@@ -37,3 +37,11 @@ const automaticLogin = async () => {
     const user = await getUserByInput(cred.id);
     user.logIn();
 }
+
+function checkKeys () {
+    if (!(event.key === "Enter")) return;
+    event.preventDefault();
+    const submitBtn = $('button[type="submit"]');
+
+    if (!$('form input:placeholder-shown')) submitBtn.click();
+}
