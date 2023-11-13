@@ -133,20 +133,10 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     --outline-thickness: 0px;
 }
 
-.close-btn {
-    position: absolute;
-    height: 28px;
-    width: 28px;
-    border-radius: 999px;
-    top: 26px;
-    right: 40px;
-    transition: all var(--transition-fast);
-}
-
 @media (hover: hover) {
     .close-btn:hover {
-    background-color: #e3eeff;
-}
+        background-color: #e3eeff;
+    }
 }
 
 .close {
