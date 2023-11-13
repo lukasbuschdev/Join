@@ -11,14 +11,21 @@ class Email {
     }
 
     send = async () => {
-        const payload = {
-            recipient: this.recipient.email,
-            message: this.message,
-            subject: this.subject
-        };
-        return (await fetch(`/Join/php/mailto.php`, {
-            method: 'POST',
-            body: JSON.stringify(payload)
-        })).text();
+        const mailOptions = {
+            to: this.recipient.email,
+            subject: this.subject,
+            html: this.message
+        }
+        SOCKET.emit('mail', mailOptions);
+        return new Promise((resolve, reject) => {
+            SOCKET.on('mailSent', () => {
+                console.log(`Mail sent!`)
+                resolve();
+            });
+            SOCKET.on('mailFailed', () => {
+                console.log(`Mail failed!`)
+                reject()
+            })
+        })
     }
 }

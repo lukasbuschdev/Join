@@ -13,22 +13,23 @@ const initPrivacy = () => {
 
 const validateInputs = async ({ name, email, password, confirmPassword }) => {
 
-    const nameValidity = validName(name);
+    const nameValidity = invalidName(name);
     const nameInUse = !!(await getUserByInput(name));
-    const emailValidity = validEmail(email);
+    const emailValidity = invalidEmail(email);
     const emailInUse = !!(await getUserByInput(email));
-    const passwordValidity = validPassword(password);
+    const passwordValidity = invalidPassword(password);
     const differentPasswords = password !== confirmPassword;
-    const privacyAccepted = $('[type="checkbox"]').checked;
+    const privacyAccepted = !($('[type="checkbox"]').checked);
+    log(nameInUse)
 
     throwErrors(
-        { identifier: 'invalid-name', bool: !nameValidity },
+        { identifier: 'invalid-name', bool: nameValidity },
         { identifier: 'name-in-use', bool: nameInUse },
-        { identifier: 'invalid-email', bool: !emailValidity },    
+        { identifier: 'invalid-email', bool: emailValidity },    
         { identifier: 'email-in-use', bool: emailInUse },    
-        { identifier: 'invalid-password', bool: !passwordValidity },
+        { identifier: 'invalid-password', bool: passwordValidity },
         { identifier: 'different-passwords', bool: differentPasswords },
-        { identifier: 'accept-privacy', bool: !privacyAccepted }
+        { identifier: 'accept-privacy', bool: privacyAccepted }
     );
 
     if (nameValidity == true &&

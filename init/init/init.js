@@ -16,13 +16,13 @@ const isSessionExpired = () => {
     }
 }
 
-const validName = (nameInput) => /^(?=.{4,20}$)(?![_])(?!.*  )(?!.*[_]{2})[a-zA-Z0-9_ ]+(?<![_])$/.test(nameInput);
+const invalidName = (nameInput) => !(/^(?=.{4,20}$)(?![_])(?!.*  )(?!.*[_]{2})[a-zA-Z0-9_ ]+(?<![_])$/.test(nameInput));
 
-const validEmail = (emailInput) => /^(?=[a-zA-Z0-9])(?!.*[^a-zA-Z0-9]{2})[a-zA-Z0-9_!#$%&'*+\/=?`{|}~^.-]{0,63}[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9.-]*\.\w{2,3}$/.test(emailInput);
+const invalidEmail = (emailInput) => !(/^(?=[a-zA-Z0-9])(?!.*[^a-zA-Z0-9]{2})[a-zA-Z0-9_!#$%&'*+\/=?`{|}~^.-]{0,63}[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9.-]*\.\w{2,3}$/.test(emailInput));
 
-const validPassword = (passwordInput) => {
+const invalidPassword = (passwordInput) => {
     const passwordRegex = new RegExp(/^(?=.{8,}$)(?=.*?[0-9])(?=.*?[a-z])(?=.*?[A-Z]).+/, "g"); // at least one lowercase and one uppercase letter and one digit
-    return passwordRegex.test(passwordInput);
+    return !(passwordRegex.test(passwordInput));
 }
 
 const validPhone = (phoneInput) => /^(?!00)0?\d{3}\s?(?!.*[\s])\d+/.test(phoneInput);
@@ -60,21 +60,10 @@ function toggleLangSelection() {
     $('.language-login').classList.toggle('active');
 }
 
-async function tst () {
-    const res = await fetch('https://api.postmarkapp.com/email', {
-        method: 'POST',
-        body: {
-            "From": "Join <noreply.info.join@gmail.com>",
-            "To": "musician.tarik@gmx.de",
-            "Subject": "tst",
-            "TextBody": "test message",
-            "MessageStream": "outbound"
-        },
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "X-Postmark-Server-Token": "POSTMARK_API_TEST"
-        }
-    });
-    log(res)
+function checkKeys () {
+    if (!(event.key === "Enter")) return;
+    event.preventDefault();
+    const submitBtn = $('button[type="submit"]');
+
+    if (!$('form input:placeholder-shown')) submitBtn.click();
 }

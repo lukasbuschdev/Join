@@ -34,12 +34,13 @@ const addNavToggleBtns = () => {
 const throwErrors = (...params) => {
   params.for(({identifier, bool}) => {
       const errorContainer = $(`#${identifier}`);
-      const inputWrapper = errorContainer.closest('.inp-wrapper')?.$('.inp-container');
-
-      if (identifier == "invalid-name") log(inputWrapper, bool);
+      const inputContainer = errorContainer.closest('.inp-wrapper')?.$('.inp-container');
+      log (identifier, bool)
 
       errorContainer.classList.toggle('active', bool);
-      inputWrapper?.classList.toggle('active', !!bool);
+      const allErrors = errorContainer.parentElement.$$('.error');
+      if (allErrors?.length > 1 && allErrors[0].classList.includes('active') && !bool) return log("aaa");
+      inputContainer?.classList.toggle('active', bool);
   });
 }
 

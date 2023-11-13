@@ -45,7 +45,7 @@
             <form novalidate>
                 <div class="inp-wrapper" id="name">
                     <div class="inp-container radius-10">
-                        <input type="text" name="" class="txt-normal" placeholder="Name" data-lang-placeholder="name">
+                        <input type="text" name="" class="txt-normal" placeholder="Name" data-lang-placeholder="name" onkeydown="checkKeys()">
                         <div class="grid-center">
                             <img src="/Join/assets/img/icons/name.svg" alt="">
                         </div>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="inp-wrapper" id="email">
                     <div class="inp-container radius-10">
-                        <input type="email" name="" class="txt-normal" placeholder="Email" data-lang-placeholder="email">
+                        <input type="email" name="" class="txt-normal" placeholder="Email" data-lang-placeholder="email" onkeydown="checkKeys()">
                         <div class="grid-center">
                             <img src="/Join/assets/img/icons/mail.svg" alt="">
                         </div>
@@ -73,7 +73,7 @@
                 </div>
                 <div class="inp-wrapper" id="password">
                     <div class="inp-container radius-10">
-                        <input type="password" name="" class="txt-normal" placeholder="Password" data-lang-placeholder="password" autocomplete="new-password">
+                        <input type="password" name="" class="txt-normal" placeholder="Password" data-lang-placeholder="password" autocomplete="new-password" onkeydown="checkKeys()">
                         <button class="grid-center" onclick="togglePasswordVisibility()" tabindex="-1">
                             <img src="/Join/assets/img/icons/hide.png" class="eye">
                         </button>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="inp-wrapper" id="confirm-password">
                     <div class="inp-container radius-10">
-                        <input type="password" name="" class="txt-normal" placeholder="Password" data-lang-placeholder="confirm-password" autocomplete="new-password">
+                        <input type="password" name="" class="txt-normal" placeholder="Password" data-lang-placeholder="confirm-password" autocomplete="new-password" onkeydown="checkKeys()">
                         <button class="grid-center" onclick="togglePasswordVisibility()" tabindex="-1">
                             <img src="/Join/assets/img/icons/hide.png" class="eye">
                         </button>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="inp-wrapper" id="privacy-wrapper">
                     <div class="row gap-8">
-                        <input type="checkbox">
+                        <input type="checkbox" onkeydown="checkKeys()">
                         <span style="color: var(--clr-placeholder);" data-lang="register-privacy"></span>
                     </div>
                     <div class="error" id="accept-privacy" style="text-align: center;">

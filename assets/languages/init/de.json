@@ -20,7 +20,7 @@
     
     "email-or-username-not-found": "Email oder Benutzer nicht gefunden!",
     "wrong-password": "Falsches Passwort!",
-    "invalid-name": "Ungültiger Name",
+    "invalid-name": "4 - 10 Zeichen, keine Sonderzeichen außer \"_\"",
     "name-in-use": "Name bereits vergeben!",
     "invalid-email": "Ungültige Email",
     "email-in-use": "Email bereits vergeben!",
