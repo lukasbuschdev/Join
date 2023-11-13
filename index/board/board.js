@@ -235,7 +235,7 @@ const taskDragger = throttle(({ startingX, startingY }) => {
         task.classList.add('active');
         taskNotActive = false;
     };
-    checkScroll(event, task);k
+    checkScroll(event, task);
 
     task.style.setProperty('--x', event.pageX - startingX);
     task.style.setProperty('--y', event.pageY - startingY);
