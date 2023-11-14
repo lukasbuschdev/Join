@@ -57,8 +57,10 @@ const signupInit = async () => {
     }
 
     if (await validateInputs(dataInput) == false) return;
+
+    const hash = await hashInputValue(dataInput.password);
+    dataInput.password = hash;
     const user = new User(dataInput);
-    initWebsocket(user.id);
     user.initVerification();
 }
 

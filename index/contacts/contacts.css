@@ -217,10 +217,25 @@
 }
 
 .add-contact-container {
+    position: relative;
+    display: flex;
+    align-items: center;
     height: 100%;
     width: 100%;
 }
 
+#add-contact-modal .close-btn {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    height: 28px;
+    width: 28px;
+    border-radius: 999px;
+    top: 26px;
+    right: 40px;
+    transition: all var(--transition-fast);
+    z-index: 2;
+}
 
 
 /* CONTACT THEME (LEFT SIDE) */
@@ -313,9 +328,9 @@
 
 @media (hover: hover) {
     .search-result-contact:hover {
-    background: linear-gradient(180deg, #f9f9f9 0%, #f0f0f0 100%);
-    cursor: pointer;
-}
+        background: linear-gradient(180deg, #f9f9f9 0%, #f0f0f0 100%);
+        cursor: pointer;
+    }   
 }
 
 .search-result-contact .user-img-container {
@@ -350,6 +365,10 @@
 
 .contact-img.user-img-container h3 {
     font-size: 0.9rem;
+}de
+
+.btn-contact {
+    z-index: 2;
 }
 
 
@@ -360,6 +379,10 @@
 
     .contacts-header-container > div span {
         font-size: 1.5rem;
+    }
+
+    .contact-name > span {
+        font-size: 2.5rem;
     }
 }
 
@@ -424,9 +447,9 @@
     }
 
     .contacts-header-container {
-        flex-direction: column;
+        flex-direction: column !important;
+        align-items: flex-start !important;
         gap: 0;
-        align-items: flex-start;
     }
 
     .contacts-header-container > div p {
@@ -436,17 +459,40 @@
     .edit-contact {
         height: 30px;
     }
+
+    #add-contact-modal .close-btn {
+        height: 35px;
+        width: 35px;
+    }
+
+    #add-contact-modal .close-btn img {
+        filter: unset;
+        height: 32px;
+        width: 32px;
+    }
+
+    .img-name {
+        gap: 30px;
+    }
+
+    .contact-name > span {
+        font-size: 2.3rem;
+    }
 }
 
 
 
 @media (max-width: 1000px) {
     .contact {
-        gap: 30px;
+        gap: 15px;
+    }
+
+    .img-name {
+        gap: 15px;
     }
 
     .header-contact .user-img-container {
-        height: 100px;
+        height: 90px;
     }
 
     .contact-email {
@@ -455,6 +501,10 @@
 
     .contact-name > div {
         gap: 10px;
+    }
+
+    #selected-contact-container .user-img-container h1 {
+        font-size: 2.5rem;
     }
 }
 
@@ -469,7 +519,7 @@
         font-size: 3rem;
     }
 
-    .contacts-header-container span {
+    .contacts-header-container div span {
         font-size: 1.4rem;
     }
 
@@ -493,10 +543,6 @@
         gap: 10px;
     }
 
-    .contact .contact-name {
-        font-size: 1.625rem;
-    }
-
     #notifications-container h1 {
         font-size: 2.5rem;
     }
@@ -507,6 +553,10 @@
 @media (max-width: 800px) {
     #add-contact-modal {
         height: 85%;
+    }
+
+    #add-contact-modal .close-btn {
+        right: 5%;
     }
     
     #contacts-container {
@@ -536,6 +586,10 @@
         justify-content: center;
     }
 
+    .contact {
+        gap: 30px;
+    }
+
     .contact-email {
         display: flex;
     }
@@ -549,6 +603,10 @@
         gap: 30px;
     }
 
+    .contact .contact-name {
+        font-size: 1.625rem;
+    }
+
     .close-inactive {
         display: grid;
     }
@@ -556,6 +614,18 @@
     .absolute {
         bottom: 0;
         margin-bottom: 15px;
+    }
+
+    .close-btn {
+        display: grid;
+        place-items: center;
+        position: absolute;
+        height: 28px;
+        width: 28px;
+        border-radius: 999px;
+        top: 26px;
+        right: 40px;
+        transition: all var(--transition-fast);
     }
 }
 

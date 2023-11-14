@@ -109,12 +109,12 @@ const getInput = debounce(async function () {
     let input = $('#input-name');
     const userId = currentUserId();
     $('#user-search-result').textContent.trim();
-
+    
     if(input.value.length >= 3) {
         const allUsers = ALL_USERS;
-    
+
         const filteredUsers = Object.values(allUsers).filter(
-            user => (user.name.toLowerCase().includes(input.value.toLowerCase()) && !(userId == user.id) && !(USER.contacts.includes(`${user.id}`)))
+            user => ((user.name.toLowerCase().includes(input.value.toLowerCase())) && !(userId == user.id) && !(USER.contacts.includes(`${user.id}`)))
         );
     
         const sortedUsers = filteredUsers.sort(

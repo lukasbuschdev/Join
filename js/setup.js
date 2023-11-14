@@ -1,3 +1,12 @@
+window.$ = function (selector) {
+  return this.document.querySelector(selector)
+};
+window.$$ = function (selector) {
+  return this.document.querySelectorAll(selector)
+};
+
+
+
 // let directories = [];
 const currentDirectory = () => window.location.pathname.split('/').at(-1).split('.')[0]
 
