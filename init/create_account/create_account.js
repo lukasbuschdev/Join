@@ -1,5 +1,6 @@
 const initCreateAccount = async () => {
     renderColorWheel();
+    initWebsocket(currentUserId());
     const { name } = await getCurrentUser();
     $('.user-img-container h1').innerText = name.slice(0, 2).toUpperCase();
     $('#user-name').innerText = name;
@@ -11,22 +12,39 @@ const submitUpload = async () => {
     if (!img) return;
     const uid = currentUserId();
 
-    formData.append('user-img', img);
-    formData.append('uid', uid);
-    formData.append('suffix', Date.now().toString().slice(-4));
+    const [fileType, extension] = img.type.split('/');
+    if (fileType !== "image") return error(`file is not an image!`);
+    const maxSize = 1024 * 1024;
+    if (img.size > maxSize) return error(`file is ${img.size - maxSize} Bytes too big!`);
+
+    SOCKET.emit('uploadImg', img, extension);
+
+    const imageSrc = await new Promise(resolve => {
+        SOCKET.on('imgId', async id => {
+            const imageSrc = `https://drive.google.com/uc?export=view&id=${id}`;
+            await REMOTE_setData(`users/${uid}`, {img: imageSrc});
+            resolve(imageSrc);
+        });
+    });
+
+    // formData.append('user-img', img);
+    // formData.append('uid', uid);
+    // formData.append('suffix', Date.now().toString().slice(-4));
     
-    const {imageSrc} = await (await fetch('/Join/php/uploadImg.php', {
-        method: 'POST',
-        body: formData
-    })).json();
+    // const {imageSrc} = await (await fetch('/Join/php/uploadImg.php', {
+    //     method: 'POST',
+    //     body: formData
+    // })).json();
 
     $('.account.user-img-container').dataset.img = 'true';
     $('[type="file"]').value = '';
-    REMOTE_setData(`users/${uid}`, {img: imageSrc});
-    if (typeof USER !== undefined) {
-        USER.img = imageSrc;
-        renderUserData();
-    }
+
+    $('.user-img').src = imageSrc;
+    // REMOTE_setData(`users/${uid}`, {img: imageSrc});
+    // if (typeof USER !== undefined) {
+    //     USER.img = imageSrc;
+    //     renderUserData();
+    // }
 }
 
 const removeUpload = async () => {
@@ -50,10 +68,11 @@ const removeUpload = async () => {
 
 const finishSetup = async () => {
     event.preventDefault();
+
     const phoneInput = $('#phone input').value;
     const phoneValidity = validPhone(phoneInput);
-    
     throwErrors({ identifier: 'invalid-phone-number', bool: (phoneInput == true && !phoneValidity) });
+    
     if (phoneValidity == false) return
 
     const user = await getCurrentUser(true);

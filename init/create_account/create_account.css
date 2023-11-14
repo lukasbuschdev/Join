@@ -32,7 +32,7 @@ label[for="choose-image"],
 }
 
 label[for="choose-image"] {
-    background-image: url(../assets/img/icons/edit.svg);
+    background-image: url(/Join/assets/img/icons/edit.svg);
     inset: auto 0 0 auto;
 }
 
@@ -49,7 +49,7 @@ label[for="choose-image"] {
 }
 
 #user-color {
-    background-image: url(../assets/img/icons/color_wheel.svg);
+    background-image: url(/Join/assets/img/icons/color_wheel.svg);
     background-size: 100% 100%;
     transition-property: filter;
     inset: 0 0 auto auto;
@@ -64,12 +64,12 @@ label[for="choose-image"] {
 }
 
 #accept-user-color {
-    background-image: url(../assets/img/icons/check.svg);
+    background-image: url(/Join/assets/img/icons/check.svg);
     display: none;
 }
 
 #user-color.active {
-    background: url(../assets/img/icons/btn_cancel_white.svg) var(--clr-blue) no-repeat center;
+    background: url(/Join/assets/img/icons/btn_cancel_white.svg) var(--clr-blue) no-repeat center;
     background-size: 50%;
     transition-property: background-color;
 }

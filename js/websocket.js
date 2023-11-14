@@ -1,4 +1,5 @@
 const initWebsocket = (uid) => {
+    log('websocket init')
     SOCKET = io("wss://join-websocket.onrender.com", {
         query: {
             uid
@@ -19,10 +20,7 @@ const initWebsocket = (uid) => {
         checkNotifications();
     });
 
-    SOCKET.on('imgId', id => {
-        console.log(Date.now() - window.startTime);
-        REMOTE_setData(`users/${uid}`, {img: `https://drive.google.com/uc?export=view&id=${id}`});
-    })
+    
 }
 
 const sendMessage = (recipients) => {

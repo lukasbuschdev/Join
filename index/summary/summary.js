@@ -40,29 +40,31 @@ const boardSelectionTemplate = ({name, id, owner}) => {
         </button>`;
 }
 
-const renderBoard = () => {
-    const id = event.currentTarget.dataset.id;
-    SELECTED_BOARD = BOARDS[id];
-    const {tasks: tasksObj, owner} = SELECTED_BOARD;
+function getTaskStats(tasksObj) {
     const tasks = Object.values(tasksObj);
-    const tasksInBoard = tasks.length;
-    const tasksInProgress = tasks.filter(({type}) => type == "in-progress").length;
-    const tasksAwaitingFeedback = tasks.filter(({type}) => type == "awaiting-feedback").length;
-    const tasksToDo = tasks.filter(({type}) => type == "to-do").length;
-    const tasksDone = tasks.filter(({type}) => type == "done").length;
-    const tasksUrgent = tasks.filter(({priority}) => priority == "urgent").length;
-    
     const now = new Date();
-    const upcomingDeadline = (tasksInBoard) ? tasks
-        .map(({dueDate}) => {
-            const [day, month, year] = dueDate.split('/');
-            return new Date(year, Number(month) - 1, day);
-        })
-        .filter(date => date > now)
-        .sort()
-        .at(0)
-        ?.toLocaleDateString(currentLang(), {year: 'numeric', month: 'long', day: 'numeric'}) || undefined : undefined;
+    return {
+        tasksInBoard: tasks.length,
+        tasksInProgress: tasks.filter(({type}) => type == "in-progress").length,
+        tasksAwaitingFeedback: tasks.filter(({type}) => type == "awaiting-feedback").length,
+        tasksToDo: tasks.filter(({type}) => type == "to-do").length,
+        tasksDone: tasks.filter(({type}) => type == "done").length,
+        tasksUrgent: tasks.filter(({priority}) => priority == "urgent").length,
+        upcomingDeadline: (tasks.length) ? tasks
+            .map(({dueDate}) => {
+                const [day, month, year] = dueDate.split('/');
+                return new Date(year, Number(month) - 1, day);
+            })
+            .filter(date => date > now)
+            .sort()
+            .at(0)
+            ?.toLocaleDateString(currentLang(), {year: 'numeric', month: 'long', day: 'numeric'}) || undefined : undefined
+    }
+}
+
+function setBoardButtons({tasksInBoard, tasksInProgress, tasksAwaitingFeedback, tasksUrgent, upcomingDeadline, tasksToDo, tasksDone}) {
     const boardButtons = $$('#summary-data button');
+    
     boardButtons[0].$('h1').innerText = tasksInBoard;
     boardButtons[1].$('h1').innerText = tasksInProgress;
     boardButtons[2].$('h1').innerText = tasksAwaitingFeedback;
@@ -73,10 +75,21 @@ const renderBoard = () => {
     boardButtons[5].$('h1').innerText = tasksDone;
     boardButtons.for(button => button.onclick = () => $('nav #board').click());
     $('#summary-selection').classList.remove('active');
-    SESSION_setData('activeBoard', Number(id));
+}
+
+
+const renderBoard = () => {
+    const id = event.currentTarget.dataset.id;
+    SELECTED_BOARD = BOARDS[id];
+    const {tasks: tasksObj, owner} = SELECTED_BOARD;
     
+    const taskStats = getTaskStats(tasksObj)  ;  
+    SESSION_setData('activeBoard', Number(id));
+
     if (owner == USER.id) renderBoardEditButton(id);
     else $('#board-title .circle')?.remove();
+
+    setBoardButtons(taskStats);
 
     const summaryHeader = $('.summary-header h2');
     delete summaryHeader.dataset.lang;

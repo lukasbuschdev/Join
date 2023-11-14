@@ -15,7 +15,7 @@ async function LANG_load (lang = currentLang()){
     const dir = currentDirectory();
     if (dir == 'signup' ||
         dir == 'login' ||
-        dir == 'create-account' ||
+        dir == 'create_account' ||
         dir == 'forgot_password' ||
         dir == 'verify_account' ||
         dir == 'reset_password') langDirectory = 'init';
