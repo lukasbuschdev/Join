@@ -83,9 +83,10 @@ const openAccountPanel = async () => {
 const loadAccountPanelContent = async () => {
     const btn = event.currentTarget;
     const template = btn.id.slice(0, -4);
-    const templatePath = `/Join/assets/templates/account/${template}.html`;
+    const url = `/Join/assets/templates/account/${template}.html`;
     const accountPanelContent = $('#account-panel-content');
-    await accountPanelContent.includeTemplate(templatePath);
+
+    await accountPanelContent.includeTemplate({url, replace: false});
     if (template == "notifications") loadNotifications();
     if (template == "edit-account") initEditAccount();
     accountPanelContent.LANG_load();

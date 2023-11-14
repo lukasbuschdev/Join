@@ -72,12 +72,12 @@ HTMLElement.prototype.on = function (eventType, callback, options = {}) {
     this.addEventListener(eventType, cb = (event) => boundCb(remove, event), options)
 }
 
-HTMLElement.prototype.includeTemplate = async function(url = this.getAttribute('include-template') || '') {
-    if (!url) return;
-    const template = await (await fetch(url)).text();
+HTMLElement.prototype.includeTemplate = async function({url = this.getAttribute('include-template') || '', replace = true} = {}) {
+    let template = await (await fetch(url)).text();
     this.innerHTML = template;
+    if (replace) this.outerHTML = template;
+    else this.innerHTML = template;
     shadowObservers = {};
-    this.$$('[data-shadow]').for(scrollContainer => scrollContainer.addScrollShadow());
 }
 
 HTMLElement.prototype.initMenus = function () {
@@ -121,7 +121,6 @@ HTMLDialogElement.prototype.openModal = function () {
     if (this.classList.contains('dlg-notification')) {
         this.showNotification();
     };
-    this.$$('[data-shadow]')?.for(scrollContainer => scrollContainer.addScrollShadow());
     this.initMenus();
     return this.LANG_load();
 }
@@ -150,52 +149,52 @@ HTMLDialogElement.prototype.showNotification = function () {
 
 let shadowObservers = {};
 
-HTMLElement.prototype.addScrollShadow = function () {
-    if (!this.classList.contains('shadow-container') && !this.$('.shadow-container')) return;
-    const [direction, color, thickness] = this.dataset.shadow.split('/');
-    const shadowWrapper = document.createElement('div');
-    shadowWrapper.classList.add('scroll-shadow');
-    shadowWrapper.classList.add(direction);
-    shadowWrapper.style.setProperty('--direction', (direction == "ud") ? 'to bottom' : 'to right');
-    shadowWrapper.style.setProperty('--clr', color);
-    shadowWrapper.style.setProperty('--thickness', thickness);
-    shadowWrapper.innerHTML = this.outerHTML;
-    this.replaceWith(shadowWrapper);
-    shadowWrapper.addScrollShadowObserver();
-};
+// HTMLElement.prototype.addScrollShadow = function () {
+//     if (!this.classList.contains('shadow-container') && !this.$('.shadow-container')) return;
+//     const [direction, color, thickness] = this.dataset.shadow.split('/');
+//     const shadowWrapper = document.createElement('div');
+//     shadowWrapper.classList.add('scroll-shadow');
+//     shadowWrapper.classList.add(direction);
+//     shadowWrapper.style.setProperty('--direction', (direction == "ud") ? 'to bottom' : 'to right');
+//     shadowWrapper.style.setProperty('--clr', color);
+//     shadowWrapper.style.setProperty('--thickness', thickness);
+//     shadowWrapper.innerHTML = this.outerHTML;
+//     this.replaceWith(shadowWrapper);
+//     shadowWrapper.addScrollShadowObserver();
+// };
 
-HTMLElement.prototype.addScrollShadowObserver = function () {
-    if (!this.classList.contains('scroll-shadow')) return error('not a srcoll-shadow container!');
-    const scrollContainer = this.$('.shadow-container');
-    const newId = Object.values(shadowObservers).length;
+// HTMLElement.prototype.addScrollShadowObserver = function () {
+//     if (!this.classList.contains('scroll-shadow')) return error('not a srcoll-shadow container!');
+//     const scrollContainer = this.$('.shadow-container');
+//     const newId = Object.values(shadowObservers).length;
 
-    this.dataset.observerId = newId;
-    const intersectionObserver = new IntersectionObserver((entries) => {
-        entries.for(({target, isIntersecting}) => {
-            if (!target.previousElementSibling) this.style.setProperty('--shadow-before', (isIntersecting) ? '0' : '1');
-            if (!target.nextElementSibling) this.style.setProperty('--shadow-after', (isIntersecting) ? '0' : '1');
-        });
-    }, {root: scrollContainer.parentElement, threshold: .99});
-    shadowObservers[newId] = intersectionObserver;
+//     this.dataset.observerId = newId;
+//     const intersectionObserver = new IntersectionObserver((entries) => {
+//         entries.for(({target, isIntersecting}) => {
+//             if (!target.previousElementSibling) this.style.setProperty('--shadow-before', (isIntersecting) ? '0' : '1');
+//             if (!target.nextElementSibling) this.style.setProperty('--shadow-after', (isIntersecting) ? '0' : '1');
+//         });
+//     }, {root: scrollContainer.parentElement, threshold: .99});
+//     shadowObservers[newId] = intersectionObserver;
 
-    const observe = (target) => {
-        const observer = shadowObservers[this.dataset.observerId];
-        observer?.disconnect();
-        const children = [...target.children]
-        if (children.length == 0) return;
-        const targets = [children[0]];
-        if (children.length > 1) {
-            targets.push(children.at(-1));
-        }
-        targets.for(container => observer.observe(container));
-    }
+//     const observe = (target) => {
+//         const observer = shadowObservers[this.dataset.observerId];
+//         observer?.disconnect();
+//         const children = [...target.children]
+//         if (children.length == 0) return;
+//         const targets = [children[0]];
+//         if (children.length > 1) {
+//             targets.push(children.at(-1));
+//         }
+//         targets.for(container => observer.observe(container));
+//     }
     
-    observe(scrollContainer);
-    const mutationObserver = new MutationObserver(([{target}]) => {
-        if (target) observe(target);
-    });
-    mutationObserver.observe(scrollContainer, {subtree: true, childList: true});
-}
+//     observe(scrollContainer);
+//     const mutationObserver = new MutationObserver(([{target}]) => {
+//         if (target) observe(target);
+//     });
+//     mutationObserver.observe(scrollContainer, {subtree: true, childList: true});
+// }
 
 HTMLElement.prototype.LANG_load = function() {
     return (LANG_load.bind(this))();

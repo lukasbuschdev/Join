@@ -93,16 +93,8 @@ function throttle (cb, delay = 1000) {
 
 const includeTemplates = async () => {
   $$('[include-template]').forEach(
-    async (templateContainer) => await includeTemplate(templateContainer)
+    async (templateContainer) => await templateContainer.includeTemplate()
   );
-  return;
-}
-
-const includeTemplate = async (templateContainer) => {
-  const url = templateContainer.getAttribute('include-template');
-  const template = await getTemplate(url);
-  templateContainer.outerHTML = template;
-  await templateContainer.LANG_load();
   return;
 }
 
