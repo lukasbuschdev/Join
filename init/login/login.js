@@ -2,9 +2,10 @@ const logIn = async () => {
     event.preventDefault();
     const emailOrUsername = $('#email input').value;
     const password = $('#password input').value;
+    const hash = await hashInputValue(password);
 
     const user = await getUserByInput(emailOrUsername);
-    const passwordValidity = user?.password == password || undefined;
+    const passwordValidity = user?.password == hash || undefined;
     throwErrors(
         { identifier: 'invalid-email-or-username', bool: user == undefined },
         { identifier: 'wrong-password', bool: !passwordValidity || false },
