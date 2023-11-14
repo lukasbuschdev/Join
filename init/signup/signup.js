@@ -1,3 +1,5 @@
+let SOCKET;
+
 const initSignup = () => {
     initPrivacyLink();
 }
@@ -32,13 +34,13 @@ const validateInputs = async ({ name, email, password, confirmPassword }) => {
         { identifier: 'accept-privacy', bool: privacyAccepted }
     );
 
-    if (nameValidity == true &&
+    if (nameValidity == false &&
         nameInUse == false &&
-        emailValidity == true &&
-        passwordValidity == true &&
+        emailValidity == false &&
+        passwordValidity == false &&
         emailInUse == false &&
         differentPasswords == false &&
-        privacyAccepted == true) {
+        privacyAccepted == false) {
         return true;
     }
     return false;
@@ -55,7 +57,8 @@ const signupInit = async () => {
     }
 
     if (await validateInputs(dataInput) == false) return;
-    const user = new User(dataInput)
+    const user = new User(dataInput);
+    initWebsocket(user.id);
     user.initVerification();
 }
 

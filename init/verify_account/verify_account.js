@@ -49,7 +49,7 @@ const processVerification = async () => {
     // await REMOTE_removeData(`verification/${newUserdata.id}`);
     const newUser = new User(userData);
     await newUser.verify();
-    goTo('create-account', {reroute: true, search: `?uid=${userData.id}`});
+    goTo('init/create_account/create_account', {search: `?uid=${userData.id}`});
 }
 
 const sendNewCode = async () => {

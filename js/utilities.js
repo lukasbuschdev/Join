@@ -39,7 +39,7 @@ const throwErrors = (...params) => {
 
       errorContainer.classList.toggle('active', bool);
       const allErrors = errorContainer.parentElement.$$('.error');
-      if (allErrors?.length > 1 && allErrors[0].classList.includes('active') && !bool) return log("aaa");
+      // if (allErrors?.length > 1 && allErrors[0].classList.includes('active') && !bool) return log("aaa");
       inputContainer?.classList.toggle('active', bool);
   });
 }

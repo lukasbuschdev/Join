@@ -8,11 +8,11 @@ const resetPassword = async () => {
     const newPasswordInput = $('#new-password input').value;
     const confirmPasswordInput = $('#confirm-password input').value;
 
-    const paswordValidity = validPassword(newPasswordInput);
+    const paswordValidity = invalidPassword(newPasswordInput);
     const passwordsMatching = newPasswordInput == confirmPasswordInput;
 
-    throwErrors({ identifier: 'invalid-password', bool: !paswordValidity });
-    if (!paswordValidity) return;
+    throwErrors({ identifier: 'invalid-password', bool: paswordValidity });
+    if (paswordValidity) return;
 
     throwErrors({ identifier: 'different-passwords', bool: !passwordsMatching });
     if (!passwordsMatching) return;

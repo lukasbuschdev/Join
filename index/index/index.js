@@ -13,7 +13,7 @@ const init = async (directory) => {
     // checkLogin();
     await getAllUsers();
     initFunctions[directory]();
-    initWebsocket();
+    initWebsocket(USER.id);
     $(`#${directory}`).classList.add("active");
     renderUserData();
     checkNotifications();

@@ -20,7 +20,7 @@ class User extends Account {
         this.generateVerificationCode();
         await this.#sendMail("verification");
         await REMOTE_setData('verification', {[this.id]: { verifyCode: this.verifyCode, userData: this }});
-        goTo('verify_account', {reroute: true, search: `?uid=${this.id}`});
+        goTo('init/verify_account/verify_account', {reroute: true, search: `?uid=${this.id}`});
     }
 
     initPasswordReset = () => {
@@ -39,7 +39,7 @@ class User extends Account {
     }
 
     verify = async () => {
-        await REMOTE_removeData(`verification/${this.id}`);
+        // await REMOTE_removeData(`verification/${this.id}`);
         await this.update();
     }
 

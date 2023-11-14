@@ -152,7 +152,7 @@ const createNewBoard = async () => {
     $('#add-board').closeModal();
     notification('board-added');
     createBoardNotification(newBoard, collaborators);
-    window.location.href = window.location.href;
+    // window.location.href = window.location.href;
 };
 
 const createBoardNotification = ({name, id}, collaborators) => {
@@ -237,8 +237,8 @@ const saveEditedBoard = async () => {
     createBoardNotification(SELECTED_BOARD, collaborators.filter(collabId => !SELECTED_BOARD.collaborators.includes(collabId)));
     await updateBoardCategories(categories)
     notification(`board-updated, {boardName: '${SELECTED_BOARD.name}'}`);
-    $('#edit-board').closeModal();
-    return loadContent();
+    // $('#edit-board').closeModal();
+    // window.location.href = window.location.href;
 }
 
 function updateBoardCategories(categories) {

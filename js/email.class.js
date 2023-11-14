@@ -16,6 +16,7 @@ class Email {
             subject: this.subject,
             html: this.message
         }
+        console.log(`sending email to: ${mailOptions.to}`)
         SOCKET.emit('mail', mailOptions);
         return new Promise((resolve, reject) => {
             SOCKET.on('mailSent', () => {

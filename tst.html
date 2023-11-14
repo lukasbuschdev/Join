@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="/Join/js/utilities.js"></script>
+    <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
+    <script src="/Join/js/storage.js"></script>
+    <script src="/Join/js/websocket.js"></script>
+</head>
+<body onload="initWebsocket(`1689153888103`)">
+    <label for="inp">Upload IMG</label>
+    <input type="file" name="" id="inp" oninput="uploadImg(this.files[0])">
+
+    <img src="https://drive.google.com/uc?export=view&id=1Uijo-SdlZiygvUu3hEjuEPvasCbw53FH" alt="" width="200">
+</body>
+</html>
