@@ -6,6 +6,22 @@
     --user-clr: var(--clr-dark);
 }
 
+.loading.active {
+    width:  50%;
+    height: 50%;
+    border-radius: 9999px;
+    background: conic-gradient(var(--clr-placeholder) 40%, transparent 40% 100%);
+    animation: loading-spin 500ms linear infinite;
+    -webkit-mask-image: radial-gradient(transparent 55%, black 55%);
+    -webkit-mask-position: center center;
+}
+
+@keyframes loading-spin {
+    to {
+        rotate: 360deg;
+    }
+}
+
 @media (hover: hover) {
     :is(label[for="choose-image"], #user-color):hover {
     opacity: 1;

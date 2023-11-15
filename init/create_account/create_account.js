@@ -17,30 +17,25 @@ const submitUpload = async () => {
     const maxSize = 1024 * 1024;
     if (img.size > maxSize) return error(`file is ${img.size - maxSize} Bytes too big!`);
 
+    $('.loading').classList.add('active');
     SOCKET.emit('uploadImg', img, extension);
-
+    
     const imageSrc = await new Promise(resolve => {
         SOCKET.on('imgId', async id => {
             const imageSrc = `https://drive.google.com/uc?export=view&id=${id}`;
-            await REMOTE_setData(`users/${uid}`, {img: imageSrc});
+            REMOTE_setData(`users/${uid}`, {img: imageSrc});
             resolve(imageSrc);
         });
     });
-
-    // formData.append('user-img', img);
-    // formData.append('uid', uid);
-    // formData.append('suffix', Date.now().toString().slice(-4));
     
-    // const {imageSrc} = await (await fetch('/Join/php/uploadImg.php', {
-    //     method: 'POST',
-    //     body: formData
-    // })).json();
-
-    $('.account.user-img-container').dataset.img = 'true';
-    $('[type="file"]').value = '';
-
-    $('.user-img').src = imageSrc;
-    // REMOTE_setData(`users/${uid}`, {img: imageSrc});
+    
+    const imgContainer = $('.user-img');
+    imgContainer.src = imageSrc;
+    imgContainer.onload = () => {
+        $('.loading').classList.remove('active');
+        $('[type="file"]').value = '';
+        $('.account.user-img-container').dataset.img = 'true';
+    }
     // if (typeof USER !== undefined) {
     //     USER.img = imageSrc;
     //     renderUserData();
@@ -48,22 +43,16 @@ const submitUpload = async () => {
 }
 
 const removeUpload = async () => {
-    const container = event.currentTarget;
     if (event.target.tagName == "LABEL" || event.target.tagName == "INPUT") return;
+    const container = event.currentTarget;
+    const img = container.$('img');
     if (container.dataset.img == 'false') return;
     
-    const uid = currentUserId();
-    const formData = new FormData();
-    formData.append('uid', uid)
-    await fetch('/Join/php/uploadImg.php', {
-        method: 'POST',
-        body: formData
-    });
-    
     $('[type="file"]').value = '';
-    container.$('img').src = '';
     container.dataset.img = false;
-    REMOTE_setData(`users/${uid}`, {img: ""});
+    img.src = '';
+    SOCKET.emit('deleteImg');
+    REMOTE_setData(`users/${currentUserId()}`, {img: ""});
 }
 
 const finishSetup = async () => {

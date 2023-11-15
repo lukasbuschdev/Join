@@ -41,9 +41,6 @@ header {
     aspect-ratio: 1;
     border-radius: 9999px;
     z-index: 999;
-}
-
-#content.loading::before {
     width: 150px;
     background: conic-gradient(transparent, var(--clr-blue) 50%, transparent 50%);
     animation: loading-spin 500ms linear infinite;

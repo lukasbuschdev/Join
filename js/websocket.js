@@ -30,8 +30,9 @@ const sendMessage = (recipients) => {
 
 async function uploadImg(img) {
     const extension = img.type.split('/')[1];
-    console.log(extension)
-    console.log("starting upload");
-    window.startTime = Date.now();
     SOCKET.emit('uploadImg', img, extension);
+}
+
+function removeImg() {
+    SOCKET.emit('deleteImg');
 }
