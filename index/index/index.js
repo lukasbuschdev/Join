@@ -56,6 +56,14 @@ async function loadContent () {
     const btn = event.currentTarget;
     if (currentDirectory() === btn.id) return;
     goTo(`index/${btn.id}/${btn.id}`);
+
+    let currentLanguage = currentLang();
+    LANG_change(currentLanguage);
+    
+    
+    // const navbar = $('nav');
+
+    // await navbar.LANG_load(currentLanguage);
     // const id = event ? event.currentTarget.id : currentDirectory();
     // if (event && event.currentTarget.classList.contains('active')) return error('already active!');
     // const url = (id === 'help') ? `/Join/assets/languages/help-${currentLang()}.html` : (id == 'privacy')? `/Join/assets/languages/privacy-${currentLang()}.html` : `/Join/assets/templates/index/${id.replace('_','-')}_template.html`;
