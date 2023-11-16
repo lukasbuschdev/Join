@@ -17,7 +17,7 @@ const init = async (directory) => {
     $(`#${directory}`).classList.add("active");
     renderUserData();
     checkNotifications();
-    await loadLanguage();
+    await LANG_load(currentLang());
 }
 
 if (LOCAL_getData('rememberMe') == 'false') {
@@ -50,7 +50,8 @@ const initFunctions = {
     "contacts": () => initContacts(),
     "board": () => initBoard(),
     "add_task": () => initAddTask(),
-    "help": () => initHelp()
+    "help": () => initHelp(),
+    "privacy": () => initPrivacy()
 }
 
 async function loadContent () {

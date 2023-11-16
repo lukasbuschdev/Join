@@ -78,11 +78,11 @@ const getEmailLanguage = async (type) => {
 //     });
 // }
 
-async function loadLanguage() {
-    const nav = $('nav');
-    const header = $('header');
-    let currentLanguage = currentLang();
+// async function loadLanguage() {
+//     const nav = $('nav');
+//     const header = $('header');
+//     let currentLanguage = currentLang();
 
-    await header.LANG_load(currentLanguage);
-    await nav.LANG_load(currentLanguage);
-}
+//     await header.LANG_load(currentLanguage);
+//     await nav.LANG_load(currentLanguage);
+// }
