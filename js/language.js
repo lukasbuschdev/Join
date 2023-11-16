@@ -65,7 +65,6 @@ const getEmailLanguage = async (type) => {
     }, {});
 }
 
-
 // function checkForLang() {
 //     const languageBtns = $$('.language-btn');
 //     const currentLanguage = currentLang();
@@ -78,3 +77,12 @@ const getEmailLanguage = async (type) => {
 //         }
 //     });
 // }
+
+async function loadLanguage() {
+    const nav = $('nav');
+    const header = $('header');
+    let currentLanguage = currentLang();
+
+    await header.LANG_load(currentLanguage);
+    await nav.LANG_load(currentLanguage);
+}
