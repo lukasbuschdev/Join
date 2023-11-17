@@ -11,7 +11,7 @@
 }
 
 .language-btn.active {
-    border: 2px solid var(--clr-blue);
+    outline: 2px solid var(--clr-blue);
     border-radius: 999px;
     padding: 2px;
 }

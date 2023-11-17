@@ -110,6 +110,10 @@ header {
     margin-top: auto;
 }
 
+#legal_notice span::after {
+    display: none;
+}
+
 #privacy {
     margin-bottom: 15%;
 }
@@ -347,8 +351,9 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     .logo {
         display: none;
     }
-    #legal-notice {
-        display: none;
+
+    #legal_notice span::after {
+        display: block;
     }
 
     #privacy {

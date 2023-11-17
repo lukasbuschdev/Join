@@ -17,6 +17,7 @@ const init = async (directory) => {
     $(`#${directory}`).classList.add("active");
     renderUserData();
     checkNotifications();
+    await LANG_load(currentLang());
 }
 
 if (LOCAL_getData('rememberMe') == 'false') {
@@ -49,13 +50,15 @@ const initFunctions = {
     "contacts": () => initContacts(),
     "board": () => initBoard(),
     "add_task": () => initAddTask(),
-    "help": () => initHelp()
+    "help": () => initHelp(),
+    "privacy": () => initPrivacy()
 }
 
 async function loadContent () {
     const btn = event.currentTarget;
     if (currentDirectory() === btn.id) return;
     goTo(`index/${btn.id}/${btn.id}`);
+
     // const id = event ? event.currentTarget.id : currentDirectory();
     // if (event && event.currentTarget.classList.contains('active')) return error('already active!');
     // const url = (id === 'help') ? `/Join/assets/languages/help-${currentLang()}.html` : (id == 'privacy')? `/Join/assets/languages/privacy-${currentLang()}.html` : `/Join/assets/templates/index/${id.replace('_','-')}_template.html`;
