@@ -145,7 +145,6 @@ const editTaskInitializer = async () => {
     editTaskContainer.innerHTML = editTaskTemplate(SELECTED_TASK);
     await editTaskContainer.LANG_load();
     await renderAssignedContacts();
-    editTaskContainer.$('.fullscreen-content').addScrollShadow();
     editTaskContainer.$('#selected-collaborator-input').innerHTML = editTaskAssignedTo();
     editTaskContainer.initMenus();
     
@@ -158,10 +157,10 @@ const renderAssignedContacts = async () => {
     $('.drp-contacts').$$('.drp-option').for(
         contact => contact.classList.toggle('active', SELECTED_TASK.assignedTo.includes(contact.dataset.id))
     );
-}
+};
 
 const toggleFullscreenState = () => {
-    const fullscreenModal = $('#fullscreen-task-modal')
+    const fullscreenModal = $('#fullscreen-task-modal');
     fullscreenModal.$$('#fullscreen-task, #edit-task').for(section => {
         section.initMenus();
         section.classList.toggle('d-none');

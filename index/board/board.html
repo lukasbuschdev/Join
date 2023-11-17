@@ -29,6 +29,8 @@
     <script src="/Join/js/mail_templates.js"></script>
     <script src="/Join/js/language.js"></script>
     <script src="/Join/assets/templates/index/notification_template.js"></script>
+    <script src="/Join/assets/templates/index/edit-task_template.js"></script>
+    <script src="/Join/assets/templates/index/fullscreen-task_template.js"></script>
 
     <script src="/Join/assets/templates/index/task_template.js"></script>
     <script src="/Join/index/board/board.js"></script>
@@ -68,7 +70,7 @@
                 </button>
             </div>
 
-            <div id="tasks" class="shadow-container" data-shadow="ud/var(--clr-bg-light)/20px">
+            <div id="tasks">
 
                 <div class="column gap-15">
                     <div class="task-header">
@@ -110,7 +112,7 @@
 
             <dialog id="fullscreen-task-modal" type="modal" class="big-modal" static="false">
                 <div id="fullscreen-task" class="column"></div>
-                <div id="edit-task" class="column d-none" data-shadow="ud/white/40px"></div>
+                <div id="edit-task" class="column d-none"></div>
             </dialog>
 
         </div>

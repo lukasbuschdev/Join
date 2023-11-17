@@ -130,55 +130,6 @@
     filter: brightness(0) invert(1);
 }
 
-.scroll-shadow {
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    height: 100%;
-}
-
-.scroll-shadow::before,
-.scroll-shadow::after {
-    transition: opacity var(--transition-fast);
-    content: '';
-    position: absolute;
-    background: linear-gradient(var(--direction), var(--clr), transparent);
-    pointer-events: none;
-    opacity: 0;
-    z-index: 9999;
-}
-
-.scroll-shadow.ud {
-    flex-direction: column;
-}
-
-.scroll-shadow.ud::before,
-.scroll-shadow.ud::after {
-    width: calc(100% - 8px);
-    height: var(--thickness, 20px);
-}
-
-.scroll-shadow.lr::before,
-.scroll-shadow.lr::after {
-    height: calc(100% - 8px);
-    width: var(--thickness, 20px);
-}
-
-.scroll-shadow::before {
-    opacity: var(--shadow-before, 0);
-    top: 0;
-}
-
-.scroll-shadow::after {
-    opacity: var(--shadow-after, 0);
-    scale: 1 -1;
-    bottom: 0;
-}
-
-.scroll-shadow > * {
-    width: 100%;
-}
-
 #summary-selection {
     padding: 2px 10px;
     width: 200px;
@@ -375,7 +326,7 @@
 #summary-selection > button {
     padding: 8px 20px;
     border-radius: 15px;
-    background-color: white;
+    background-color: white;    
     box-shadow: 0px 0px 4px 0px #0000001A;
     font-weight: 600;
     font-size: 1.5rem;
