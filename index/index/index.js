@@ -17,7 +17,6 @@ const init = async (directory) => {
     $(`#${directory}`).classList.add("active");
     renderUserData();
     checkNotifications();
-    await LANG_load(currentLang());
 }
 
 if (LOCAL_getData('rememberMe') == 'false') {
