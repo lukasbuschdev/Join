@@ -218,9 +218,9 @@ function checkScroll({pageY}, task) {
     log("creating interval")
     window.taskScrollInterval = setInterval(()=> {
         log(`scrolling ${scrollDireciton === 1 ? 'down' : 'up'}`)
-        taskContainer.scrollBy(0, 2 * scrollDireciton);
-        task.updatePosition(0, 2 * scrollDireciton);
-    }, 20);
+        taskContainer.scrollBy({top: 2 * scrollDireciton, behavior: 'instant'});
+        // task.updatePosition(0, task.style.getPropertyValue('--y') + 2 * scrollDireciton);
+    }, 50);
 }
 
 const taskDragger = throttle(({ startingX, startingY }) => {

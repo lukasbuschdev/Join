@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/Join/init/create_account.css">
+<link rel="stylesheet" href="/Join/init/create_account/create_account.css">
 <div id="edit-account-content" class="column gap25">
     <h1 data-lang="account-panel-edit-account"></h1>
     <div class="grid-center">
@@ -12,6 +12,7 @@
             </div>
             <label class="border" for="choose-image"></label>
             <input type="file" style="display: none;" id="choose-image" name="user-img" accept="image/*" onchange="submitUpload()">
+            <div class="loading"></div>
         </div>   
         <button class="btn btn-secondary txt-small txt-600 mla" data-lang="reset-password" onclick="confirmation('reset-password', () => goTo('init/reset_password/reset_password', {reroute: true}))">Reset Password</button>
     </div>

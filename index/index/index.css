@@ -29,29 +29,7 @@ header {
 #content {
     background-color: var(--clr-bg-light);
     overflow: auto;
-    /* scrollbar-gutter: stable; */
     position: relative;
-}
-
-#content.loading::before {
-    content: '';
-    position: absolute;
-    inset: 50% auto auto 50%;
-    translate: -50% -50%;
-    aspect-ratio: 1;
-    border-radius: 9999px;
-    z-index: 999;
-    width: 150px;
-    background: conic-gradient(transparent, var(--clr-blue) 50%, transparent 50%);
-    animation: loading-spin 500ms linear infinite;
-    -webkit-mask-image: radial-gradient(transparent 55%, black 55%);
-    -webkit-mask-position: center center;
-}
-
-@keyframes loading-spin {
-    to {
-        rotate: 360deg;
-    }
 }
 
 #content > div:not(.o-none) {

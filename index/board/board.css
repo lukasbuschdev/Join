@@ -101,6 +101,11 @@
     /* position: absolute; */
 }
 
+#tasks > div:has( .task.active) {
+    position: static;
+    background-color: red;
+}
+
 .drop-transition {
     transition: var(--tr), translate var(--transition-fast);
 }

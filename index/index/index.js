@@ -10,7 +10,7 @@ let notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wa
 const init = async (directory) => {
     await includeTemplates();
     await getUser();
-    // checkLogin();
+    checkLogin();
     await getAllUsers();
     initFunctions[directory]();
     initWebsocket(USER.id);
@@ -36,7 +36,7 @@ const checkNotifications = async () => {
 
 const checkLogin = () => {
     if (USER.loggedIn == 'false') {
-        goTo('login', {search: '', reroute: true});
+        goTo('init/login/login', {search: ''});
     }
 }
 
@@ -57,23 +57,6 @@ async function loadContent () {
     const btn = event.currentTarget;
     if (currentDirectory() === btn.id) return;
     goTo(`index/${btn.id}/${btn.id}`);
-
-    // const id = event ? event.currentTarget.id : currentDirectory();
-    // if (event && event.currentTarget.classList.contains('active')) return error('already active!');
-    // const url = (id === 'help') ? `/Join/assets/languages/help-${currentLang()}.html` : (id == 'privacy')? `/Join/assets/languages/privacy-${currentLang()}.html` : `/Join/assets/templates/index/${id.replace('_','-')}_template.html`;
-    // const content = $('#content');
-    // content.classList.add("loading");
-    // await content.includeTemplate(url);
-    // content.$(':scope > div').classList.add("o-none");
-
-    // if (id in initFunctions) await initFunctions[id]();
-    // if (currentDirectory() !== id) goTo(id);
-    // content.LANG_load();
-    // content.initMenus();
-    // content.$(':scope > div').classList.remove("o-none");
-    // setTimeout(()=>{
-    //     content.classList.remove('loading');
-    // }, 100);
 };
 
 const openAccountPanel = async () => {
