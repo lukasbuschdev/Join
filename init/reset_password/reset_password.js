@@ -24,5 +24,5 @@ const initiatePasswordChange = async (newPasswordInput) => {
     const user = await REMOTE_getData(`users/${currentUserId()}`, true);
     await user.resetPassword(await hashInputValue(newPasswordInput));
     await notification("password-reset");
-    goTo('summary', {reroute: true, search: `?uid=${user.id}`});
+    goTo('index/summary/summary', {reroute: true, search: `?uid=${user.id}`});
 }

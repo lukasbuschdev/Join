@@ -13,13 +13,6 @@ const currentDirectory = () => window.location.pathname.split('/').at(-1).split(
 const goTo = (directory, options) => {
     const url = `${window.location.origin}/Join/${directory}.html${(options?.search ?? location.search)}`
     window.location.href = url;
-    // const search = options?.search ?? location.search;
-    // const reroute = options?.reroute ?? false;
-    // const subDirectory = (directory === "login" || directory === "signup" || directory === "create_account" || directory === "forgot_password" || directory === "help" || directory === "privacy") ? 'init' : 'index';
-    // const newUrl = `/Join/${subDirectory}/${directory.replace('-', '_')}.html${search}`;
-    // log(newUrl)
-    // if (reroute) location.href = newUrl;
-    // else history.pushState(directory, '', newUrl);
 }
 const currentUserId = () => (searchParams().get('uid') == null) ? undefined : `${searchParams().get('uid')}`;
 

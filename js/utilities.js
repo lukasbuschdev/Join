@@ -35,11 +35,9 @@ const throwErrors = (...params) => {
   params.for(({identifier, bool}) => {
       const errorContainer = $(`#${identifier}`);
       const inputContainer = errorContainer.closest('.inp-wrapper')?.$('.inp-container');
-      log (identifier, bool)
 
       errorContainer.classList.toggle('active', bool);
       const allErrors = errorContainer.parentElement.$$('.error');
-      // if (allErrors?.length > 1 && allErrors[0].classList.includes('active') && !bool) return log("aaa");
       inputContainer?.classList.toggle('active', bool);
   });
 }
@@ -121,12 +119,11 @@ const submitUpload = async () => {
   
   const imageSrc = await new Promise(resolve => {
       SOCKET.on('imgId', async id => {
-          const imageSrc = `https://drive.google.com/uc?export=view&id=${id}`;
+          const imageSrc = `https://lh3.google.com/u/0/d/${id}`;
           REMOTE_setData(`users/${uid}`, {img: imageSrc});
           resolve(imageSrc);
       });
   });
-  
   
   const imgContainer = $('.user-img');
   imgContainer.src = imageSrc;

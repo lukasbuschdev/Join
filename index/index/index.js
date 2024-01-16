@@ -7,7 +7,7 @@ let CONTACTS = {};
 let SOCKET;
 let notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wav');
 
-const init = async (directory) => {
+async function init(directory) {
     await includeTemplates();
     await getUser();
     checkLogin();
@@ -54,7 +54,8 @@ const initFunctions = {
 }
 
 async function loadContent () {
-    const btn = event.currentTarget;
+    const btn = event.currentTarget ?? undefined;
+    if(!btn) location.href = location.href;
     if (currentDirectory() === btn.id) return;
     goTo(`index/${btn.id}/${btn.id}`);
 };

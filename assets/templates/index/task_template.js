@@ -5,7 +5,7 @@ const taskTemplate = ({boardId, id, title, description, assignedTo, category, pr
         return total;
     }, []); 
     return /*html*/`
-    <div class="task txt-small" onpointerdown="addDragAndDrop()" data-id="${boardId}/${id}" style="--x: 0; --y: 0;">
+    <div class="task txt-small" onpointerdown="addDragAndDrop()" data-id="${boardId}/${id}">
         <div class="task-category" style="--clr: ${BOARDS[boardId].categories[category] ?? "#d1d1d1"};">${Object.keys(SELECTED_BOARD.categories).find(cat => cat == category) ?? "Default"}</div>
         <div class="task-title txt-700">${highlight(title, filter)}</div>
         <div class="task-description">${highlight(description, filter)}</div>
