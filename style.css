@@ -557,7 +557,7 @@ h4 {
     grid-area: a;
 }
 
-.user-img-container img:not([src=""]) {
+.user-img-container :is(img, iframe):not([src=""]) {
     width: calc(100% - calc(var(--outline-thickness) * 1));
     aspect-ratio: 1;
     object-fit: cover;

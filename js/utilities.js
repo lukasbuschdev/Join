@@ -107,33 +107,46 @@ const searchParams = () => new URLSearchParams(document.location.search);
 const submitUpload = async () => {
   const img = $('[type="file"]').files[0];
   if (!img) return;
-  const uid = currentUserId();
-
-  const [fileType, extension] = img.type.split('/');
-  if (fileType !== "image") return error(`file is not an image!`);
-  const maxSize = 1024 * 1024;
-  if (img.size > maxSize) return error(`file is ${img.size - maxSize} Bytes too big!`);
-
-  $('.loading').classList.add('active');
-  SOCKET.emit('uploadImg', img, extension);
+  if (isInvalidImg(img)) return;
   
-  const imageSrc = await new Promise(resolve => {
-      SOCKET.on('imgId', async id => {
-          const imageSrc = `https://lh3.google.com/u/0/d/${id}`;
-          REMOTE_setData(`users/${uid}`, {img: imageSrc});
-          resolve(imageSrc);
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const arrayBuffer = e.target.result;
+    SOCKET.emit('uploadImg', arrayBuffer);
+  }
+  reader.readAsArrayBuffer(img)
+  $('.loading').classList.add('active');
+  
+  const imgURL = await getImgUrl();
+
+  renderUploadedImg(imgURL);
+}
+
+function isInvalidImg(file) {
+  const maxSize = 1024 * 1024;
+  if (file.size > maxSize) return throwErrors({ identifier: '', bool: false });
+}
+
+function getImgUrl() {
+  return new Promise(resolve => {
+    SOCKET.on('imgURL', async (imgURL) => {
+          const uid = currentUserId();
+          REMOTE_setData(`users/${uid}`, {img: imgURL});
+          resolve(imgURL);
       });
   });
-  
+}
+
+function renderUploadedImg(imgURL) {
   const imgContainer = $('.user-img');
-  imgContainer.src = imageSrc;
+  imgContainer.src = imgURL;
   imgContainer.onload = () => {
       $('.loading').classList.remove('active');
       $('[type="file"]').value = '';
       $('.account.user-img-container').dataset.img = 'true';
   }
   if (typeof USER !== undefined) {
-      USER.img = imageSrc;
+      USER.img = imgURL;
       renderUserData();
   }  
 }

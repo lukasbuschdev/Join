@@ -1,5 +1,6 @@
 const initWebsocket = (uid) => {
     const url = "wss://join-websocket.onrender.com";
+    // const url = "ws://localhost:10000";
     SOCKET = io(url, {
         query: {
             uid

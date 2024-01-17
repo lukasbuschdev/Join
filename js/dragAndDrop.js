@@ -46,7 +46,7 @@ function dragFunctionality() {
             stopScroll()
             window.removeEventListener('pointermove', dragHandler)
             dropHandler()
-        }, { once: true, passive: false });
+        }, { once: true });
         task.classList.add('active')
 }
 
@@ -116,8 +116,10 @@ function dropHandler() {
     if (!targetContainer) return taskDropAnimation()
 
     const el = targetContainer.$('.task-container')
+    const taskId = task.dataset.id.split('/')[1]
+    const taskType = SELECTED_BOARD.tasks[taskId].type
 
-    if (el.id !== SELECTED_BOARD.tasks[`${task.dataset.id.split('/')[1]}`].type) {
+    if (taskType != el.id) {
         el.appendChild(task);
         changeTaskType(task, el.id)
     }
@@ -138,7 +140,7 @@ function taskDropAnimation() {
     // move to final position
     setTimeout(() => {
         task.classList.add('drop-transition')
-        task.addEventListener('transitionend', () => task.classList.remove('drop-transition'))
+        task.addEventListener('transitionend', () => task.classList.remove('drop-transition'), { once: true })
         task.style.translate = '0 0'
     }, 0)
 }

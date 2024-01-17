@@ -265,6 +265,10 @@
     padding: 15px 0;
 }
 
+#edit-task #subtask-input:placeholder-shown + div {
+    display: none;
+}
+
 .fullscreen-task-subTasks:has(.column:empty) {
     display: none;
 }

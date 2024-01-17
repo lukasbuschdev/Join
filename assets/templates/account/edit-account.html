@@ -13,6 +13,9 @@
             <label class="border" for="choose-image"></label>
             <input type="file" style="display: none;" id="choose-image" name="user-img" accept="image/*" onchange="submitUpload()">
             <div class="loading"></div>
+        </div>
+        <div class="error" id="img-too-large" style="margin: auto;">
+            <span data-lang="img-too-large"></span>
         </div>   
         <button class="btn btn-secondary txt-small txt-600 mla" data-lang="reset-password" onclick="confirmation('reset-password', () => goTo('init/reset_password/reset_password', {reroute: true}))">Reset Password</button>
     </div>

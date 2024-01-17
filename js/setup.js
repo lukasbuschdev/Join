@@ -66,6 +66,14 @@ const renderName = (userField, name) => {
     userField.innerText = name;
 };
 const renderImage = (userField, img) => {
+        // if (img.includes('drive.google.com')) {
+        //     const iframe = document.createElement('iframe');
+        //     iframe.src = img;
+        //     iframe.allow = "autoplay";
+        //     iframe.onload = () => console.log("drive img loaded!")
+        //     userField.replaceWith(iframe)
+        //     return;
+        // }
     userField.src = img;
 };
 const renderInitials = (userField, name) => {

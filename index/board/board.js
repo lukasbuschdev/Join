@@ -59,18 +59,18 @@ const renderFullscreenTask = (ids) => {
 
 const saveEditedTask = () => {
     const editedTaskData = {
-        title: $('#title').value,
-        description: $('#description').value,
-        dueDate: $('#date').value,
-        priority: $('.prio-btn.active span').dataset.lang,
+        title: $('#fullscreen-task-modal #title').value,
+        description: $('#fullscreen-task-modal #description').value,
+        dueDate: $('#fullscreen-task-modal #date').value,
+        priority: $('#fullscreen-task-modal .prio-btn.active span').dataset.lang,
         assignedTo: selectedCollaborators,
-        subTasks: subtasks.map(name => {
+        subTasks: [...$$('#edit-task #subtask-container li')].map(({innerText: name}) => {
             return {
                 name,
-                done: SELECTED_TASK.subTasks.find(({name: subTaskName}) => subTaskName == name)?.done || false
+                done: SELECTED_TASK.subTasks.find(({name: subTaskName}) => subTaskName === name)?.done || false
             }
         })
-    }    
+    }
     Object.assign(SELECTED_TASK, editedTaskData);
     $('#fullscreen-task-modal').closeModal();
     toggleFullscreenState();
@@ -81,7 +81,7 @@ const saveTaskChanges = () => {
 
     const differences = getJsonChanges(updatedTask, initialTask);
     if (Object.values(differences).length > 0) {
-        updateTaskUi(differences);
+        updateTaskUi(differences, initialTask);
         SELECTED_TASK.update();
     }
 };
@@ -117,7 +117,7 @@ const changeSubtaskDoneState = async (subTaskName) => {
 
     let subTaskIndex;
     for(let i = 0; i < SELECTED_TASK.subTasks.length; i++) {
-        if (SELECTED_TASK.subTasks[i].name == subTaskName) {
+        if (SELECTED_TASK.subTasks[i].name === subTaskName) {
             subTaskIndex = i;
             break;
         };
@@ -125,7 +125,7 @@ const changeSubtaskDoneState = async (subTaskName) => {
     SELECTED_TASK.subTasks[subTaskIndex].done = isChecked;
 };
 
-const updateTaskUi = ({title = null, description = null, priority = null, assignedTo = null, subTasks = null}) => {
+const updateTaskUi = ({title = null, description = null, priority = null, assignedTo = null, subTasks = null}, initialTask) => {
     const taskContainer = $(`[data-id="${SELECTED_TASK.boardId}/${SELECTED_TASK.id}"]`);
     
     if (title) taskContainer.$('.task-title').textAnimation(title);
@@ -133,6 +133,10 @@ const updateTaskUi = ({title = null, description = null, priority = null, assign
     if (priority) taskContainer.$('.task-priority').style.setProperty('--priority', `url(../assets/img/icons/prio_${priority}.svg)`);
     if (assignedTo) taskContainer.$('.task-assigned-to').innerHTML = assignedToTemplate(assignedTo.map(id => ALL_USERS[id]));
     if (subTasks) {
+        if (!SELECTED_TASK.subTasks.length) return taskContainer.$('.task-description').nextElementSibling.remove();
+        if (!initialTask.subTasks.length) {
+            taskContainer.$('.task-description').insertAdjacentHTML('afterend', progressTemplate(SELECTED_TASK.subTasks));
+        }
         const currentSubtaskCount = SELECTED_TASK.subTasks.filter(({done}) => done == true).length;
         const totalSubtaskCount = SELECTED_TASK.subTasks.length;
         taskContainer.$('.task-progress-counter span').innerText = `${currentSubtaskCount} / ${totalSubtaskCount}`;
@@ -145,7 +149,6 @@ const editTaskInitializer = async () => {
     editTaskContainer.innerHTML = editTaskTemplate(SELECTED_TASK);
     await editTaskContainer.LANG_load();
     await renderAssignedContacts();
-    editTaskContainer.$('#selected-collaborator-input').innerHTML = editTaskAssignedTo();
     editTaskContainer.initMenus();
     
     toggleFullscreenState();

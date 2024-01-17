@@ -47,12 +47,12 @@ function checkSelectedBoard() {
     const boardInput = $('#selected-board').innerText;
     
     if(boardInput === LANG['select-board']) {
-        document.getElementById('select-a-board').classList.remove('error-inactive');
-        document.getElementById('drp-wrapper-board').classList.add('input-warning');
+        $('#select-a-board').classList.remove('error-inactive');
+        $('#drp-wrapper-board').classList.add('input-warning');
         return
     } else if(boardInput.length >= 3) {
-        document.getElementById('select-a-board').classList.add('error-inactive');
-        document.getElementById('drp-wrapper-board').classList.remove('input-warning'); 
+        $('#select-a-board').classList.add('error-inactive');
+        $('#drp-wrapper-board').classList.remove('input-warning'); 
     }
 }
 
@@ -130,12 +130,12 @@ function selectCollaborator() {
 
 function checkSelectedCollaborator() {
     if(selectedCollaborators.length == 0) {
-        document.getElementById('select-a-collaborator').classList.remove('error-inactive');
-        document.getElementById('drp-wrapper-collaborator').classList.add('input-warning');
+        $('#select-a-collaborator').classList.remove('error-inactive');
+        $('#drp-wrapper-collaborator').classList.add('input-warning');
         return
     } else if(selectedCollaborators.length >= 1) {
-        document.getElementById('select-a-collaborator').classList.add('error-inactive');
-        document.getElementById('drp-wrapper-collaborator').classList.remove('input-warning');
+        $('#select-a-collaborator').classList.add('error-inactive');
+        $('#drp-wrapper-collaborator').classList.remove('input-warning');
     }
 }
 
@@ -171,32 +171,32 @@ function getTitle() {
 }
 
 function titleEmpty() {
-    document.getElementById('enter-a-title').classList.remove('error-inactive');
-    document.getElementById('title').classList.add('input-warning');
-    document.getElementById('title-too-long').classList.add('error-inactive');
+    $('#enter-a-title').classList.remove('error-inactive');
+    $('#title').classList.add('input-warning');
+    $('#title-too-long').classList.add('error-inactive');
     return
 }
 
 function titleInvalid() {
-    document.getElementById('enter-a-title').classList.add('error-inactive');
-    document.getElementById('title-letters-only').classList.remove('error-inactive');
-    document.getElementById('title').classList.add('input-warning');
-    document.getElementById('title-too-long').classList.add('error-inactive');
+    $('#enter-a-title').classList.add('error-inactive');
+    $('#title-letters-only').classList.remove('error-inactive');
+    $('#title').classList.add('input-warning');
+    $('#title-too-long').classList.add('error-inactive');
     return
 }
 
 function titleTooLong() {
-    document.getElementById('title').classList.add('input-warning');
-    document.getElementById('title-letters-only').classList.add('error-inactive');
-    document.getElementById('enter-a-title').classList.add('error-inactive');
-    document.getElementById('title').classList.add('input-warning');
-    document.getElementById('title-too-long').classList.remove('error-inactive');
+    $('#title').classList.add('input-warning');
+    $('#title-letters-only').classList.add('error-inactive');
+    $('#enter-a-title').classList.add('error-inactive');
+    $('#title').classList.add('input-warning');
+    $('#title-too-long').classList.remove('error-inactive');
 }
 
 function titleValid() {
-    document.getElementById('title-letters-only').classList.add('error-inactive');
-    document.getElementById('title-too-long').classList.add('error-inactive');
-    document.getElementById('title').classList.remove('input-warning');
+    $('#title-letters-only').classList.add('error-inactive');
+    $('#title-too-long').classList.add('error-inactive');
+    $('#title').classList.remove('input-warning');
 }
 
 function getDescription() {
@@ -214,22 +214,22 @@ function getDescription() {
 }
 
 function descriptionEmpty() {
-    document.getElementById('enter-a-description').classList.remove('error-inactive');
-    document.getElementById('description').classList.add('input-warning');
+    $('#enter-a-description').classList.remove('error-inactive');
+    $('#description').classList.add('input-warning');
     return;
 }
 
 function descriptionInvalid() {
-    document.getElementById('enter-a-description').classList.add('error-inactive');
-    document.getElementById('description').classList.add('input-warning');
-    document.getElementById('description-letters-only').classList.remove('error-inactive');
+    $('#enter-a-description').classList.add('error-inactive');
+    $('#description').classList.add('input-warning');
+    $('#description-letters-only').classList.remove('error-inactive');
     return;
 }
 
 function descriptionValid() {
-    document.getElementById('description-letters-only').classList.add('error-inactive');
-    document.getElementById('enter-a-description').classList.add('error-inactive');
-    document.getElementById('description').classList.remove('input-warning');
+    $('#description-letters-only').classList.add('error-inactive');
+    $('#enter-a-description').classList.add('error-inactive');
+    $('#description').classList.remove('input-warning');
 }
 
 function renderSelectedCategory(category) {
@@ -249,14 +249,14 @@ function getSelectedCategory() {
 }
 
 function noCategorySelected() {
-    document.getElementById('select-a-category').classList.remove('error-inactive');
-    document.getElementById('category-drp-wrapper').classList.add('input-warning');
+    $('#select-a-category').classList.remove('error-inactive');
+    $('#category-drp-wrapper').classList.add('input-warning');
     return
 }
 
 function categorySelected() {
-    document.getElementById('select-a-category').classList.add('error-inactive');
-    document.getElementById('category-drp-wrapper').classList.remove('input-warning');
+    $('#select-a-category').classList.add('error-inactive');
+    $('#category-drp-wrapper').classList.remove('input-warning');
 }
 
 function getFormattedDate() {
@@ -286,32 +286,32 @@ function getDueDate() {
 }
 
 function dateEmpty() {
-    document.getElementById('enter-a-dueDate').classList.remove('error-inactive');
-    document.getElementById('date').classList.add('input-warning');     
+    $('#enter-a-dueDate').classList.remove('error-inactive');
+    $('#date').classList.add('input-warning');     
     return
 }
 
 function dateWrongFormat() {
-    document.getElementById('enter-a-dueDate').classList.add('error-inactive');
-    document.getElementById('date').classList.add('input-warning');     
-    document.getElementById('wrong-date-format').classList.remove('error-inactive');
+    $('#enter-a-dueDate').classList.add('error-inactive');
+    $('#date').classList.add('input-warning');     
+    $('#wrong-date-format').classList.remove('error-inactive');
     return
 }
 
 function dateValid() {
-    document.getElementById('enter-a-dueDate').classList.add('error-inactive');
-    document.getElementById('date').classList.remove('input-warning');
-    document.getElementById('wrong-date-format').classList.add('error-inactive');
+    $('#enter-a-dueDate').classList.add('error-inactive');
+    $('#date').classList.remove('input-warning');
+    $('#wrong-date-format').classList.add('error-inactive');
 }
 
 function checkPriority() {
     const activeButton = $('.btn-priority button.active');
     
     if (activeButton) {
-        document.getElementById('select-a-priority').classList.add('error-inactive')
+        $('#select-a-priority').classList.add('error-inactive')
         return activeButton.$('.priority').dataset.lang;
     } else {
-        return document.getElementById('select-a-priority').classList.remove('error-inactive');
+        return $('#select-a-priority').classList.remove('error-inactive');
     }
 }
 
@@ -371,7 +371,7 @@ function clearSubtaskInput() {
 
 function checkSubtaskInput() {
     const inputField = $('.subtasks input').value;
-    const inputButtons = document.querySelector('.subtasks .inp-buttons');
+    const inputButtons = $('.subtasks .inp-buttons');
 
     if(inputField.length >= 1) {
         inputButtons.classList.remove('d-none');
@@ -382,7 +382,7 @@ function checkSubtaskInput() {
 
 function addSubtask() {
     const subtaskValue = $('.subtasks input');
-    const inputButtons = document.querySelector('.subtasks .inp-buttons');
+    const inputButtons = $('.subtasks .inp-buttons');
 
     if(!letterRegex.test(subtaskValue.value)) {
         subtaskInvalid();
@@ -398,25 +398,25 @@ function addSubtask() {
 }
 
 function subtaskInvalid() {
-    document.getElementById('error-container').classList.remove('d-none');
-    document.getElementById('subtask-letters-only').classList.remove('error-inactive');
-    document.getElementById('add-subtask').classList.add('input-warning');
+    $('#error-container').classList.remove('d-none');
+    $('#subtask-letters-only').classList.remove('error-inactive');
+    $('#add-subtask').classList.add('input-warning');
     return
 }
 
 function subtaskTooLong() {
-    document.getElementById('error-container').classList.remove('d-none');
-    document.getElementById('add-subtask').classList.add('input-warning');
-    document.getElementById('subtask-letters-only').classList.add('error-inactive');
-    document.getElementById('subtask-too-long').classList.remove('error-inactive');
+    $('#error-container').classList.remove('d-none');
+    $('#add-subtask').classList.add('input-warning');
+    $('#subtask-letters-only').classList.add('error-inactive');
+    $('#subtask-too-long').classList.remove('error-inactive');
     return 
 }
 
 function subtaskValid() {
-    document.getElementById('subtask-letters-only').classList.add('error-inactive');
-    document.getElementById('subtask-too-long').classList.add('error-inactive');
-    document.getElementById('add-subtask').classList.remove('input-warning');
-    document.getElementById('error-container').classList.add('d-none');
+    $('#subtask-letters-only').classList.add('error-inactive');
+    $('#subtask-too-long').classList.add('error-inactive');
+    $('#add-subtask').classList.remove('input-warning');
+    $('#error-container').classList.add('d-none');
 }
 
 function renderSubtasks() {
@@ -436,9 +436,9 @@ function editSubtask(i) {
     subtaskInput.focus();
     subtaskInput.setAttribute('contenteditable', 'true')
 
-    document.querySelector('#single-subtask'+ i).classList.toggle('edit-btn-active');
-    document.querySelector('.subtask-edit-btn'+ i).classList.toggle('d-none');
-    document.querySelector('.save-edited-subtask-btn'+ i).classList.toggle('d-none');
+    $('#single-subtask'+ i).classList.toggle('edit-btn-active');
+    $('.subtask-edit-btn'+ i).classList.toggle('d-none');
+    $('.save-edited-subtask-btn'+ i).classList.toggle('d-none');
     
     range.selectNodeContents(subtaskInput);
     range.collapse(false);
@@ -458,9 +458,9 @@ function saveEditedSubtask(i) {
         button.classList.toggle('d-none');
     });
 
-    document.querySelector('#single-subtask'+ i).classList.toggle('edit-btn-active');
-    document.querySelector('.subtask-edit-btn'+ i).classList.toggle('d-none');
-    document.querySelector('.save-edited-subtask-btn'+ i).classList.toggle('d-none');
+    $('#single-subtask'+ i).classList.toggle('edit-btn-active');
+    $('.subtask-edit-btn'+ i).classList.toggle('d-none');
+    $('.save-edited-subtask-btn'+ i).classList.toggle('d-none');
 }
 
 
@@ -485,6 +485,11 @@ function renderSubtaskTemplate(subtask, i) {
 }
 
 function deleteSubtask(i) {
+    if (event.currentTarget.closest('#edit-task')) {
+        SELECTED_TASK.subTasks.splice(i, 1);
+        renderEditSubtasks();
+        return;
+    };
     subtasks.splice(i, 1);
     renderSubtasks();
 }

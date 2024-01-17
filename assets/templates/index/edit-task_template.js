@@ -4,7 +4,7 @@ const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, su
     selectedCollaborators.length = 0;
     assignedTo.for(id => selectedCollaborators.push(id));
     return /*html*/`
-    <div class="fullscreen-content column gap-25 shadow-container" data-shadow="ud/white/40px">
+    <div class="fullscreen-content column gap-25">
         <div class="column gap-8">
             <span data-lang="title">Title</span>
             <textarea name="title" id="title" placeholder="Enter a title" data-lang-placeholder="title-placeholder">${title}</textarea>
@@ -51,9 +51,9 @@ const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, su
             <span data-lang="assigned-to">Assigned to</span>
             <div class="drp-wrapper" id="drp-wrapper-collaborator">
                 <div id="selected-collaborator-input" data-lang="select-collaborators" class="drp-title" onclick="this.toggleDropDown()"></div>
-                <div class="drp-option-wrapper" id="drp-collaborators" data-shadow="ud/white/10px">
-                    <div class="drp-contacts shadow-container" id="drp-collab-container">
-                        ${""}
+                <div class="drp-option-wrapper" id="drp-collaborators">
+                    <div class="drp-contacts" id="drp-collab-container">
+                        ${editTaskAssignedTo()}
                     </div>
                 </div>
             </div>
@@ -67,12 +67,12 @@ const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, su
             <div class="inp-wrapper column gap-10" id="add-subtask">
                 <div class="inp-container radius-10">
                     <input oninput="checkSubtaskInput()" type="text" name="" id="subtask-input" data-lang-placeholder="add-subtask">
-                    <div class="d-none inp-buttons row gap-10">
-                        <button onclick="clearSubtaskInput()">
+                    <div class="inp-buttons row gap-10">
+                        <button onclick="this.parentElement.previousElementSibling.value = ''">
                             <img src="/Join/assets/img/icons/close.svg" width="20">
                         </button>
                         <div class="vertical-line"></div>
-                        <button onclick="addSubtask()">
+                        <button onclick="addEditSubtask()">
                             <img src="/Join/assets/img/icons/check_black.svg" width="20">
                         </button>
                     </div>
@@ -82,7 +82,7 @@ const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, su
                     <span class="error-inactive error-enter-input" data-lang="subtask-too-long" id="subtask-too-long">Subtask too long!</span>
                 </div>
             </div>
-            <div id="subtask-container" class="column">${allSubtasksTemplate()}</div>
+            <div id="subtask-container" class="column">${allSubtasksTemplate(subtasks)}</div>
         </div>
 
     </div>
@@ -97,20 +97,101 @@ const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, su
     `
 }
 
-const editTaskAssignedTo = () => selectedCollaborators.reduce((template, id) => template += userIconTemplate(id), ``);
+const editTaskAssignedTo = () => SELECTED_BOARD.collaborators.reduce((template, id) => `${template}${collaboratorTemplate(id)}`, ``);
 
-const userIconTemplate = (id) => {
+const collaboratorTemplate = (id) => {
     const {name, img, color} = ALL_USERS[id];
-    return /*html*/`<div class="input-collaborator user-img-container grid-center" style="--user-clr: ${color}">
-        <span>${name.slice(0, 2).toUpperCase()}</span>
-        <img src="${img}">
+    const collaboratorIsAssigned = selectedCollaborators.includes(id);
+    return /*html*/`
+    <div class="drp-option ${collaboratorIsAssigned ? 'active' : ''}" data-id="${id}" onclick="selectCollaborator()">
+        <div class="user-img-container grid-center" style="--user-clr: ${color}">
+            <span>${name.slice(0, 2).toUpperCase()}</span>
+            <img src="${img}">
+        </div>
+        <span>${name}</span>
     </div>`
 }
 
-const allSubtasksTemplate = () => subtasks
+const allSubtasksTemplate = (subtasks) => subtasks
     .reduce(
         (template, name, index) => {
             template += renderSubtaskTemplate(name, index);
             return template;
         }, ''
     );
+
+function addEditSubtask() {
+    const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
+    const subtask = $('#edit-task #subtask-input');
+
+    if(!letterRegex.test(subtask.value)) {
+        subtaskInvalidEdit();
+    } else if(subtask.value.length > 30) {
+        subtaskTooLongEdit();
+    } else {
+        subtaskValidEdit();
+        SELECTED_TASK.addSubtask(subtask.value);
+        subtask.value = '';
+    }
+    renderEditSubtasks();
+}
+
+function subtaskInvalidEdit() {
+    $('#edit-task #error-container').classList.remove('d-none');
+    $('#edit-task #subtask-letters-only').classList.remove('error-inactive');
+    $('#edit-task #add-subtask').classList.add('input-warning');
+    return
+}
+
+function subtaskTooLongEdit() {
+    $('#edit-task #error-container').classList.remove('d-none');
+    $('#edit-task #add-subtask').classList.add('input-warning');
+    $('#edit-task #subtask-letters-only').classList.add('error-inactive');
+    $('#edit-task #subtask-too-long').classList.remove('error-inactive');
+    return 
+}
+
+function subtaskValidEdit() {
+    $('#edit-task #subtask-letters-only').classList.add('error-inactive');
+    $('#edit-task #subtask-too-long').classList.add('error-inactive');
+    $('#edit-task #add-subtask').classList.remove('input-warning');
+    $('#edit-task #error-container').classList.add('d-none');
+}
+
+function renderEditSubtasks() {
+    $('#edit-task #subtask-container').innerHTML = allSubtasksTemplate(SELECTED_TASK.subTasks.map(({name}) => name))
+}
+
+function editSubtaskEdit(i) {
+    const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
+    const range = document.createRange();
+    const selection = window.getSelection();
+    subtaskInput.focus();
+    subtaskInput.setAttribute('contenteditable', 'true')
+
+    $('#edit-task #single-subtask'+ i).classList.toggle('edit-btn-active');
+    $('#edit-task .subtask-edit-btn'+ i).classList.toggle('d-none');
+    $('#edit-task .save-edited-subtask-btn'+ i).classList.toggle('d-none');
+    
+    range.selectNodeContents(subtaskInput);
+    range.collapse(false);
+
+    selection.removeAllRanges();
+    selection.addRange(range);
+}
+
+function saveEditedSubtaskEdit(i) {
+    const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
+    subtasks[i] = subtaskInput.innerText;
+    subtaskInput.setAttribute('contenteditable', 'false')
+
+    const allSaveButtons = $$('#edit-task .save-edited-subtask-btn');
+
+    allSaveButtons.for((button) => {
+        button.classList.toggle('d-none');
+    });
+
+    $('#edit-task #single-subtask'+ i).classList.toggle('edit-btn-active');
+    $('#edit-task .subtask-edit-btn'+ i).classList.toggle('d-none');
+    $('#edit-task .save-edited-subtask-btn'+ i).classList.toggle('d-none');
+}

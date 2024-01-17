@@ -21,22 +21,28 @@ class Task extends BaseClass {
         return this.update();
     }
 
-    addSubtask = (name) => {
-        this.subTasks.push({
-            name: name,
-            done: false
-        });
+    addSubtask = (names) => {
+        if (typeof names === "string") names = [names];
+        for (const name of names) {
+            this.subTasks.push({
+                name: name,
+                done: false
+            });
+        }
         return this.update();
     }
 
     finishSubtask = (name) => {
     }
 
-    assignTo = async (userId) => {
+    assignTo = async (userIds) => {
         const collaborators = BOARDS[this.boardId].collaborators;
-        if (!(collaborators.includes(userId)) && userId !== USER.id) return error('user not in collaborators!');
-        if (this.assignedTo.includes(userId)) return error('user already assigned!')
-        this.assignedTo.push(userId);
+        if (typeof userIds === "string") userIds = [userIds];
+        for (const userId of userIds) {
+            if (!(collaborators.includes(userId)) && userId !== USER.id) return error('user not in collaborators!');
+            if (this.assignedTo.includes(userId)) return error('user already assigned!')
+            this.assignedTo.push(userId);
+        }
         return this.update();
     }
 
