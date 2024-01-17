@@ -250,8 +250,8 @@ const saveEditedBoard = async () => {
     createBoardNotification(SELECTED_BOARD, collaborators.filter(collabId => !SELECTED_BOARD.collaborators.includes(collabId)));
     await updateBoardCategories(categories)
     notification(`board-updated, {boardName: '${SELECTED_BOARD.name}'}`);
-    // $('#edit-board').closeModal();
-    // window.location.href = window.location.href;
+    $('#edit-board').closeModal();
+    location.reload();
 }
 
 function updateBoardCategories(categories) {
@@ -264,7 +264,7 @@ function updateBoardCategories(categories) {
 const initEditBoard = async () => {
     newBoardCollaborators = [];
     const editBoardModal = $('#edit-board');
-    await editBoardModal.$('.edit-board-data').includeTemplate('/Join/assets/templates/index/edit-board.html');
+    await editBoardModal.$('.edit-board-data').includeTemplate({url: '/Join/assets/templates/index/edit-board.html', replace: false});
     await getContacts();
     renderEditBoard();
     editBoardModal.openModal();

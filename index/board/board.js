@@ -3,7 +3,26 @@ let initialTask;
 const initBoard = async () => {
     await getAllUsers();
     await getBoards();
-    if (Object.values(BOARDS).length) return renderTasks();
+    if (Object.values(BOARDS).length === 0) return
+    renderBoardTitleSelection();
+    renderTasks();
+}
+
+function renderBoardTitleSelection() {
+    $('#board-title-selection .options').innerHTML = Object.values(BOARDS).reduce((template, board) => {
+        return `${template}${boardTitleSelectionTemplate(board)}`
+    }, ``);
+}
+
+function boardTitleSelectionTemplate({id, name}) {
+    return/*html*/`
+        <h4 class="option" onclick="switchBoards(${id})">${name}</h4>
+    `
+}
+
+function switchBoards(id) {
+    SESSION_setData('activeBoard', Number(id));
+    location.reload();
 }
 
 const renderTasks = async (filter) => {
@@ -42,6 +61,18 @@ const clearTaskSearch = () => {
 
 const addTaskModal = async () => {
     $('#add-task-modal').openModal();
+}
+
+function toggleBoardTitleSelection() {
+    const el = event.currentTarget
+    el.classList.toggle('active');
+    if (el.classList.contains('active')) {
+        window.addEventListener('pointerdown', closeHandler = () => {
+            if (event.target.closest('#board-title-selection')) return;
+            el.classList.remove('active');
+            window.removeEventListener('pointerdown', closeHandler);
+        })
+    }
 }
 
 const renderFullscreenTask = (ids) => {

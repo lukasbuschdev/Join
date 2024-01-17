@@ -83,6 +83,76 @@
     z-index: 1;
 }
 
+#board-title-selection:not(:has( .option)) {
+    pointer-events: none;
+}
+
+#board-title-selection {
+    width: 15rem;
+    position: relative;
+}
+
+#board-title-selection .options-wrapper {
+    width: inherit;
+    position: absolute;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--transition-fast);
+}
+
+#board-title-selection.active .options-wrapper {
+    grid-template-rows: 1fr;
+}
+
+#board-title-selection h2 {
+    padding: 0 18px;
+    width: inherit;
+    box-sizing: border-box;
+    z-index: 51;
+    display: flex;
+    transition: background-color var(--transition-fast);
+}
+
+@media (hover: hover) {
+    #board-title-selection h2:hover {
+        cursor: pointer;
+        background-color: white;
+        border-radius: 10px;
+    }
+}
+
+#board-title-selection:has( .option) h2::after {
+    content: '';
+    background: url(/Join/assets/img/icons/dropdown.svg) no-repeat center;
+    margin-left: auto;
+    width: 20px;
+}
+
+#board-title-selection.active h2 {
+    background-color: white;
+    border-radius: 10px 10px 0 0;
+}
+
+#board-title-selection .options {
+    overflow: hidden;
+    z-index: 50;
+    width: inherit;
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0px 0px 14px 3px #0000000A;
+}
+
+#board-title-selection .option {
+    padding: 5px 18px;
+}
+
+@media (hover: hover) {
+    #board-title-selection .option:hover {
+        background-color: var(--clr-placeholder);
+        cursor: pointer;
+    }
+}
+
 .task {
     --tr: rotate var(--transition-fast);
     background-color: white;
@@ -121,15 +191,6 @@
     flex-grow: 1;
     /* max-height: 205px; */
     outline: 1px dashed var(--clr-placeholder);
-}
-
-.task-category {
-    width: fit-content;
-    background-color: var(--clr);
-    color: white;
-    border-radius: 8px;
-    padding: 4px 25px;
-    font-family: 'Open Sans';
 }
 
 .task-description {
@@ -302,9 +363,8 @@
     #board-header {
         position: relative;
         flex-wrap: wrap;
-        padding-left: 4rem;
     }
-    #board-header h2 {
+    #board-header #board-title-selection {
         margin-right: 100%;
     }
     #search-task {

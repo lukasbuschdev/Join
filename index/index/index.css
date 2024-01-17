@@ -278,6 +278,14 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     margin: unset;
 }
 
+.task-category {
+    width: fit-content;
+    background-color: var(--clr);
+    color: white;
+    border-radius: 8px;
+    padding: 4px 25px;
+    font-family: 'Open Sans';
+}
 
 @media(max-width: 1000px) {
     #account-panel-options button span {

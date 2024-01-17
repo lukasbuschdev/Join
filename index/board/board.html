@@ -51,7 +51,17 @@
 
         <div id="board-wrapper">
             <div id="board-header" class="row gap-35">
-                <h2 data-lang="board">Board</h2>
+                <div id="board-title-selection" onclick="toggleBoardTitleSelection()">
+                    <h2 data-lang="board">Board</h2>
+                    <div class="options-wrapper">
+                        <div class="options column">
+                            <!-- <h4 class="option">Test</h4>
+                            <h4 class="option">Test</h4>
+                            <h4 class="option">Test</h4>
+                            <h4 class="option">Test</h4> -->
+                        </div>
+                    </div>
+                </div>
                     <div id="search-task" class="inp-container gap-10 radius-10">
                         <div class="inp-buttons row gap-10" style="flex-grow: 1;">
                             <input type="text" placeholder="Find Task" data-lang-placeholder="find-task" oninput="searchTasks()">
