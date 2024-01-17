@@ -102,7 +102,6 @@ const saveEditedTask = () => {
             }
         })
     }
-    log(editedTaskData)
     Object.assign(SELECTED_TASK, editedTaskData);
     $('#fullscreen-task-modal').closeModal();
     toggleFullscreenState();

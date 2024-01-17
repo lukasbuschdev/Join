@@ -118,7 +118,6 @@ async function dropHandler() {
 
     const taskId = task.dataset.id.split('/')[1]
     const taskType = SELECTED_BOARD.tasks[taskId].type
-    console.log(el.id, taskType)
 
     if (taskType != el.id) {
         el.append(task)

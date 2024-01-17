@@ -64,25 +64,3 @@ const getEmailLanguage = async (type) => {
         else return total;
     }, {});
 }
-
-// function checkForLang() {
-//     const languageBtns = $$('.language-btn');
-//     const currentLanguage = currentLang();
-
-//     languageBtns.forEach(button => {
-//         console.log("Checking language button:", button.id);
-//         if (button.id === currentLanguage) {
-//             console.log("Match found, clicking:", button.id);
-//             button.click(); // Simulate a click on the button
-//         }
-//     });
-// }
-
-// async function loadLanguage() {
-//     const nav = $('nav');
-//     const header = $('header');
-//     let currentLanguage = currentLang();
-
-//     await header.LANG_load(currentLanguage);
-//     await nav.LANG_load(currentLanguage);
-// }

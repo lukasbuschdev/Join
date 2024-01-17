@@ -46,7 +46,6 @@ const processVerification = async () => {
         $$('.error')[1].classList.add('active');
         return;
     }
-    // await REMOTE_removeData(`verification/${newUserdata.id}`);
     const newUser = new User(userData);
     await newUser.verify();
     goTo('init/create_account/create_account', {search: `?uid=${userData.id}`});

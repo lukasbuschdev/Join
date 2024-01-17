@@ -16,15 +16,12 @@ class Email {
             subject: this.subject,
             html: this.message
         }
-        console.log(`sending email to: ${mailOptions.to}`)
         SOCKET.emit('mail', mailOptions);
         return new Promise((resolve, reject) => {
             SOCKET.on('mailSent', () => {
-                console.log(`Mail sent!`)
                 resolve();
             });
             SOCKET.on('mailFailed', () => {
-                console.log(`Mail failed!`)
                 reject()
             })
         })

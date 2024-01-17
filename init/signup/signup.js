@@ -22,7 +22,6 @@ const validateInputs = async ({ name, email, password, confirmPassword }) => {
     const passwordValidity = invalidPassword(password);
     const differentPasswords = password !== confirmPassword;
     const privacyAccepted = !($('[type="checkbox"]').checked);
-    log(nameInUse)
 
     throwErrors(
         { identifier: 'invalid-name', bool: nameValidity },
