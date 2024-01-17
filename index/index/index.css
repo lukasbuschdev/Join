@@ -267,7 +267,7 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 
 #account-panel-content .user-img-container{
     width: 180px;
-    margin: 10% auto;
+    margin: 10% auto 0;
 }
 
 #edit-account-content > div {

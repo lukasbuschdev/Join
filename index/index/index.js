@@ -83,7 +83,7 @@ const initEditAccount = () => {
     const editAccountContent = $('#edit-account-content');
     editAccountContent.renderUserData();
     renderColorWheel();
-    if (editAccountContent.$('img').src) editAccountContent.$('.user-img-container').dataset.img = "true";
+    if (USER.img) editAccountContent.$('.user-img-container').dataset.img = "true";
 }
 
 const loadNotifications = async () => {

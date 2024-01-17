@@ -222,6 +222,7 @@
 #fullscreen-task-modal .close-btn {
     position: absolute;
     inset: 20px 20px auto auto;
+    border-radius: 999px;
 }
 
 #fullscreen-task-modal .user-img-container {

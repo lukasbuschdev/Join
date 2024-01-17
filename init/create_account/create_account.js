@@ -12,7 +12,7 @@ const finishSetup = async () => {
     event.preventDefault();
 
     const phoneInput = $('#phone input').value;
-    const phoneValidity = validPhone(phoneInput);
+    const phoneValidity = phoneInput ? validPhone(phoneInput) : true;
     throwErrors({ identifier: 'invalid-phone-number', bool: (phoneInput == true && !phoneValidity) });
     
     if (phoneValidity == false) return

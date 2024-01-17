@@ -124,7 +124,11 @@ const submitUpload = async () => {
 
 function isInvalidImg(file) {
   const maxSize = 1024 * 1024;
-  if (file.size > maxSize) return throwErrors({ identifier: '', bool: false });
+  const fileTooLarge = file.size > maxSize
+  throwErrors({ identifier: 'img-too-large', bool: fileTooLarge });
+  if (fileTooLarge) {
+    return true;
+  }
 }
 
 function getImgUrl() {
@@ -145,7 +149,7 @@ function renderUploadedImg(imgURL) {
       $('[type="file"]').value = '';
       $('.account.user-img-container').dataset.img = 'true';
   }
-  if (typeof USER !== undefined) {
+  if (typeof USER !== "undefined") {
       USER.img = imgURL;
       renderUserData();
   }  
@@ -154,13 +158,18 @@ function renderUploadedImg(imgURL) {
 const removeUpload = async () => {
   if (event.target.tagName == "LABEL" || event.target.tagName == "INPUT") return;
   const container = event.currentTarget;
+  if (!($('#color-wheel').classList.contains('d-none'))) return;
   const img = container.$('img');
-  if (container.dataset.img == 'false') return;
+  if (container.dataset.img === 'false') return;
   
   $('[type="file"]').value = '';
-  container.dataset.img = false;
+  container.dataset.img = 'false';
   img.src = '';
   SOCKET.emit('deleteImg');
+  if (typeof USER !== "undefined") {
+    USER.img = "";
+    renderUserData();
+  }
   REMOTE_setData(`users/${currentUserId()}`, {img: ""});
 }
 
@@ -178,7 +187,6 @@ const renderColorWheel = () => {
 }
 
 const toggleColorPicker = () => {
-  event.preventDefault();
   event.stopPropagation();
   $('#color-wheel').classList.toggle('d-none');
   $('label').classList.toggle('d-none');
@@ -215,17 +223,17 @@ const moveColorCursor = (offsetX, offsetY, userColor) => {
 const addAcceptColor = (userColor) => {
   $('#accept-user-color').classList.add('active');
   $('label').classList.remove('border');
-  try {$('#accept-user-color').removeEventListener("click", colorPicker)}catch(e){};
-  $('#accept-user-color').addEventListener("click", colorPicker = (event) => {
-      event.preventDefault();
+  try {$('#accept-user-color').removeEventListener("click", colorPicker, { once: true })}catch(e){};
+  $('#accept-user-color').addEventListener("click", colorPicker = () => {
+      event.stopPropagation();
       $$('.user-img-container.account').for(button => button.style.setProperty('--user-clr', userColor));
-      if (typeof USER !== undefined) {
+      if (typeof USER !== "undefined") {
           USER.color = userColor;
           USER.update();
+          renderUserData();
       };
       $('#user-color').click();
-      renderUserData();
-  }, {once: true});
+  }, { once: true });
 }
 
 const HSLToRGB = (h, s, l) => {
