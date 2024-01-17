@@ -172,13 +172,8 @@ const toggleFullscreenState = () => {
     fullscreenModal.setAttribute('static', (fullscreenModal.getAttribute('static') == "true") ? "false" : "true");
 };
 
-const changeTaskType = async (taskElement, newType) => {
-    if (newType !== "to-do" &&
-        newType !== "in-progress" &&
-        newType !== "awaiting-feedback" &&
-        newType !== "done") return error(newType);
-    const [, taskId] = taskElement.dataset.id.split('/');
-    const task = new Task(SELECTED_BOARD.tasks[taskId]);
-    await task.setProperty('type', newType);
-    await getBoards();
+async function changeTaskType (taskId, newType) {
+    SELECTED_BOARD.tasks[taskId].type = newType;
+    await SELECTED_BOARD.update();
+    return getBoards();
 }

@@ -24,7 +24,7 @@ function addDragAndDrop() {
 
 function fullscreenFunctionality() {
     task.removeEventListener('pointermove', dragFunctionality)
-    fullscreenHandler();
+    fullscreenHandler()
 }
 
 function fullscreenHandler() {
@@ -46,7 +46,7 @@ function dragFunctionality() {
             stopScroll()
             window.removeEventListener('pointermove', dragHandler)
             dropHandler()
-        }, { once: true });
+        }, { once: true })
         task.classList.add('active')
 }
 
@@ -78,8 +78,8 @@ function checkScrollSoft(taskContainer) {
 }
 
 function checkScrollHard(taskContainer) {
-    const taskBBox = task.getBoundingClientRect();
-    const taskContainerBBox = taskContainer.getBoundingClientRect();
+    const taskBBox = task.getBoundingClientRect()
+    const taskContainerBBox = taskContainer.getBoundingClientRect()
     const yOffset = 50
 
     const canScrollDown = taskContainer.scrollTop < (taskContainer.scrollHeight - taskContainer.clientHeight -1 )
@@ -98,7 +98,6 @@ function customScroll(direction) {
 }
 
 function startScroll() {
-    console.log("starting scroll")
     scrollInterval = setInterval(scrollFunctionality, scrollFrequency)
 }
 
@@ -108,22 +107,24 @@ function stopScroll() {
 
 // DROP FUNC
 
-function dropHandler() {
+async function dropHandler() {
     task.classList.remove('active')
     task.style.maxWidth = ''
 
-    const targetContainer = checkDropContainers();
+    const targetContainer = checkDropContainers()
     if (!targetContainer) return taskDropAnimation()
 
     const el = targetContainer.$('.task-container')
+
     const taskId = task.dataset.id.split('/')[1]
     const taskType = SELECTED_BOARD.tasks[taskId].type
+    console.log(el.id, taskType)
 
     if (taskType != el.id) {
-        el.appendChild(task);
-        changeTaskType(task, el.id)
+        el.append(task)
+        changeTaskType(taskId, el.id)
     }
-    taskDropAnimation();
+    taskDropAnimation()
     moveTask(0, 0)
     targetContainer.children[1].classList.remove('placeholder')    
 }
@@ -147,7 +148,7 @@ function taskDropAnimation() {
 
 function checkDropContainers() {
     const { pageX, pageY } = event
-    const taskContainer = $('#tasks');
+    const taskContainer = $('#tasks')
     for (const container of [...taskContainer.children]) {
         const containerBBox = container.getBoundingClientRect()
         const mouseXInside = pageX > containerBBox.x && pageX < containerBBox.right
