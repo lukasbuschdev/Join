@@ -63,7 +63,7 @@ const saveEditedTask = () => {
         description: $('#fullscreen-task-modal #description').value,
         dueDate: $('#fullscreen-task-modal #date').value,
         priority: $('#fullscreen-task-modal .prio-btn.active span').dataset.lang,
-        assignedTo: selectedCollaborators,
+        assignedTo: [...$$('#edit-task .drp-contacts > div.active')].map(contact => contact.dataset.id),
         subTasks: [...$$('#edit-task #subtask-container li')].map(({innerText: name}) => {
             return {
                 name,

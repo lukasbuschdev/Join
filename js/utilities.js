@@ -57,8 +57,8 @@ const notification = (message) => {
     el.LANG_load();
     el.openModal();
     el.addEventListener("close", () => {
-      resolve();
       el.remove();
+      resolve();
     });
   });
 }
