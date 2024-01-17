@@ -99,17 +99,22 @@ HTMLElement.prototype.$$ = function (sel) {
 
 HTMLDialogElement.prototype.openModal = function () {
     this.showModal();
+    let shouldBeAbleToBeClosed = false;
     if (this.classList.contains('big-modal')) {
         this.classList.add('active');
-    };
+        this.addEventListener('transitionend', () => shouldBeAbleToBeClosed = true)
+    } else {
+        shouldBeAbleToBeClosed = true
+    }
     this.inert = false;
-
+    
     const handlerId = Date.now();
+    
     this.addEventListener('pointerdown', window[handlerId] = () => {
+        if (!shouldBeAbleToBeClosed) return;
         if (event.which == 3) return;
         if (this.getAttribute('static') == "true") return;
-        if (![...this.$$(':scope > div')]
-        .every(container => !container.contains(event.target))) return;
+        if (![...this.$$(':scope > div')].every(container => !container.contains(event.target))) return;
         
         this.$('.notification')?.classList.remove('anim-notification');
         this.closeModal(handlerId);
