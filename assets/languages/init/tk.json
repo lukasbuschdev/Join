@@ -54,5 +54,6 @@
     "choose-image": "Resim Seç",
     "choose-image-info": "Resminizi yükleyin (isteğe bağlı)",
     "phone-number": "Telefon numarası (isteğe bağlı)",
-    "phone-number-invalid": "Geçersiz telefon numarası!"
+    "phone-number-invalid": "Geçersiz telefon numarası!",
+    "img-too-large": "Dosya çok büyük! Maksimum boyut: 1 MB"
 }

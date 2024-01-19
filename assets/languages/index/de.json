@@ -145,7 +145,9 @@
     "understood": "Verstanden",
     "board-nonexistent": "Tafel %boardName% existiert nicht!",
     "no-notifications": "Du hast keine Benachrichtigungen!",
-    "board-updated": "%boardName% aktualisiert!", 
+    "board-updated": "%boardName% aktualisiert!",
+
+    "img-too-large": "Datei zu groß! Maximale Größe: 1 MB",
 
     "network-error": "Netzwerkfehler!",
     "websocket-disconnect": "Websocket - Verbindungsfehler!",

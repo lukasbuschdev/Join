@@ -146,6 +146,8 @@
     "board-nonexistent": "¡El tablero %boardName% no existe!",
     "no-notifications": "No tienes notificaciones!",
     "board-updated": "%boardName% actualizado!",
+    
+    "img-too-large": "¡Archivo demasiado grande! Tamaño máximo: 1 MB",
 
     "network-error": "Error de Red!",
     "websocket-disconnect": "Desconexión de Websocket - Error de Conexión!",

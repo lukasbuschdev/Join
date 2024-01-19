@@ -56,5 +56,6 @@
     "choose-image": "Bild hochladen",
     "choose-image-info": "Lade ein Bild von dir hoch (optional)",
     "phone-number": "Telefonnummer (optional)",
-    "phone-number-invalid": "Ungültige Telefonnummer!"
+    "phone-number-invalid": "Ungültige Telefonnummer!",
+    "img-too-large": "Datei zu groß! Maximale Größe: 1 MB"
 }

@@ -147,6 +147,8 @@
     "no-notifications": "Bildiriminiz yok!",
     "board-updated": "%boardName% güncellendi!",
 
+    "img-too-large": "Dosya çok büyük! Maksimum boyut: 1 MB",
+
     "network-error": "Ağ Hatası!",
     "websocket-disconnect": "WebSocket - Bağlantı Hatası!",
     "websocket-reconnect": "WebSocket - Yeniden Bağlandı!"

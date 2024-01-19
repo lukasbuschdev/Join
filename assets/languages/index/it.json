@@ -147,6 +147,8 @@
     "no-notifications": "Non hai notifiche!",
     "board-updated": "%boardName% aggiornata!", 
 
+    "img-too-large": "File troppo grande! Dimensione massima: 1 MB",
+
     "network-error": "Errore di Rete!",
     "websocket-disconnect": "Disconnessione WebSocket - Errore di Connessione!",
     "websocket-reconnect": "WebSocket - Riconnesso!"

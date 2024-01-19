@@ -54,5 +54,6 @@
     "choose-image": "Scegli un'Immagine",
     "choose-image-info": "Carica la tua immagine (opzionale)",
     "phone-number": "Numero di Telefono (opzionale)",
-    "phone-number-invalid": "Numero di telefono non valido!"
+    "phone-number-invalid": "Numero di telefono non valido!",
+    "img-too-large": "File troppo grande! Dimensione massima: 1 MB"
 }

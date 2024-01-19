@@ -56,5 +56,6 @@
     "choose-image": "Choose Image",
     "choose-image-info": "Upload your picture (optional)",
     "phone-number": "Phone number (optional)",
-    "phone-number-invalid": "Invalid Phone number!"
+    "phone-number-invalid": "Invalid Phone number!",
+    "img-too-large": "File too large! Maximum size: 1 MB"
 }

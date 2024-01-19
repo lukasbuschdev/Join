@@ -145,7 +145,9 @@
     "understood": "Compris",
     "board-nonexistent": "Le tableau %boardName% n'existe pas !",
     "no-notifications": "Vous n'avez aucune notification !",
-    "board-updated": "%boardName% mis à jour !", 
+    "board-updated": "%boardName% mis à jour !",
+
+    "img-too-large": "Fichier trop grand ! Taille maximale : 1 Mo",
 
     "network-error": "Erreur réseau !",
     "websocket-disconnect": "Déconnexion du WebSocket - Erreur de connexion !",
