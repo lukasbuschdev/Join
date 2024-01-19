@@ -9,8 +9,9 @@ const initBoard = async () => {
 }
 
 function renderBoardTitleSelection() {
+    const activeBoardId = SESSION_getData('activeBoard');
     $('#board-title-selection .options').innerHTML = Object.values(BOARDS).reduce((template, board) => {
-        return `${template}${boardTitleSelectionTemplate(board)}`
+        return `${template}${(activeBoardId != board.id) ? boardTitleSelectionTemplate(board) : ''}`
     }, ``);
 }
 
