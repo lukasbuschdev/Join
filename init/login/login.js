@@ -1,34 +1,43 @@
+function initLogin() {
+    rememberLoginDetails();
+}
+
 const logIn = async () => {
     event.preventDefault();
     const emailOrUsername = $('#email input').value;
     const password = $('#password input').value;
     const hash = await hashInputValue(password);
-
+    
     const user = await getUserByInput(emailOrUsername);
     const passwordValidity = user?.password == hash || undefined;
     throwErrors(
         { identifier: 'invalid-email-or-username', bool: user == undefined },
         { identifier: 'wrong-password', bool: !passwordValidity || false },
-        );
+    );
     if(!user || !passwordValidity) return;
-    rememberMe(user);
+    const tempUser = new User(user);
+    Object.assign(tempUser, user);
+    tempUser.password = password;
+    
+    rememberMe(tempUser);
     user.logIn();
 }
 
 const rememberMe = (user) => {
     const rememberLogin = $('#remember-me').getAttribute('checked');
     if (rememberLogin == 'false') return LOCAL_setData('rememberMe', false);
-    LOCAL_setData('rememberMe', true);
+    LOCAL_setData('rememberMe', user);
     if ("PasswordCredential" in window) user.setCredentials();
 }
 
 const rememberLoginDetails = () => {
-    if (LOCAL_getItem('remember-me') !== null) {
-        const { email, password } = LOCAL_getItem('remember-me');
-        $('#email input').value = email;
-        $('#password input').value = password;
-        $('#remember-me').setAttribute('checked', 'true');
-    }
+    const rememberedData = LOCAL_getData('rememberMe');
+    if (!rememberedData) return;
+    const { name, password } = rememberedData;
+    console.log(rememberedData.password)
+    $('#email input').value = name;
+    $('#password input').value = password;
+    $('#remember-me').setAttribute('checked', 'true');
 }
 
 const automaticLogin = async () => {

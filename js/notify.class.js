@@ -8,7 +8,7 @@ class Notify {
 
     async send () {
         if (SOCKET.disconnected) return error('network-error');
-        await this.recipients.forAwait((recipientId) => REMOTE_setData(`users/${recipientId}/notifications`, {[this.id]: removeMethods(this)}));
         SOCKET.emit('notification', {to: this.recipients});
+        return this.recipients.forAwait((recipientId) => REMOTE_setData(`users/${recipientId}/notifications`, {[this.id]: removeMethods(this)}));
     };
 }

@@ -97,7 +97,7 @@ const renderBoard = () => {
 }
 
 const createBoardModal = async () => {
-    await $('#add-board .add-board-data').includeTemplate('/Join/assets/templates/index/add-board.html');
+    await $('#add-board .add-board-data').includeTemplate({url: '/Join/assets/templates/index/add-board.html', replace: false});
     newBoardCollaborators = [];
     $('#add-board').openModal();
 }
@@ -163,12 +163,13 @@ const createNewBoard = async () => {
     };
     const newBoard = await USER.addBoard(boardData);
     $('#add-board').closeModal();
-    notification('board-added');
-    createBoardNotification(newBoard, collaborators);
-    // window.location.href = window.location.href;
+    await Promise.all([createBoardNotification(newBoard, collaborators), notification('board-added')]);
+    SESSION_setData('activeBoard', newBoard.id);
+    location.reload();    
 };
 
 const createBoardNotification = ({name, id}, collaborators) => {
+    console.log(`sending notification to ${collaborators}`)
     if (!collaborators.length) return;
     const notification = new Notify({
         recipients: collaborators,
@@ -177,7 +178,7 @@ const createBoardNotification = ({name, id}, collaborators) => {
         boardName: name,
         boardId: id
     });
-    notification.send();
+    return notification.send();
 };
 
 const toggleDrp = () => {
@@ -247,8 +248,9 @@ const saveEditedBoard = async () => {
     const collaborators = getCollaborators();
     const categories = getTaskCategories();
     
-    createBoardNotification(SELECTED_BOARD, collaborators.filter(collabId => !SELECTED_BOARD.collaborators.includes(collabId)));
-    await updateBoardCategories(categories)
+    const notifyPromise = createBoardNotification(SELECTED_BOARD, collaborators.filter(collabId => !SELECTED_BOARD.collaborators.includes(collabId)));
+    const categoryPromise = updateBoardCategories(categories);
+    await Promise.all([notifyPromise, categoryPromise]);
     notification(`board-updated, {boardName: '${SELECTED_BOARD.name}'}`);
     $('#edit-board').closeModal();
     location.reload();

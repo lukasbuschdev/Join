@@ -194,7 +194,11 @@ const LOCAL_setData = (key, value) => {
 
 const LOCAL_getData = (key) => {
     let data = localStorage.getItem(key);
-    return (typeof data == "object") ? JSON.parse(data) : data; 
+    try {
+        return JSON.parse(data);
+    } catch(e) {
+        return data;
+    }
 }
 
 const LOCAL_removeData = (key) => {
