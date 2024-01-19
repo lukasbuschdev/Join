@@ -60,6 +60,8 @@ const clearTaskSearch = () => {
 }
 
 const addTaskModal = async () => {
+    renderBoardIds();
+    renderDate();
     $('#add-task-modal').openModal();
 }
 

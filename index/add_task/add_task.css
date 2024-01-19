@@ -32,6 +32,10 @@ textarea {
 
 #drp-categories .category-color {
     margin-left: auto;
+    border-radius: 999px;
+    background-color: var(--clr);
+    width: 10px;
+    aspect-ratio: 1;
 }
 
 #drp-board-container, 

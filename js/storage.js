@@ -32,7 +32,7 @@ const REMOTE_upload = async (directory, data) => {
     });
 }
 
-const REMOTE_getData = async (path, methods) => {
+const REMOTE_getData = async (path) => {
     if (!path) return
     if (!/^(?=[a-zA-Z0-9])(?!.*\/\/)[a-zA-Z0-9\/-]*[a-zA-Z0-9]$/.test(path)) {
         console.error(`'${path}' is not a valid path!`);
@@ -49,9 +49,9 @@ const REMOTE_getData = async (path, methods) => {
     
     const result = parse(`${JSON.stringify(data)}${pathSelector}`);
     if (result) {
-        if (pathArray.at(-2) == "users") return (methods) ? new User(result) : removeMethods(new User(result));
-        else if (pathArray.at(-2) == "boards") return (methods) ? new Board(result) : removeMethods(new Board(result));
-        else if (pathArray.at(-2) == "tasks") return (methods) ? new Task(result) : removeMethods(new Task(result));
+        if (pathArray.at(-2) == "users") return new User(result);
+        else if (pathArray.at(-2) == "boards") return new Board(result);
+        else if (pathArray.at(-2) == "tasks") return new Task(result);
         else return result;
 
     } else {
@@ -209,41 +209,23 @@ const SESSION_setData = (key, value) => {
 
 const SESSION_getData = (key) => {
     let data = sessionStorage.getItem(key);
-    // if (typeof Number(data) == 'number') data = Number(data);
-    return (!(data == 'undefined')) ? data : undefined;
+    if (data) return data;
 }
 
 const SESSION_removeData = (key) => {
     sessionStorage.removeItem(key);
 }
 
-// DEV
-
-const getDevUsers = async () => {
-    return await (await fetch("../assets/dev/dev_users.json")).json();
-}
-
-const getDevData = async (type) => {
-    return await (await fetch(`../assets/dev/dev_${type}.json`)).json();
-}
-
-const uploadDevData = async () => {
-    const users = await (await fetch("../assets/dev/dev_users.json")).json();
-    const boards = await (await fetch("../assets/dev/dev_boards.json")).json();
-    await REMOTE_setData('dev', 'users', users);
-    await REMOTE_setData('dev', 'boards', boards);
-}
-
 // UserData
 
-const getCurrentUser = async (methods) => {
-    const uid = currentUserId() ?? "guest";
+const getCurrentUser = async () => {
+    const uid = currentUserId();
     if (!uid) return null;
-    return REMOTE_getData(`users/${uid}`, methods);
+    return REMOTE_getData(`users/${uid}`);
 }
 
 const getUser = async () => {
-    USER = await getCurrentUser(true);
+    USER = await getCurrentUser();
     return getContacts();
 };
 
@@ -252,6 +234,7 @@ const getContacts = async () => {
     USER.contacts.for(
         contactId => CONTACTS[contactId] = new User(allUsers[contactId])
     );
+    return;
 }
 
 const getBoards = async () => {

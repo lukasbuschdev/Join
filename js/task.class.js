@@ -13,7 +13,7 @@ class Task extends BaseClass {
         this.boardId = boardId;
     }
     
-    changePriority = (priority) => {
+    changePriority(priority) {
         if (!(priority == 'urgent' || priority == 'medium' || priority == 'low')) {
             console.error(`priority '${priority}' does not exist!`)
         }
@@ -21,7 +21,7 @@ class Task extends BaseClass {
         return this.update();
     }
 
-    addSubtask = (names) => {
+    addSubtask(names) {
         if (typeof names === "string") names = [names];
         for (const name of names) {
             this.subTasks.push({
@@ -32,10 +32,10 @@ class Task extends BaseClass {
         return this.update();
     }
 
-    finishSubtask = (name) => {
+    finishSubtask(name) {
     }
 
-    assignTo = async (userIds) => {
+    async assignTo(userIds) {
         const collaborators = BOARDS[this.boardId].collaborators;
         if (typeof userIds === "string") userIds = [userIds];
         for (const userId of userIds) {
@@ -46,7 +46,7 @@ class Task extends BaseClass {
         return this.update();
     }
 
-    update = () => {
+    update() {
         Object.assign(BOARDS[this.boardId].tasks[this.id], this);
         return REMOTE_setData(`boards/${this.boardId}/tasks`, {[this.id]: this});
     }

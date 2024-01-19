@@ -41,6 +41,9 @@ function dragFunctionality() {
         window.addEventListener('pointermove', dragHandler)
         startScroll()
 
+        const placeholderElement = '<div class="element-placeholder"></div>'
+        task.insertAdjacentHTML('beforebegin', placeholderElement)
+
         window.addEventListener('pointerup', () => {
             // remove moveListener
             stopScroll()
@@ -112,6 +115,7 @@ async function dropHandler() {
     task.style.maxWidth = ''
 
     const targetContainer = checkDropContainers()
+    $('.element-placeholder')?.remove()
     if (!targetContainer) return taskDropAnimation()
 
     const el = targetContainer.$('.task-container')

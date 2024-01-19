@@ -10,7 +10,7 @@ class Email {
         }
     }
 
-    send = async () => {
+    async send() {
         const mailOptions = {
             to: this.recipient.email,
             subject: this.subject,

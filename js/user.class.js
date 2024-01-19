@@ -6,28 +6,34 @@ class User extends Account {
         this.pendingFriendshipRequests = userData.pendingFriendshipRequests ?? [];
     }
 
-    setPicture = async (img) => await this.setProperty("img", img);
+    async setPicture(img) {
+        return this.setProperty("img", img)
+    };
 
-    setColor = async (color) => await this.setProperty("color", color);
+    async setColor(color) {
+        return this.setProperty("color", color);
+    }
 
-    setPhoneNumber = async (phone) => await this.setProperty("phone", phone);
+    async setPhoneNumber(phone) {
+        return this.setProperty("phone", phone);
+    }
 
-    resetPassword = async (newPassword = '') => { // TODO
+    async resetPassword(newPassword = '') {
         return this.setProperty("password", newPassword);
     }
 
-    initVerification = async () => {
+    async initVerification() {
         this.generateVerificationCode();
         await this.#sendMail("verification");
         await REMOTE_setData('verification', {[this.id]: { verifyCode: this.verifyCode, userData: this }});
         goTo('init/verify_account/verify_account', {reroute: true, search: `?uid=${this.id}`});
     }
 
-    initPasswordReset = () => {
+    initPasswordReset() {
         return this.#sendMail("passwordReset");
     }
 
-    #sendMail = async (type, options) => {
+    async #sendMail(type, options) {
         const mailOptions = {
             recipient: this,
             type,
@@ -38,12 +44,11 @@ class User extends Account {
         return mail.send();
     }
 
-    verify = async () => {
-        // await REMOTE_removeData(`verification/${this.id}`);
+    async verify() {
         await this.update();
     }
 
-    setCredentials = () => {
+    setCredentials() {
         const cred = new PasswordCredential({
             id: this.name,
             password: this.password,
@@ -52,7 +57,7 @@ class User extends Account {
         navigator.credentials.store(cred);
     }
 
-    logIn = async () => {
+    async logIn() {
         LOCAL_setData('loggedIn', true);
         this.loggedIn = 'true';
         if ("PasswordCredential" in window) this.setCredentials();
@@ -60,7 +65,7 @@ class User extends Account {
         goTo('index/summary/summary', {search: `?uid=${this.id}`, reroute: true});
     }
 
-    logOut = async () => {
+    async logOut() {
         LOCAL_setData('loggedIn', false);
         this.loggedIn = 'false';
         await this.update();
@@ -68,13 +73,13 @@ class User extends Account {
         goTo('init/login/login', {reroute: true, search: ''});
     }
 
-    update = async () => {
+    async update() {
         await REMOTE_setData('users', {[this.id]: this});
         if (typeof CONTACTS == "undefined") return;
         return getUser();
     }
 
-    generateVerificationCode = () => {
+    generateVerificationCode() {
         const charSet = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789';
         let code = '';
         for (let i = 0; i < 6; i++) {
@@ -83,14 +88,11 @@ class User extends Account {
         this.verifyCode = { code, expires: Date.now() + 5 * 1000 * 60 };
     }
 
-    codeExpired = () => this.verifyCode.expires < Date.now();
-
-    unknownDevice = async (deviceData) => {
-        // await this.#sendMail("unknownDevice", deviceData);
+    codeExpired() {
+        return this.verifyCode.expires < Date.now();
     }
 
-    addBoard = async (boardData) => {
-
+    async addBoard(boardData) {
         if (typeof boardData !== "object") return;
         boardData.owner = this.id;
         const board = new Board(boardData);
@@ -101,25 +103,14 @@ class User extends Account {
         return board;
     }
 
-    getBoard = async (boardId) => await REMOTE_getData(`boards/${boardId}`, true);
+    getBoard(boardId) {
+        return REMOTE_getData(`boards/${boardId}`);
+    }
 
-    getContacts = async () => {
+    async getContacts() {
         const allUsers = await REMOTE_getData('users');
         return this.contacts.map(
             contactId => allUsers[contactId]
         );
     }
-
-    // sendNotification = async (to, type) => {
-    //     if (!(type == "friendRequest" || type == "boardInvite" || type == "taskAssignment")) return error(
-    //         `type '${type}' invalid! type may be one of: 'friendRequest', 'boardInvite', 'taskAssignment'`
-    //     )
-    //     if (to == this.id) return error('invalid recipient!');
-    //     const recipient = CONTACTS[to];
-    //     const allNotifications = recipient.getPropertyValue('notifications');
-    //     return recipient.setProperty('notifications', [{
-    //         type,
-    //         from: this.id
-    //     }, ...allNotifications]);
-    // }
 }

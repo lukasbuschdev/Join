@@ -89,6 +89,7 @@ function renderAssignToContacts() {
 
         drpContainer.append(collaboratorOption.children[0]);
     });
+    drpContainer.LANG_load();
 }
 
 function renderSelfToAssign() {
@@ -339,7 +340,7 @@ async function addTask() {
     await createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
     notification('task-created');
     resetArrays();
-    if (dir == "board") loadContent();
+    if (dir === "board") location.reload();
     else $('#board').click();
 }
 
