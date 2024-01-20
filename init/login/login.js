@@ -35,7 +35,7 @@ const rememberMe = (user, password) => {
     const shouldRemember = $('#remember-me').checked;
     if (!shouldRemember) return LOCAL_setData('rememberMe', false);
     LOCAL_setData('rememberMe', tempUser);
-    if ("PasswordCredential" in window) user.setCredentials(user.password);
+    if ("PasswordCredential" in window) user.setCredentials(tempUser.password);
 }
 
 const rememberLoginDetails = () => {
