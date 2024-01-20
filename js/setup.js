@@ -5,9 +5,6 @@ window.$$ = function (selector) {
   return this.document.querySelectorAll(selector)
 };
 
-
-
-// let directories = [];
 const currentDirectory = () => window.location.pathname.split('/').at(-1).split('.')[0]
 
 const goTo = (directory, options) => {
@@ -54,10 +51,13 @@ window.renderUserData = function () {
     this.$$('[data-user-data]').for(
         (userField) => {
             const dataType = userField.dataset.userData;
-            if (dataType == "img") renderImage(userField, img);
-            else if (dataType == "name") renderName(userField, name);
-            else if (dataType == "initials") renderInitials(userField, name);
-            else if (dataType == "color") renderColor(userField, color);
+            switch (dataType) {
+                case "img": return renderImage(userField, img);
+                case "name": return renderName(userField, name);
+                case "initials": return renderInitials(userField, name);
+                case "color": return renderColor(userField, color);
+                default: return;
+            }
         }
     );
 }
@@ -75,6 +75,6 @@ const renderColor = (userField, color) => {
     userField.style.setProperty('--user-clr', color);
 };
 
-// initInactivity();
+initInactivity();
 $('body').initMenus();
 LANG_load();
