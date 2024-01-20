@@ -13,11 +13,7 @@ const goTo = (directory, options) => {
 }
 const currentUserId = () => (searchParams().get('uid') == null) ? undefined : `${searchParams().get('uid')}`;
 
-const menuOptionInitator = new MutationObserver(
-    ({target}) => {
-        target.closest('[type = "menu"]').initMenus();
-    }
-);
+const menuOptionInitator = new MutationObserver(({target}) => target.closest('[type = "menu"]').initMenus());
 
 const mutationObserverOptions = {
     childList: true,
@@ -26,18 +22,11 @@ const mutationObserverOptions = {
 
 const resetMenus = function () {
     menuOptionInitator.disconnect();
-    this.$$('[type = "menu"]').for(menu => {
-            menuOptionInitator.observe(menu, mutationObserverOptions)
-        }
-    )
+    this.$$('[type = "menu"]').for(menu => menuOptionInitator.observe(menu, mutationObserverOptions));
 }
 
 let inactivityTimer;
-const addInactivityTimer = (minutes = 5) => {
-    inactivityTimer = setTimeout(()=>{
-        goTo('login', {search: '?expired', reroute: true});
-    }, minutes * 60 * 1000);
-}
+const addInactivityTimer = (minutes = 5) => inactivityTimer = setTimeout(() => goTo('login', {search: '?expired', reroute: true}), minutes * 60 * 1000);
 
 const initInactivity = () => {
     window.addEventListener("visibilitychange", () => {
