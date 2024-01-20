@@ -1,6 +1,14 @@
 function initLogin() {
     rememberLoginDetails();
-    automaticLogin();
+    // automaticLogin();
+    initAutomaticLogin();
+}
+
+function initAutomaticLogin() {
+    $('form').addEventListener('focusin', () => {
+        if (event.target.tagName === "INPUT" && event.target.type === 'checkbox') return initAutomaticLogin();
+        automaticLogin();
+    }, { once: true });
 }
 
 const logIn = async () => {
@@ -41,7 +49,7 @@ const rememberLoginDetails = () => {
 
 const automaticLogin = async () => {
     if (!("PasswordCredential" in window)) return;
-    const cred = await navigator.credentials.get({ password: true }) || false;
+    const cred = await navigator.credentials.get({ password: true });
     if (!cred) return;
     const user = await getUserByInput(cred.id);
     user.logIn();
