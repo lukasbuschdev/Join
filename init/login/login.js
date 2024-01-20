@@ -5,7 +5,8 @@ function initLogin() {
 
 function initAutomaticLogin() {
     $('form').addEventListener('focusin', () => {
-        if (event.target.tagName === "INPUT" && event.target.type === 'checkbox') return initAutomaticLogin();
+        const target = event.target;
+        if (target.tagName !== "INPUT" || target.type === "checkbox") return initAutomaticLogin();
         automaticLogin();
     }, { once: true });
 }
@@ -33,7 +34,7 @@ const rememberMe = (user, password) => {
     tempUser.password = password;
     const shouldRemember = $('#remember-me').checked;
     if (!shouldRemember) return LOCAL_setData('rememberMe', false);
-    LOCAL_setData('rememberMe', user);
+    LOCAL_setData('rememberMe', tempUser);
     if ("PasswordCredential" in window) user.setCredentials(user.password);
 }
 

@@ -17,7 +17,7 @@
     <script src="/Join/index/help/help.js"></script>
     <script src="/Join/js/storage.js"></script>
 </head>
-<body onload="$('div').includeTemplate(`/Join/assets/languages/help-${currentLang()}.html`)" style="background-color: #f5f5f5; font-family: 'Inter';">
+<body onload="$('div').includeTemplate({url: `/Join/assets/languages/help-${currentLang()}.html`, replace: false})" style="background-color: #f5f5f5; font-family: 'Inter';">
     <div></div>
 </body>
 </html>
