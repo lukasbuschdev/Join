@@ -36,7 +36,7 @@ let inactivityTimer;
 const addInactivityTimer = (minutes = 5) => {
     inactivityTimer = setTimeout(()=>{
         goTo('login', {search: '?expired', reroute: true});
-    }, minutes * 60 * 1000)
+    }, minutes * 60 * 1000);
 }
 
 const initInactivity = () => {
