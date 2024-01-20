@@ -272,8 +272,6 @@ const initEditBoard = async () => {
     editBoardModal.openModal();
 }
 
-
-
 const deleteBoard = () => confirmation(`delete-board, {boardName: '${SELECTED_BOARD.name}'}`, async () => {
     SELECTED_BOARD.collaborators.forAwait(async collaboratorId => {
         await REMOTE_removeData(`users/${collaboratorId}/boards/${SELECTED_BOARD.id}`);
@@ -283,7 +281,7 @@ const deleteBoard = () => confirmation(`delete-board, {boardName: '${SELECTED_BO
     SELECTED_BOARD = Object.values(BOARDS)[0] || undefined;
     notification('board-deleted');
     $('#edit-board').closeModal();
-    loadContent();
+    location.reload();
 })
 
 const toggleBoardSelection = () => {

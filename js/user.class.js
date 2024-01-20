@@ -48,21 +48,20 @@ class User extends Account {
         await this.update();
     }
 
-    setCredentials() {
+    setCredentials(rawPassword) {
         const cred = new PasswordCredential({
             id: this.name,
-            password: this.password,
+            password: rawPassword,
             name: this.email
         });
         navigator.credentials.store(cred);
     }
 
-    async logIn() {
+    async logIn(rawPassword) {
         LOCAL_setData('loggedIn', true);
         this.loggedIn = 'true';
-        if ("PasswordCredential" in window) this.setCredentials();
         await this.update();
-        goTo('index/summary/summary', {search: `?uid=${this.id}`, reroute: true});
+        goTo('index/summary/summary', {search: `?uid=${this.id}`});
     }
 
     async logOut() {
@@ -70,7 +69,7 @@ class User extends Account {
         this.loggedIn = 'false';
         await this.update();
         if ("PasswordCredential" in window) navigator.credentials.preventSilentAccess();
-        goTo('init/login/login', {reroute: true, search: ''});
+        goTo('init/login/login', {search: ''});
     }
 
     async update() {

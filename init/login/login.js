@@ -1,5 +1,6 @@
 function initLogin() {
     rememberLoginDetails();
+    automaticLogin();
 }
 
 const logIn = async () => {
@@ -16,7 +17,6 @@ const logIn = async () => {
     );
     if(!user || !passwordValidity) return;
     const tempUser = new User(user);
-    Object.assign(tempUser, user);
     tempUser.password = password;
     
     rememberMe(tempUser);
@@ -24,17 +24,16 @@ const logIn = async () => {
 }
 
 const rememberMe = (user) => {
-    const rememberLogin = $('#remember-me').getAttribute('checked');
-    if (rememberLogin == 'false') return LOCAL_setData('rememberMe', false);
+    const shouldRemember = $('#remember-me').getAttribute('checked');
+    if (shouldRemember == 'false') return LOCAL_setData('rememberMe', false);
     LOCAL_setData('rememberMe', user);
-    if ("PasswordCredential" in window) user.setCredentials();
+    if ("PasswordCredential" in window) user.setCredentials(user.password);
 }
 
 const rememberLoginDetails = () => {
     const rememberedData = LOCAL_getData('rememberMe');
     if (!rememberedData) return;
     const { name, password } = rememberedData;
-    console.log(rememberedData.password)
     $('#email input').value = name;
     $('#password input').value = password;
     $('#remember-me').setAttribute('checked', 'true');

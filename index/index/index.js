@@ -40,10 +40,6 @@ const checkLogin = () => {
     }
 }
 
-window.addEventListener("popstate", (e) => {
-    $(`#${currentDirectory()}`)?.click();
-});
-
 const initFunctions = {
     "summary": () => initSummary(),
     "contacts": () => initContacts(),

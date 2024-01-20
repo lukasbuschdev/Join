@@ -43,12 +43,12 @@ const notificationTemplate = (notification) => {
 async function acceptBoardInvite (boardId, boardName, notificationId) {
     await removeNotification(notificationId);
     if (!await REMOTE_getData(`boards/${boardId}`)) return notification(`board-nonexistent, {boardName: '${boardName}'}`);
-    await USER.setProperty('boards', [...USER.getPropertyValue('boards'), `${boardId}`]);
-    await REMOTE_setData(`boards/${boardId}/collaborators`, USER.id);
+    const setUser = USER.setProperty('boards', [...USER.getPropertyValue('boards'), `${boardId}`]);
+    const setBoard = REMOTE_setData(`boards/${boardId}/collaborators`, USER.id);
+    await Promise.all([setUser, setBoard]);
     await getBoards();
-    notification(`board-joined, {boardName: '${boardName}'}`);
-    await getBoards();
-    loadContent();
+    await notification(`board-joined, {boardName: '${boardName}'}`);
+    location.reload();
 }
 
 async function removeNotification (notificationId) {
@@ -68,6 +68,6 @@ async function acceptFriendshipRequest(id, userId, name) {
     await REMOTE_setData(`users/${userId}/contacts`, USER.id.toString());
     USER.contacts.push(userId);
     await removeFriendshipRequest(id, userId);
-    loadContent();
-    notification(`friend-added, {name: '${name}'}`);
+    await notification(`friend-added, {name: '${name}'}`);
+    location.reload();
 }
