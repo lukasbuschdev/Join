@@ -76,11 +76,8 @@
     width: calc(100%);
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
-
-
-
-
 
 .contacts-header-container {
     gap: 30px;
