@@ -2,6 +2,7 @@
 .add-task-card {
     padding: 2vh 4rem;
     width: 100%;
+    overflow: hidden;
 }
 
 .flex-right {
@@ -87,6 +88,7 @@ textarea {
     height: fit-content;
     gap: 30px;
     align-items: center;
+    overflow: auto;
 }
 
 .add-task-rows .inputs {
@@ -230,7 +232,6 @@ textarea {
 
 #add-task-modal .add-task-card {
     height: 720px;
-    overflow: scroll;
 }
 
 #add-task-modal .add-task-heading {
