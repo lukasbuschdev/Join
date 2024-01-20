@@ -103,8 +103,6 @@ const getTemplate = async (url) => (await fetch(url)).text();
 
 const parse = (evalString) => Function(`'use strict'; return (${evalString}) ?? false`)();
 
-const getFraction = (numerator, denominator, range = 1) => numerator / (denominator / range);
-
 const searchParams = () => new URLSearchParams(document.location.search);
 
 const submitUpload = async () => {
@@ -215,6 +213,8 @@ const pickColor = () => {
   addAcceptColor(userColor);
 }
 
+const getFraction = (numerator, denominator, range = 1) => numerator / (denominator / range);
+
 const moveColorCursor = (offsetX, offsetY, userColor) => {
   const colorCursor = $('#color-cursor');
   colorCursor.classList.remove('d-none');
@@ -271,7 +271,7 @@ function HSLToHex(hsl) {
   return `#${f(0)}${f(8)}${f(4)}${(alpha < 1) ? hexAlpha : ''}`;
 }
 
-const luma = (r, g, b) => Math.round(0.2126 * r + 0.7152 * g + 0.0722 * b);
+// const luma = (r, g, b) => Math.round(0.2126 * r + 0.7152 * g + 0.0722 * b);
 
 function getCubicBezierPoint(t, p1, p2, p0 = {x: 0, y: 0}, p3 = {x: 1, y: 1}) {
   // Calculate the blending functions
@@ -296,8 +296,6 @@ function getCubicBezierPoint(t, p1, p2, p0 = {x: 0, y: 0}, p3 = {x: 1, y: 1}) {
   // Round the coordinates to 2 decimal places
   const roundedX = Math.roundTo(x, 2);
   const roundedY = Math.roundTo(y, 2);
-
-  // Return the rounded coordinates
   return { x: roundedX, y: roundedY };
 }
 
@@ -313,9 +311,8 @@ const getRGBfromString = (colorString) => {
 
 const getRGBA = (color) => {
   if (!color.includes("rgb")) {
-    if (getRGBfromString(color)) {
-      color = getRGBfromString(color);
-    }
+    const rgb = getRGBfromString(color);
+    if (rgb) color = rgb;
   };
   const r = Number(color.match(/(?<=\()\d+(?=,)/g)[0]);
   const g = Number(color.match(/(?<=,\s{0,1})\d+(?=,)/g)[0]);
@@ -337,16 +334,12 @@ const averageColor = (c1, c2, factor = 0.5) => {
     g2 = g1;
     b2 = b1;
   }
-
   const r = Math.round(getRange(r1, r2, factor));
   const g = Math.round(getRange(g1, g2, factor));
   const b = Math.round(getRange(b1, b2, factor));
   const a = Math.roundTo(getRange(a1, a2, factor), 2);
-
   return `rgba(${r}, ${g}, ${b}, ${a})`
 } 
-
-const getAverage = (...args) => args.reduce((total, current) => total += current, 0) / args.length;
 
 const getRange = (min, max, factor) => min + (factor * max - factor * min)
 
@@ -375,27 +368,7 @@ const bezierGradient = ({colors: [...colors], resolution = 10}) => {
   return bg.join(', ');
 }
 
-const linearGradient = ([...colors], resolutionFactor = 5) => {
-  let bg = [];
-  const resolution = resolutionFactor * colors.length;
-  colors.slice(0, -1).for(
-    (c1, i) => {
-      const c2 = colors[i + 1];
-      for (let i = 1; i <= resolution / colors.length; i++) {
-        const progress = i / resolutionFactor;
-        bg.push(`${averageColor(c1, c2, progress)}`);
-      }
-    }
-  )
-  return bg.join(', ');
-}
-
 const isLetterOrNumber = (input) => input.length == 1 && /([a-z]|[A-Z]|[0-9])/.test(input);
-
-// const removeMethods = (obj) => {
-//   if (obj.hasOwnProperty("password")) delete obj.password;
-//   return JSON.parse(JSON.stringify(obj));
-// }
 
 const confirmation = (type, cb) => {
   const dataLang = (type.includes(',')) ? type.slice(0, type.indexOf(',')) : type;
@@ -403,26 +376,29 @@ const confirmation = (type, cb) => {
   const confirmationContainer = document.createElement('dialog');
   confirmationContainer.type = "modal";
 
-  confirmationContainer.innerHTML = /*html*/`
-    <div class="confirmation-dialog column gap-25">
-      <span data-lang="confirmation-${type}"></span>
-      <div class="btn-container gap-15">
-        <div class="btn btn-secondary txt-small txt-700" data-lang="btn-cancel" onclick="this.closest('dialog').closeModal()"></div>
-        <div class="btn btn-primary txt-small txt-700" data-lang="confirm-${type}"></div>
-      </div>
-    </div>
-  `;
+  confirmationContainer.innerHTML = confirmationTemplate(type);
   confirmationContainer.LANG_load();
 
   confirmationContainer.$('.btn-primary').on('click', () => {
     cb();
     confirmationContainer.closeModal();
+    confirmationContainer.remove()
   }, {once: true});
 
   $('body').append(confirmationContainer);
-  confirmationContainer.on('close', () => confirmationContainer.remove());
-
   confirmationContainer.openModal();
+}
+
+const confirmationTemplate = (type) => {
+  return /*html*/`
+  <div class="confirmation-dialog column gap-25">
+    <span data-lang="confirmation-${type}"></span>
+    <div class="btn-container gap-15">
+      <div class="btn btn-secondary txt-small txt-700" data-lang="btn-cancel" onclick="this.closest('dialog').closeModal()"></div>
+      <div class="btn btn-primary txt-small txt-700" data-lang="confirm-${type}"></div>
+    </div>
+  </div>
+`;
 }
 
 const dateFormat = (dateString) => {
@@ -444,22 +420,6 @@ const invalidDate = (input, output) => {
   const yO = output.getFullYear();
 
   return !(Number(mI) == mO && Number(yI) == yO);
-}
-
-const hoverReplaceRegex = () => {
-  const regex = /(.*[^\s][\n]?.*:hover \{[\s\n\S]+?\})/;
-  const replaceString = "@media (hover: hover) {\n    $1\n}";
-  return [regex, replaceString];
-}
-
-HTMLElement.prototype.textAnimation = async function (text, speed = 10) {
-  this.innerText = '';
-  let i = 0;
-  const int = setInterval(() => {
-    if (i + 1 == text.length) clearInterval(int);
-    this.textContent += text[i];
-    i++;
-  }, speed);
 }
 
 async function hashInputValue(inputValue) {

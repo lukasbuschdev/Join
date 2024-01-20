@@ -169,7 +169,6 @@ const createNewBoard = async () => {
 };
 
 const createBoardNotification = ({name, id}, collaborators) => {
-    console.log(`sending notification to ${collaborators}`)
     if (!collaborators.length) return;
     const notification = new Notify({
         recipients: collaborators,

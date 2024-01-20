@@ -208,8 +208,6 @@ Math.roundTo = function (nbr, decimals) {
 }
 
 HTMLElement.prototype.renderItems = function (items, templateFunction) {
-    // this.innerHTML = '';
-
     const docFrag = document.createDocumentFragment();
     items.for(item => {
         const newItem = document.createElement('div');
@@ -218,3 +216,13 @@ HTMLElement.prototype.renderItems = function (items, templateFunction) {
     });
     this.appendChild(docFrag);
 }
+
+HTMLElement.prototype.textAnimation = async function (text, speed = 10) {
+    this.innerText = '';
+    let i = 0;
+    const int = setInterval(() => {
+      if (i + 1 == text.length) clearInterval(int);
+      this.textContent += text[i];
+      i++;
+    }, speed);
+  }
