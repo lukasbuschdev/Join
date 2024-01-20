@@ -251,7 +251,7 @@ const saveEditedBoard = async () => {
     const notifyPromise = createBoardNotification(SELECTED_BOARD, collaborators.filter(collabId => !SELECTED_BOARD.collaborators.includes(collabId)));
     const categoryPromise = updateBoardCategories(categories);
     await Promise.all([notifyPromise, categoryPromise]);
-    notification(`board-updated, {boardName: '${SELECTED_BOARD.name}'}`);
+    await notification(`board-updated, {boardName: '${SELECTED_BOARD.name}'}`);
     $('#edit-board').closeModal();
     location.reload();
 }
@@ -279,7 +279,7 @@ const deleteBoard = () => confirmation(`delete-board, {boardName: '${SELECTED_BO
     SESSION_removeData('activeBoard');
     await SELECTED_BOARD.delete();
     SELECTED_BOARD = Object.values(BOARDS)[0] || undefined;
-    notification('board-deleted');
+    await notification('board-deleted');
     $('#edit-board').closeModal();
     location.reload();
 })

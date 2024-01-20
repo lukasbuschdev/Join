@@ -49,11 +49,7 @@ const notification = (message) => {
     el.classList.value = "dlg-notification";
     $('body').append(el);
 
-    el.innerHTML = /*html*/`
-      <div class="notification grid-center">
-          <span data-lang="${message}"></span>
-      </div>
-    `
+    el.innerHTML = popUpNotificationTemplate(message);
     el.LANG_load();
     el.openModal();
     el.addEventListener("close", () => {
@@ -61,6 +57,13 @@ const notification = (message) => {
       resolve();
     });
   });
+}
+
+const popUpNotificationTemplate = (message) => {
+  return /*html*/`
+  <div class="notification grid-center">
+      <span data-lang="${message}"></span>
+  </div>`
 }
 
 const debounce = (cb, delay = 1000) => {
@@ -387,22 +390,12 @@ const linearGradient = ([...colors], resolutionFactor = 5) => {
   return bg.join(', ');
 }
 
-const getIp = async () => {
-  return await (await fetch('../php/getIp.php')).text();
-}
-
 const isLetterOrNumber = (input) => input.length == 1 && /([a-z]|[A-Z]|[0-9])/.test(input);
 
-const getDeviceData = async () => {
-  const {city: {name: city}, country: {name: country}} = await (await fetch("https://api.geoapify.com/v1/ipinfo?&apiKey=58aa476deefd4ea69553d253e4063d6a")).json();
-  const platform = navigator.userAgent.match(/(?<=\()[^;\s]*/)[0];
-  return {city, country, platform};
-}
-
-const removeMethods = (obj) => {
-  if (obj.hasOwnProperty("password")) delete obj.password;
-  return JSON.parse(JSON.stringify(obj));
-}
+// const removeMethods = (obj) => {
+//   if (obj.hasOwnProperty("password")) delete obj.password;
+//   return JSON.parse(JSON.stringify(obj));
+// }
 
 const confirmation = (type, cb) => {
   const dataLang = (type.includes(',')) ? type.slice(0, type.indexOf(',')) : type;

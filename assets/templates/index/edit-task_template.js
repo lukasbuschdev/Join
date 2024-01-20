@@ -140,7 +140,6 @@ function subtaskInvalidEdit() {
     $('#edit-task #error-container').classList.remove('d-none');
     $('#edit-task #subtask-letters-only').classList.remove('error-inactive');
     $('#edit-task #add-subtask').classList.add('input-warning');
-    return
 }
 
 function subtaskTooLongEdit() {
@@ -148,7 +147,6 @@ function subtaskTooLongEdit() {
     $('#edit-task #add-subtask').classList.add('input-warning');
     $('#edit-task #subtask-letters-only').classList.add('error-inactive');
     $('#edit-task #subtask-too-long').classList.remove('error-inactive');
-    return 
 }
 
 function subtaskValidEdit() {

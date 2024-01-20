@@ -37,11 +37,9 @@ const fullscreenTaskTemplate = ({category, title, description, priority, dueDate
 };
 
 const fullscreenTaskAssignedTo = (assignedTo) => {
-    let template = '';
-    ALL_USERS
-    .filter(({id}) => assignedTo.includes(id))
-    .for(
-        ({name, color}) => template += /*html*/`
+    const assignedUsers = Object.values(ALL_USERS).filter(({id}) => assignedTo.includes(id));
+    return assignedUsers.reduce(
+        (template, {name, color}) => template += /*html*/`
             <div class="assigned-to-contact row gap-15">
                 <div class="user-img-container grid-center" style="--user-clr: ${color}; --outline-thickness: 0px;">
                     <span>${name.slice(0, 2).toUpperCase()}</span>
@@ -51,20 +49,17 @@ const fullscreenTaskAssignedTo = (assignedTo) => {
                 </div>
             </div>
         `
-    );
-    return template;
+    , '');
 };
 
 const fullscreenTaskSubTasks = (subTasks) => {
     if (subTasks.length == 0) return '';
-    let template = '';
-    subTasks.for(
-        ({name, done}) => template += /*html*/`
+    return subTasks.reduce(
+        (template, {name, done}) => template += /*html*/`
             <div class="fullscreen-subtask row gap-15">
                 <input type="checkbox" data-done="'${done}'"${done == true ? 'checked' : ''} onchange="changeSubtaskDoneState('${name}')">
                 <span class="txt-small">${name}</span>
             </div>
         `
-    );
-    return template;
+    , '');
 };

@@ -24,14 +24,14 @@ const logIn = async () => {
         { identifier: 'wrong-password', bool: !passwordValidity || false },
     );
     if(!user || !passwordValidity) return;
-    const tempUser = new User(user);
-    tempUser.password = password;
     
-    rememberMe(tempUser);
+    rememberMe(user, password);
     user.logIn();
 }
 
-const rememberMe = (user) => {
+const rememberMe = (user, password) => {
+    const tempUser = new User(user);
+    tempUser.password = password;
     const shouldRemember = $('#remember-me').getAttribute('checked');
     if (shouldRemember == 'false') return LOCAL_setData('rememberMe', false);
     LOCAL_setData('rememberMe', user);

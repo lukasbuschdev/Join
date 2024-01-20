@@ -35,7 +35,7 @@
         padding: 15px;
     }
     .contact .column {
-        width: calc(100%) !important;
+        /* width: calc(100%) !important; */
     }
     .contact-img {
         display: none;
@@ -142,17 +142,6 @@
 .delete-contact-btn span {
     font-size: 1rem;
     color: var(--clr-orange);
-}
-
-.contact-name button:first-of-type::before {
-    content: '';
-    background: url(/Join/assets/img/icons/plusBlue.svg);
-    height: 15px;
-    width: 15px;
-    margin-right: 13px;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
 }
 
 .img-name {
@@ -604,7 +593,7 @@
     }
 
     .contact .contact-name {
-        font-size: 1.625rem;
+        font-size: 1.25rem;
     }
 
     .close-inactive {

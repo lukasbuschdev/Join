@@ -22,10 +22,6 @@ const REMOTE_upload = async (directory, data) => {
         value: JSON.stringify(data),
         token: STORAGE_TOKEN
     };
-
-    // log(data);
-    // return;
-
     return fetch(STORAGE_URL, {
         method: 'POST',
         body: JSON.stringify(payload)
@@ -33,30 +29,25 @@ const REMOTE_upload = async (directory, data) => {
 }
 
 const REMOTE_getData = async (path) => {
-    if (!path) return
-    if (!/^(?=[a-zA-Z0-9])(?!.*\/\/)[a-zA-Z0-9\/-]*[a-zA-Z0-9]$/.test(path)) {
-        console.error(`'${path}' is not a valid path!`);
-        return
-    };
+    if (!path) return;
+    const isValidPath = /^(?=[a-zA-Z0-9])(?!.*\/\/)[a-zA-Z0-9\/-]*[a-zA-Z0-9]$/.test(path);
+    if (!isValidPath) return console.error(`'${path}' is not a valid path!`);
+
     let pathArray = path.split('/');
     const directory = pathArray[0];
     const pathSelector = pathArray.slice(1).map(directory => `["${directory}"]`).join('');
-
     const data = await REMOTE_download(directory);
-    if(!data) {
-        return notification('network-error');
-    };
+    if(!data) return notification('network-error');
     
     const result = parse(`${JSON.stringify(data)}${pathSelector}`);
-    if (result) {
-        if (pathArray.at(-2) == "users") return new User(result);
-        else if (pathArray.at(-2) == "boards") return new Board(result);
-        else if (pathArray.at(-2) == "tasks") return new Task(result);
-        else return result;
+    if (!result) return error(`subdirectory '${path}' not found!`);
 
-    } else {
-        error(`subdirectory '${path}' not found!`);
-        return undefined;
+    const mainDirectory = pathArray.at(-2);
+    switch (mainDirectory) {
+        case "users": return new User(result);
+        case "boards": return new Board(result);
+        case "tasks": return new Task(result);
+        default: return result;
     }
 }
 
@@ -115,40 +106,24 @@ const REMOTE_clearVerifications = async () => {
 
 // Directories
 
-const REMOTE_addDirectory = async (directoryName) => {
-    if (await REMOTE_getData(directoryName)) {
-        console.error(`directory '${directoryName}' already exists!`);
-        return;
-    }
-    return REMOTE_upload(directoryName, {});
-}
+// const REMOTE_addDirectory = async (directoryName) => {
+//     if (await REMOTE_getData(directoryName)) {
+//         console.error(`directory '${directoryName}' already exists!`);
+//         return;
+//     }
+//     return REMOTE_upload(directoryName, {});
+// }
 
-const REMOTE_resetDirectory = async (directoryName) => {
-    const dev = await REMOTE_getData('dev/master-pw');
-    if (!dev) return;
-    let prompt = window.prompt(`Do you really want to reset '${directoryName}'?`, 'Password');
-    if (prompt == dev) {
-        REMOTE_upload(directoryName, {});
-    } else if (prompt) {
-        window.alert('Wrong password!');
-    }
-}
-
-const REMOTE_updateUsers = async () => {
-    const allUsers = Object.values(await REMOTE_getData('users'));
-
-    let updatedUsersObject = {};
-
-    let updatedUsers = allUsers.map(
-        user => new User(user)
-    );
-
-    updatedUsers.for(
-        user => updatedUsersObject[user.id] = removeMethods(user)
-    );
-
-    return await REMOTE_upload('users', updatedUsersObject);
-}
+// const REMOTE_resetDirectory = async (directoryName) => {
+//     const dev = await REMOTE_getData('dev/master-pw');
+//     if (!dev) return;
+//     let prompt = window.prompt(`Do you really want to reset '${directoryName}'?`, 'Password');
+//     if (prompt == dev) {
+//         REMOTE_upload(directoryName, {});
+//     } else if (prompt) {
+//         window.alert('Wrong password!');
+//     }
+// }
 
 // USERDATA
 
@@ -238,7 +213,6 @@ const getContacts = async () => {
     USER.contacts.for(
         contactId => CONTACTS[contactId] = new User(allUsers[contactId])
     );
-    return;
 }
 
 const getBoards = async () => {

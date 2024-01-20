@@ -181,8 +181,8 @@ function selectedContactTemplate({id, img, name, email, phone, color}) {
                 <div class="column contact-name">
                     <span>${name}</span>
                     <div class="row gap-30">
-                        <button data-lang="add-task" class="row" onclick="addTaskModal()">Add Task</button>
-                        <div class="vertical-line"></div>
+                        <!-- <button data-lang="add-task" class="row" onclick="addTaskModal()">Add Task</button> -->
+                        <!-- <div class="vertical-line"></div> -->
                         <button class="delete-contact-btn row gap-10" onclick="confirmation('delete-contact', () => deleteContact(${id}))">
                             <span data-lang="delete">Delete</span>
                             <img src="/Join/assets/img/icons/trash_red.svg" width="20">

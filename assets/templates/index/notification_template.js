@@ -1,42 +1,47 @@
 const notificationTemplate = (notification) => {
-    if (notification.type == "friendshipRequest") {
-        const {userName, userId, id} = notification;
-        return /*html*/`
-            <div class="notification radius-15 row" data-id="${id}">
-                <div>
-                    <span data-lang="user-has-sent-friendship-request, {ownerName: '${userName}'}"></span>
+    switch (notification.type) {
+        case "friendshipRequest": {
+            const {userName, userId, id} = notification;
+            return /*html*/`
+                <div class="notification radius-15 row" data-id="${id}">
+                    <div>
+                        <span data-lang="user-has-sent-friendship-request, {ownerName: '${userName}'}"></span>
+                    </div>
+                    <div class="btn-container gap-10">
+                        <button data-lang="decline" class="btn btn-secondary txt-small txt-600" onclick="removeFriendshipRequest('${id}', '${userId}')">Decline</button>
+                        <button data-lang="accept" class="btn btn-primary txt-small txt-600" onclick="acceptFriendshipRequest('${id}', '${userId}', '${userName}')">Accept</button>
+                    </div>
                 </div>
-                <div class="btn-container gap-10">
-                    <button data-lang="decline" class="btn btn-secondary txt-small txt-600" onclick="removeFriendshipRequest('${id}', '${userId}')">Decline</button>
-                    <button data-lang="accept" class="btn btn-primary txt-small txt-600" onclick="acceptFriendshipRequest('${id}', '${userId}', '${userName}')">Accept</button>
+            `;
+        }
+        case "boardInvite": {
+            const {ownerName, boardName, boardId, id} = notification;
+            return /*html*/`
+                <div class="notification radius-15 row" data-id="${id}">
+                    <div>
+                        <span data-lang="user-invited-you-to-board, {ownerName: '${ownerName}', boardName: '${boardName.replaceAll('-',' ')}'}"></span>
+                    </div>
+                    <div class="btn-container gap-10">
+                        <button data-lang="decline" class="btn btn-secondary txt-small txt-600" onclick="removeNotification('${id}')">Decline</button>
+                        <button data-lang="accept" class="btn btn-primary txt-small txt-600" onclick="acceptBoardInvite('${boardId}', '${boardName}', '${id}')">Accept</button>
+                    </div>
                 </div>
-            </div>
-        `;
-    } else if (notification.type == "boardInvite") {
-        const {ownerName, boardName, boardId, id} = notification;
-        return /*html*/`
-            <div class="notification radius-15 row" data-id="${id}">
-                <div>
-                    <span data-lang="user-invited-you-to-board, {ownerName: '${ownerName}', boardName: '${boardName.replaceAll('-',' ')}'}"></span>
+            `;
+        }
+        case "assignTo": {
+            const {userName, boardName, taskName, id} = notification;
+            return /*html*/`
+                <div class="notification radius-15 column gap-10" data-id="${id}">
+                    <div>
+                        <span data-lang="assigned-you-to-task, {ownerName: '${userName}', taskName: '${taskName}', boardName: '${boardName}'}"></span>
+                    </div>
+                    <div class="btn-container gap-10">
+                        <button data-lang="understood" class="btn btn-secondary txt-small txt-600" onclick="removeNotification('${id}')">Understood</button>
+                    </div>
                 </div>
-                <div class="btn-container gap-10">
-                    <button data-lang="decline" class="btn btn-secondary txt-small txt-600" onclick="removeNotification('${id}')">Decline</button>
-                    <button data-lang="accept" class="btn btn-primary txt-small txt-600" onclick="acceptBoardInvite('${boardId}', '${boardName}', '${id}')">Accept</button>
-                </div>
-            </div>
-        `;
-    } else if (notification.type == "assignTo") {
-        const {userName, boardName, taskName, id} = notification;
-        return /*html*/`
-            <div class="notification radius-15 column gap-10" data-id="${id}">
-                <div>
-                    <span data-lang="assigned-you-to-task, {ownerName: '${userName}', taskName: '${taskName}', boardName: '${boardName}'}"></span>
-                </div>
-                <div class="btn-container gap-10">
-                    <button data-lang="understood" class="btn btn-secondary txt-small txt-600" onclick="removeNotification('${id}')">Understood</button>
-                </div>
-            </div>
-        `;
+            `;
+        }
+        default: return
     }
 }
 
