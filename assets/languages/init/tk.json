@@ -26,6 +26,8 @@
     "email-in-use": "E-posta zaten kullanılıyor!",
     "invalid-password": "Şifre en az 8 karakter uzunluğunda olmalı ve en az bir büyük harf, bir küçük harf ve bir rakam içermelidir",
     "automatic-signout": "Otomatik olarak çıkış yaptınız!",
+    "register-privacy": "%Gizlilik Politikası%nı kabul ediyorum",
+    "accept-privacy-please": "Lütfen Gizlilik Politikasını kabul edin!",
 
     "i-forgot-password": "Şifremi unuttum",
     "dont-worry": "Endişelenmeyin! Size şifrenizi sıfırlama talimatlarını içeren bir e-posta göndereceğiz.",

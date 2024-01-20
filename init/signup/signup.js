@@ -2,11 +2,12 @@ let SOCKET;
 
 const initSignup = () => {
     initPrivacyLink();
+    initWebsocket();
 }
 
 const initPrivacyLink = () => {
     const privacyContainer = $('[data-lang="register-privacy"]')
-    privacyContainer.innerHTML = privacyContainer.innerHTML.replace(/\b\w+\b \b\w+\b$/, words => /*html*/`<span class="txt-blue" style="cursor: pointer;" onclick="initPrivacy()">${words}</span>`)
+    privacyContainer.innerHTML = privacyContainer.innerText.replace(/%.+%/, words => /*html*/`<span class="txt-blue" style="cursor: pointer;" onclick="initPrivacy()">${words.replaceAll('%','')}</span>`)
 }
 
 const initPrivacy = () => {

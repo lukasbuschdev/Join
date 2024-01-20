@@ -26,6 +26,8 @@
     "email-in-use": "Email já em uso!",
     "invalid-password": "A senha deve ter pelo menos 8 caracteres e conter pelo menos uma letra maiúscula, uma letra minúscula e um dígito",
     "automatic-signout": "Você foi desconectado automaticamente!",
+    "register-privacy": "Eu aceito a %Política de Privacidade%",
+    "accept-privacy-please": "Por favor, aceite a Política de Privacidade!",
 
     "i-forgot-password": "Esqueci minha senha",
     "dont-worry": "Não se preocupe! Enviaremos um email com as instruções para redefinir sua senha.",
