@@ -17,6 +17,7 @@ async function init(directory) {
     $(`#${directory}`).classList.add("active");
     renderUserData();
     checkNotifications();
+    LANG_load();
 }
 
 if (LOCAL_getData('rememberMe') == 'false') {

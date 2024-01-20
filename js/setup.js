@@ -65,5 +65,5 @@ const renderColor = (userField, color) => {
 };
 
 initInactivity();
-$('body').initMenus();
 LANG_load();
+$('body').initMenus();
