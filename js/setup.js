@@ -26,7 +26,7 @@ const resetMenus = function () {
 }
 
 let inactivityTimer;
-const addInactivityTimer = (minutes = 5) => inactivityTimer = setTimeout(() => goTo('login', {search: '?expired', reroute: true}), minutes * 60 * 1000);
+const addInactivityTimer = (minutes = 5) => inactivityTimer = setTimeout(() => goTo('init/login/login', { search: '?expired' }), minutes * 60 * 1000);
 
 const initInactivity = () => {
     window.addEventListener("visibilitychange", () => {
