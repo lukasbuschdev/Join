@@ -1,6 +1,5 @@
 function initLogin() {
     rememberLoginDetails();
-    // automaticLogin();
     initAutomaticLogin();
 }
 
@@ -32,8 +31,8 @@ const logIn = async () => {
 const rememberMe = (user, password) => {
     const tempUser = new User(user);
     tempUser.password = password;
-    const shouldRemember = $('#remember-me').getAttribute('checked');
-    if (shouldRemember == 'false') return LOCAL_setData('rememberMe', false);
+    const shouldRemember = $('#remember-me').checked;
+    if (!shouldRemember) return LOCAL_setData('rememberMe', false);
     LOCAL_setData('rememberMe', user);
     if ("PasswordCredential" in window) user.setCredentials(user.password);
 }
@@ -49,6 +48,7 @@ const rememberLoginDetails = () => {
 
 const automaticLogin = async () => {
     if (!("PasswordCredential" in window)) return;
+    navigator.credentials.preventSilentAccess();
     const cred = await navigator.credentials.get({ password: true });
     if (!cred) return;
     const user = await getUserByInput(cred.id);
