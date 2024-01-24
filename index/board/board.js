@@ -84,7 +84,7 @@ const renderFullscreenTask = (ids) => {
     const [boardId, taskId] = ids.split('/');
     const taskData = BOARDS[boardId].tasks[taskId];
     SELECTED_TASK = new Task(taskData);
-    initialTask = _.cloneDeep(removeMethods(SELECTED_TASK));
+    initialTask = _.cloneDeep(SELECTED_TASK);
     modal.$('#fullscreen-task').innerHTML = fullscreenTaskTemplate(taskData);
     modal.LANG_load();
     modal.openModal();
@@ -111,7 +111,7 @@ const saveEditedTask = () => {
 }
 
 const saveTaskChanges = () => {
-    const updatedTask = removeMethods(SELECTED_TASK);
+    const updatedTask = SELECTED_TASK;
 
     const differences = getJsonChanges(updatedTask, initialTask);
     if (Object.values(differences).length > 0) {
