@@ -39,11 +39,13 @@ const rememberMe = (user, password) => {
     if ("PasswordCredential" in window) user.setCredentials(tempUser.password);
 }
 
-const rememberLoginDetails = () => {
+const rememberLoginDetails = async () => {
     const rememberedData = LOCAL_getData('rememberMe');
     console.log(rememberedData)
     if (!rememberedData) return;
     const { name, password } = rememberedData;
+    const user = await getUserByInput(name)
+    if (!user || (await hashInputValue(password) !== user.password)) return
     $('#email input').value = name;
     $('#password input').value = password;
     $('#remember-me').setAttribute('checked', 'true');
