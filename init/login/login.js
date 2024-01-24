@@ -41,7 +41,6 @@ const rememberMe = (user, password) => {
 
 const rememberLoginDetails = async () => {
     const rememberedData = LOCAL_getData('rememberMe');
-    console.log(rememberedData)
     if (!rememberedData) return;
     const { name, password } = rememberedData;
     const user = await getUserByInput(name)
