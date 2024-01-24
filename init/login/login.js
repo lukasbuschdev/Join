@@ -30,19 +30,20 @@ const logIn = async () => {
 }
 
 const rememberMe = (user, password) => {
+    const shouldRemember = $('#remember-me').checked;
+    if (!shouldRemember) return LOCAL_removeData('rememberMe');
+
     const tempUser = new User(user);
     tempUser.password = password;
-    const shouldRemember = $('#remember-me').checked;
-    if (!shouldRemember) return LOCAL_setData('rememberMe', false);
-    LOCAL_setData('rememberMe', tempUser);
+    LOCAL_setData('rememberMe', JSON.stringify(tempUser));
     if ("PasswordCredential" in window) user.setCredentials(tempUser.password);
 }
 
 const rememberLoginDetails = () => {
     const rememberedData = LOCAL_getData('rememberMe');
-    if (rememberedData === null) return;
+    console.log(rememberedData)
+    if (!rememberedData) return;
     const { name, password } = rememberedData;
-    if (!name || !password) return
     $('#email input').value = name;
     $('#password input').value = password;
     $('#remember-me').setAttribute('checked', 'true');

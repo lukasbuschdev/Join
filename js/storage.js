@@ -164,7 +164,7 @@ const getContactsData = async () => {
 // LOCAL STORAGE
 
 const LOCAL_setData = (key, value) => {
-    localStorage.setItem(key, (typeof value == "object") ? JSON.stringify(value) : value);
+    localStorage.setItem(key, (typeof value === "object") ? JSON.stringify(value) : value);
 }
 
 const LOCAL_getData = (key) => {
@@ -172,7 +172,7 @@ const LOCAL_getData = (key) => {
     try {
         return JSON.parse(data);
     } catch(e) {
-        return data;
+        return data !== null ? data : undefined;
     }
 }
 
