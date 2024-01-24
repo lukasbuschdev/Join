@@ -8,11 +8,9 @@ const isSessionExpired = () => {
     const a = new URLSearchParams(document.location.search);
     if (a.has('expired')){
         document.addEventListener("visibilitychange", visibilityHander = () => {
-            if (document.visibilityState == 'visible') {
-                notification("automatic-signout");
-                document.removeEventListener("visibilitychange", visibilityHander);
-            }
-        });
+            if (document.visibilityState == 'visible') return notification("automatic-signout");
+            isSessionExpired();
+        }, { once: true });
     }
 }
 

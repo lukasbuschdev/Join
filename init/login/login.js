@@ -40,8 +40,9 @@ const rememberMe = (user, password) => {
 
 const rememberLoginDetails = () => {
     const rememberedData = LOCAL_getData('rememberMe');
-    if (!rememberedData) return;
+    if (rememberedData === null) return;
     const { name, password } = rememberedData;
+    if (!name || !password) return
     $('#email input').value = name;
     $('#password input').value = password;
     $('#remember-me').setAttribute('checked', 'true');

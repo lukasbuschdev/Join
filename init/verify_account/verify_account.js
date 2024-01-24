@@ -1,3 +1,5 @@
+let SOCKET;
+
 const initVerifyAccount = () => {
     LANG_load();
     initTimer();
