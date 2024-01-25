@@ -8,9 +8,9 @@ let SOCKET;
 let notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wav');
 
 async function init(directory) {
+    await checkLogin();
     await includeTemplates();
     await getUser();
-    checkLogin();
     await getAllUsers();
     initFunctions[directory]();
     initWebsocket(USER.id);
@@ -35,10 +35,11 @@ const checkNotifications = async () => {
     notificationCounters.for(counter => counter.innerText = notificationCount);
 }
 
-const checkLogin = () => {
-    if (USER.loggedIn == 'false') {
-        goTo('init/login/login', {search: ''});
-    }
+const checkLogin = async () => {
+    const searchParams = new URLSearchParams();
+    const isValidUser = await getUsersById([searchParams.get('uid')])
+    console.log(isValidUser)
+    if (!isValidUser) goTo('init/login/login', {search: ''});
 }
 
 const initFunctions = {

@@ -134,14 +134,10 @@ const getUserByInput = async (input) => {
 }
 
 const getUsersById = async (uids) => {
-    let returnData = {};
     const allUsers = await REMOTE_getData(`users`);
-    uids.for(
-        uid => {
-            if (allUsers[uid]) returnData[uid] = allUsers[uid];
-        }
-    )
-    return returnData;
+    const foundUsers = uids.reduce((users, uid) => { return allUsers.hasOwnProperty(uid) ? {...users, [uid]: allUsers[uid]} : users }, {});
+    if (Object.values(foundUsers).length === 0) return;
+    return foundUsers
 }
 
 const getContactsData = async () => {
