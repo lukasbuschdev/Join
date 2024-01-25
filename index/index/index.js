@@ -36,9 +36,9 @@ const checkNotifications = async () => {
 }
 
 const checkLogin = async () => {
-    const searchParams = new URLSearchParams(document.location.search);
-    const isValidUser = await getUsersById([searchParams.get('uid')])
-    console.log(isValidUser)
+    const uid = searchParams().get('uid')
+    if (!uid) return
+    const isValidUser = !!(await getUsersById([uid]))
     if (!isValidUser) goTo('init/login/login', {search: ''});
 }
 
