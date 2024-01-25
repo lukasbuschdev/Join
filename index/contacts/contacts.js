@@ -117,18 +117,10 @@ const getInput = debounce(async function () {
             user => ((user.name.toLowerCase().includes(input.value.toLowerCase())) && !(userId == user.id) && !(USER.contacts.includes(`${user.id}`)))
         );
     
-        const sortedUsers = filteredUsers.sort(
-            function(a, b) {
-                if(a.name > b.name) {
-                    return 1
-                } else {
-                    return -1
-                } 
-            }
-        );
+        const sortedUsers = filteredUsers.sort((a, b) => a.name > b.name);
     
         renderSearchResults(sortedUsers);
-        setSearchResultStyle();
+        if (sortedUsers.length) setSearchResultStyle();
     } else {
         unsetSearchResultStyle();
     }
@@ -253,6 +245,9 @@ function selectNewContact(id, img, name, color) {
 
 async function addContact() {
     const selectedUser = $('#input-name');
+    const userExists = await getUserByInput(selectedUser.value)
+    throwErrors({identifier: 'select-valid-user', bool: !userExists})
+    if (!userExists) return
     const selectedUserId = selectedUser.dataset.id;
     const userName = USER.name;
 
@@ -287,5 +282,5 @@ async function deleteContact(id) {
 
     $('.contact-container').classList.add('d-none');
     await renderContacts();
-    await loadContent();
+    location.reload();
 }

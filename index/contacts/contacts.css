@@ -25,7 +25,7 @@
 
 .contact {
     border-radius: 10px;
-    padding: 15px 25px;
+    padding: 50px 25px 15px;
     gap: 35px;
 }
 
@@ -261,7 +261,6 @@
 .add-contact-field {
     width: 570px;
     height: 100%;
-    justify-content: space-around;
     position: relative;
     padding: 66px 46px;
     background-color: white;
@@ -346,7 +345,14 @@
 }
 
 .add-contact-btns {
+    margin-top: auto;
     justify-content: flex-end;
+}
+
+.add-contact-field:has( input:placeholder-shown) .add-contact-btns button {
+    pointer-events: none;
+    font-weight: 500;
+    filter: invert(1);
 }
 
 .contact-img.user-img-container h3 {
@@ -421,6 +427,8 @@
     .search-result-container {
         height: 150px;
         justify-content: center;
+        align-items: flex-start !important;
+        margin-top: 50px;
     }
 
     .search-result-container {

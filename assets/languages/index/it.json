@@ -112,8 +112,9 @@
     "add-contact-subheading": "Le attività sono migliori con un team!",
     "friendship-request": "Richiesta inviata a %name%!",
     "friend-added": "Il contatto %name% è stato aggiunto!",
-
     "confirmation-delete-contact": "Vuoi eliminare questo Contatto?",
+    "select-valid-user": "Seleziona un utente valido!",
+
     "confirm-delete-contact": "Elimina",
     "confirmation-delete-category": "Eliminare Categoria?",
     "confirm-delete-category": "Elimina",

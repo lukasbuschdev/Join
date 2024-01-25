@@ -34,10 +34,10 @@ const addNavToggleBtns = () => {
 const throwErrors = (...params) => {
   params.for(({identifier, bool}) => {
       const errorContainer = $(`#${identifier}`);
+      console.log(identifier, errorContainer)
       const inputContainer = errorContainer.closest('.inp-wrapper')?.$('.inp-container');
 
       errorContainer.classList.toggle('active', bool);
-      const allErrors = errorContainer.parentElement.$$('.error');
       inputContainer?.classList.toggle('active', bool);
   });
 }

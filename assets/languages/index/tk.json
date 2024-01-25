@@ -112,8 +112,9 @@
     "add-contact-subheading": "Görevler bir ekip ile daha iyi yapılır!",
     "friendship-request": "%name% adlı kişi size arkadaşlık isteği gönderdi!",
     "friend-added": "%name% adlı kişi eklenmiştir!",
-
     "confirmation-delete-contact": "Bu Kişiyi silmek istiyor musunuz?",
+    "select-valid-user": "Geçerli bir kullanıcı seçin!",
+
     "confirm-delete-contact": "Sil",
     "confirmation-delete-category": "Kategoriyi Silinsin mi?",
     "confirm-delete-category": "Sil",
