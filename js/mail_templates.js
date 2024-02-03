@@ -1,11 +1,11 @@
 const verificationEmailTemplate = ({ id, name, verifyCode: { code }}, langData) => {
     return /*html*/`
         <div style="height: 500px; background-color: #F6F7F8; padding: 30px;">
-            <img src="https://tarik-uyan.developerakademie.net/Join/assets/img/icons/logo.svg" alt="" style="width: 75px; margin-bottom: 30px;">
+            <img src="https://lukas-busch.developerakademie.net/Join/assets/img/icons/logo.svg" alt="" style="width: 75px; margin-bottom: 30px;">
             <h1>${langData["message-1"]}${name}!</h1>
             <p style="font-size: 14px;">${langData["message-2"]}<span style="color: #29ABE2; font-size: 16px; font-weight: 700;">${code}</span>${langData["message-3"]}</p>
             <a
-            href="https://tarik-uyan.developerakademie.net/Join/init/verify_account/verify_account.html?uid=${id}&token=${code}"
+            href="https://lukas-busch.developerakademie.net/Join/init/verify_account/verify_account.html?uid=${id}&token=${code}"
             style="
                 background-color: rgb(42,54,71);
                 display: block;
@@ -26,11 +26,11 @@ const verificationEmailTemplate = ({ id, name, verifyCode: { code }}, langData) 
 const resetPasswordEmailTemplate = ({ id, name }, langData) => {
     return /*html*/`
         <div style="height: 500px; background-color: #F6F7F8; padding: 30px;">
-            <img src="https://tarik-uyan.developerakademie.net/Join/assets/img/icons/logo.svg" alt="" style="width: 75px; margin-bottom: 30px;">
+            <img src="https://lukas-busch.developerakademie.net/Join/assets/img/icons/logo.svg" alt="" style="width: 75px; margin-bottom: 30px;">
             <h1>${langData["message-1"]}${name}!</h1>
             <p style="font-size: 14px;">${langData["message-2"]}</p>
             <a
-            href="https://tarik-uyan.developerakademie.net/Join/init/reset_password/reset_password.html?uid=${id}"
+            href="https://lukas-busch.developerakademie.net/Join/init/reset_password/reset_password.html?uid=${id}"
             style="
                 background-color: rgb(42,54,71);
                 display: block;
