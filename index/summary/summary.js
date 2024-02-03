@@ -2,18 +2,12 @@ let newBoardCollaborators;
 const initSummary = async () => {
     await getBoards();
     renderBoards();
+    const boardId = SESSION_getData('activeBoard') || Object.values(BOARDS)[0];
+    renderBoard(boardId);
+    renderBoardTitleSelection();
 }
 
 const renderBoards = () => {
-    const selection = $('#summary-selection');
-    if (USER.boards.length == 0) {
-        $('#summary-content').classList.toggle('d-none');
-        $('.summary-header button').classList.toggle('d-none');
-        $('#summary-body').style.margin = "auto";
-        return;
-    }
-    selection.innerHTML = '';
-    selection.renderItems(Object.values(BOARDS).sort((a, b) => a.dateOfLastEdit - b.dateOfLastEdit), boardSelectionTemplate);
     if (!SESSION_getData('activeBoard')) SESSION_setData('activeBoard', Number(Object.keys(BOARDS)[0]));
 
     const activeBoard = SESSION_getData('activeBoard');
@@ -23,17 +17,16 @@ const renderBoards = () => {
 }
 
 const renderBoardEditButton = (boardId) => {
-    const btn = document.createElement('div');
-    btn.innerHTML = 
-    /*html*/`<button class="circle grid-center" onclick="initEditBoard(${boardId})">
+    $('#summary-data').innerHTML += 
+    /*html*/`<button class="circle grid-center edit-btn" onclick="initEditBoard(${boardId})">
         <img src="/Join/assets/img/icons/edit.svg" alt="">
     </button>`;
-    const summaryHeaderDiv = $('.summary-header > div');
-    summaryHeaderDiv.$('button')?.remove();
-    summaryHeaderDiv.appendChild(btn.children[0]);
+    // const summaryHeaderDiv = $('.summary-header > div');
+    // summaryHeaderDiv.$('button')?.remove();
+    // summaryHeaderDiv.appendChild(btn.children[0]);
 }
 
-const boardSelectionTemplate = ({name, id, owner}) => {
+const boardSelectionTemplate = ({name, id}) => {
     return /*html*/`
         <button class="row" type="option" data-id="${id}" onclick="renderBoard()">
             <span>${name.replaceAll('-',' ')}</span>
@@ -63,7 +56,7 @@ function getTaskStats(tasksObj) {
 }
 
 function setBoardButtons({tasksInBoard, tasksInProgress, tasksAwaitingFeedback, tasksUrgent, upcomingDeadline, tasksToDo, tasksDone}) {
-    const boardButtons = $$('#summary-data button');
+    const boardButtons = $$('#summary-data button:not(.edit-btn)');
     
     boardButtons[0].$('h1').innerText = tasksInBoard;
     boardButtons[1].$('h1').innerText = tasksInProgress;
@@ -73,13 +66,13 @@ function setBoardButtons({tasksInBoard, tasksInProgress, tasksAwaitingFeedback, 
     boardButtons[3].$$(':is(.line, .upcoming-deadline)').for(container => container.classList.toggle('d-none', !upcomingDeadline));
     boardButtons[4].$('h1').innerText = tasksToDo;
     boardButtons[5].$('h1').innerText = tasksDone;
-    boardButtons.for(button => button.onclick = () => $('nav #board').click());
-    $('#summary-selection').classList.remove('active');
+    boardButtons.for(button => button.onclick = () => {
+        $('nav #board').click()
+    });
 }
 
 
-const renderBoard = () => {
-    const id = event.currentTarget.dataset.id;
+const renderBoard = (id) => {
     SELECTED_BOARD = BOARDS[id];
     const {tasks: tasksObj, owner} = SELECTED_BOARD;
     
@@ -263,6 +256,7 @@ function updateBoardCategories(categories) {
 }
 
 const initEditBoard = async () => {
+    event.stopPropagation();
     newBoardCollaborators = [];
     const editBoardModal = $('#edit-board');
     await editBoardModal.$('.edit-board-data').includeTemplate({url: '/Join/assets/templates/index/edit-board.html', replace: false});

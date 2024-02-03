@@ -99,3 +99,33 @@ function noNotificationsYet() {
         <h3 class="no-notifications txt-center" data-lang="no-notifications">You have no notifications!</h3>
     `;
 }
+
+function toggleBoardTitleSelection() {
+    const el = event.currentTarget
+    el.classList.toggle('active');
+    if (el.classList.contains('active')) {
+        window.addEventListener('pointerdown', closeHandler = () => {
+            if (event.target.closest('#board-title-selection')) return;
+            el.classList.remove('active');
+            window.removeEventListener('pointerdown', closeHandler);
+        })
+    }
+}
+
+function renderBoardTitleSelection() {
+    const activeBoardId = SESSION_getData('activeBoard');
+    $('#board-title-selection .options').innerHTML = Object.values(BOARDS).reduce((template, board) => {
+        return `${template}${(activeBoardId != board.id) ? boardTitleSelectionTemplate(board) : ''}`
+    }, ``);
+}
+
+function boardTitleSelectionTemplate({id, name}) {
+    return/*html*/`
+        <h4 class="option" onclick="switchBoards(${id})">${name}</h4>
+    `
+}
+
+function switchBoards(id) {
+    SESSION_setData('activeBoard', Number(id));
+    location.reload();
+}

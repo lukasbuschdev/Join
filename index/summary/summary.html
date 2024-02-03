@@ -45,8 +45,14 @@
         
         <div id="summary-wrapper" class="column">
             <div class="summary-header row">
-                <div id="board-title" class="row gap-25">
-                    <h2 data-lang="summary" class="row">Summary</h2>
+                <div id="board-title-selection" class="row gap-25" width="100%" onclick="toggleBoardTitleSelection()">
+                    <div class="row">
+                        <h2 data-lang="board">Board</h2>
+                        <img src="/Join/assets/img/icons/dropdown.svg" alt="">
+                    </div>
+                    <div class="options-wrapper">
+                        <div class="options column"></div>
+                    </div>
                 </div>
                 <h3 data-lang="summary-subtext">Everything in a nutshell!</h3>
                 <button class="add-board btn btn-primary btn-add-task txt-normal txt-700" onclick="createBoardModal()">
@@ -56,10 +62,6 @@
         
             <div id="summary-body" class="column">
                 <div id="summary-content" class="row">
-                    <div class="row">
-                        <div id="summary-selection" class="column gap-15" type="menu"></div>
-                        <div id="summary-contextmenu" class="text-normal txt-center" data-lang="board-selection" onclick="toggleBoardSelection()">Board Selection</div>
-                    </div>
                     <div id="summary-data" class="column gap-30">
                         <div class="row gap-30">
                             <button class="summary-btn">

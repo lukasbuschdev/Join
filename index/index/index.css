@@ -483,3 +483,99 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
         padding: 1.5rem 1rem;
     }
 }
+
+#board-title-selection:not(:has( .option)) {
+    pointer-events: none;
+}
+
+#board-title-selection {
+    min-width: 15rem;
+    max-width: 80%;
+    position: relative;
+}
+
+#board-title-selection .options-wrapper {
+    width: 100%;
+    position: absolute;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--transition-fast);
+    top: 100%;
+}
+
+#board-title-selection.active .options-wrapper {
+    grid-template-rows: 1fr;
+}
+
+#board-title-selection > .row {
+    padding: 0 18px;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 51;
+    display: flex;
+    justify-content: space-between;
+    transition: background-color var(--transition-fast);
+    border: solid transparent;
+    border-width: 1px 1px 0 1px;
+}
+
+@media (hover: hover) {
+    #board-title-selection > .row:hover {
+        cursor: pointer;
+        background-color: white;
+        border-radius: 10px;
+    }
+}
+
+#board-title-selection:has( .option) > .row img {
+    margin-left: 30px;
+    width: 20px;
+}
+
+#board-title-selection.active > .row {
+    background-color: white;
+    border-radius: 10px 10px 0 0;
+    border-color: var(--clr-placeholder);
+}
+
+#board-title-selection h2 {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#board-title-selection .options {
+    overflow: hidden;
+    z-index: 50;
+    width: inherit;
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0px 0px 14px 3px #0000000A;
+}
+
+#board-title-selection.active .options {
+    border: solid var(--clr-placeholder);
+    border-width: 0 1px 1px 1px;
+}
+
+#board-title-selection .option {
+    padding: 5px 18px;
+}
+
+@media (hover: hover) {
+    #board-title-selection .option:hover {
+        background-color: var(--clr-placeholder);
+        cursor: pointer;
+    }
+}
+
+@media(max-width: 1000px) {
+    #board-title-selection {
+        margin-right: 100%;
+    }
+    #board-title-selection {
+        flex-shrink: 0;
+    }
+}

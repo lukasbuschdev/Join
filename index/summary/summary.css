@@ -3,7 +3,6 @@
 }
 
 #summary-wrapper {
-    height: 100%;
     padding: 2vh 4rem;
     gap: 5%;
 }
@@ -13,9 +12,19 @@
     position: relative;
 }
 
-.summary-header .circle {
+.edit-btn.circle {
     --diameter: 35px;
     background-color: var(--clr-dark);
+}
+
+.edit-btn {
+    position: absolute;
+    inset: auto 0 0 auto;
+    translate: 50% 50%;
+}
+
+.edit-btn:not(:hover) {
+    background-color: var(--clr-blue);
 }
 
 .summary-header > div {
@@ -49,16 +58,6 @@
 #summary-data {
     aspect-ratio: 1;
     position: relative;
-}
-
-#summary-data::before {
-    position: absolute;
-    left: -40px;
-    content: '';
-    display: block;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(to bottom, transparent, var(--clr-placeholder) 20% 80%, transparent);
 }
 
 #summary-data .row {
@@ -161,7 +160,7 @@
 
 @media (max-width: 1200px) {
     #summary-wrapper {
-        padding: 2vh 1rem 2vh 0;
+        padding: 2vh 1rem 5vh 0;
     }
     .summary-header {
         padding-left: 4rem;
@@ -171,13 +170,14 @@
     }
     #summary-body {
         margin: unset;
+        padding: 10px 20px;
     }
     #summary-content {
         gap: 1rem;
     }
     #summary-data {
         margin: 0 auto;
-        font-size: 14px;
+        font-size: 11px;
     }
     #summary-selection {
         padding: 0;
@@ -236,6 +236,12 @@
     #summary-data > .row {
         gap: 1rem;
     }
+    #summary-data .circle:not(.edit-btn) {
+        --diameter: 45px !important;
+    }
+    .edit-btn {
+        --diameter: 30px !important;
+    }
     :is(.add-board-content, .edit-board-content) {
         flex-direction: column;
         width: calc((100vw - 6px) - 2em);
@@ -271,9 +277,6 @@
     }
     #summary-data h1 {
         font-size: 35px;
-    }
-    #summary-data .circle {
-        --diameter: 45px !important;
     }
     .add-board span {
         font-size: 0;
