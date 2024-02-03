@@ -1,4 +1,4 @@
-## Link zur Website: [Join/login](https://tarik-uyan.developerakademie.net/Join/login)
+## Link zur Website: [Join/login](https://lukas-busch.developerakademie.net/Join/init/login/login.html)
 
 Dies ist das Kanban-Projekt **Join** im Rahmen der Frontend-Ausbildung der Developerakademie erstellt von **Lukas Busch** und **Tarik Uyan**.
 
