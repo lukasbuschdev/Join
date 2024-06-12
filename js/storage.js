@@ -215,7 +215,7 @@ const getBoards = async () => {
     if (!USER.boards.length) return;
     const allBoards = await REMOTE_getData('boards');
     for await (const boardId of USER.boards) {
-        if (`${boardId}` in allBoards) BOARDS[boardId] = new Board(allBoards[boardId]); 
+        if (`${boardId}` in allBoards) BOARDS[boardId] = new Board(allBoards[boardId]);
         else {
             USER.boards.remove(`${boardId}`);
             delete BOARDS[boardId];

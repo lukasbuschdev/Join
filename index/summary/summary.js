@@ -2,6 +2,7 @@ let newBoardCollaborators;
 const initSummary = async () => {
     await getBoards();
     renderBoards();
+    if (!USER.boards.length) return $('#summary-content').classList.add('d-none')
     const boardId = SESSION_getData('activeBoard') || Object.values(BOARDS)[0];
     renderBoard(boardId);
     renderBoardTitleSelection();
