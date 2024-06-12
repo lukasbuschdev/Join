@@ -212,7 +212,7 @@ const getContacts = async () => {
 }
 
 const getBoards = async () => {
-    if (USER.boards == []) return;
+    if (!USER.boards.length) return;
     const allBoards = await REMOTE_getData('boards');
     for await (const boardId of USER.boards) {
         if (`${boardId}` in allBoards) BOARDS[boardId] = new Board(allBoards[boardId]); 
