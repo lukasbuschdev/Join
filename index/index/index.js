@@ -8,11 +8,14 @@ let SOCKET;
 let notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wav');
 
 async function init(directory) {
-    await checkLogin();
-    await includeTemplates();
-    await getUser();
-    await getAllUsers();
-    initFunctions[directory]();
+    await Promise.all([
+        checkLogin(),
+        includeTemplates(),
+        getUser(),
+        getAllUsers(),
+    ])
+    await initFunctions[directory]()
+    $('#content').classList.remove('loading')
     initWebsocket(USER.id);
     $(`#${directory}`).classList.add("active");
     renderUserData();

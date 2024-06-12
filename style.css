@@ -797,3 +797,21 @@ input[type="checkbox"]:checked {
         translate: 0 -20%;
     }
 }
+
+
+/* TO DO */
+.loading::after {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    inset: 0;
+    content: '...';
+    font-size: 100px;
+    text-align: center;
+    background-color: inherit;
+    z-index: 100;
+}
+
+.loading {
+    position: relative;
+}
