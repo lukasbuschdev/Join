@@ -2,7 +2,8 @@ let newBoardCollaborators;
 const initSummary = async () => {
     await getBoards();
     renderBoards();
-    if (!USER.boards.length) return $('#summary-content').classList.add('d-none')
+    if (USER.boards.length) $('#summary-content').classList.remove('d-none')
+    else return
     const boardId = SESSION_getData('activeBoard') || Object.values(BOARDS)[0];
     renderBoard(boardId);
     renderBoardTitleSelection();
@@ -74,6 +75,7 @@ function setBoardButtons({tasksInBoard, tasksInProgress, tasksAwaitingFeedback, 
 
 
 const renderBoard = (id) => {
+    if(!USER.boards.length) return
     SELECTED_BOARD = BOARDS[id];
     const {tasks: tasksObj, owner} = SELECTED_BOARD;
     
