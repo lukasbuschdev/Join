@@ -1,3 +1,3 @@
 const initPrivacy = () => {
-    $('nav button.active')?.classList.remove('active');
+    $('#content').includeTemplate({url: `/Join/assets/languages/privacy-${currentLang()}.html`, replace: false})
 }

@@ -57,7 +57,7 @@ class User extends Account {
         navigator.credentials.store(cred);
     }
 
-    async logIn(rawPassword) {
+    async logIn() {
         LOCAL_setData('loggedIn', true);
         this.loggedIn = 'true';
         await this.update();

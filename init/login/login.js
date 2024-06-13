@@ -29,6 +29,13 @@ const logIn = async () => {
     user.logIn();
 }
 
+async function guestLogin() {
+    event.preventDefault()
+    const guestUser = await getUserByInput('Guest');
+    if (!guestUser) return;
+    guestUser.logIn();
+}
+
 const rememberMe = (user, password) => {
     const shouldRemember = $('#remember-me').checked;
     if (!shouldRemember) return LOCAL_removeData('rememberMe');
@@ -43,6 +50,7 @@ const rememberLoginDetails = async () => {
     const rememberedData = LOCAL_getData('rememberMe');
     if (!rememberedData) return;
     const { name, password } = rememberedData;
+    if (name === "Guest") return
     const user = await getUserByInput(name)
     if (!user || (await hashInputValue(password) !== user.password)) return
     $('#email input').value = name;

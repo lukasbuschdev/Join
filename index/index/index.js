@@ -57,7 +57,7 @@ const initFunctions = {
 async function loadContent () {
     const btn = event.currentTarget ?? undefined;
     if(!btn) location.href = location.href;
-    if (currentDirectory() === btn.id) return;
+    if(currentDirectory() === btn.id) return;
     goTo(`index/${btn.id}/${btn.id}`);
 };
 
