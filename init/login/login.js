@@ -30,9 +30,8 @@ const logIn = async () => {
 }
 
 async function guestLogin() {
-    event.preventDefault()
+    event.preventDefault();
     const guestUser = await getUserByInput('Guest');
-    if (!guestUser) return;
     guestUser.logIn();
 }
 
