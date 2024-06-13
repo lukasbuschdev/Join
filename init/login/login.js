@@ -29,6 +29,12 @@ const logIn = async () => {
     user.logIn();
 }
 
+async function guestLogin() {
+    event.preventDefault();
+    const guestUser = await getUserByInput('Guest');
+    guestUser.logIn();
+}
+
 const rememberMe = (user, password) => {
     const shouldRemember = $('#remember-me').checked;
     if (!shouldRemember) return LOCAL_removeData('rememberMe');
