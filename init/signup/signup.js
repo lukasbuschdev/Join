@@ -7,11 +7,10 @@ const initSignup = () => {
 }
 
 const initPrivacyLink = () => {
-    log('ISch werd ausjeführt!')
     const privacyContainer = $('[data-lang="register-privacy"]');  
-    privacyContainer.innerHTML = privacyContainer.innerHTML.replace(/%.+%/, (words) => {
+    privacyContainer.innerHTML = privacyContainer.innerHTML.replace(/%(.+)%/, (match, words) => {
         return /*html*/ `
-            <span class="txt-blue" style="cursor: pointer;" onclick="initPrivacy()">${words.replaceAll('%', '')}</span>
+            <span class="txt-blue" style="cursor: pointer;" onclick="initPrivacy()">${words}</span>
         `});
 }
 
