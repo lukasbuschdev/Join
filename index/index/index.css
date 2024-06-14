@@ -579,3 +579,24 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
         flex-shrink: 0;
     }
 }
+
+.summary-placeholder {
+    margin: auto;
+    grid-area: a;
+    display: none;
+    position: absolute;
+    inset: 0;
+    max-height: 300px;
+}
+
+:is(#summary-wrapper, .contacts-wrapper):has( :is(#summary-content, #selected-contact-container).d-none) :is(.summary-header, .contacts-header-container) {
+    display: none;
+}
+
+:is(#summary-content, #selected-contact-container).d-none + :is(.summary-placeholder) {
+    display: grid;
+}
+
+.summary-placeholder img {
+    width: 100px;
+}

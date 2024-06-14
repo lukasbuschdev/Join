@@ -5,8 +5,9 @@ async function initContacts () {
 
 async function renderContacts() {
     const contactsData = Object.values(CONTACTS);
-    if(contactsData.length == 0) return noContactsYet();
-    contactsExisting();
+    $('#selected-contact-container').classList.toggle('d-none', contactsData.length == 0);
+    // if(contactsData.length == 0) return noContactsYet();
+    // contactsExisting();
     
     const initialLetters = [...new Set(
         contactsData.map(
@@ -23,15 +24,15 @@ async function renderContacts() {
     });
 }
 
-function noContactsYet() {
-    document.getElementById('contacts-empty')?.classList.remove('d-none');
-    document.getElementById('selected-contact-container').classList.add('grid-center');
-}
+// function noContactsYet() {
+//     document.getElementById('contacts-empty')?.classList.remove('d-none');
+//     document.getElementById('selected-contact-container').classList.add('grid-center');
+// }
 
-function contactsExisting() {
-    document.getElementById('contacts-empty')?.classList.add('d-none');
-    document.getElementById('selected-contact-container').classList.remove('grid-center');
-}
+// function contactsExisting() {
+//     document.getElementById('contacts-empty')?.classList.add('d-none');
+//     document.getElementById('selected-contact-container').classList.remove('grid-center');
+// }
 
 const contactListLetterTemplate = (letter) => {
     return /*html*/`

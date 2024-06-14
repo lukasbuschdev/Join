@@ -42,7 +42,7 @@
 
     <header include-Template="/Join/index/header/header.html"></header>
 
-    <div id="content">
+    <div id="content" class="content-loading">
 
         <div class="contacts-wrapper row">
             <button onclick="closeSelectedContact()" class="close-btn close-inactive">
@@ -59,9 +59,12 @@
                         <span data-lang="sub-header">Better with a team</span>
                     </div>
                 </div>
-            
-                <div id="selected-contact-container" class="grid-center">
-                    <span id="contacts-empty" class="d-none txt-big txt-blue txt-600" data-lang="contacts-empty">Oops, you don't have any contacts yet.</span>
+                <div id="selected-contact-container" class="grid-center"></div>
+                <div class="summary-placeholder grid-center gap-35">
+                    <img src="/Join/assets/img/icons/logo.svg" alt="">
+                    <div class="btn-container flex-center">
+                        <h3 class="txt-blue" data-lang="contacts-empty"></h3>
+                    </div>
                 </div>
             </div>
 
