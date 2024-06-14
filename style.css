@@ -22,6 +22,8 @@
     --transition-slow: 250ms ease-in-out;
 
     --header-height: 85px;
+
+    --btn-hover-shadow: 0 4px 4px 0 rgba(0 0 0 / 25%);
 }
 
 html {
@@ -106,7 +108,7 @@ button.bg-dark {
 
 @media (hover: hover) {
     .btn:hover {
-box-shadow: 0 4px 4px 0 rgba(0 0 0 / 25%);
+    box-shadow: var(--btn-hover-shadow);
 }
 }
 
@@ -800,7 +802,7 @@ input[type="checkbox"]:checked {
 
 
 /* TO DO */
-.loading::after {
+.content-loading::after {
     width: fit-content;
     position: absolute;
     inset: 0;
@@ -826,7 +828,7 @@ input[type="checkbox"]:checked {
     }
 }
 
-.loading::before {
+.content-loading::before {
     content: '';
     display: grid;
     place-items: center;
