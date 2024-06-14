@@ -7,17 +7,41 @@
 
     <link rel="icon" href="/Join/assets/img/icons/logo.svg">
 
-    <link rel="stylesheet" href="/Join/fonts/fonts.css">
-    <link rel="stylesheet" href="/Join/style.css">
-    <link rel="stylesheet" href="/Join/index/help/help.css">
 
+    <link rel="stylesheet" href="/Join/style.css">
+    <link rel="stylesheet" href="/Join/index/index/settings.css">
+    <link rel="stylesheet" href="/Join/index/index/index.css">
+    <link rel="stylesheet" href="/Join/fonts/fonts.css">
+
+    <link rel="stylesheet" href="/Join/index/help/help.css">
+    
+    <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
     <script src="/Join/js/prototype_extensions.js"></script>
+    <script src="/Join/js/websocket.js"></script>
+    <script src="/Join/js/base.class.js"></script>
+    <script src="/Join/js/account.class.js"></script>
+    <script src="/Join/js/user.class.js"></script>
+    <script src="/Join/js/task.class.js"></script>
+    <script src="/Join/js/board.class.js"></script>
     <script src="/Join/js/utilities.js"></script>
-    <script src="/Join/js/language.js"></script>
-    <script src="/Join/index/help/help.js"></script>
     <script src="/Join/js/storage.js"></script>
+    <script src="/Join/js/email.class.js"></script>
+    <script src="/Join/js/notify.class.js"></script>
+    <script src="/Join/js/mail_templates.js"></script>
+    <script src="/Join/js/language.js"></script>
+    <script src="/Join/assets/templates/index/notification_template.js"></script>
+    <script src="/Join/index/help/help.js"></script>
+    <script src="/Join/js/setup.js" defer></script>
+    <script src="/Join/index/index/index.js"></script>
 </head>
-<body onload="$('div').includeTemplate({url: `/Join/assets/languages/help-${currentLang()}.html`, replace: false})" style="background-color: #f5f5f5; font-family: 'Inter';">
-    <div></div>
+<body onload="init('help')" style="background-color: #f5f5f5; font-family: 'Inter';">
+    <nav include-Template="/Join/index/nav/nav.html"></nav>
+
+    <header include-Template="/Join/index/header/header.html"></header>
+
+    <div id="content"></div>
+
+    <div include-template="/Join/index/account_panel/account_panel.html"></div>
 </body>
 </html>

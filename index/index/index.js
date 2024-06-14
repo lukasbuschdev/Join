@@ -51,6 +51,7 @@ const initFunctions = {
     "board": () => initBoard(),
     "add_task": () => initAddTask(),
     "help": () => initHelp(),
+    "legal_notice": () => initLegalNotice(),
     "privacy": () => initPrivacy()
 }
 

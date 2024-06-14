@@ -8,44 +8,71 @@
     <link rel="icon" href="/Join/assets/img/icons/logo.svg">
 
     <link rel="stylesheet" href="/Join/style.css">
+    <link rel="stylesheet" href="/Join/index/index/settings.css">
+    <link rel="stylesheet" href="/Join/index/index/index.css">
     <link rel="stylesheet" href="/Join/fonts/fonts.css">
+
     <link rel="stylesheet" href="/Join/index/legal_notice/legal_notice.css">
-
-    <script src="/Join/js/storage.js"></script>
-    <script src="/Join/js/prototype_extensions.js"></script>
-    <script src="/Join/js/setup.js" defer></script>
-    <script src="/Join/js/language.js"></script>
-</head>
-<body>
-
-<div class="legal-notice-container column">
-    <h2 data-lang="legal-notice-heading">Legal notice</h2>
-    <div class="column gap-30 legal-notice-segments">
-        <div class="column gap-20">
-            <h3 data-lang="legal-notice-heading-2">Angaben gemäß § 5 TMG</h3>
-            <div class="column gap-10">
-                <span>Lukas Busch</span>
-                <span>Wiener Neustädter Straße 34a/6</span>
-                <span>2483 Ebreichsdorf</span>
-            </div>
-        </div>
     
-        <div class="column gap-20">
-            <h3 data-lang="legal-notice-heading-3">Contact</h3>
-            <div class="column gap-10">
-                <div class="row gap-10">
-                    <span data-lang="phone">Phone:</span><a href="tel:+436643126109">+43 664 3126109</a>
-                </div>
-                <span>E-Mail: <a href="mailto:lukas.busch1996@gmx.at">lukas.busch1996@gmx.at</a></span>
-            </div>
-        </div>
+    <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <script src="/Join/js/prototype_extensions.js"></script>
+    <script src="/Join/js/websocket.js"></script>
+    <script src="/Join/js/base.class.js"></script>
+    <script src="/Join/js/account.class.js"></script>
+    <script src="/Join/js/user.class.js"></script>
+    <script src="/Join/js/task.class.js"></script>
+    <script src="/Join/js/board.class.js"></script>
+    <script src="/Join/js/utilities.js"></script>
+    <script src="/Join/js/storage.js"></script>
+    <script src="/Join/js/email.class.js"></script>
+    <script src="/Join/js/notify.class.js"></script>
+    <script src="/Join/js/mail_templates.js"></script>
+    <script src="/Join/js/language.js"></script>
+    <script src="/Join/assets/templates/index/notification_template.js"></script>
+    <script src="/Join/index/legal_notice/legal_notice.js"></script>
+    <script src="/Join/js/setup.js" defer></script>
+    <script src="/Join/index/index/index.js"></script>
+</head>
 
-        <div class="row gap-10">
-            <span data-lang="legal-notice-source">Quelle:</span>
-            <a href="https://www.e-recht24.de">eRecht24</a>
+<body onload="init('legal_notice')" style="background-color: #f5f5f5; font-family: 'Inter';">
+    <nav include-Template="/Join/index/nav/nav.html"></nav>
+
+    <header include-Template="/Join/index/header/header.html"></header>
+
+    <div id="content">
+        <div class="legal-notice-container column">
+            <h2 data-lang="legal-notice-heading">Legal notice</h2>
+            <div class="column gap-30 legal-notice-segments">
+                <div class="column gap-20">
+                    <h3 data-lang="legal-notice-heading-2">Angaben gemäß § 5 TMG</h3>
+                    <div class="column gap-10">
+                        <span>Lukas Busch</span>
+                        <span>Calle 41 X 84B, 595</span>
+                        <span>97000 Mérida</span>
+                        <span>México</span>
+                    </div>
+                </div>
+            
+                <div class="column gap-20">
+                    <h3 data-lang="legal-notice-heading-3">Contact</h3>
+                    <div class="column gap-10">
+                        <div class="row gap-10">
+                            <span data-lang="phone">Phone:</span><a href="tel:+436643126109">+52 999 351 8061</a>
+                        </div>
+                        <span>E-Mail: <a href="mailto:lukas.busch1996@gmx.at">lukas.busch1996@gmx.at</a></span>
+                    </div>
+                </div>
+        
+                <div class="row gap-10">
+                    <span data-lang="legal-notice-source">Quelle:</span>
+                    <a href="https://www.e-recht24.de">eRecht24</a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
+    <div include-template="/Join/index/account_panel/account_panel.html"></div>
 
 </body>
 </html>
