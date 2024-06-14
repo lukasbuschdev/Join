@@ -101,6 +101,11 @@ header {
     margin-right: auto;
 }
 
+header #help {
+    display: flex;
+    border-radius: 999px;
+}
+
 header .user-img-container {
     height: 100%;
     aspect-ratio: 1;
@@ -113,6 +118,10 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 }
 
 @media (hover: hover) {
+    header :is(#help, .user-img-container):hover {
+        box-shadow: var(--btn-hover-shadow);
+    }
+
     .close-btn:hover {
         background-color: #e3eeff;
     }
