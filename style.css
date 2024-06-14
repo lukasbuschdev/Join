@@ -801,13 +801,28 @@ input[type="checkbox"]:checked {
 
 /* TO DO */
 .loading::after {
+    height: fit-content;
+    width: fit-content;
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    content: '...';
+    color: transparent;
+    font-size: 100px;
+    background-image: linear-gradient(red, blue);
+    text-align: center;
+    z-index: 100;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+.loading::before {
+    content: '';
     display: grid;
     place-items: center;
     position: absolute;
     inset: 0;
-    content: '...';
-    font-size: 100px;
-    text-align: center;
     background-color: inherit;
     z-index: 100;
 }
