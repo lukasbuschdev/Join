@@ -2,6 +2,7 @@ let SOCKET;
 
 const initSignup = () => {
     window.addEventListener('langLoaded', initPrivacyLink, {once: true});
+    initPrivacyLink();
     initWebsocket();
 }
 
