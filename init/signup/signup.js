@@ -1,13 +1,17 @@
 let SOCKET;
 
 const initSignup = () => {
-    initPrivacyLink();
+    window.addEventListener('langLoaded', initPrivacyLink, {once: true});
     initWebsocket();
 }
 
 const initPrivacyLink = () => {
-    const privacyContainer = $('[data-lang="register-privacy"]')
-    privacyContainer.innerHTML = privacyContainer.innerText.replace(/%.+%/, words => /*html*/`<span class="txt-blue" style="cursor: pointer;" onclick="initPrivacy()">${words.replaceAll('%','')}</span>`)
+    log('ISch werd ausjeführt!')
+    const privacyContainer = $('[data-lang="register-privacy"]');  
+    privacyContainer.innerHTML = privacyContainer.innerHTML.replace(/%.+%/, (words) => {
+        return /*html*/ `
+            <span class="txt-blue" style="cursor: pointer;" onclick="initPrivacy()">${words.replaceAll('%', '')}</span>
+        `});
 }
 
 const initPrivacy = () => {

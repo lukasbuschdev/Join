@@ -36,7 +36,9 @@ async function LANG_load(lang = currentLang()) {
     });
     $$('[data-lang-placeholder]').for(input => input.placeholder = LANG[input.dataset.langPlaceholder]);
     $$('[data-lang-empty]').for(element => element.dataset.type = LANG[element.dataset.langEmpty]);
-    return;
+    
+    const langLoadedEvent = new CustomEvent('langLoaded');
+    window.dispatchEvent(langLoadedEvent);
 }
 
 const LANG_set = (lang) => {
