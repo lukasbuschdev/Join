@@ -801,20 +801,29 @@ input[type="checkbox"]:checked {
 
 /* TO DO */
 .loading::after {
-    height: fit-content;
     width: fit-content;
     position: absolute;
     inset: 0;
+    margin: auto;
     display: grid;
     place-items: center;
     content: '...';
     color: transparent;
-    font-size: 100px;
-    background-image: linear-gradient(red, blue);
+    font-size: 180px;
+    background-image: linear-gradient(90deg, var(--clr-blue), var(--clr-light), var(--clr-blue));
+    background-size: 200% 100%;
+    background-position-x: 100%;
+    animation: loading-gradient 1.25s linear infinite;
     text-align: center;
     z-index: 100;
     background-clip: text;
     -webkit-background-clip: text;
+}
+
+@keyframes loading-gradient {
+    to {
+        background-position-x: 0%;
+    }
 }
 
 .loading::before {

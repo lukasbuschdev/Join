@@ -15,7 +15,7 @@ async function init(directory) {
         getAllUsers(),
     ])
     await initFunctions[directory]()
-    // $('#content').classList.remove('loading');
+    $('#content').classList.remove('loading');
     initWebsocket(USER.id);
     $(`#${directory}`).classList.add("active");
     renderUserData();
