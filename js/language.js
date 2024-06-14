@@ -5,12 +5,11 @@ window.$$ = function (selector) {
   return this.document.querySelectorAll(selector)
 };
 
-
 let LANG;
 
 const currentLang = () => LOCAL_getData('lang') ?? navigator.language.slice(0, 2) ?? "en-US";
 
-async function LANG_load (lang = currentLang()){
+async function LANG_load(lang = currentLang()) {
     let langDirectory = 'index';
     const dir = currentDirectory();
     if (dir == 'signup' ||

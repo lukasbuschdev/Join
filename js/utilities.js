@@ -7,6 +7,8 @@ window.$$ = function (selector) {
   return this.document.querySelectorAll(selector)
 };
 
+const currentDirectory = () => window.location.pathname.split('/').at(-1).split('.')[0]
+
 const show = (selector) => $(selector).classList.remove("d-none");
 const hide = (selector) => $(selector).classList.add("d-none");
 

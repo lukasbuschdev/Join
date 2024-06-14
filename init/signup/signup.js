@@ -11,7 +11,7 @@ const initPrivacyLink = () => {
 }
 
 const initPrivacy = () => {
-    window.open('/Join/index/privacy/privacy.html', '_blank')
+    window.open(`/Join/assets/templates/init/privacy.html`, '_blank')
 }
 
 const validateInputs = async ({ name, email, password, confirmPassword }) => {

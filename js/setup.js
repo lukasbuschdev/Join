@@ -1,12 +1,3 @@
-window.$ = function (selector) {
-  return this.document.querySelector(selector)
-};
-window.$$ = function (selector) {
-  return this.document.querySelectorAll(selector)
-};
-
-const currentDirectory = () => window.location.pathname.split('/').at(-1).split('.')[0]
-
 const goTo = (directory, options) => {
     const url = `${window.location.origin}/Join/${directory}.html${(options?.search ?? location.search)}`
     window.location.href = url;
