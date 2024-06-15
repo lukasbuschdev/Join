@@ -14,11 +14,11 @@ function $(selectors) {
 /**
  * shortcut of document.querySelectorAll()
  * @template {keyof HTMLElementTagNameMap} K
- * @param {K} selector 
- * @returns {NodeListOf<HTMLElementTagNameMap[K]>}
+ * @param {K} selector
+ * @returns {HTMLElementTagNameMap[T][]}
  */
 function $$(selector) {
-  return this.document.querySelectorAll(selector)
+  return [...document.querySelectorAll(selector)]
 };
 
 /**
@@ -142,9 +142,7 @@ function throttle (cb, delay = 1000) {
       if (shouldWait) return;
       cb(...args);
       shouldWait = true;
-      setTimeout(() => {
-        shouldWait = false;
-      }, delay);
+      setTimeout(() => shouldWait = false, delay);
   }
 }
 
@@ -153,11 +151,7 @@ function throttle (cb, delay = 1000) {
  * @returns {Promise<void[]>}
  */
 async function includeTemplates() {
-  return Promise.all(
-    $$('[include-template]').map(
-      async (templateContainer) => templateContainer.includeTemplate()
-    )
-  )
+  return Promise.all($$('[include-template]')?.map((templateContainer) => templateContainer.includeTemplate()))
 }
 
 /**
@@ -174,7 +168,7 @@ async function getTemplate(url) {
  * @param {string} evalString
  */
 function parse(evalString) {
-  Function(`'use strict'; return (${evalString}) ?? false`)();
+  return Function(`'use strict'; return (${evalString}) ?? false`)();
 }
 
 /**
@@ -481,11 +475,9 @@ const confirmation = (type, cb) => {
   if (!LANG[`confirmation-${dataLang}`]) return error('message unknown!');
   const confirmationContainer = document.createElement('dialog');
   confirmationContainer.type = "modal";
-
   confirmationContainer.innerHTML = confirmationTemplate(type);
   confirmationContainer.LANG_load();
-
-  confirmationContainer.$('.btn-primary').on('click', () => {
+  confirmationContainer.$('.btn-primary').addEventListener('click', () => {
     cb();
     confirmationContainer.closeModal();
     confirmationContainer.remove()
@@ -523,7 +515,6 @@ function isInvalidDate (input, output) {
   const [, mI, yI] = input.split('/');
   const mO = output.getMonth() + 1;
   const yO = output.getFullYear();
-
   return !(Number(mI) == mO && Number(yI) == yO);
 }
 
@@ -538,6 +529,5 @@ async function hashInputValue(inputValue) {
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-
   return hashHex;
 }

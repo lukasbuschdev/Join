@@ -7,11 +7,9 @@ const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
 
 const REMOTE_download = async (directory) => {
     try{
-        const { data: { value } } = await (await fetch(`${STORAGE_URL}?key=${directory}&token=${STORAGE_TOKEN}`)).json();
+        const { data: {value} } = await (await fetch(`${STORAGE_URL}?key=${directory}&token=${STORAGE_TOKEN}`)).json();
         return (value !== "empty") ? parse(value) : value;
-    } catch(e) {
-        return undefined;
-    }
+    } catch(e) { return undefined; }
 }
 
 // UPLOAD

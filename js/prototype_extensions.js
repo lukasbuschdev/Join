@@ -4,17 +4,6 @@ NodeList.prototype.for = function(cb) {
     }
 }
 
-/**
- * @template T
- * @typedef {Object} ArrayExtensions
- * @property {function(T[]): boolean} remove
- */
-
-/**
- * @template T
- * @typedef {Array<T> & ArrayExtensions<T>} ArrayWithExtensions<T>
- */
-
 Array.prototype.for = function(cb) {
     for (let i = 0; i < this.length; i++){
         cb(this[i], i);
@@ -28,20 +17,23 @@ Array.prototype.forAwait = async function(cb) {
     return;
 }
 
+/**
+ * returns an object literal where the array values are the values and keys are provided
+ * @param {string[]} keys keys for the object as an array (has to be the same length as the array) 
+ * @returns {[string]: any}}
+ */
 Array.prototype.toObject = function (keys) {
     if (keys.length < this.length) {
         console.error('not enough keys provided!');
         return;
     }
-    return this.reduce((total, current, i) => { return {...total, [keys[i]]: current }}, {});
+    return this.reduce((total, current, i) => ({...total, [keys[i]]: current }), {});
 }
 
 /**
  * returns a copy of the array without the specified item(s)
- * @this {Array<T>} 
  * @param {T[]} items
  * @returns {boolean}
- * @template T
  *  */
 Array.prototype.remove = function(...items) {
     items.forEach(item => {
@@ -52,45 +44,19 @@ Array.prototype.remove = function(...items) {
 }
 
 Object.prototype.filter = function (cb) {
-    let newObj = {};
-    Object.entries(this).filter(([key, value], index) =>
-        {
-            if (cb(value, index) == true) {
-                newObj[key] = value;
-                return true;
-            }
-        }
-    );
-    return newObj;
+    return Object.entries(this).reduce((newObj, [key, value], index) => cb([key, value], index) ? ({ ...newObj, [key]: value}) : newObj, {})
 }
 
 Object.prototype.for = function (cb) {
     Object.values(this).for(cb);
 };
 
-Object.prototype.map = function(cb){
-    let newObj = {};
-    Object.entries(this).for(([key, value]) =>
-        {
-            newObj[key] = cb(value);
-        }
-    );
-    return newObj;
+Object.prototype.map = function(cb) {
+    return Object.entries(this).reduce((newObj, [key, value]) => ({...newObj, [key]: cb(value) }), {});
 }
 
 String.prototype.convert = function () {
     return this.replaceAll(/[A-Z]/g, i => `-${i.toLowerCase()}`);
-}
-
-HTMLElement.prototype.on = function (eventType, callback, options = {}) {
-    const remove = () => {
-        try {
-            this.removeEventListener(eventType, cb, options);
-        } catch (e) {
-        }
-    }
-    const boundCb = callback.bind(this)
-    this.addEventListener(eventType, cb = (event) => boundCb(remove, event), options)
 }
 
 HTMLElement.prototype.includeTemplate = async function({url = this.getAttribute('include-template') || '', replace = true} = {}) {

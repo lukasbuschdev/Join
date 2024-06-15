@@ -1,10 +1,3 @@
-window.$ = function (selector) {
-  return this.document.querySelector(selector)
-};
-window.$$ = function (selector) {
-  return this.document.querySelectorAll(selector)
-};
-
 let LANG;
 
 const currentLang = () => LOCAL_getData('lang') ?? navigator.language.slice(0, 2) ?? "en-US";
