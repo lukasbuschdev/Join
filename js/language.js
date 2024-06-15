@@ -11,10 +11,11 @@ const currentLang = () => LOCAL_getData('lang') ?? navigator.language.slice(0, 2
 
 async function LANG_load(lang = currentLang()) {
     const allLangData = (await Promise.all([
-        await (await fetch(`/Join/assets/languages/index/${lang}.json`)).json(),
-        await (await fetch(`/Join/assets/languages/init/${lang}.json`)).json(),
+        (await fetch(`/Join/assets/languages/init/${lang}.json`)).json(),
+        (await fetch(`/Join/assets/languages/index/${lang}.json`)).json(),
     ])).reduce((all, dt) => ({...all, ...dt}), {})
     LANG = allLangData
+
     const notificationCount = document.title.match(/(\(\d+\) )?/)[0];
     if (this === window) {
         document.title = `${notificationCount}${LANG[`title-${dir.replace('_', '-')}`]}`;
