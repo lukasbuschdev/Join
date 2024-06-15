@@ -111,7 +111,7 @@ const getInput = debounce(async function () {
     const userId = currentUserId();
     $('#user-search-result').textContent.trim();
     
-    if(input.value.length >= 3) {
+    if(input.value.length > 0) {
         const allUsers = ALL_USERS;
 
         const filteredUsers = Object.values(allUsers).filter(
