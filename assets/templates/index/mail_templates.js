@@ -32,7 +32,7 @@ const resetPasswordEmailTemplate = ({ id, name }, langData) => {
             <a
             href="${location.origin}/Join/init/reset_password/reset_password.html?uid=${id}"
             style="
-                background-color: rgb(42,54,71);
+                background-color: rgb(42, 54, 71);
                 display: block;
                 padding: 10px 10px;
                 margin-top: 30px;
