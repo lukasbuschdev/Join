@@ -700,6 +700,7 @@ input[type="checkbox"]:checked {
     border: 1px solid var(--clr-placeholder);
     display: flex;
     justify-content: space-between;
+    align-items: center;
     min-height: 51px;
     background-color: white;
     transition: border-color var(--transition-fast);
@@ -788,6 +789,10 @@ input[type="checkbox"]:checked {
 
     .btn {
         font-size: var(--txt-small);
+    }
+
+    .inp-container {
+        padding: 13px;
     }
 }
 

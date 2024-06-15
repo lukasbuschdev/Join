@@ -28,12 +28,17 @@
     <script src="/Join/init/login/login.js" defer></script>
 </head>
 <body class="bg-light" onload="init(), initLogin()">
-    <div id="logo">
-        <img src="/Join/assets/img/icons/logo.svg" alt="" width="100">
-        <img src="/Join/assets/img/icons/logo_white.svg" alt="" width="100">
-    </div>
     <div id="content">
+        <div id="logo">
+            <img src="/Join/assets/img/icons/logo.svg" alt="" width="100">
+            <img src="/Join/assets/img/icons/logo_white.svg" alt="" width="100">
+        </div>
         <div class="card" id="login" data-title="title-login">
+            <div id="logo" style="display: none;">
+                <img src="/Join/assets/img/icons/logo.svg" alt="" width="100">
+                <img src="/Join/assets/img/icons/logo_white.svg" alt="" width="100">
+            </div>
+
             <div class="header-container">
                 <h2 class="txt-center" data-lang="log-in">Log in</h2>
             </div>
@@ -124,7 +129,7 @@
                 </div>
                 <div class="row gap-10">
                     <span class="txt-normal" data-lang="not-join-user">Not a Join user?</span>
-                    <a href="/Join/init/signup/signup.html" class="btn btn-primary txt-small txt-700" data-lang="sign-up">Sign up</a>
+                    <a href="/Join/init/signup/signup.html" class="btn btn-primary txt-small txt-700 sign-up-btn" data-lang="sign-up">Sign up</a>
                 </div>
             </div>
         </div>
