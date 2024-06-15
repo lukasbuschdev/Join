@@ -318,6 +318,7 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
         flex-direction: row;
         padding: unset;
         padding: 0 15px;
+        gap: unset;
     }
 
     .btn-nav {
@@ -483,6 +484,18 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     }
 
     #settings-container h1 {
+        font-size: 1.625rem;
+    }
+
+    header {
+        padding: 20px 10px;
+    }
+
+    #header-title {
+        margin-left: 5%;
+    }
+
+    #edit-account-content h1 {
         font-size: 1.625rem;
     }
 }

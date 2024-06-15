@@ -324,6 +324,10 @@
     #summary-data > .row {
         gap: 0.5rem;
     }
+
+    :is(.add-board-content, .edit-board-content) > div {
+        padding: 1.5rem !important;
+    }
 }
 
 #summary-selection > button {
