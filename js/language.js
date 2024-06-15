@@ -18,7 +18,7 @@ async function LANG_load(lang = currentLang()) {
 
     const notificationCount = document.title.match(/(\(\d+\) )?/)[0];
     if (this === window) {
-        document.title = `${notificationCount}${LANG[`title-${dir.replace('_', '-')}`]}`;
+        document.title = `${notificationCount}${LANG[`title-${currentDirectory().replace('_', '-')}`]}`;
     }
     this.$$('[data-lang]').for(element => {
         const dataLang = element.dataset.lang
