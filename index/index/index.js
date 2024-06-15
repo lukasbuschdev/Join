@@ -10,7 +10,7 @@ let notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wa
 async function init(directory) {
     await Promise.all([
         checkLogin(),
-        includeTemplates(),
+        // includeTemplates(),
         getUser(),
         getAllUsers(),
     ])
