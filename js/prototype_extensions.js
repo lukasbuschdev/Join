@@ -4,6 +4,17 @@ NodeList.prototype.for = function(cb) {
     }
 }
 
+/**
+ * @template T
+ * @typedef {Object} ArrayExtensions
+ * @property {function(T[]): boolean} remove
+ */
+
+/**
+ * @template T
+ * @typedef {Array<T> & ArrayExtensions<T>} ArrayWithExtensions<T>
+ */
+
 Array.prototype.for = function(cb) {
     for (let i = 0; i < this.length; i++){
         cb(this[i], i);
@@ -25,9 +36,19 @@ Array.prototype.toObject = function (keys) {
     return this.reduce((total, current, i) => { return {...total, [keys[i]]: current }}, {});
 }
 
-Array.prototype.remove = function (item) {
-    if (!this.includes(item)) return;
-    return this.splice(this.indexOf(item), 1);
+/**
+ * returns a copy of the array without the specified item(s)
+ * @this {Array<T>} 
+ * @param {T[]} items
+ * @returns {boolean}
+ * @template T
+ *  */
+Array.prototype.remove = function(...items) {
+    items.forEach(item => {
+        if (!this.includes(item)) return false;
+        this.splice(this.indexOf(item), 1);
+    })
+    return true
 }
 
 Object.prototype.filter = function (cb) {

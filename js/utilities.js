@@ -1,25 +1,56 @@
 const log = console.log;
 const error = console.error;
 
-window.$ = function (selector) {
-  return this.document.querySelector(selector)
+/**
+ * shortcut of document.querySelector
+ * @template {keyof HTMLElementTagNameMap} K
+ * @param {K} selectors 
+ * @returns {HTMLElementTagNameMap[K]}
+ */
+function $(selectors) {
+  return document.querySelector(selectors)
 };
-window.$$ = function (selector) {
+
+/**
+ * shortcut of document.querySelectorAll()
+ * @template {keyof HTMLElementTagNameMap} K
+ * @param {K} selector 
+ * @returns {NodeListOf<HTMLElementTagNameMap[K]>}
+ */
+function $$(selector) {
   return this.document.querySelectorAll(selector)
 };
 
+/**
+ * returns the current directory name
+ * @returns {'login' | 'signup' | 'forgot_password' | 'reset_password' | 'create_account' | 'verification' | 'summary' | 'board' | 'add_task' | 'contacts' | 'help' | 'privacy' | 'legal_notice' | 'privacy'}
+ */
 function currentDirectory() {
-    return window.location.pathname.split('/').at(-1).split('.')[0]
+  return window.location.pathname.split('/').at(-1).split('.')[0]
 }
 
-function show(selector) {
-    return $(selector).classList.remove("d-none");
-}
-function hide(selector) {
-    return $(selector).classList.add("d-none");
+/**
+ * shows an element specified by its selector
+ * @param {string} selectors 
+ * @returns {void}
+*/
+function show(selectors) {
+  $(selectors)?.classList.remove('d-none')
 }
 
+/**
+ * hides an element specified by its selector
+ * @param {string} selectors 
+ * @returns {void}
+*/
+function hide(selectors) {
+  $(selectors)?.classList.add("d-none");
+}
 
+/**
+ * callback to toggle the 'active' class on a set of buttons. Only use as EventListerner!!!
+ * @param {NodeListOf<HTMLButtonElement> | HTMLButtonElement[]} buttons
+ */
 const toggleActiveBtn = (buttons) => {
   buttons.forEach((button) =>
 
@@ -27,21 +58,20 @@ const toggleActiveBtn = (buttons) => {
   );
 };
 
-const addNavToggleBtns = () => {
-  $$("nav").forEach((navbar) =>
-    navbar
-      .$$("button")
-      .forEach((button) =>
-        button.addEventListener("click", () =>
-          toggleActiveBtn(navbar.$$("button"))
-        )
-      )
-  );
+/**
+ * adds the toggleActiveBtn() callback to all nav buttons
+ */
+function addNavToggleBtns() {
+  $$('nav button').forEach((btn, i, buttons) => btn.addEventListener("click", toggleActiveBtn.bind(btn, buttons)))
 };
 
-const throwErrors = (...params) => {
-  params.for(({identifier, bool}) => {
-      const errorContainer = $(`#${identifier}`);
+/**
+ * toggles the 'active' class on the provided error containers
+ * @param {...{string, boolean}} errors 
+ */
+function throwErrors(...errors) {
+errors.for(({identifier, bool}) => {
+const errorContainer = $(`#${identifier}`);
       const inputContainer = errorContainer.closest('.inp-wrapper')?.$('.inp-container');
 
       errorContainer.classList.toggle('active', bool);
@@ -49,14 +79,18 @@ const throwErrors = (...params) => {
   });
 }
 
-const notification = (message) => {
+/**
+ * adds a notification popup to the screen which fades out
+ * @param {string} languageKey 
+ */
+const notification = (languageKey) => {
   return new Promise(resolve => {
     const el = document.createElement('dialog');
     el.type = "modal";
     el.classList.value = "dlg-notification";
     $('body').append(el);
 
-    el.innerHTML = popUpNotificationTemplate(message);
+    el.innerHTML = popUpNotificationTemplate(languageKey);
     el.LANG_load();
     el.openModal();
     el.addEventListener("close", () => {
@@ -66,16 +100,27 @@ const notification = (message) => {
   });
 }
 
-const popUpNotificationTemplate = (message) => {
+/**
+ * template for popup
+ * @param {string} languageKey keyof LANG
+ * @returns {string}
+ */
+function popUpNotificationTemplate(languageKey) {
   return /*html*/`
   <div class="notification grid-center">
-      <span data-lang="${message}"></span>
+      <span data-lang="${languageKey}"></span>
   </div>`
 }
 
-const debounce = (cb, delay = 1000) => {
+/**
+ * returns a debounced function from an input callback function
+ * @template T
+ * @param {(...params: any[]) => T} cb callback function
+ * @param {number} [delay] idle time in miliseconds before execition (1000 default)
+ * @returns {(...params: any[]) => T}
+ */
+function debounce(cb, delay = 1000) {
   let timeout;
-
   return (...args) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
@@ -84,40 +129,60 @@ const debounce = (cb, delay = 1000) => {
   };
 };
 
+/**
+ * returns a throttled function from an input callback function
+ * @template T
+ * @param {(...params: any[]) => T} cb callback function 
+ * @param {number} [delay] cooldown time in miliseconds (1000 default) 
+ * @returns {(...params: any[]) => T}
+ */
 function throttle (cb, delay = 1000) {
   let shouldWait = false;
-
   return (...args) => {
       if (shouldWait) return;
-
       cb(...args);
       shouldWait = true;
-
       setTimeout(() => {
-          shouldWait = false;
+        shouldWait = false;
       }, delay);
   }
 }
 
-const includeTemplates = async () => {
-  $$('[include-template]').forEach(
-    async (templateContainer) => await templateContainer.includeTemplate()
-  );
-  return;
+/**
+ * renders into elements with the 'include-template' attribute
+ * @returns {Promise<void[]>}
+ */
+async function includeTemplates() {
+  return Promise.all(
+    $$('[include-template]').map(
+      async (templateContainer) => templateContainer.includeTemplate()
+    )
+  )
 }
 
-const regEx = /const (\w+) = (async)?\(?([^\)]*)\)? => ([^{]+)/
-
+/**
+ * returns the content of a template as text
+ * @param {string} url path of the template 
+ * @returns {Promise<string>}
+ */
 async function getTemplate(url) {
     return (await fetch(url)).text();
 }
 
+/**
+ * custom eval() implementation
+ * @param {string} evalString
+ */
 function parse(evalString) {
-    return Function(`'use strict'; return (${evalString}) ?? false`)();
+  Function(`'use strict'; return (${evalString}) ?? false`)();
 }
 
+/**
+ * returns the current url search params
+ * @returns {URLSearchParams}
+ */
 function searchParams() {
-    return new URLSearchParams(document.location.search);
+  return new URLSearchParams(document.location.search);
 }
 
 const submitUpload = async () => {
@@ -138,15 +203,22 @@ const submitUpload = async () => {
   renderUploadedImg(imgURL);
 }
 
+/**
+ * checks if file size is biggaer than 1MB and throws errors accordingly
+ * @param {File} file 
+ * @returns {boolean}
+ */
 function isInvalidImg(file) {
   const maxSize = 1024 * 1024;
   const fileTooLarge = file.size > maxSize
   throwErrors({ identifier: 'img-too-large', bool: fileTooLarge });
-  if (fileTooLarge) {
-    return true;
-  }
+  return fileTooLarge
 }
 
+/**
+ * creates a promise which resolves to the url of the user image when the websocket emits the 'imgURL' event
+ * @returns {Promise<string>}
+ */
 function getImgUrl() {
   return new Promise(resolve => {
     SOCKET.on('imgURL', async (imgURL) => {
@@ -157,6 +229,10 @@ function getImgUrl() {
   });
 }
 
+/**
+ * TO DO
+ * @param {string} imgURL 
+ */
 function renderUploadedImg(imgURL) {
   const imgContainer = $('.user-img');
   imgContainer.src = imgURL;
@@ -391,8 +467,13 @@ const bezierGradient = ({colors: [...colors], resolution = 10}) => {
   return bg.join(', ');
 }
 
+/**
+ * tests if the input string is a letter or a number
+ * @param {string} input 
+ * @returns {boolean}
+ */
 function isLetterOrNumber(input) {
-    return input.length == 1 && /([a-z]|[A-Z]|[0-9])/.test(input);
+  return input.length == 1 && /([a-z]|[A-Z]|[0-9])/.test(input);
 }
 
 const confirmation = (type, cb) => {
@@ -414,32 +495,31 @@ const confirmation = (type, cb) => {
   confirmationContainer.openModal();
 }
 
-const confirmationTemplate = (type) => {
-  return /*html*/`
-  <div class="confirmation-dialog column gap-25">
-    <span data-lang="confirmation-${type}"></span>
-    <div class="btn-container gap-15">
-      <div class="btn btn-secondary txt-small txt-700" data-lang="btn-cancel" onclick="this.closest('dialog').closeModal()"></div>
-      <div class="btn btn-primary txt-small txt-700" data-lang="confirm-${type}"></div>
-    </div>
-  </div>
-`;
-}
+/**
+ * if 'input' is a valid date, a new date is returned. if invalid, returns undefined
+ * @param {string} input 
+ * @returns {Date | undefined}
+ */
+const dateFormat = (input) => {
+  if (typeof input !== "string") return;
+  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(input)) return;
 
-const dateFormat = (dateString) => {
-  if (typeof dateString !== "string") return false;
-  if (!/^\d{2}\/\d{2}\/\d{4}$/.test(dateString)) return false;
-
-  const [day, month, year] = dateString.split('/');
+  const [day, month, year] = input.split('/');
   const date = new Date(year, month - 1, day);
-  if (invalidDate(dateString, date)) return false
-  const now = Date.now();
+  if (isInvalidDate(input, date)) return
 
-  if (date < now && date.getDate() !== date.getDate()) return false;
+  const now = Date.now();
+  if (date < now && date.getDate() !== date.getDate()) return;
   return date;
 }
 
-const invalidDate = (input, output) => {
+/**
+ * tests whether the date given as a string is a valid date for a deadline
+ * @param {string} input 
+ * @param {Date} output 
+ * @returns {boolean}
+ */
+function isInvalidDate (input, output) {
   const [, mI, yI] = input.split('/');
   const mO = output.getMonth() + 1;
   const yO = output.getFullYear();
@@ -447,6 +527,11 @@ const invalidDate = (input, output) => {
   return !(Number(mI) == mO && Number(yI) == yO);
 }
 
+/**
+ * gets a hashed input
+ * @param {string} inputValue 
+ * @returns {Promise<string>}
+ */
 async function hashInputValue(inputValue) {
   const encoder = new TextEncoder();
   const data = encoder.encode(inputValue);
