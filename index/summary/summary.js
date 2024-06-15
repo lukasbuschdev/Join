@@ -149,15 +149,11 @@ const createNewBoard = async () => {
     const collaborators = getCollaborators();
     const categories = getTaskCategories();
     
-    const boardData = {
-        name: boardName,
-        categories,
-        collaborators: [USER.id]
-    };
+    const boardData = { name: boardName, categories, collaborators: [USER.id] };
     const newBoard = await USER.addBoard(boardData);
     $('#add-board').closeModal();
-    await Promise.all([createBoardNotification(newBoard, collaborators), notification('board-added')]);
     SESSION_setData('activeBoard', newBoard.id);
+    await Promise.all([createBoardNotification(newBoard, collaborators), notification('board-added')]);
     location.reload();    
 };
 

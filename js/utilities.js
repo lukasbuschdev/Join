@@ -51,11 +51,8 @@ function hide(selectors) {
  * callback to toggle the 'active' class on a set of buttons. Only use as EventListerner!!!
  * @param {NodeListOf<HTMLButtonElement> | HTMLButtonElement[]} buttons
  */
-const toggleActiveBtn = (buttons) => {
-  buttons.forEach((button) =>
-
-    button.classList.toggle("active", button == event.currentTarget)
-  );
+async function toggleActiveBtn(buttons) {
+  buttons.forEach((button) => button.classList.toggle("active", button === event.currentTarget));
 };
 
 /**
@@ -70,12 +67,11 @@ function addNavToggleBtns() {
  * @param {...{string, boolean}} errors 
  */
 function throwErrors(...errors) {
-errors.for(({identifier, bool}) => {
-const errorContainer = $(`#${identifier}`);
-      const inputContainer = errorContainer.closest('.inp-wrapper')?.$('.inp-container');
-
-      errorContainer.classList.toggle('active', bool);
-      inputContainer?.classList.toggle('active', bool);
+  errors.for(({identifier, bool}) => {
+    const errorContainer = $(`#${identifier}`);
+    const inputContainer = errorContainer.closest('.inp-wrapper')?.$('.inp-container');
+    errorContainer.classList.toggle('active', bool);
+    inputContainer?.classList.toggle('active', bool);
   });
 }
 
@@ -89,7 +85,6 @@ const notification = (languageKey) => {
     el.type = "modal";
     el.classList.value = "dlg-notification";
     $('body').append(el);
-
     el.innerHTML = popUpNotificationTemplate(languageKey);
     el.LANG_load();
     el.openModal();
@@ -179,6 +174,10 @@ function searchParams() {
   return new URLSearchParams(document.location.search);
 }
 
+/**
+ * TO DO
+ * @returns 
+ */
 const submitUpload = async () => {
   const img = $('[type="file"]').files[0];
   if (!img) return;
@@ -265,11 +264,7 @@ const renderColorWheel = () => {
   for (let i = 0; i < 361; i+= 360 / factor) {
       clrBg.push(`hsl(${i}, 100%, 50%)`)
   }
-  const lightnessBg = bezierGradient({
-      colors: ['white', 'transparent', 'black'],
-      resolution: 10
-  });
-  $('#color-wheel').style.backgroundImage = `radial-gradient(${lightnessBg}), conic-gradient(${clrBg.join(', ')})`;
+  $('#color-wheel').style.backgroundImage = `radial-gradient(white, transparent, black), conic-gradient(${clrBg.join(', ')})`;
 }
 
 const toggleColorPicker = () => {
@@ -326,70 +321,6 @@ const addAcceptColor = (userColor) => {
   }, { once: true });
 }
 
-const HSLToRGB = (h, s, l) => {
-  s /= 100;
-  l /= 100;
-  function k(n) {
-    return (n + h / 30) % 12;
-}
-  const a = s * Math.min(l, 1 - l);
-  const f = n =>
-    l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
-  return [Math.round(255 * f(0)), Math.round(255 * f(8)),Math.round( 255 * f(4))];
-};
-
-function HSLToHex(hsl) {
-  if (!hsl) return;
-  const h = Number(hsl.match(/(?<=\()\d+/g)[0]);
-  const s = Number(hsl.match(/(?<=,[\s]{0,1})\d+/g)[0]);
-  const l = Number(hsl.match(/(?<=,[\s]{0,1})\d+/g)[1]);
-  const alpha = (hsl.includes('hsla')) ? Math.roundTo(Number(hsl.match(/[\d\.]+(?=\)$)/g)[0]), 2) : 1;
-  const hDecimal = l / 100;
-  const a = (s * Math.min(hDecimal, 1 - hDecimal)) / 100;
-  const hexAlpha = Math.round(255 * alpha).toString(16).toUpperCase();
-  const f = (n) => {
-    const k = (n + h / 30) % 12;
-    const color = hDecimal - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-
-    // Convert to Hex and prefix with "0" if required
-    return Math.round(255 * color)
-      .toString(16)
-      .padStart(2, "0")
-      .toUpperCase();
-  };
-  return `#${f(0)}${f(8)}${f(4)}${(alpha < 1) ? hexAlpha : ''}`;
-}
-
-function luma(r, g, b) {
-    return Math.round(0.2126 * r + 0.7152 * g + 0.0722 * b);
-}
-
-function getCubicBezierPoint(t, p1, p2, p0 = {x: 0, y: 0}, p3 = {x: 1, y: 1}) {
-  // Calculate the blending functions
-  const mt = 1 - t;
-  const mt2 = mt * mt;
-  const mt3 = mt2 * mt;
-  const t2 = t * t;
-  const t3 = t2 * t;
-
-  // Calculate the x and y coordinates
-  const x =
-      mt3 * p0.x +
-      3 * mt2 * t * p1.x +
-      3 * mt * t2 * p2.x +
-      t3 * p3.x;
-  const y =
-      mt3 * p0.y +
-      3 * mt2 * t * p1.y +
-      3 * mt * t2 * p2.y +
-      t3 * p3.y;
-
-  // Round the coordinates to 2 decimal places
-  const roundedX = Math.roundTo(x, 2);
-  const roundedY = Math.roundTo(y, 2);
-  return { x: roundedX, y: roundedY };
-}
-
 const getRGBfromString = (colorString) => {
   if (!(typeof colorString == 'string')) return colorString;
   const a = document.createElement('div');
@@ -412,53 +343,8 @@ const getRGBA = (color) => {
   return {r, g, b, a}; 
 }
 
-const averageColor = (c1, c2, factor = 0.5) => {
-  let { r: r1, b: b1, g: g1, a: a1} = getRGBA(c1); 
-  let { r: r2, b: b2, g: g2, a: a2} = getRGBA(c2);
-
-  if (a1 == 0) {
-    r1 = r2;
-    g1 = g2;
-    b1 = b2;
-  } else if (a2 == 0) {
-    r2 = r1;
-    g2 = g1;
-    b2 = b1;
-  }
-  const r = Math.round(getRange(r1, r2, factor));
-  const g = Math.round(getRange(g1, g2, factor));
-  const b = Math.round(getRange(b1, b2, factor));
-  const a = Math.roundTo(getRange(a1, a2, factor), 2);
-  return `rgba(${r}, ${g}, ${b}, ${a})`
-} 
-
 function getRange(min, max, factor) {
     return min + (factor * max - factor * min)
-}
-
-const bezierGradient = ({colors: [...colors], resolution = 10}) => {
-  let bg = [getRGBfromString(colors[0])];
-  colors.slice(0, -1).for(
-    (c1, i) => {
-      const c2 = colors[i+1];
-      for (let j = 1; j <= resolution; j++) {
-        const t = j / resolution;
-        let p1 = { x: 0.5, y: 0 };
-        let p2 = { x: 0.5, y: 1 };
-        if (i == 0) {
-          p1 = { x: .25, y: .75 };
-          p2 = { x:1, y: 1 };
-        } else if (i == colors.length - 1) {
-          p1 = { x: 0, y: 0 };
-          p2 = { x:.75, y: .25 };
-        }
-        let { x, y } = getCubicBezierPoint(t, p1, p2);
-        const colorStop = Math.round((x * 100) / (colors.length - 1) + (100 / (colors.length - 1)) * i);
-        bg.push(`${averageColor(c1, c2, y)} ${colorStop}%`)
-      }
-    }
-  )
-  return bg.join(', ');
 }
 
 /**
@@ -470,7 +356,10 @@ function isLetterOrNumber(input) {
   return input.length == 1 && /([a-z]|[A-Z]|[0-9])/.test(input);
 }
 
-const confirmation = (type, cb) => {
+/**
+ * TO DO
+ */
+async function confirmation(type, cb) {
   const dataLang = (type.includes(',')) ? type.slice(0, type.indexOf(',')) : type;
   if (!LANG[`confirmation-${dataLang}`]) return error('message unknown!');
   const confirmationContainer = document.createElement('dialog');
