@@ -10,15 +10,6 @@ let LANG;
 const currentLang = () => LOCAL_getData('lang') ?? navigator.language.slice(0, 2) ?? "en-US";
 
 async function LANG_load(lang = currentLang()) {
-    let langDirectory = 'index';
-    const dir = currentDirectory();
-    if (dir == 'signup' ||
-        dir == 'login' ||
-        dir == 'create_account' ||
-        dir == 'forgot_password' ||
-        dir == 'verify_account' ||
-        dir == 'reset_password') langDirectory = 'init';
-    
     const allLangData = (await Promise.all([
         await (await fetch(`/Join/assets/languages/index/${lang}.json`)).json(),
         await (await fetch(`/Join/assets/languages/init/${lang}.json`)).json(),
