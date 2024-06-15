@@ -19,7 +19,11 @@ async function LANG_load(lang = currentLang()) {
         dir == 'verify_account' ||
         dir == 'reset_password') langDirectory = 'init';
     
-    LANG = await (await fetch(`/Join/assets/languages/${langDirectory}/${lang}.json`)).json();
+    const allLangData = (await Promise.all([
+        await (await fetch(`/Join/assets/languages/index/${lang}.json`)).json(),
+        await (await fetch(`/Join/assets/languages/init/${lang}.json`)).json(),
+    ])).reduce((all, dt) => ({...all, ...dt}), {})
+    LANG = allLangData
     const notificationCount = document.title.match(/(\(\d+\) )?/)[0];
     if (this === window) {
         document.title = `${notificationCount}${LANG[`title-${dir.replace('_', '-')}`]}`;

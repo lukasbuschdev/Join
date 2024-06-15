@@ -2,7 +2,9 @@ const goTo = (directory, options) => {
     const url = `${window.location.origin}/Join/${directory}.html${(options?.search ?? location.search)}`
     window.location.href = url;
 }
-const currentUserId = () => (searchParams().get('uid') == null) ? undefined : `${searchParams().get('uid')}`;
+function currentUserId() {
+    return (searchParams().get('uid') == null) ? undefined : `${searchParams().get('uid')}`;
+}
 
 const menuOptionInitator = new MutationObserver(({target}) => target.closest('[type = "menu"]').initMenus());
 
@@ -17,7 +19,9 @@ const resetMenus = function () {
 }
 
 let inactivityTimer;
-const addInactivityTimer = (minutes = 5) => inactivityTimer = setTimeout(() => goTo('init/login/login', { search: '?expired' }), minutes * 60 * 1000);
+function addInactivityTimer(minutes = 5) {
+    return inactivityTimer = setTimeout(() => goTo('init/login/login', { search: '?expired' }), minutes * 60 * 1000);
+}
 
 const initInactivity = () => {
     window.addEventListener("visibilitychange", () => {

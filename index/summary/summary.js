@@ -4,7 +4,7 @@ const initSummary = async () => {
     renderBoards();
     if (USER.boards.length) $('#summary-content').classList.remove('d-none')
     else return
-    const boardId = SESSION_getData('activeBoard') || Object.values(BOARDS)[0];
+    const boardId = SESSION_getData('activeBoard') || Object.keys(BOARDS)[0];
     renderBoard(boardId);
     renderBoardTitleSelection();
 }
@@ -23,9 +23,6 @@ const renderBoardEditButton = (boardId) => {
     /*html*/`<button class="circle grid-center edit-btn" onclick="initEditBoard(${boardId})">
         <img src="/Join/assets/img/icons/edit.svg" alt="">
     </button>`;
-    // const summaryHeaderDiv = $('.summary-header > div');
-    // summaryHeaderDiv.$('button')?.remove();
-    // summaryHeaderDiv.appendChild(btn.children[0]);
 }
 
 const boardSelectionTemplate = ({name, id}) => {
@@ -75,7 +72,7 @@ function setBoardButtons({tasksInBoard, tasksInProgress, tasksAwaitingFeedback, 
 
 
 const renderBoard = (id) => {
-    if(!USER.boards.length) return
+    if(!id) return
     SELECTED_BOARD = BOARDS[id];
     const {tasks: tasksObj, owner} = SELECTED_BOARD;
     

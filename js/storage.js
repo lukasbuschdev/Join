@@ -184,6 +184,7 @@ const SESSION_setData = (key, value) => {
 
 const SESSION_getData = (key) => {
     let data = sessionStorage.getItem(key);
+    if (data === "null" || data === "undefined" || data === "NaN" || data === "false") return undefined
     if (data) return data;
 }
 

@@ -1,4 +1,5 @@
 const log = console.log;
+const error = console.error;
 
 window.$ = function (selector) {
   return this.document.querySelector(selector)
@@ -7,12 +8,17 @@ window.$$ = function (selector) {
   return this.document.querySelectorAll(selector)
 };
 
-const currentDirectory = () => window.location.pathname.split('/').at(-1).split('.')[0]
+function currentDirectory() {
+    return window.location.pathname.split('/').at(-1).split('.')[0]
+}
 
-const show = (selector) => $(selector).classList.remove("d-none");
-const hide = (selector) => $(selector).classList.add("d-none");
+function show(selector) {
+    return $(selector).classList.remove("d-none");
+}
+function hide(selector) {
+    return $(selector).classList.add("d-none");
+}
 
-const error = (error) => console.error(error);
 
 const toggleActiveBtn = (buttons) => {
   buttons.forEach((button) =>
@@ -100,11 +106,19 @@ const includeTemplates = async () => {
   return;
 }
 
-const getTemplate = async (url) => (await fetch(url)).text();
+const regEx = /const (\w+) = (async)?\(?([^\)]*)\)? => ([^{]+)/
 
-const parse = (evalString) => Function(`'use strict'; return (${evalString}) ?? false`)();
+async function getTemplate(url) {
+    return (await fetch(url)).text();
+}
 
-const searchParams = () => new URLSearchParams(document.location.search);
+function parse(evalString) {
+    return Function(`'use strict'; return (${evalString}) ?? false`)();
+}
+
+function searchParams() {
+    return new URLSearchParams(document.location.search);
+}
 
 const submitUpload = async () => {
   const img = $('[type="file"]').files[0];
@@ -214,7 +228,9 @@ const pickColor = () => {
   addAcceptColor(userColor);
 }
 
-const getFraction = (numerator, denominator, range = 1) => numerator / (denominator / range);
+function getFraction(numerator, denominator, range = 1) {
+    return numerator / (denominator / range);
+}
 
 const moveColorCursor = (offsetX, offsetY, userColor) => {
   const colorCursor = $('#color-cursor');
@@ -243,7 +259,9 @@ const addAcceptColor = (userColor) => {
 const HSLToRGB = (h, s, l) => {
   s /= 100;
   l /= 100;
-  const k = n => (n + h / 30) % 12;
+  function k(n) {
+    return (n + h / 30) % 12;
+}
   const a = s * Math.min(l, 1 - l);
   const f = n =>
     l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
@@ -272,7 +290,9 @@ function HSLToHex(hsl) {
   return `#${f(0)}${f(8)}${f(4)}${(alpha < 1) ? hexAlpha : ''}`;
 }
 
-// const luma = (r, g, b) => Math.round(0.2126 * r + 0.7152 * g + 0.0722 * b);
+function luma(r, g, b) {
+    return Math.round(0.2126 * r + 0.7152 * g + 0.0722 * b);
+}
 
 function getCubicBezierPoint(t, p1, p2, p0 = {x: 0, y: 0}, p3 = {x: 1, y: 1}) {
   // Calculate the blending functions
@@ -342,7 +362,9 @@ const averageColor = (c1, c2, factor = 0.5) => {
   return `rgba(${r}, ${g}, ${b}, ${a})`
 } 
 
-const getRange = (min, max, factor) => min + (factor * max - factor * min)
+function getRange(min, max, factor) {
+    return min + (factor * max - factor * min)
+}
 
 const bezierGradient = ({colors: [...colors], resolution = 10}) => {
   let bg = [getRGBfromString(colors[0])];
@@ -369,7 +391,9 @@ const bezierGradient = ({colors: [...colors], resolution = 10}) => {
   return bg.join(', ');
 }
 
-const isLetterOrNumber = (input) => input.length == 1 && /([a-z]|[A-Z]|[0-9])/.test(input);
+function isLetterOrNumber(input) {
+    return input.length == 1 && /([a-z]|[A-Z]|[0-9])/.test(input);
+}
 
 const confirmation = (type, cb) => {
   const dataLang = (type.includes(',')) ? type.slice(0, type.indexOf(',')) : type;
