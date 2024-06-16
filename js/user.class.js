@@ -73,9 +73,9 @@ class User extends Account {
     }
 
     async update() {
-        await REMOTE_setData('users', {[this.id]: this});
-        if (!CONTACTS) return;
-        return getUser();
+        const allUsers = await REMOTE_setData('users', {[this.id]: this});
+        if (typeof CONTACTS === 'undefined') return;
+        USER = this
     }
 
     generateVerificationCode() {

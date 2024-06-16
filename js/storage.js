@@ -27,8 +27,8 @@ async function REMOTE_download(directory) {
  */
 function REMOTE_upload(directory, data) {
     if (directory !== "users" || directory !== "boards" || directory !== "verification" || directory !== "dev") return Promise.resolve(undefined);
-    return log(directory, data)
-    const payload = { key: directory, value: JSON.stringify(data), token: STORAGE_TOKEN };
+    // return log(directory, data)
+    const payload = { key: directory, value: data, token: STORAGE_TOKEN };
     return fetch(STORAGE_URL, { method: 'POST', body: JSON.stringify(payload) });
 };
 
@@ -61,20 +61,20 @@ async function REMOTE_getData(path) {
 };
 
 /**
- * propagates the directory tree via the path and if successful adds the data and then uploads it
+ * propagates the directory tree via the path and if successful adds the data, then uploads it
+ * and returns the data
  * @param {string} path path url in the format 'parent/child/grandchild' 
  * @param {any} upload 
- * @returns {Promise<Response | undefined>};
+ * @returns {Promise<any | undefined>};
  */
 async function REMOTE_setData(path, upload) {
     const data = await REMOTE_getData(path.split('/')[0]);
     const directories = path.split('/');
-
     let currentObj = data;
     for(let i = 1; i < directories.length; i++) {
         const directory = directories[i];
 
-        if(!currentObj.hasOwnProperty(directory)) currentObj[directory] = {};
+        if(!currentObj.hasOwnProperty(directory)) return currentObj[directory] = {};
         currentObj = currentObj[directory];
     };
 
@@ -83,8 +83,9 @@ async function REMOTE_setData(path, upload) {
         else if(currentObj.indexOf(upload !== -1)) currentObj.push(upload);
     } 
     else Object.assign(currentObj, upload);
-    log(currentObj, data)
-    return REMOTE_upload(directories[0], data);
+    await REMOTE_upload(directories[0], JSON.parse(JSON.stringify(data)));
+    console.log(data)
+    return data
 };
 
 /**
