@@ -74,7 +74,7 @@ class User extends Account {
 
     async update() {
         await REMOTE_setData('users', {[this.id]: this});
-        if (typeof CONTACTS == "undefined") return;
+        if (!CONTACTS) return;
         return getUser();
     }
 
@@ -96,9 +96,11 @@ class User extends Account {
         boardData.owner = this.id;
         const board = new Board(boardData);
         
-        await board.update();
-        this.boards.push(`${board.id}`);
-        await this.update();
+        this.boards.push(board.id);
+        await Promise.all([
+            board.update(),
+            this.update()
+        ]);
         return board;
     }
 

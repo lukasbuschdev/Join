@@ -74,6 +74,7 @@ function setBoardButtons({tasksInBoard, tasksInProgress, tasksAwaitingFeedback, 
 const renderBoard = (id) => {
     if(!id) return
     SELECTED_BOARD = BOARDS[id];
+    if(!SELECTED_BOARD) return;
     const {tasks: tasksObj, owner} = SELECTED_BOARD;
     
     const taskStats = getTaskStats(tasksObj)  ;  
@@ -151,6 +152,7 @@ const createNewBoard = async () => {
     
     const boardData = { name: boardName, categories, collaborators: [USER.id] };
     const newBoard = await USER.addBoard(boardData);
+    return log(newBoard)
     $('#add-board').closeModal();
     SESSION_setData('activeBoard', newBoard.id);
     await Promise.all([createBoardNotification(newBoard, collaborators), notification('board-added')]);

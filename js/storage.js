@@ -26,7 +26,8 @@ async function REMOTE_download(directory) {
  * @returns {Promise<Response | undefined>};
  */
 function REMOTE_upload(directory, data) {
-    if (directory !== "users" || directory !== "boards" || directory !== "verification" || directory !== "dev") return
+    if (directory !== "users" || directory !== "boards" || directory !== "verification" || directory !== "dev") return Promise.resolve(undefined);
+    return log(directory, data)
     const payload = { key: directory, value: JSON.stringify(data), token: STORAGE_TOKEN };
     return fetch(STORAGE_URL, { method: 'POST', body: JSON.stringify(payload) });
 };
@@ -68,20 +69,21 @@ async function REMOTE_getData(path) {
 async function REMOTE_setData(path, upload) {
     const data = await REMOTE_getData(path.split('/')[0]);
     const directories = path.split('/');
+
     let currentObj = data;
-    for (let i = 1; i < directories.length; i++) {
+    for(let i = 1; i < directories.length; i++) {
         const directory = directories[i];
-        if (!currentObj.hasOwnProperty(directory)) {
-        currentObj[directory] = {};
-        };
+
+        if(!currentObj.hasOwnProperty(directory)) currentObj[directory] = {};
         currentObj = currentObj[directory];
     };
-    if (Array.isArray(currentObj)) {
-        if (Array.isArray(upload)) {
-            currentObj.splice(0, currentObj.length, ...upload);
-        }
-        else if (currentObj.indexOf(upload !== -1)) currentObj.push(upload);
-    } else Object.assign(currentObj, upload);
+
+    if(Array.isArray(currentObj)) {
+        if(Array.isArray(upload)) currentObj.splice(0, currentObj.length, ...upload);
+        else if(currentObj.indexOf(upload !== -1)) currentObj.push(upload);
+    } 
+    else Object.assign(currentObj, upload);
+    log(currentObj, data)
     return REMOTE_upload(directories[0], data);
 };
 
@@ -249,11 +251,12 @@ async function getBoards() {
     if (!USER.boards.length) return;
     const allBoards = await REMOTE_getData('boards');
     for await (const boardId of USER.boards) {
-        if (`${boardId}` in allBoards) BOARDS[boardId] = new Board(allBoards[boardId]);
+        if (boardId in allBoards) BOARDS[boardId] = new Board(allBoards[boardId]);
         else {
-            USER.boards.remove(`${boardId}`);
-            delete BOARDS[boardId];
-            await USER.update();
+            log(boardId, allBoards)
+            // USER.boards.remove(`${boardId}`);
+            // delete BOARDS[boardId];
+            // await USER.update();
         };
     };
     SELECTED_BOARD = BOARDS[SESSION_getData('activeBoard')] ?? BOARDS[Object.keys(BOARDS)[0]];
