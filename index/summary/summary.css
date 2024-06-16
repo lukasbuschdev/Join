@@ -437,7 +437,8 @@
 }
 
 :is(:is(.add-board-data, .edit-board-data), .subtasks) input:placeholder-shown + .inp-buttons {
-    visibility: hidden;
+    /* visibility: hidden; */
+    display: none;
     pointer-events: none;
 }
 
