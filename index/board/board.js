@@ -85,7 +85,8 @@ export const clearTaskSearch = () => {
 export const addTaskModal = async () => {
     renderBoardIds();
     renderDate();
-    $('#add-task-modal').openModal();
+    const modal = $('#add-task-modal');
+    modal.openModal();
 }
 
 // export function toggleBoardTitleSelection() {

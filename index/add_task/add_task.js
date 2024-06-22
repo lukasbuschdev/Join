@@ -14,6 +14,7 @@ export async function initAddTask() {
     renderBoardIds();
     renderDate();
     $('.add-task-card').LANG_load();
+    // $('#add-task-modal #content').classList.remove('loading');
     resetArrays();
 }
 
