@@ -5,8 +5,8 @@ import { invalidPassword } from "../init/init.js";
 
 bindInlineFunctions(getContext(), [
     '/Join/init/init/init.js',
-    '/Join/js/language.js'
-
+    '/Join/js/language.js',
+    '/Join/js/utilities.js'
 ])
 
 export const initPage = () => {

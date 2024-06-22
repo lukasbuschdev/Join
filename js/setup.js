@@ -7,7 +7,7 @@ import { LANG_load } from "./language.js";
 
 export function getContext() {
     const { stack } = new Error()
-    console.log(stack)
+    // console.log(stack)
     return getCallerModulePath(stack)
 }
 
@@ -35,10 +35,10 @@ export async function bindInlineFunctions(callerModulePath, importPaths = []) {
     if (document.readyState === 'loading') await new Promise((resolve) => window.addEventListener("DOMContentLoaded", resolve))
     
     const allFunctionNames = getAllFunctionNames()
-    console.log(allFunctionNames)
+    // console.log(allFunctionNames)
     bindFunctionsToWindow(modules, allFunctionNames);
     const onload = customOnloadFunction()
-    console.log(onload)
+    // console.log(onload)
     onload() // calls the oncustomload event
     window.dispatchEvent(new CustomEvent("EventsBound"))
 }

@@ -1,14 +1,13 @@
-import { LANG_load } from "../../js/language.js";
-import { bindInlineFunctions, goTo } from "../../js/setup.js";
+import { bindInlineFunctions, getContext } from "../../js/setup.js";
+bindInlineFunctions(getContext(), [
+    '/Join/init/init/init.js',
+    '/Join/js/utilities.js',
+    '/Join/js/language.js'
+])
 import { getUserByInput } from "../../js/storage.js";
-import { $, notification, throwErrors } from "../../js/utilities.js";
+import { $, notification, throwErrors, goTo } from "../../js/utilities.js";
 import { initWebsocket } from "../../js/websocket.js";
 import { invalidEmail } from "../init/init.js";
-bindInlineFunctions(getContext())
-
-export function initPage() {
-    return LANG_load()
-}
 
 export const forgotPassword = async () => {
     event.preventDefault();

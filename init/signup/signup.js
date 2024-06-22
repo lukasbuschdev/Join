@@ -1,6 +1,7 @@
-import { bindInlineFunctions } from "../../js/setup.js";
+import { bindInlineFunctions, getContext } from "../../js/setup.js";
 bindInlineFunctions(getContext(), [
     '/Join/init/init/init.js',
+    '/Join/js/language.js'
 ]);
 
 import { getUserByInput } from "../../js/storage.js";
@@ -13,7 +14,7 @@ import { invalidEmail, invalidName, invalidPassword } from "../init/init.js";
 export let SOCKET;
 
 export function initSignup() {
-    window.addEventListener('langLoaded', initPrivacyLink, {once: true});
+    window.addEventListener('EventsBound', initPrivacyLink, {once: true});
     initPrivacyLink();
     initWebsocket();
 }
