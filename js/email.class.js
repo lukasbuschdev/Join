@@ -1,5 +1,7 @@
-class Email {
-    constructor({recipient, type = '', langData, options}) {
+import { resetPasswordEmailTemplate, verificationEmailTemplate } from "/Join/assets/templates/index/mail_templates.js";
+
+export class Email {
+    constructor({ recipient, type = '', langData }) {
         this.recipient = recipient;
         this.subject = langData["subject"];
         if (type == "verification") {
@@ -10,18 +12,19 @@ class Email {
         }
     }
 
-    async send() {
+    async send(socket) {
+        console.log(socket)
         const mailOptions = {
             to: this.recipient.email,
             subject: this.subject,
             html: this.message
         }
-        SOCKET.emit('mail', mailOptions);
+        socket.emit('mail', mailOptions);
         return new Promise((resolve, reject) => {
-            SOCKET.on('mailSent', () => {
+            socket.on('mailSent', () => {
                 resolve();
             });
-            SOCKET.on('mailFailed', () => {
+            socket.on('mailFailed', () => {
                 reject()
             })
         })

@@ -1,10 +1,16 @@
-let SOCKET;
+import { LANG_load } from "../../js/language.js";
+import { bindInlineFunctions, goTo } from "../../js/setup.js";
+import { getUserByInput } from "../../js/storage.js";
+import { $, notification, throwErrors } from "../../js/utilities.js";
+import { initWebsocket } from "../../js/websocket.js";
+import { invalidEmail } from "../init/init.js";
+bindInlineFunctions(getContext())
 
-const initPage = () => {
-    // LANG_load();
+export function initPage() {
+    return LANG_load()
 }
 
-const forgotPassword = async () => {
+export const forgotPassword = async () => {
     event.preventDefault();
     
     const email = $('input').value;
@@ -17,7 +23,7 @@ const forgotPassword = async () => {
     
     throwErrors({ identifier: 'email-not-found', bool: !user });
     if (!user) return;
-    initWebsocket(user.id);
+    initWebsocket();
 
     await user.initPasswordReset();
     await notification("email-sent");

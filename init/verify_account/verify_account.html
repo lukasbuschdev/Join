@@ -11,23 +11,9 @@
     <link rel="stylesheet" href="/Join/style.css">
     <link rel="stylesheet" href="/Join/init/init/init.css">
 
-    <script src="/Join/js/prototype_extensions.js"></script>
-    <script src="/Join/js/websocket.js"></script>
-    <script src="/Join/js/utilities.js"></script>
-    <script src="/Join/js/storage.js"></script>
-    <script src="/Join/assets/templates/index/mail_templates.js"></script>
-    <script src="/Join/js/base.class.js"></script>
-    <script src="/Join/js/account.class.js"></script>
-    <script src="/Join/js/user.class.js"></script>
-    <script src="/Join/js/language.js"></script>
-    <script src="/Join/js/email.class.js"></script>
-    <script src="/Join/js/setup.js" defer></script>
-
-    <script src="/Join/init/init/init.js"></script>
-
-    <script src="/Join/init/verify_account/verify_account.js" defer></script>
+    <script type="module" src="/Join/init/verify_account/verify_account.js"></script>
 </head>
-<body class="bg-light" onload="initVerifyAccount()">
+<body class="bg-light" oncustomload="initVerifyAccount()">
     <div class="veryfiy-account-help">
         <button id="help" onclick="window.open('/Join/help_me', '_blank')">
             <img src="/Join/assets/img/icons/help.svg">

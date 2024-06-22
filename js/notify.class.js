@@ -1,4 +1,4 @@
-class Notify {
+export class Notify {
     constructor(notification) {
         Object.entries(notification).for(
             ([key, value]) => this[key] = value

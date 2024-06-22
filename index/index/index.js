@@ -1,13 +1,24 @@
-let ALL_USERS;
-let USER;
-let BOARDS = {};
-let SELECTED_BOARD;
-let SELECTED_TASK;
-let CONTACTS = {};
-let SOCKET;
-let notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wav');
+import { goTo, renderUserData } from "../../js/setup.js";
+import { LANG_load } from "../../js/language.js";
+import { getAllUsers, getUser, getUsersById, LOCAL_getData, LOCAL_setData } from "../../js/storage.js";
+import { $, $$, currentDirectory, searchParams } from "../../js/utilities.js";
+import { initWebsocket } from "../../js/websocket.js";
+import "/Join/js/prototype_extensions.js";
+import { initSummary } from "../summary/summary.js";
 
-async function init(directory) {
+export function initGlobalVariables() {
+  window.ALL_USERS = {};
+  window.USER = {};
+  window.BOARDS = {};
+  window.SELECTED_BOARD = {};
+  window.SELECTED_TASK = {};
+  window.CONTACTS = {};
+  // window.SOCKET = {};
+  window.notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wav');
+}
+
+export async function init(directory) {
+  initGlobalVariables();
   await Promise.all([
     checkLogin(),
     // includeTemplates(),
@@ -16,7 +27,7 @@ async function init(directory) {
   ]);
   await initFunctions[directory]();
   $("#content").classList.remove("content-loading");
-  initWebsocket(USER.id);
+  initWebsocket();
   $(`#${directory}`).classList.add("active");
   renderUserData();
   checkNotifications();
@@ -27,27 +38,27 @@ if (LOCAL_getData("rememberMe") == "false") {
   window.on("beforeunload", () => LOCAL_setData("loggedIn", false));
 }
 
-const checkNotifications = async () => {
+export const checkNotifications = async () => {
   await getUser();
   const notificationCount = Object.values(USER.notifications).length;
   const notificationCounters = $$(".notifications-counter");
 
-  notificationCounters.for((counter) => counter.classList.toggle("d-none", !notificationCount));
+  notificationCounters.forEach((counter) => counter.classList.toggle("d-none", !notificationCount));
   document.title = `${notificationCount ? `(${notificationCount}) ` : ""}${
-    LANG[`title-${currentDirectory().replace("_", "-")}`]
+    window.LANG[`title-${currentDirectory().replace("_", "-")}`]
   }`;
   if (!notificationCount) return;
   notificationCounters.forEach((counter) => (counter.innerText = notificationCount));
 };
 
-const checkLogin = async () => {
+export const checkLogin = async () => {
   const uid = searchParams().get("uid");
   if (!uid) return;
   const isValidUser = !!(await getUsersById([uid]));
   if (!isValidUser) goTo("init/login/login", { search: "" });
 };
 
-const initFunctions = {
+export const initFunctions = {
   summary: () => initSummary(),
   contacts: () => initContacts(),
   board: () => initBoard(),
@@ -57,20 +68,20 @@ const initFunctions = {
   privacy: () => initPrivacy(),
 };
 
-async function loadContent() {
+export async function loadContent() {
   const btn = event.currentTarget ?? undefined;
   if (!btn) location.href = location.href;
   if (currentDirectory() === btn.id) return;
   goTo(`index/${btn.id}/${btn.id}`);
 }
 
-const openAccountPanel = async () => {
+export function openAccountPanel() {
   $("dialog#account-panel").openModal();
   $("#account-panel-options button.active")?.click();
   $("#account-panel-options #notifications-btn")?.click();
 };
 
-const loadAccountPanelContent = async () => {
+export async function loadAccountPanelContent() {
   const btn = event.currentTarget;
   const template = btn.id.slice(0, -4);
   const url = `/Join/assets/templates/account/${template}.html`;
@@ -83,15 +94,15 @@ const loadAccountPanelContent = async () => {
   accountPanelContent.initMenus();
 };
 
-const initEditAccount = () => {
+export function initEditAccount() {
   const editAccountContent = $("#edit-account-content");
-  editAccountContent.renderUserData();
+  editAccountContent.renderUserData(USER);
   renderColorWheel();
   if (USER.img)
     editAccountContent.$(".user-img-container").dataset.img = "true";
 };
 
-const loadNotifications = async () => {
+export function loadNotifications() {
   if (Object.values(USER.notifications).length == 0)
     return noNotificationsYet();
   const container = $("#notifications-content");
@@ -102,7 +113,7 @@ const loadNotifications = async () => {
   );
 };
 
-function noNotificationsYet() {
+export function noNotificationsYet() {
   const notificaitionsContent = $("#notifications-content");
   notificaitionsContent.style.alignItems = "center";
   notificaitionsContent.style.justifyContent = "center";
@@ -111,30 +122,23 @@ function noNotificationsYet() {
 `;
 }
 
-function toggleBoardTitleSelection() {
-const el = event.currentTarget
-el.classList.toggle('active');
-if (el.classList.contains('active')) {
-    window.addEventListener('pointerdown', closeHandler = () => {
-        if (event.target.closest('#board-title-selection')) return;
-        el.classList.remove('active');
-        window.removeEventListener('pointerdown', closeHandler);
-    })
-}
-}
-
-function renderBoardTitleSelection() {
-  const activeBoardId = SESSION_getData("activeBoard");
-  $("#board-title-selection .options").innerHTML = Object.values(BOARDS).reduce(
-    (template, board) => `${template}${ activeBoardId != board.id ? boardTitleSelectionTemplate(board) : "" }`, ``
-  );
+export function toggleBoardTitleSelection() {
+  const el = event.currentTarget
+  el.classList.toggle('active');
+  if (el.classList.contains('active')) {
+      window.addEventListener('pointerdown', closeHandler = () => {
+          if (event.target.closest('#board-title-selection')) return;
+          el.classList.remove('active');
+          window.removeEventListener('pointerdown', closeHandler);
+      })
+  }
 }
 
-function boardTitleSelectionTemplate({ id, name }) {
+export function boardTitleSelectionTemplate({ id, name }) {
   return /*html*/ `<h4 class="option" onclick="switchBoards(${id})">${name}</h4>`;
 }
 
-function switchBoards(id) {
+export function switchBoards(id) {
   SESSION_setData("activeBoard", Number(id));
   location.reload();
 }

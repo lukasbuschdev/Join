@@ -1,31 +1,36 @@
-const init = async () => {
+import { initGlobalVariables } from "../../index/index/index.js";
+import { notification } from "../../js/utilities.js";
+import { $ } from "/Join/js/utilities.js";
+import "/join/js/prototype_extensions.js"
+
+export const init = async () => {
+    initGlobalVariables();
     isSessionExpired();
     $('.language-login').initMenus();
 }
 
-
-const isSessionExpired = () => {
+export function isSessionExpired() {
     const a = new URLSearchParams(document.location.search);
     if (a.has('expired')){
-        document.addEventListener("visibilitychange", visibilityHander = () => {
+        document.addEventListener("visibilitychange", () => {
             if (document.visibilityState == 'visible') return notification("automatic-signout");
             isSessionExpired();
         }, { once: true });
     }
 }
 
-const invalidName = (nameInput) => !(/^(?=.{4,20}$)(?![_])(?!.*  )(?!.*[_]{2})[a-zA-Z0-9_ ]+(?<![_])$/.test(nameInput));
+export const invalidName = (nameInput) => !(/^(?=.{4,20}$)(?![_])(?!.*  )(?!.*[_]{2})[a-zA-Z0-9_ ]+(?<![_])$/.test(nameInput));
 
-const invalidEmail = (emailInput) => !(/^(?=[a-zA-Z0-9])(?!.*[^a-zA-Z0-9]{2})[a-zA-Z0-9_!#$%&'*+\/=?`{|}~^.-]{0,63}[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9.-]*\.\w{2,3}$/.test(emailInput));
+export const invalidEmail = (emailInput) => !(/^(?=[a-zA-Z0-9])(?!.*[^a-zA-Z0-9]{2})[a-zA-Z0-9_!#$%&'*+\/=?`{|}~^.-]{0,63}[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9.-]*\.\w{2,3}$/.test(emailInput));
 
-const invalidPassword = (passwordInput) => {
+export const invalidPassword = (passwordInput) => {
     const passwordRegex = new RegExp(/^(?=.{8,}$)(?=.*?[0-9])(?=.*?[a-z])(?=.*?[A-Z]).+/, "g"); // at least one lowercase and one uppercase letter and one digit
     return !(passwordRegex.test(passwordInput));
 }
 
-const validPhone = (phoneInput) => /^(?!00)0?\d{3}\s?(?!.*[\s])\d+/.test(phoneInput);
+export const validPhone = (phoneInput) => /^(?!00)0?\d{3}\s?(?!.*[\s])\d+/.test(phoneInput);
 
-const togglePasswordVisibility = () => {
+export const togglePasswordVisibility = () => {
     event.preventDefault();
     const passwordInput = event.currentTarget.previousElementSibling;
     const eye = event.currentTarget.children[0];
@@ -33,7 +38,7 @@ const togglePasswordVisibility = () => {
     eye.src = eye.src.includes('show.png') ? '/Join/assets/img/icons/hide.png' : '/Join/assets/img/icons/show.png';
 }
 
-function changeLanguageImage() {
+export function changeLanguageImage() {
     const selectElement = document.getElementById('language-selection');
     const selectedValue = selectElement.value;
     const selectBox = selectElement.parentElement;
@@ -54,11 +59,11 @@ function changeLanguageImage() {
 }
 
 
-function toggleLangSelection() {
+export function toggleLangSelection() {
     $('.language-login').classList.toggle('active');
 }
 
-function checkKeys () {
+export function checkKeys () {
     if (!(event.key === "Enter")) return;
     event.preventDefault();
     const submitBtn = $('button[type="submit"]');

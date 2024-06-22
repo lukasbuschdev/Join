@@ -10,23 +10,10 @@
     <link rel="stylesheet" href="/Join/fonts/fonts.css">
     <link rel="stylesheet" href="/Join/style.css">
     <link rel="stylesheet" href="/Join/init/init/init.css">
-
-    <script src="/Join/js/prototype_extensions.js"></script>
-    <script src="/Join/js/utilities.js"></script>
-    <script src="/Join/js/storage.js"></script>
-    <script src="/Join/js/base.class.js"></script>
-    <script src="/Join/js/account.class.js"></script>
-    <script src="/Join/js/user.class.js"></script>
-    <script src="/Join/js/email.class.js"></script>
-    <script src="/Join/assets/templates/index/mail_templates.js"></script>
-    <script src="/Join/js/language.js"></script>
-    <script src="/Join/js/setup.js" defer></script>
-
-    <script src="/Join/init/init/init.js"></script>
-
-    <script src="/Join/init/login/login.js" defer></script>
+    
+    <script src="/Join/init/login/login.js" type="module"></script>
 </head>
-<body class="bg-light" onload="init(), initLogin()">
+<body class="bg-light" oncustomload="init(), initLogin()">
     <div id="content">
         <div id="logo">
             <img src="/Join/assets/img/icons/logo.svg" alt="" width="100">

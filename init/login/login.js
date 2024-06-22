@@ -1,9 +1,20 @@
-function initLogin() {
+import { bindInlineFunctions, getContext } from '../../js/setup.js';
+
+bindInlineFunctions(getContext(), [
+    '/Join/init/init/init.js',
+    '/Join/js/utilities.js',
+    '/Join/js/language.js'
+])
+import { getUserByInput, LOCAL_getData, LOCAL_removeData, LOCAL_setData } from "../../js/storage.js";
+import { User } from "../../js/user.class.js";
+import { $, hashInputValue, throwErrors } from "../../js/utilities.js";
+
+export function initLogin() {
     rememberLoginDetails();
     initAutomaticLogin();
 }
 
-function initAutomaticLogin() {
+export function initAutomaticLogin() {
     $('form').addEventListener('focusin', () => {
         const target = event.target;
         if (target.tagName !== "INPUT" || target.type === "checkbox") return initAutomaticLogin();
@@ -11,7 +22,7 @@ function initAutomaticLogin() {
     }, { once: true });
 }
 
-const logIn = async () => {
+export const logIn = async () => {
     event.preventDefault();
     const emailOrUsername = $('#email input').value;
     const password = $('#password input').value;
@@ -29,13 +40,13 @@ const logIn = async () => {
     user.logIn();
 }
 
-async function guestLogin() {
+export async function guestLogin() {
     event.preventDefault();
     const guestUser = await getUserByInput('Guest');
     guestUser.logIn();
 }
 
-const rememberMe = (user, password) => {
+export const rememberMe = (user, password) => {
     const shouldRemember = $('#remember-me').checked;
     if (!shouldRemember) return LOCAL_removeData('rememberMe');
 
@@ -45,7 +56,7 @@ const rememberMe = (user, password) => {
     if ("PasswordCredential" in window) user.setCredentials(tempUser.password);
 }
 
-const rememberLoginDetails = async () => {
+export const rememberLoginDetails = async () => {
     const rememberedData = LOCAL_getData('rememberMe');
     if (!rememberedData) return;
     const { name, password } = rememberedData;
@@ -57,7 +68,7 @@ const rememberLoginDetails = async () => {
     $('#remember-me').setAttribute('checked', 'true');
 }
 
-const automaticLogin = async () => {
+export const automaticLogin = async () => {
     if (!("PasswordCredential" in window)) return;
     navigator.credentials.preventSilentAccess();
     const cred = await navigator.credentials.get({ password: true });

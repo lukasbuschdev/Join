@@ -1,15 +1,26 @@
+import { currentLang } from "../../js/language.js";
+import { getBoards, getContacts, REMOTE_removeData, SESSION_getData, SESSION_removeData, SESSION_setData } from "../../js/storage.js";
+import { $, $$, debounce, notification, throwErrors } from "../../js/utilities.js";
+import { Notify } from "../../js/notify.class.js";
+import * as _ from "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js";
+import { bindInlineFunctions, getContext } from "../../js/setup.js";
+import { boardTitleSelectionTemplate } from "../index/index.js";
+bindInlineFunctions(getContext(), [
+    '/Join/index/index/index.js',
+])
+
 let newBoardCollaborators;
-const initSummary = async () => {
+export async function initSummary() {
     await getBoards();
     renderBoards();
-    if (USER.boards.length) $('#summary-content').classList.remove('d-none')
+    if (USER.boards?.length) $('#summary-content').classList.remove('d-none')
     else return
     const boardId = SESSION_getData('activeBoard') || Object.keys(BOARDS)[0];
     renderBoard(boardId);
     renderBoardTitleSelection();
 }
 
-const renderBoards = () => {
+export function renderBoards() {
     if (!SESSION_getData('activeBoard')) SESSION_setData('activeBoard', Number(Object.keys(BOARDS)[0]));
 
     const activeBoard = SESSION_getData('activeBoard');
@@ -18,21 +29,21 @@ const renderBoards = () => {
     activeBoardButton?.classList.add('active');
 }
 
-const renderBoardEditButton = (boardId) => {
+export function renderBoardEditButton(boardId) {
     $('#summary-data').innerHTML += 
     /*html*/`<button class="circle grid-center edit-btn" onclick="initEditBoard(${boardId})">
         <img src="/Join/assets/img/icons/edit.svg" alt="">
     </button>`;
 }
 
-const boardSelectionTemplate = ({name, id}) => {
+export function boardSelectionTemplate({name, id}) {
     return /*html*/`
         <button class="row" type="option" data-id="${id}" onclick="renderBoard()">
             <span>${name.replaceAll('-',' ')}</span>
         </button>`;
 }
 
-function getTaskStats(tasksObj) {
+export function getTaskStats(tasksObj) {
     const tasks = Object.values(tasksObj);
     const now = new Date();
     return {
@@ -54,7 +65,7 @@ function getTaskStats(tasksObj) {
     }
 }
 
-function setBoardButtons({tasksInBoard, tasksInProgress, tasksAwaitingFeedback, tasksUrgent, upcomingDeadline, tasksToDo, tasksDone}) {
+export function setBoardButtons({tasksInBoard, tasksInProgress, tasksAwaitingFeedback, tasksUrgent, upcomingDeadline, tasksToDo, tasksDone}) {
     const boardButtons = $$('#summary-data button:not(.edit-btn)');
     
     boardButtons[0].$('h1').innerText = tasksInBoard;
@@ -65,13 +76,13 @@ function setBoardButtons({tasksInBoard, tasksInProgress, tasksAwaitingFeedback, 
     boardButtons[3].$$(':is(.line, .upcoming-deadline)').for(container => container.classList.toggle('d-none', !upcomingDeadline));
     boardButtons[4].$('h1').innerText = tasksToDo;
     boardButtons[5].$('h1').innerText = tasksDone;
-    boardButtons.for(button => button.onclick = () => {
+    boardButtons.forEach(button => button.onclick = () => {
         $('nav #board').click()
     });
 }
 
 
-const renderBoard = (id) => {
+export function renderBoard(id) {
     if(!id) return
     SELECTED_BOARD = BOARDS[id];
     if(!SELECTED_BOARD) return;
@@ -90,13 +101,20 @@ const renderBoard = (id) => {
     summaryHeader.innerText = SELECTED_BOARD.name;
 }
 
-const createBoardModal = async () => {
+export function renderBoardTitleSelection() {
+  const activeBoardId = SESSION_getData("activeBoard");
+  $("#board-title-selection .options").innerHTML = Object.values(BOARDS).reduce(
+    (template, board) => `${template}${ activeBoardId != board.id ? boardTitleSelectionTemplate(board) : "" }`, ``
+  );
+}
+
+export async function createBoardModal() {
     await $('#add-board .add-board-data').includeTemplate({url: '/Join/assets/templates/index/add-board.html', replace: false});
     newBoardCollaborators = [];
     $('#add-board').openModal();
 }
 
-const addBoardCategory = () => {
+export function addBoardCategory() {
     const title = $('#add-board-categories input').value;
     const color = $('.category-color.active').style.getPropertyValue('--clr');
     const titleValidity = title.length > 20;
@@ -106,7 +124,7 @@ const addBoardCategory = () => {
     $('#add-board-categories input').value = '';
 }
 
-const addBoardCategoryTemplate = ([title, color]) => {
+export function addBoardCategoryTemplate([title, color]) {
     return /*html*/`
         <div class="task-category" style="--clr: ${color};">
             <span>${title}</span>
@@ -117,32 +135,36 @@ const addBoardCategoryTemplate = ([title, color]) => {
     `
 }
 
-function removeBoardCategory() {
+export function removeBoardCategory() {
     event.currentTarget.parentElement.remove();
 }
 
-const clearCategoryInput = () => {
+export function clearCategoryInput() {
     event.currentTarget.parentElement.previousElementSibling.value = ''
     const title = $('#add-board-categories input').value;
     const titleValidity = title.length > 10;
     throwErrors({identifier: "name-too-long", bool: titleValidity});
 }
 
-const isValidTitle = (titleInput) => /^[a-zA-Z0-9_-]+$/.test(titleInput);
+export function isValidTitle(titleInput) {
+    return /^[a-zA-Z0-9_-]+$/.test(titleInput);
+}
 
-const getCollaborators = () => [...$$('.collaborator')].reduce((total, collaborator) => {
-    total.push(collaborator.dataset.id);
-    return total;
-}, []);
+export function getCollaborators() {
+    return [...$$('.collaborator')].reduce((total, collaborator) => {
+        total.push(collaborator.dataset.id);
+        return total;
+    }, [])
+}
 
-const getTaskCategories = () => [...$$('.task-category')].reduce((total, category) => {
+export const getTaskCategories = () => [...$$('.task-category')].reduce((total, category) => {
     const color = category.style.getPropertyValue('--clr');
     const name = category.$('span').innerText;
     total[name] = color;
     return total;
 }, {});
 
-const createNewBoard = async () => {
+export async function createNewBoard() {
     const boardName = $('#add-board-title input').value.replaceAll(' ', '-');
     const titleIsValid = isValidTitle(boardName);
     if (!titleIsValid) return throwErrors({identifier: 'title', bool: titleIsValid});
@@ -159,7 +181,7 @@ const createNewBoard = async () => {
     location.reload();    
 };
 
-const createBoardNotification = ({name, id}, collaborators) => {
+export function createBoardNotification({name, id}, collaborators) {
     if (!collaborators.length) return;
     const notification = new Notify({
         recipients: collaborators,
@@ -171,7 +193,7 @@ const createBoardNotification = ({name, id}, collaborators) => {
     return notification.send();
 };
 
-const toggleDrp = () => {
+export function toggleDrp() {
     event.currentTarget.toggleDropDown();
     const drp = $(':is(.add-board-data, .edit-board-data) #drp-collaborators');
     const filteredContacts = !!(event.currentTarget.closest('.edit-board-data')) ? Object.values(CONTACTS).filter(({id}) => !(SELECTED_BOARD.collaborators.includes(id))) : Object.values(CONTACTS);
@@ -180,7 +202,7 @@ const toggleDrp = () => {
     drp.renderItems(sortedContacts, contactDropdownTemplate);
 };
 
-const filterDrp = debounce(() => {
+export const filterDrp = debounce(() => {
     
     const drp = $('.add-board-data .drp');
     const filter = $('#add-board-collaborators input').value;
@@ -192,7 +214,7 @@ const filterDrp = debounce(() => {
     drp.renderItems(filteredContacts, contactDropdownTemplate);
 });
 
-const contactDropdownTemplate = ({name, color, id, img}) => {
+export function contactDropdownTemplate({name, color, id, img}) {
     return /*html*/`
         <div class="contact row gap-15 drp-option ${newBoardCollaborators.includes(id) ? 'active' : ''}" onclick="addCollaborator(${id})">
             <div class="user-img-container" style="--user-clr: ${color};">
@@ -204,7 +226,7 @@ const contactDropdownTemplate = ({name, color, id, img}) => {
     `
 }
 
-const addCollaborator = (id) => {
+export function addCollaborator(id) {
     event.currentTarget.classList.toggle('active');
     if (newBoardCollaborators.includes(`${id}`)) newBoardCollaborators.remove(`${id}`); 
     else newBoardCollaborators.push(`${id}`);
@@ -213,7 +235,7 @@ const addCollaborator = (id) => {
     collabContainer.renderItems(Object.values(CONTACTS).filter(contact => newBoardCollaborators.includes(contact.id)), newBoardCollaboratorTemplate);
 }
 
-const newBoardCollaboratorTemplate = ({img, name, color, id}) => {
+export function newBoardCollaboratorTemplate({img, name, color, id}) {
     return /*html*/`
     <button class="collaborator ${!SELECTED_BOARD.collaborators.includes(id) ? 'invitation' : ''}" data-id="${id}">
         <div class="user-img-container" style="--user-clr: ${color}">
@@ -224,7 +246,7 @@ const newBoardCollaboratorTemplate = ({img, name, color, id}) => {
 `
 }
 
-const renderEditBoard = () => {
+export function renderEditBoard() {
     const {name, collaborators, categories} = SELECTED_BOARD;
     const editBoardContainer = $('.edit-board-data');
     editBoardContainer.$(':scope > h3').innerText = name;
@@ -234,7 +256,7 @@ const renderEditBoard = () => {
     editBoardContainer.$('.collaborators-container').renderItems(Object.values(CONTACTS).filter(contact => collaborators.includes(contact.id)), newBoardCollaboratorTemplate);
 }
 
-const saveEditedBoard = async () => {
+export async function saveEditedBoard() {
     const collaborators = getCollaborators();
     const categories = getTaskCategories();
     
@@ -246,14 +268,14 @@ const saveEditedBoard = async () => {
     location.reload();
 }
 
-function updateBoardCategories(categories) {
+export function updateBoardCategories(categories) {
     if (_.isEqual(categories, SELECTED_BOARD.categories)) return;
     SELECTED_BOARD.categories = {};
     Object.entries(categories).for(([name, color]) => SELECTED_BOARD.categories[name] = color);
     return SELECTED_BOARD.update();
 }
 
-const initEditBoard = async () => {
+export async function initEditBoard() {
     event.stopPropagation();
     newBoardCollaborators = [];
     const editBoardModal = $('#edit-board');
@@ -263,7 +285,7 @@ const initEditBoard = async () => {
     editBoardModal.openModal();
 }
 
-const deleteBoard = () => confirmation(`delete-board, {boardName: '${SELECTED_BOARD.name}'}`, async () => {
+export const deleteBoard = () => confirmation(`delete-board, {boardName: '${SELECTED_BOARD.name}'}`, async () => {
     SELECTED_BOARD.collaborators.forAwait(async collaboratorId => {
         await REMOTE_removeData(`users/${collaboratorId}/boards/${SELECTED_BOARD.id}`);
     });
@@ -275,6 +297,6 @@ const deleteBoard = () => confirmation(`delete-board, {boardName: '${SELECTED_BO
     location.reload();
 })
 
-const toggleBoardSelection = () => {
+export function toggleBoardSelection() {
     $('#summary-selection').classList.toggle('active');
 }

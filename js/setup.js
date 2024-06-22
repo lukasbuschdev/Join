@@ -1,38 +1,47 @@
-const goTo = (directory, options) => {
+import { $, $$, currentDirectory, includeTemplates, parse, searchParams } from "./utilities.js";
+import './prototype_extensions.js';
+import { LANG_load } from "./language.js";
+
+/**
+ * parses the specified directory and reloads the current page to it
+ * @param {string} directory 
+ * @param {any} options 
+ */
+export const goTo = (directory, options) => {
     const url = `${window.location.origin}/Join/${directory}.html${(options?.search ?? location.search)}`
     window.location.href = url;
 }
-function currentUserId() {
+export function currentUserId() {
     return (searchParams().get('uid') == null) ? undefined : `${searchParams().get('uid')}`;
 }
 
-const menuOptionInitator = new MutationObserver(({target}) => target.closest('[type = "menu"]').initMenus());
+export const menuOptionInitator = new MutationObserver(([{target}]) => target.parentElement.closest('[type = "menu"]').initMenus());
 
-const mutationObserverOptions = {
+export const mutationObserverOptions = {
     childList: true,
     subTree: true
 };
 
-const resetMenus = function () {
+export const resetMenus = function () {
     menuOptionInitator.disconnect();
     this.$$('[type = "menu"]').for(menu => menuOptionInitator.observe(menu, mutationObserverOptions));
 }
 
 let inactivityTimer;
-function addInactivityTimer(minutes = 5) {
+export function addInactivityTimer(minutes = 5) {
     return inactivityTimer = setTimeout(() => goTo('init/login/login', { search: '?expired' }), minutes * 60 * 1000);
 }
 
-const initInactivity = () => {
+export const initInactivity = () => {
     window.addEventListener("visibilitychange", () => {
         if (document.visibilityState == "hidden") return addInactivityTimer();
         clearTimeout(inactivityTimer);
     });
 }
 
-window.renderUserData = function () {
-    const { name, img, color } = USER;
-    this.$$('[data-user-data]').for(
+export function renderUserData() {
+    const { name, img, color } = window.USER;
+    (this ?? document.documentElement).$$('[data-user-data]').forEach(
         (userField) => {
             const dataType = userField.dataset.userData;
             switch (dataType) {
@@ -46,20 +55,101 @@ window.renderUserData = function () {
     );
 }
 
-const renderName = (userField, name) => {
+export const renderName = (userField, name) => {
     userField.innerText = name;
 };
-const renderImage = (userField, img) => {
+export const renderImage = (userField, img) => {
     userField.src = img;
 };
-const renderInitials = (userField, name) => {
+export const renderInitials = (userField, name) => {
     userField.innerText = name.slice(0, 2).toUpperCase();
 };
-const renderColor = (userField, color) => {
+export const renderColor = (userField, color) => {
     userField.style.setProperty('--user-clr', color);
 };
 
-initInactivity();
-includeTemplates();
-LANG_load();
-$('body').initMenus();
+// HELPER
+
+export function getContext() {
+    return getCallerModulePath(new Error().stack)
+}
+
+/**
+ * makes inline HTML events available in es modules
+ * 
+ * IMPORTANT: callerModulePath must be passed in via the 'getContext()' function
+ * @param {string} callerModulePath !! must be passed in via the 'getContext()' function !!
+ * @param {string[]} importPaths an Array of paths to js files 
+ * @returns 
+ */
+export async function bindInlineFunctions(callerModulePath, importPaths = []) {    
+    if (currentDirectory(callerModulePath) !== currentDirectory()) return
+    const allImportPaths = new Set(importPaths)
+    if (!/setup/.test(callerModulePath)) allImportPaths.add(callerModulePath)
+
+    await new Promise((resolve) => {
+        window.addEventListener("templatesIncluded", resolve, { once: true })
+    })
+
+    // console.log('importing modules: ', allImportPaths)
+    const modules = await Promise.all([...allImportPaths].map((path) => import(path)))
+    console.log(modules)
+    if (document.readyState === 'loading') await new Promise((resolve) => window.addEventListener("DOMContentLoaded", resolve))
+    
+    const allFunctionNames = getAllFunctionNames() 
+    bindFunctionsToWindow(modules, allFunctionNames);
+    const onload = customOnloadFunction()
+    console.log(onload)
+    onload()() // calls the oncustomload event
+    window.dispatchEvent(new CustomEvent("EventsBound"))
+}
+
+function getAllFunctionNames() {
+    const functionNameRegExp = /(?<!\.)\b\w+\b(?=\()/g;
+    return [...$$('*')].reduce((total, { attributes }) => {
+            [...attributes].forEach(({ name, value }) => {
+                if (!/^(on|methods)/.test(name)) return
+                const functionNames = String(value).match(functionNameRegExp)
+                if (!functionNames) return
+                total.add(...functionNames)
+            })
+            return total
+    }, new Set());
+}
+
+function customOnloadFunction() {
+    const customOnloadEvalString = $('body').attributes.getNamedItem('oncustomload')?.value
+    return !!customOnloadEvalString
+        ? parse.bind(customOnloadEvalString)
+        : () => {}
+}
+
+export function getCallerModulePath(stack) {
+    const lastLine = stack.split('\n').at(-1)
+    const matches = lastLine.match(/\/Join[^:]*/g)
+    if (matches) return matches[0]
+}
+
+function bindFunctionsToWindow(modules, allFunctionNames) {
+    const missingFunctions = modules.reduce((allMissing, module) => {
+        allFunctionNames.forEach((name) => {
+            if (name in module) {
+                console.log(`binding function ${name} to window!`)
+                window[name] = module[name]
+                allMissing.delete(name)
+            }
+        })
+        return allMissing
+    }, new Set(allFunctionNames));
+    if (missingFunctions.size > 0) throw Error(`Missing module / invalid import(s):\n${Array.from(missingFunctions).join("\n")}`);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+    initInactivity();
+    includeTemplates();
+}, { once: true })
+
+window.addEventListener("EventsBound", () => {
+    LANG_load();
+    $('body').initMenus();
+}, { once: true })

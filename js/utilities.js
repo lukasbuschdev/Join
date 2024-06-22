@@ -1,5 +1,7 @@
-const log = console.log;
-const error = console.error;
+import { renderUserData } from "./setup.js";
+
+export const log = console.log;
+export const error = console.error;
 
 /**
  * shortcut of document.querySelector
@@ -7,7 +9,7 @@ const error = console.error;
  * @param {K} selectors 
  * @returns {HTMLElementTagNameMap[K]}
  */
-function $(selectors) {
+export function $(selectors) {
   return document.querySelector(selectors)
 };
 
@@ -17,7 +19,7 @@ function $(selectors) {
  * @param {K} selector
  * @returns {HTMLElementTagNameMap[T][]}
  */
-function $$(selector) {
+export function $$(selector) {
   return [...document.querySelectorAll(selector)]
 };
 
@@ -25,8 +27,8 @@ function $$(selector) {
  * returns the current directory name
  * @returns {'login' | 'signup' | 'forgot_password' | 'reset_password' | 'create_account' | 'verification' | 'summary' | 'board' | 'add_task' | 'contacts' | 'help' | 'privacy' | 'legal_notice' | 'privacy'}
  */
-function currentDirectory() {
-  return window.location.pathname.split('/').at(-1).split('.')[0]
+export function currentDirectory(path = window.location.pathname) {
+  return path.split('/').at(-1).split('.')[0]
 }
 
 /**
@@ -34,7 +36,7 @@ function currentDirectory() {
  * @param {string} selectors 
  * @returns {void}
 */
-function show(selectors) {
+export function show(selectors) {
   $(selectors)?.classList.remove('d-none')
 }
 
@@ -43,7 +45,7 @@ function show(selectors) {
  * @param {string} selectors 
  * @returns {void}
 */
-function hide(selectors) {
+export function hide(selectors) {
   $(selectors)?.classList.add("d-none");
 }
 
@@ -51,14 +53,14 @@ function hide(selectors) {
  * callback to toggle the 'active' class on a set of buttons. Only use as EventListerner!!!
  * @param {NodeListOf<HTMLButtonElement> | HTMLButtonElement[]} buttons
  */
-async function toggleActiveBtn(buttons) {
+export async function toggleActiveBtn(buttons) {
   buttons.forEach((button) => button.classList.toggle("active", button === event.currentTarget));
 };
 
 /**
  * adds the toggleActiveBtn() callback to all nav buttons
  */
-function addNavToggleBtns() {
+export function addNavToggleBtns() {
   $$('nav button').forEach((btn, i, buttons) => btn.addEventListener("click", toggleActiveBtn.bind(btn, buttons)))
 };
 
@@ -66,9 +68,10 @@ function addNavToggleBtns() {
  * toggles the 'active' class on the provided error containers
  * @param {...{string, boolean}} errors 
  */
-function throwErrors(...errors) {
+export function throwErrors(...errors) {
   errors.for(({identifier, bool}) => {
     const errorContainer = $(`#${identifier}`);
+    if (!errorContainer) console.log(identifier)
     const inputContainer = errorContainer.closest('.inp-wrapper')?.$('.inp-container');
     errorContainer.classList.toggle('active', bool);
     inputContainer?.classList.toggle('active', bool);
@@ -79,7 +82,7 @@ function throwErrors(...errors) {
  * adds a notification popup to the screen which fades out
  * @param {string} languageKey 
  */
-const notification = (languageKey) => {
+export const notification = (languageKey) => {
   return new Promise(resolve => {
     const el = document.createElement('dialog');
     el.type = "modal";
@@ -100,7 +103,7 @@ const notification = (languageKey) => {
  * @param {string} languageKey keyof LANG
  * @returns {string}
  */
-function popUpNotificationTemplate(languageKey) {
+export function popUpNotificationTemplate(languageKey) {
   return /*html*/`
   <div class="notification grid-center">
       <span data-lang="${languageKey}"></span>
@@ -114,7 +117,7 @@ function popUpNotificationTemplate(languageKey) {
  * @param {number} [delay] idle time in miliseconds before execition (1000 default)
  * @returns {(...params: any[]) => T}
  */
-function debounce(cb, delay = 1000) {
+export function debounce(cb, delay = 1000) {
   let timeout;
   return (...args) => {
     clearTimeout(timeout);
@@ -131,7 +134,7 @@ function debounce(cb, delay = 1000) {
  * @param {number} [delay] cooldown time in miliseconds (1000 default) 
  * @returns {(...params: any[]) => T}
  */
-function throttle (cb, delay = 1000) {
+export function throttle (cb, delay = 1000) {
   let shouldWait = false;
   return (...args) => {
       if (shouldWait) return;
@@ -145,8 +148,12 @@ function throttle (cb, delay = 1000) {
  * renders into elements with the 'include-template' attribute
  * @returns {Promise<void[]>}
  */
-async function includeTemplates() {
-  return Promise.all($$('[include-template]')?.map((templateContainer) => templateContainer.includeTemplate()))
+export function includeTemplates() {
+  return new Promise(async (resolve) => {
+    const data = await Promise.all($$('[include-template]')?.map((templateContainer) => templateContainer.includeTemplate()));
+    window.dispatchEvent(new CustomEvent("templatesIncluded"))
+    resolve(data)
+  })
 }
 
 /**
@@ -154,7 +161,7 @@ async function includeTemplates() {
  * @param {string} url path of the template 
  * @returns {Promise<string>}
  */
-async function getTemplate(url) {
+export async function getTemplate(url) {
     return (await fetch(url)).text();
 }
 
@@ -162,7 +169,7 @@ async function getTemplate(url) {
  * custom eval() implementation
  * @param {string} evalString
  */
-function parse(evalString) {
+export function parse(evalString) {
   return Function(`'use strict'; return (${evalString}) ?? false`)();
 }
 
@@ -170,7 +177,7 @@ function parse(evalString) {
  * returns the current url search params
  * @returns {URLSearchParams}
  */
-function searchParams() {
+export function searchParams() {
   return new URLSearchParams(document.location.search);
 }
 
@@ -178,7 +185,7 @@ function searchParams() {
  * TO DO
  * @returns 
  */
-const submitUpload = async () => {
+export const submitUpload = async () => {
   const img = $('[type="file"]').files[0];
   if (!img) return;
   if (isInvalidImg(img)) return;
@@ -201,7 +208,7 @@ const submitUpload = async () => {
  * @param {File} file 
  * @returns {boolean}
  */
-function isInvalidImg(file) {
+export function isInvalidImg(file) {
   const maxSize = 1024 * 1024;
   const fileTooLarge = file.size > maxSize
   throwErrors({ identifier: 'img-too-large', bool: fileTooLarge });
@@ -212,7 +219,7 @@ function isInvalidImg(file) {
  * creates a promise which resolves to the url of the user image when the websocket emits the 'imgURL' event
  * @returns {Promise<string>}
  */
-function getImgUrl() {
+export function getImgUrl() {
   return new Promise(resolve => {
     SOCKET.on('imgURL', async (imgURL) => {
           const uid = currentUserId();
@@ -226,7 +233,7 @@ function getImgUrl() {
  * TO DO
  * @param {string} imgURL 
  */
-function renderUploadedImg(imgURL) {
+export function renderUploadedImg(imgURL) {
   const imgContainer = $('.user-img');
   imgContainer.src = imgURL;
   imgContainer.onload = () => {
@@ -240,7 +247,7 @@ function renderUploadedImg(imgURL) {
   }  
 }
 
-const removeUpload = async () => {
+export const removeUpload = async () => {
   if (event.target.tagName == "LABEL" || event.target.tagName == "INPUT") return;
   const container = event.currentTarget;
   if (!($('#color-wheel').classList.contains('d-none'))) return;
@@ -258,7 +265,8 @@ const removeUpload = async () => {
   REMOTE_setData(`users/${currentUserId()}`, {img: ""});
 }
 
-const renderColorWheel = () => {
+export function renderColorWheel() {
+  console.log("rendering color wheel")
   let clrBg = [];
   const factor = 12;
   for (let i = 0; i < 361; i+= 360 / factor) {
@@ -267,7 +275,7 @@ const renderColorWheel = () => {
   $('#color-wheel').style.backgroundImage = `radial-gradient(white, transparent, black), conic-gradient(${clrBg.join(', ')})`;
 }
 
-const toggleColorPicker = () => {
+export function toggleColorPicker() {
   event.stopPropagation();
   $('#color-wheel').classList.toggle('d-none');
   $('label').classList.toggle('d-none');
@@ -278,7 +286,7 @@ const toggleColorPicker = () => {
   $('#user-color').classList.toggle('active');
 }
 
-const pickColor = () => {
+export function pickColor() {
   const width = event.currentTarget.offsetWidth;
   const heigth = event.currentTarget.offsetHeight;
   const { offsetX, offsetY } = event;
@@ -293,11 +301,11 @@ const pickColor = () => {
   addAcceptColor(userColor);
 }
 
-function getFraction(numerator, denominator, range = 1) {
+export function getFraction(numerator, denominator, range = 1) {
     return numerator / (denominator / range);
 }
 
-const moveColorCursor = (offsetX, offsetY, userColor) => {
+export function moveColorCursor(offsetX, offsetY, userColor) {
   const colorCursor = $('#color-cursor');
   colorCursor.classList.remove('d-none');
   colorCursor.style.setProperty('--x', offsetX);
@@ -305,9 +313,11 @@ const moveColorCursor = (offsetX, offsetY, userColor) => {
   colorCursor.style.backgroundColor = userColor;
 }
 
-const addAcceptColor = (userColor) => {
+export function addAcceptColor(userColor) {
   $('#accept-user-color').classList.add('active');
   $('label').classList.remove('border');
+
+  let colorPicker
   try {$('#accept-user-color').removeEventListener("click", colorPicker, { once: true })}catch(e){};
   $('#accept-user-color').addEventListener("click", colorPicker = () => {
       event.stopPropagation();
@@ -321,7 +331,7 @@ const addAcceptColor = (userColor) => {
   }, { once: true });
 }
 
-const getRGBfromString = (colorString) => {
+export function getRGBfromString(colorString) {
   if (!(typeof colorString == 'string')) return colorString;
   const a = document.createElement('div');
   a.style.color = colorString;
@@ -331,7 +341,7 @@ const getRGBfromString = (colorString) => {
   return rgb;
 }
 
-const getRGBA = (color) => {
+export function getRGBA(color) {
   if (!color.includes("rgb")) {
     const rgb = getRGBfromString(color);
     if (rgb) color = rgb;
@@ -343,7 +353,7 @@ const getRGBA = (color) => {
   return {r, g, b, a}; 
 }
 
-function getRange(min, max, factor) {
+export function getRange(min, max, factor) {
     return min + (factor * max - factor * min)
 }
 
@@ -352,14 +362,14 @@ function getRange(min, max, factor) {
  * @param {string} input 
  * @returns {boolean}
  */
-function isLetterOrNumber(input) {
+export function isLetterOrNumber(input) {
   return input.length == 1 && /([a-z]|[A-Z]|[0-9])/.test(input);
 }
 
 /**
  * TO DO
  */
-async function confirmation(type, cb) {
+export async function confirmation(type, cb) {
   const dataLang = (type.includes(',')) ? type.slice(0, type.indexOf(',')) : type;
   if (!LANG[`confirmation-${dataLang}`]) return error('message unknown!');
   const confirmationContainer = document.createElement('dialog');
@@ -381,7 +391,7 @@ async function confirmation(type, cb) {
  * @param {string} input 
  * @returns {Date | undefined}
  */
-const dateFormat = (input) => {
+export function dateFormat(input) {
   if (typeof input !== "string") return;
   if (!/^\d{2}\/\d{2}\/\d{4}$/.test(input)) return;
 
@@ -400,7 +410,7 @@ const dateFormat = (input) => {
  * @param {Date} output 
  * @returns {boolean}
  */
-function isInvalidDate (input, output) {
+export function isInvalidDate (input, output) {
   const [, mI, yI] = input.split('/');
   const mO = output.getMonth() + 1;
   const yO = output.getFullYear();
@@ -412,7 +422,7 @@ function isInvalidDate (input, output) {
  * @param {string} inputValue 
  * @returns {Promise<string>}
  */
-async function hashInputValue(inputValue) {
+export async function hashInputValue(inputValue) {
   const encoder = new TextEncoder();
   const data = encoder.encode(inputValue);
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);

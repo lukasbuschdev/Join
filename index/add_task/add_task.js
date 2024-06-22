@@ -1,4 +1,8 @@
-async function initAddTask() {
+import { getBoards } from "../../js/storage.js";
+import { $, currentDirectory, dateFormat, notification } from "../../js/utilities";
+import "/Join/js/prototype_extensions.js"
+
+export async function initAddTask() {
     await getBoards();
     renderBoardIds();
     renderDate();
@@ -6,14 +10,14 @@ async function initAddTask() {
     resetArrays();
 }
 
-const subtasks = [];
-const selectedCollaborators = [];
-const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
+export const subtasks = [];
+export const selectedCollaborators = [];
+export const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
 
-const newCollabArray = _.cloneDeep(selectedCollaborators);
+export const newCollabArray = _.cloneDeep(selectedCollaborators);
 
 
-function renderBoardIds() {
+export function renderBoardIds() {
     const drpContainer = $('#drp-board-container');
     drpContainer.innerHTML = ''; 
 
@@ -24,7 +28,7 @@ function renderBoardIds() {
     });
 }
 
-function selectBoard(boardId) {
+export function selectBoard(boardId) {
     const selectedBoard = BOARDS[boardId];
     SELECTED_BOARD = selectedBoard;
     event.currentTarget.toggleDropDown();
@@ -36,14 +40,14 @@ function selectBoard(boardId) {
     renderAssignToContacts();
 }
 
-function renderSelectedBoard(selectedBoard) {
+export function renderSelectedBoard(selectedBoard) {
     const selectedBoardField = $('#selected-board');
     const selectedBoardName = selectedBoard.name;
 
     selectedBoardField.innerText = selectedBoardName;
 }
 
-function checkSelectedBoard() {
+export function checkSelectedBoard() {
     const boardInput = $('#selected-board').innerText;
     
     if(boardInput === LANG['select-board']) {
@@ -56,7 +60,7 @@ function checkSelectedBoard() {
     }
 }
 
-function renderCategories(selectedBoard) {
+export function renderCategories(selectedBoard) {
     const drpContainer = $('#drp-categories');
     drpContainer.innerHTML = '';
 
@@ -70,7 +74,7 @@ function renderCategories(selectedBoard) {
     });
 }
 
-function renderAssignToContacts() {
+export function renderAssignToContacts() {
     const drpContainer = $('#drp-collab-container');
     const assignToUser = document.createElement('div');
     assignToUser.innerHTML = renderSelfToAssign();
@@ -92,7 +96,7 @@ function renderAssignToContacts() {
     drpContainer.LANG_load();
 }
 
-function renderSelfToAssign() {
+export function renderSelfToAssign() {
     return /*html*/`
         <div class="drp-option" data-id="${USER.id}" onclick="selectCollaborator()">
             <div class="user-img-container grid-center" style="--user-clr: ${USER.color}">
@@ -104,7 +108,7 @@ function renderSelfToAssign() {
     `;
 }
 
-function renderCollaboratorsToAssign(collaborator) {
+export function renderCollaboratorsToAssign(collaborator) {
     return /*html*/ `
         <div class="drp-option" data-id="${collaborator.id}" onclick="selectCollaborator()">
             <div class="user-img-container grid-center" style="--user-clr: ${collaborator.color}">
@@ -116,7 +120,7 @@ function renderCollaboratorsToAssign(collaborator) {
     `;
 }
 
-function selectCollaborator() {
+export function selectCollaborator() {
     event.currentTarget.classList.toggle('active');
     const collaboratorId = event.currentTarget.dataset.id;
     const index = selectedCollaborators.indexOf(collaboratorId.toString());
@@ -129,7 +133,7 @@ function selectCollaborator() {
     renderCollaboratorInput();
 }
 
-function checkSelectedCollaborator() {
+export function checkSelectedCollaborator() {
     if(selectedCollaborators.length == 0) {
         $('#select-a-collaborator').classList.remove('error-inactive');
         $('#drp-wrapper-collaborator').classList.add('input-warning');
@@ -140,7 +144,7 @@ function checkSelectedCollaborator() {
     }
 }
 
-function renderCollaboratorInput() {
+export function renderCollaboratorInput() {
     const inputContainerCollaborator = $('#selected-collaborator-input');
     inputContainerCollaborator.innerHTML = '';
 
@@ -156,7 +160,7 @@ function renderCollaboratorInput() {
     });
 }
 
-function getTitle() {
+export function getTitle() {
     const title = $('#title').value;
   
     if (title === '') {
@@ -171,14 +175,14 @@ function getTitle() {
     }
 }
 
-function titleEmpty() {
+export function titleEmpty() {
     $('#enter-a-title').classList.remove('error-inactive');
     $('#title').classList.add('input-warning');
     $('#title-too-long').classList.add('error-inactive');
     return
 }
 
-function titleInvalid() {
+export function titleInvalid() {
     $('#enter-a-title').classList.add('error-inactive');
     $('#title-letters-only').classList.remove('error-inactive');
     $('#title').classList.add('input-warning');
@@ -186,7 +190,7 @@ function titleInvalid() {
     return
 }
 
-function titleTooLong() {
+export function titleTooLong() {
     $('#title').classList.add('input-warning');
     $('#title-letters-only').classList.add('error-inactive');
     $('#enter-a-title').classList.add('error-inactive');
@@ -194,13 +198,13 @@ function titleTooLong() {
     $('#title-too-long').classList.remove('error-inactive');
 }
 
-function titleValid() {
+export function titleValid() {
     $('#title-letters-only').classList.add('error-inactive');
     $('#title-too-long').classList.add('error-inactive');
     $('#title').classList.remove('input-warning');
 }
 
-function getDescription() {
+export function getDescription() {
     const description = $('#description').value;
     const letterRegexDiscription = /^[A-Za-zäöüßÄÖÜ\-\/_'., "0-9]{3,150}$/;
   
@@ -214,32 +218,32 @@ function getDescription() {
     }
 }
 
-function descriptionEmpty() {
+export function descriptionEmpty() {
     $('#enter-a-description').classList.remove('error-inactive');
     $('#description').classList.add('input-warning');
     return;
 }
 
-function descriptionInvalid() {
+export function descriptionInvalid() {
     $('#enter-a-description').classList.add('error-inactive');
     $('#description').classList.add('input-warning');
     $('#description-letters-only').classList.remove('error-inactive');
     return;
 }
 
-function descriptionValid() {
+export function descriptionValid() {
     $('#description-letters-only').classList.add('error-inactive');
     $('#enter-a-description').classList.add('error-inactive');
     $('#description').classList.remove('input-warning');
 }
 
-function renderSelectedCategory(category) {
+export function renderSelectedCategory(category) {
     const selected = $('#select-task-category');
     event.currentTarget.toggleDropDown();
     return selected.innerHTML = category;
 }
 
-function getSelectedCategory() {
+export function getSelectedCategory() {
     const category = $('#select-task-category').innerText;
     
     if(category === LANG['select-task-category']) {
@@ -249,18 +253,18 @@ function getSelectedCategory() {
     return category; 
 }
 
-function noCategorySelected() {
+export function noCategorySelected() {
     $('#select-a-category').classList.remove('error-inactive');
     $('#category-drp-wrapper').classList.add('input-warning');
     return
 }
 
-function categorySelected() {
+export function categorySelected() {
     $('#select-a-category').classList.add('error-inactive');
     $('#category-drp-wrapper').classList.remove('input-warning');
 }
 
-function getFormattedDate() {
+export function getFormattedDate() {
     const today = new Date();
     const day = String(today.getDate()).padStart(2, '0');
     const month = String(today.getMonth() + 1).padStart(2, '0');
@@ -269,11 +273,11 @@ function getFormattedDate() {
     return `${day}/${month}/${year}`;
 }
 
-function renderDate() {
+export function renderDate() {
     $('#date').value = getFormattedDate();
 }
 
-function getDueDate() {
+export function getDueDate() {
     const date = $('#date');
 
     if(date.value == '') {
@@ -286,26 +290,26 @@ function getDueDate() {
     }
 }
 
-function dateEmpty() {
+export function dateEmpty() {
     $('#enter-a-dueDate').classList.remove('error-inactive');
     $('#date').classList.add('input-warning');     
     return
 }
 
-function dateWrongFormat() {
+export function dateWrongFormat() {
     $('#enter-a-dueDate').classList.add('error-inactive');
     $('#date').classList.add('input-warning');     
     $('#wrong-date-format').classList.remove('error-inactive');
     return
 }
 
-function dateValid() {
+export function dateValid() {
     $('#enter-a-dueDate').classList.add('error-inactive');
     $('#date').classList.remove('input-warning');
     $('#wrong-date-format').classList.add('error-inactive');
 }
 
-function checkPriority() {
+export function checkPriority() {
     const activeButton = $('.btn-priority button.active');
     
     if (activeButton) {
@@ -316,13 +320,13 @@ function checkPriority() {
     }
 }
 
-function getSubtasks() {
+export function getSubtasks() {
     return subtasks.map((subtaskName) => {
         return {name: subtaskName, done: false}
     });
 }
 
-async function addTask() {
+export async function addTask() {
     const dir = currentDirectory();
     checkSelectedBoard();
     checkSelectedCollaborator();
@@ -344,11 +348,11 @@ async function addTask() {
     else $('#board').click();
 }
 
-function checkAddTaskInputs(addTaskData) {
+export function checkAddTaskInputs(addTaskData) {
     return addTaskData.some(singleInputField => singleInputField === undefined);
 }
 
-async function createNewTask(SELECTED_BOARD, title, 
+export async function createNewTask(SELECTED_BOARD, title, 
     description, category, selectedCollaborators, 
     dueDate, priority, subtasks) {
 
@@ -365,12 +369,12 @@ async function createNewTask(SELECTED_BOARD, title,
         await SELECTED_BOARD.addTask(newTask);
 }
 
-function clearSubtaskInput() {
+export function clearSubtaskInput() {
     const subtaskInputContainer = $('.subtasks input');
     subtaskInputContainer.value = '';
 }
 
-function checkSubtaskInput() {
+export function checkSubtaskInput() {
     const inputField = $('.subtasks input').value;
     const inputButtons = $('.subtasks .inp-buttons');
 
@@ -381,7 +385,7 @@ function checkSubtaskInput() {
     }
 }
 
-function addSubtask() {
+export function addSubtask() {
     const subtaskValue = $('.subtasks input');
     const inputButtons = $('.subtasks .inp-buttons');
 
@@ -398,14 +402,14 @@ function addSubtask() {
     renderSubtasks();
 }
 
-function subtaskInvalid() {
+export function subtaskInvalid() {
     $('#error-container').classList.remove('d-none');
     $('#subtask-letters-only').classList.remove('error-inactive');
     $('#add-subtask').classList.add('input-warning');
     return
 }
 
-function subtaskTooLong() {
+export function subtaskTooLong() {
     $('#error-container').classList.remove('d-none');
     $('#add-subtask').classList.add('input-warning');
     $('#subtask-letters-only').classList.add('error-inactive');
@@ -413,14 +417,14 @@ function subtaskTooLong() {
     return 
 }
 
-function subtaskValid() {
+export function subtaskValid() {
     $('#subtask-letters-only').classList.add('error-inactive');
     $('#subtask-too-long').classList.add('error-inactive');
     $('#add-subtask').classList.remove('input-warning');
     $('#error-container').classList.add('d-none');
 }
 
-function renderSubtasks() {
+export function renderSubtasks() {
     const subtaskContainer = $('#subtask-container');
     subtaskContainer.innerHTML = '';
 
@@ -430,7 +434,7 @@ function renderSubtasks() {
     }
 }
 
-function editSubtask(i) {
+export function editSubtask(i) {
     const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
     const range = document.createRange();
     const selection = window.getSelection();
@@ -448,7 +452,7 @@ function editSubtask(i) {
     selection.addRange(range);
 }
 
-function saveEditedSubtask(i) {
+export function saveEditedSubtask(i) {
     const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
     subtasks[i] = subtaskInput.innerText;
     subtaskInput.setAttribute('contenteditable', 'false')
@@ -465,7 +469,7 @@ function saveEditedSubtask(i) {
 }
 
 
-function renderSubtaskTemplate(subtask, i) {
+export function renderSubtaskTemplate(subtask, i) {
     return /*html*/ `
         <div class="row single-subtask" id="single-subtask${i}">
             <li>${subtask}</li>
@@ -485,7 +489,7 @@ function renderSubtaskTemplate(subtask, i) {
     `;
 }
 
-function deleteSubtask(i) {
+export function deleteSubtask(i) {
     if (event.currentTarget.closest('#edit-task')) {
         SELECTED_TASK.subTasks.splice(i, 1);
         renderEditSubtasks();
@@ -495,12 +499,12 @@ function deleteSubtask(i) {
     renderSubtasks();
 }
 
-function resetArrays() {
+export function resetArrays() {
     selectedCollaborators.length = 0;
     subtasks.length = 0;
 }
 
-function resetPriorityButton() {
+export function resetPriorityButton() {
     const buttons = $$('.btn-priority button');
     buttons.for((button) => button.classList.remove('active'));
 }

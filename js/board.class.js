@@ -1,4 +1,7 @@
-class Board extends BaseClass {
+import { BaseClass } from "./base.class.js";
+import { currentUserId } from "./setup.js";
+
+export class Board extends BaseClass {
     constructor({
         name,
         owner = currentUserId(),

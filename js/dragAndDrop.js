@@ -3,12 +3,12 @@ let taskWidth
 let offset = { x: 0, y: 0 }
 let scrollInterval
 
-const scrollFrequency = 20
-const throttleDelay = 10
+export const scrollFrequency = 20
+export const throttleDelay = 10
 
 // SETUP
 
-function addDragAndDrop() {
+export function addDragAndDrop() {
     task = event.currentTarget
     const taskBBox = task.getBoundingClientRect()
     offset.x = event.pageX - taskBBox.x
@@ -22,18 +22,18 @@ function addDragAndDrop() {
 
 // FULLSCREEN FUNC
 
-function fullscreenFunctionality() {
+export function fullscreenFunctionality() {
     task.removeEventListener('pointermove', dragFunctionality)
     fullscreenHandler()
 }
 
-function fullscreenHandler() {
+export function fullscreenHandler() {
     renderFullscreenTask(task.dataset.id)
 }
 
 // DRAG FUNC
 
-function dragFunctionality() {
+export function dragFunctionality() {
         // remove fullscreenListener
         task.removeEventListener('pointerup', fullscreenFunctionality, { once: true })
 
@@ -53,7 +53,7 @@ function dragFunctionality() {
         task.classList.add('active')
 }
 
-const dragHandler = throttle(() => {
+export const dragHandler = throttle(() => {
     checkDropContainers()
     const {pageX, pageY} = event
     const x = Math.round(pageX - offset.x)
@@ -61,26 +61,26 @@ const dragHandler = throttle(() => {
     moveTask(x, y)
 }, throttleDelay)
 
-function moveTask(x, y) {
+export function moveTask(x, y) {
     task.style.top = `${y}px`
     task.style.left = `${x}px`
 }
 
 // SCROLL FUNC
 
-function scrollFunctionality() {
+export function scrollFunctionality() {
     const taskContainer = $('#tasks')
     if (checkScrollSoft(taskContainer) === false) return
     const scrollDireciton = checkScrollHard(taskContainer)
     if (scrollDireciton) customScroll(scrollDireciton)
 }
 
-function checkScrollSoft(taskContainer) {
+export function checkScrollSoft(taskContainer) {
     const canScroll = taskContainer.scrollHeight > taskContainer.clientHeight
     return canScroll
 }
 
-function checkScrollHard(taskContainer) {
+export function checkScrollHard(taskContainer) {
     const taskBBox = task.getBoundingClientRect()
     const taskContainerBBox = taskContainer.getBoundingClientRect()
     const yOffset = 50
@@ -95,22 +95,22 @@ function checkScrollHard(taskContainer) {
     return 0
 }
 
-function customScroll(direction) {
+export function customScroll(direction) {
     const taskContainer = $('#tasks')
     taskContainer.scrollBy(0, 3 * direction)
 }
 
-function startScroll() {
+export function startScroll() {
     scrollInterval = setInterval(scrollFunctionality, scrollFrequency)
 }
 
-function stopScroll() {
+export function stopScroll() {
     clearInterval(scrollInterval)
 }
 
 // DROP FUNC
 
-async function dropHandler() {
+export async function dropHandler() {
     task.classList.remove('active')
     task.style.maxWidth = ''
 
@@ -132,7 +132,7 @@ async function dropHandler() {
     targetContainer.children[1].classList.remove('placeholder')    
 }
 
-function taskDropAnimation() {
+export function taskDropAnimation() {
     const {pageX, pageY} = event
     const taskBBox = task.getBoundingClientRect()
 
@@ -149,7 +149,7 @@ function taskDropAnimation() {
     }, 0)
 }
 
-function checkDropContainers() {
+export function checkDropContainers() {
     const { pageX, pageY } = event
     const taskContainer = $('#tasks')
     for (const container of [...taskContainer.children]) {

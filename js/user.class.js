@@ -1,5 +1,13 @@
-class User extends Account {
-    constructor(userData){
+import { Account } from "./account.class.js";
+import { Board } from "./board.class.js";
+import { Email } from "./email.class.js";
+import { getEmailLanguage } from "./language.js";
+import { goTo } from "./setup.js";
+import { LOCAL_setData, REMOTE_getData, REMOTE_setData } from "./storage.js";
+
+export class User extends Account {
+    socket
+    constructor(userData) {
         super(userData);
         this.password = userData.password;
         this.color = userData.color ?? '#D1D1D1';
@@ -41,7 +49,7 @@ class User extends Account {
         }
         if (typeof options == "object") mailOptions.options = options;
         const mail = new Email(mailOptions);
-        return mail.send();
+        return mail.send(this.socket);
     }
 
     async verify() {

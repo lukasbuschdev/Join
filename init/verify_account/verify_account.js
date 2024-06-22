@@ -1,19 +1,26 @@
-let SOCKET;
+import { bindInlineFunctions, currentUserId, getContext, goTo } from "../../js/setup.js";
+import { LANG_load } from "../../js/language.js";
+import { REMOTE_getData } from "../../js/storage.js";
+import { User } from "../../js/user.class.js";
+import { $, $$, isLetterOrNumber } from "../../js/utilities.js";
+bindInlineFunctions(getContext())
 
-const initVerifyAccount = () => {
+export function initVerifyAccount() {
     LANG_load();
     initTimer();
     checkEmailVerification();
 }
 
-const checkEmailVerification = async () => {
+export async function checkEmailVerification() {
     const uid = currentUserId();
-    const { verifyCode: { code }} = await REMOTE_getData(`verification/${uid}`)
+    const verificaiton = await REMOTE_getData(`verification/${uid}`)
+    if(verificaiton === undefined) return;
+    const { verifyCode: { code }} = verificaiton
     if (new URLSearchParams(location.search).get('token') !== code) return;
     fillCodeInputs(code);
 }
 
-const initTimer = async () => {
+export async function initTimer() {
     const uid = currentUserId();
     const { verifyCode: { expires }} = await REMOTE_getData(`verification/${uid}`);
     if (expires == undefined) return;
@@ -32,7 +39,7 @@ const initTimer = async () => {
     }, 1000)
 }
 
-const processVerification = async () => {
+export async function processVerification() {
     event.preventDefault();
     
     const uid = currentUserId();
@@ -53,14 +60,14 @@ const processVerification = async () => {
     goTo('init/create_account/create_account', {search: `?uid=${userData.id}`});
 }
 
-const sendNewCode = async () => {
+export async function sendNewCode() {
     event.preventDefault();
     const { userData } = await REMOTE_getData(`verification/${currentUserId()}`);
     const user = new User(userData);
     user.initVerification();
 }
 
-const incrementCodeInputField = () => {
+export function incrementCodeInputField() {
     const input = event.currentTarget;
     if (input.value.length !== 1) return;
     if (event.key == 'Backspace') {
@@ -75,11 +82,11 @@ const incrementCodeInputField = () => {
     event.preventDefault();
 }
 
-const fillCodeInputs = (code) => {
+export function fillCodeInputs(code) {
     $$('input').forEach((input, i) => setTimeout(()=>input.value = code[i], 200 * i))
 }
 
-const pasteCode = () => {
+export function pasteCode() {
     event.preventDefault();
     const code = event.clipboardData.getData('text');
     fillCodeInputs(code);

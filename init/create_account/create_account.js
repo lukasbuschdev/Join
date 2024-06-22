@@ -1,14 +1,17 @@
-const initCreateAccount = async () => {
+import { bindInlineFunctions, getContext } from "../../js/setup.js";
+bindInlineFunctions(getContext(), [
+    '/Join/js/utilities.js'
+])
+
+export async function initCreateAccount() {
     renderColorWheel();
-    initWebsocket(currentUserId());
+    initWebsocket();
     const { name } = await getCurrentUser();
     $('.user-img-container h1').innerText = name.slice(0, 2).toUpperCase();
     $('#user-name').innerText = name;
 }
 
-
-
-const finishSetup = async () => {
+export async function finishSetup() {
     event.preventDefault();
 
     const phoneInput = $('#phone input').value;

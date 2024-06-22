@@ -1,4 +1,4 @@
-class BaseClass {
+export class BaseClass {
     constructor() {
     }
 

@@ -1,4 +1,6 @@
-class Task extends BaseClass {
+import { BaseClass } from "./base.class.js";
+
+export class Task extends BaseClass {
     constructor({ id = Date.now().toString(), type = "to-do", title, description, category = "default", assignedTo = [], dueDate, priority, subTasks = [], boardId }) {
         super();
         this.id = id;

@@ -1,7 +1,42 @@
+import { LANG_load } from "./language.js";
+
 NodeList.prototype.for = function(cb) {
     for (let i = 0; i < this.length; i++){
         cb(this[i], i);
     }
+}
+
+/**
+ * askjdhaskjdhk
+ * @param {*} cb 
+ * @returns 
+ */
+Array.prototype.filteredMap = function(cb) {
+    return this.reduce((filteredMap, item, index) => {
+        const returnItem = cb(item, index, filteredMap)
+        return (returnItem?.length ?? returnItem)
+            ? [...filteredMap, returnItem]
+            : filteredMap
+    }, [])
+}
+
+/**
+ * @template {*} T
+ * @param {*} cb 
+ * @param {*} depth 
+ * @returns {number}
+ * @this {Array<T>}
+ */
+Array.prototype.filteredFlatMap = function(cb, depth) {
+    return this.filteredMap(cb).flat(depth)
+}
+
+/**
+ * @returns {string}
+ * @this {String}
+ */
+String.prototype.reverse = function() {
+    return this.split('').reverse().join('')
 }
 
 Array.prototype.for = function(cb) {
@@ -40,7 +75,6 @@ Array.prototype.remove = function(...items) {
         if (!this.includes(item)) return false;
         this.splice(this.indexOf(item), 1);
     })
-    return true
 }
 
 Object.prototype.filter = function (cb) {
@@ -61,7 +95,7 @@ String.prototype.convert = function () {
 
 HTMLElement.prototype.includeTemplate = async function({url = this.getAttribute('include-template') || '', replace = true} = {}) {
     let template = await (await fetch(url)).text();
-    if (replace) this.outerHTML = template;
+    if (replace && this.parentElement) this.outerHTML = template;
     else this.innerHTML = template;
 }
 
@@ -126,11 +160,12 @@ HTMLDialogElement.prototype.closeModal = function (handlerId) {
 }
 
 HTMLDialogElement.prototype.showNotification = function () {
+    let abortHandler, completionHandler
     this.$('.notification').classList.add('anim-notification');
     this.$('.notification').addEventListener('animationcancel', abortHandler = () => {
         event.currentTarget.removeEventListener('animationend', completionHandler)
     }, { once: true });
-    this.$('.notification').addEventListener('animationend', completionHandler = ()=>{
+    this.$('.notification').addEventListener('animationend', completionHandler = () => {
         event.currentTarget.removeEventListener('animationcancel', abortHandler);
         event.currentTarget.classList.remove('anim-notification');
         this.closeModal();

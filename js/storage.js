@@ -1,5 +1,12 @@
 // REMOTE
 
+import { Account } from "./account.class.js";
+import { Board } from "./board.class.js";
+import { currentUserId } from "./setup.js";
+import { User } from "./user.class.js";
+import { error, notification, parse } from "./utilities.js";
+import { initWebsocket } from "./websocket.js";
+
 const STORAGE_TOKEN = 'NVTVE0QJKQ005SECVM4281V290DQJKIG6V0LRBYV';
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
 
@@ -10,11 +17,14 @@ const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
  * @param {"users" | "boards" | "verification" | "dev"} directory 
  * @returns {Promise<any | undefined>};
  */
-async function REMOTE_download(directory) {
+export async function REMOTE_download(directory) {
     try{
         const { data: {value} } = await (await fetch(`${STORAGE_URL}?key=${directory}&token=${STORAGE_TOKEN}`)).json();
         return (value !== "empty") ? parse(value) : value;
-    } catch(e) { return undefined };
+    } catch(e) {
+        console.log(`download failed! ${e}`)
+        return undefined 
+    };
 };
 
 // UPLOAD
@@ -25,7 +35,7 @@ async function REMOTE_download(directory) {
  * @param {any} data 
  * @returns {Promise<Response | undefined>};
  */
-function REMOTE_upload(directory, data) {
+export function REMOTE_upload(directory, data) {
     if (directory !== "users" || directory !== "boards" || directory !== "verification" || directory !== "dev") return Promise.resolve(undefined);
     // return log(directory, data)
     const payload = { key: directory, value: data, token: STORAGE_TOKEN };
@@ -37,7 +47,7 @@ function REMOTE_upload(directory, data) {
  * @param {string} path path url in the format 'parent/child/grandchild' 
  * @returns {Promise<User | Board | Task | any | undefined>};
  */
-async function REMOTE_getData(path) {
+export async function REMOTE_getData(path) {
     if (!path) return;
     const isValidPath = /^(?=[a-zA-Z0-9])(?!.*\/\/)[a-zA-Z0-9\/-]*[a-zA-Z0-9]$/.test(path);
     if (!isValidPath) return console.error(`'${path}' is not a valid path!`);
@@ -67,7 +77,7 @@ async function REMOTE_getData(path) {
  * @param {any} upload 
  * @returns {Promise<any | undefined>};
  */
-async function REMOTE_setData(path, upload) {
+export async function REMOTE_setData(path, upload) {
     const data = await REMOTE_getData(path.split('/')[0]);
     const directories = path.split('/');
     let currentObj = data;
@@ -83,8 +93,7 @@ async function REMOTE_setData(path, upload) {
         else if(currentObj.indexOf(upload !== -1)) currentObj.push(upload);
     } 
     else Object.assign(currentObj, upload);
-    await REMOTE_upload(directories[0], JSON.parse(JSON.stringify(data)));
-    console.log(data)
+    await REMOTE_upload(directories[0], data);
     return data
 };
 
@@ -93,7 +102,7 @@ async function REMOTE_setData(path, upload) {
  * @param {string} path path url in the format 'parent/child/grandchild' 
  * @returns {Promise<Response | undefined>};
  */
-async function REMOTE_removeData(path) {
+export async function REMOTE_removeData(path) {
     if (!path.includes('/')) return error('can only remove subdirectory!');
     const directory = path.slice(0, path.lastIndexOf('/'));
     const item = path.slice(path.lastIndexOf('/') + 1);
@@ -114,7 +123,7 @@ async function REMOTE_removeData(path) {
  * clears all expired verification from the data
  * @returns {Promise<Response | undefined>};
  */
-async function REMOTE_clearVerifications() {
+export async function REMOTE_clearVerifications() {
     const verifications = await REMOTE_getData('verification');
     for (const verification in verifications) {
         if (verifications[verification].verifyCode.expires < Date.now()) {
@@ -129,8 +138,9 @@ async function REMOTE_clearVerifications() {
  * @param {string} input name or email of user 
  * @returns {Promise<User | undefined>}
  */
-async function getUserByInput(input) {
+export async function getUserByInput(input) {
     const allUsers = await REMOTE_getData('users');
+    if (!allUsers) return undefined
     const [ userData ] = Object.values(allUsers).filter(({ name, email }) => name == input || email == input);
     return (userData) ? new User(userData) : undefined;
 };
@@ -140,7 +150,7 @@ async function getUserByInput(input) {
  * @param {string[]} uids array of user ids 
  * @returns {Promise<User[]>}
  */
-async function getUsersById(uids) {
+export async function getUsersById(uids) {
     const allUsers = await REMOTE_getData(`users`);
     const foundUsers = uids.reduce((users, uid) => { return allUsers.hasOwnProperty(uid) ? {...users, [uid]: allUsers[uid]} : users }, {});
     if (Object.values(foundUsers).length === 0) return;
@@ -151,7 +161,7 @@ async function getUsersById(uids) {
  * returns a promise which resolves to an array of all Users who are not already existing Contacts of the current User sorted by name
  * @returns {Promise<User[]>}
  */
-async function getContactsData() {
+export async function getContactsData() {
     const {contacts: contactIds} = await REMOTE_getData(`users/${currentUserId()}`);
     if (!contactIds) return [];
     const userData = await REMOTE_getData('users');
@@ -169,7 +179,7 @@ async function getContactsData() {
  * @param {string} key 
  * @param {any} value 
  */
-function LOCAL_setData(key, value) {
+export function LOCAL_setData(key, value) {
     localStorage.setItem(key, (typeof value === "object") ? JSON.stringify(value) : value);
 };
 
@@ -178,7 +188,7 @@ function LOCAL_setData(key, value) {
  * @param {string} key 
  * @returns {any}
  */
-function LOCAL_getData(key) {
+export function LOCAL_getData(key) {
     let data = localStorage.getItem(key);
     try { return JSON.parse(data); } catch(e) { return data };
 };
@@ -187,7 +197,7 @@ function LOCAL_getData(key) {
  * removes an item from local storage by key
  * @param {string} key 
  */
-function LOCAL_removeData(key) {
+export function LOCAL_removeData(key) {
     localStorage.removeItem(key);
 };
 
@@ -196,7 +206,7 @@ function LOCAL_removeData(key) {
  * @param {string} key 
  * @param {any} value 
  */
-function SESSION_setData(key, value) {
+export function SESSION_setData(key, value) {
     sessionStorage.setItem(key, JSON.stringify(value));
 };
 
@@ -205,7 +215,7 @@ function SESSION_setData(key, value) {
  * @param {string} key 
  * @returns {any | undefined}
  */
-function SESSION_getData(key) {
+export function SESSION_getData(key) {
     let data = sessionStorage.getItem(key);
     if (data === "null" || data === "undefined" || data === "NaN" || data === "false") return undefined
     if (data) return data;
@@ -215,7 +225,7 @@ function SESSION_getData(key) {
  * removes an item from session storage by key
  * @param {string} key 
  */
-function SESSION_removeData(key) {
+export function SESSION_removeData(key) {
     sessionStorage.removeItem(key);
 };
 
@@ -223,33 +233,35 @@ function SESSION_removeData(key) {
  * returns a promise which resolves to an instance of the current User
  * @returns {Promise<User>}
  */
-async function getCurrentUser() {
+export async function getCurrentUser() {
     const uid = currentUserId();
     if (!uid) return null;
-    return REMOTE_getData(`users/${uid}`);
+    const user = await REMOTE_getData(`users/${uid}`);
+    initWebsocket(user)
+    return user
 };
 
 /**
  * updates the global USER variable and calls getContacts()
  */
-async function getUser() {
-    USER = await getCurrentUser();
+export async function getUser() {
+    window.USER = await getCurrentUser();
     return getContacts();
 };
 
 /**
  * updates the contacts property of the global USER variable
  */
-async function getContacts() {
+export async function getContacts() {
     const allUsers = await REMOTE_getData('users');
-    USER.contacts.for(contactId => CONTACTS[contactId] = new User(allUsers[contactId]));
+    window.USER.contacts.for(contactId => CONTACTS[contactId] = new User(allUsers[contactId]));
 };
 
 /**
  * updates the global BOARDS variable and also sets the SELECTED_BOARD variable
  */
-async function getBoards() {
-    if (!USER.boards.length) return;
+export async function getBoards() {
+    if (!window.USER?.boards?.length) return;
     const allBoards = await REMOTE_getData('boards');
     for await (const boardId of USER.boards) {
         if (boardId in allBoards) BOARDS[boardId] = new Board(allBoards[boardId]);
@@ -260,13 +272,13 @@ async function getBoards() {
             // await USER.update();
         };
     };
-    SELECTED_BOARD = BOARDS[SESSION_getData('activeBoard')] ?? BOARDS[Object.keys(BOARDS)[0]];
+    window.SELECTED_BOARD = window.BOARDS[SESSION_getData('activeBoard')] ?? window.BOARDS[Object.keys(BOARDS)[0]];
 };
 
 /**
  * updates the global ALL_USERS variable
  */
-async function getAllUsers() {
+export async function getAllUsers() {
     const allUsers = await REMOTE_getData('users');
-    ALL_USERS = allUsers.map(user => new Account(user));
+    window.ALL_USERS = allUsers.map(user => new Account(user));
 };

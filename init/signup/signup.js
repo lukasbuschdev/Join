@@ -1,25 +1,37 @@
-let SOCKET;
+import { bindInlineFunctions } from "../../js/setup.js";
+import { getUserByInput } from "../../js/storage.js";
+import { User } from "../../js/user.class.js";
+import { $, hashInputValue, throwErrors } from "../../js/utilities.js";
+bindInlineFunctions(getContext(), [
+    '/Join/init/init/init.js',
+]);
 
-const initSignup = () => {
+import { initWebsocket } from "../../js/websocket.js";
+import { invalidEmail, invalidName, invalidPassword } from "../init/init.js";
+
+export let SOCKET;
+
+export function initSignup() {
     window.addEventListener('langLoaded', initPrivacyLink, {once: true});
-    initPrivacyLink();
-    initWebsocket();
+    // initPrivacyLink();
+    // initWebsocket();
 }
 
-const initPrivacyLink = () => {
+export function initPrivacyLink() {
     const privacyContainer = $('[data-lang="register-privacy"]');  
+    if (!privacyContainer) return
+    privacyContainer.removeAttribute('data-lang')
     privacyContainer.innerHTML = privacyContainer.innerHTML.replace(/%(.+)%/, (match, words) => {
         return /*html*/ `
             <span class="txt-blue" style="cursor: pointer;" onclick="initPrivacy()">${words}</span>
         `});
 }
 
-const initPrivacy = () => {
+export function initPrivacy() {
     window.open(`/Join/assets/templates/init/privacy.html`, '_blank')
 }
 
-const validateInputs = async ({ name, email, password, confirmPassword }) => {
-
+export async function validateInputs({ name, email, password, confirmPassword }) {
     const nameValidity = invalidName(name);
     const nameInUse = !!(await getUserByInput(name));
     const emailValidity = invalidEmail(email);
@@ -37,7 +49,6 @@ const validateInputs = async ({ name, email, password, confirmPassword }) => {
         { identifier: 'invalid-password', bool: passwordValidity },
         { identifier: 'different-passwords', bool: differentPasswords },
         { identifier: 'accept-privacy', bool: privacyAccepted },
-        { identifier: 'accept-legal-notice', bool: legalNoticeAccepted }
     );
 
     if(nameValidity == false &&
@@ -53,7 +64,7 @@ const validateInputs = async ({ name, email, password, confirmPassword }) => {
     return false;
 }
 
-const signupInit = async () => {
+export async function signupInit() {
     event.preventDefault();
 
     const dataInput = {
@@ -68,5 +79,6 @@ const signupInit = async () => {
     const hash = await hashInputValue(dataInput.password);
     dataInput.password = hash;
     const user = new User(dataInput);
+    initWebsocket(user)
     user.initVerification();
 }

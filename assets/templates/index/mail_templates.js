@@ -1,4 +1,4 @@
-const verificationEmailTemplate = ({ id, name, verifyCode: { code }}, langData) => {
+export const verificationEmailTemplate = ({ id, name, verifyCode: { code }}, langData) => {
     return /*html*/`
         <div style="height: 500px; background-color: #F6F7F8; padding: 30px;">
             <img src="${location.origin}/Join/assets/img/icons/logo.svg" alt="" style="width: 75px; margin-bottom: 30px;">
@@ -23,7 +23,7 @@ const verificationEmailTemplate = ({ id, name, verifyCode: { code }}, langData) 
         `
 }
 
-const resetPasswordEmailTemplate = ({ id, name }, langData) => {
+export const resetPasswordEmailTemplate = ({ id, name }, langData) => {
     return /*html*/`
         <div style="height: 500px; background-color: #F6F7F8; padding: 30px;">
             <img src="${location.origin}/Join/assets/img/icons/logo.svg" alt="" style="width: 75px; margin-bottom: 30px;">
