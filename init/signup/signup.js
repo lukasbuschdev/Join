@@ -14,8 +14,7 @@ import { invalidEmail, invalidName, invalidPassword } from "../init/init.js";
 export let SOCKET;
 
 export function initSignup() {
-    window.addEventListener('EventsBound', initPrivacyLink, {once: true});
-    initPrivacyLink();
+    window.addEventListener('langLoaded', initPrivacyLink, {once: true});
     initWebsocket();
 }
 
