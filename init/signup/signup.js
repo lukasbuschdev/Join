@@ -1,7 +1,8 @@
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 bindInlineFunctions(getContext(), [
     '/Join/init/init/init.js',
-    '/Join/js/language.js'
+    '/Join/js/language.js',
+    '/Join/index/legal_notice/legal_notice.js'
 ]);
 
 import { getUserByInput } from "../../js/storage.js";
@@ -28,9 +29,9 @@ export function initPrivacyLink() {
         `});
 }
 
-export function initPrivacy() {
-    window.open(`/Join/assets/templates/init/privacy.html`, '_blank')
-}
+// export function initPrivacy() {
+//     window.open(`/Join/assets/templates/init/privacy.html`, '_blank')
+// }
 
 export async function validateInputs({ name, email, password, confirmPassword }) {
     const nameValidity = invalidName(name);

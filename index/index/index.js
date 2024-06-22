@@ -5,6 +5,11 @@ import { initWebsocket } from "../../js/websocket.js";
 import "/Join/js/prototype_extensions.js";
 import { initSummary } from "../summary/summary.js";
 import { initBoard } from "../board/board.js";
+import { initLegalNotice } from "../legal_notice/legal_notice.js";
+import { initHelp } from "../help/help.js";
+import { initAddTask } from "../add_task/add_task.js";
+import { initContacts } from "../contacts/contacts.js";
+import { initPrivacy } from "../privacy/privacy.js";
 
 export function initGlobalVariables() {
   window.ALL_USERS = {};

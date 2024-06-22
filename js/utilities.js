@@ -28,7 +28,7 @@ export function $$(selector) {
  * @returns {'login' | 'signup' | 'forgot_password' | 'reset_password' | 'create_account' | 'verification' | 'summary' | 'board' | 'add_task' | 'contacts' | 'help' | 'privacy' | 'legal_notice' | 'privacy'}
  */
 export function currentDirectory(path = window.location.pathname) {
-  return path.split('/').at(-1).split('.')[0]
+  return path.split('/').at(-1).split('.')[0].replace('-', '_')
 }
 
 /**
