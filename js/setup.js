@@ -136,6 +136,7 @@ function bindFunctionsToWindow(modules, allFunctionNames) {
             if (name in module) {
                 console.log(`binding function ${name} to window!`)
                 window[name] = module[name]
+                
                 allMissing.delete(name)
             }
         })

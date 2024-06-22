@@ -1,6 +1,20 @@
+import { bindInlineFunctions, getContext } from "../../js/setup.js";
+import { getAllUsers, getBoards, SESSION_getData } from "../../js/storage.js";
+import { confirmation, debounce } from "../../js/utilities.js";
+import { renderBoardTitleSelection } from "../summary/summary.js";
+import "../../js/prototype_extensions.js";
+import { Task } from "../../js/task.class.js";
+
+bindInlineFunctions(getContext(), [
+    '/Join/index/index/index.js',
+    '/Join/js/utilities.js'
+    // '/Join/index/add_task/add_task.js'
+])
+
+
 let initialTask;
 
-const initBoard = async () => {
+export const initBoard = async () => {
     await getAllUsers();
     await getBoards();
     if (Object.values(BOARDS).length === 0) return
@@ -8,25 +22,25 @@ const initBoard = async () => {
     renderTasks();
 }
 
-// function renderBoardTitleSelection() {
+// export function renderBoardTitleSelection() {
 //     const activeBoardId = SESSION_getData('activeBoard');
 //     $('#board-title-selection .options').innerHTML = Object.values(BOARDS).reduce((template, board) => {
 //         return `${template}${(activeBoardId != board.id) ? boardTitleSelectionTemplate(board) : ''}`
 //     }, ``);
 // }
 
-// function boardTitleSelectionTemplate({id, name}) {
+// export function boardTitleSelectionTemplate({id, name}) {
 //     return/*html*/`
 //         <h4 class="option" onclick="switchBoards(${id})">${name}</h4>
 //     `
 // }
 
-// function switchBoards(id) {
+// export function switchBoards(id) {
 //     SESSION_setData('activeBoard', Number(id));
 //     location.reload();
 // }
 
-const renderTasks = async (filter) => {
+export const renderTasks = async (filter) => {
     let boardId = SESSION_getData('activeBoard');
     if (!(boardId in BOARDS)) boardId = Object.keys(BOARDS)[0];
     const {tasks, name} = BOARDS[boardId];
@@ -46,27 +60,27 @@ const renderTasks = async (filter) => {
     await tasksContainer.LANG_load();
 }
 
-const searchTasks = debounce(() => {
+export const searchTasks = debounce(() => {
     const searchInput = $('#search-task input').value;
     renderTasks(searchInput);
 }, 200);
 
-const focusInput = () => {
+export const focusInput = () => {
     $('#search-task input').focus();
 }
 
-const clearTaskSearch = () => {
+export const clearTaskSearch = () => {
     $('#search-task input').value = "";
     renderTasks();
 }
 
-const addTaskModal = async () => {
+export const addTaskModal = async () => {
     renderBoardIds();
     renderDate();
     $('#add-task-modal').openModal();
 }
 
-// function toggleBoardTitleSelection() {
+// export function toggleBoardTitleSelection() {
 //     const el = event.currentTarget
 //     el.classList.toggle('active');
 //     if (el.classList.contains('active')) {
@@ -78,7 +92,7 @@ const addTaskModal = async () => {
 //     }
 // }
 
-const renderFullscreenTask = (ids) => {
+export const renderFullscreenTask = (ids) => {
     if (event.which !== 1) return;
     const modal = $('#fullscreen-task-modal');
     const [boardId, taskId] = ids.split('/');
@@ -91,7 +105,7 @@ const renderFullscreenTask = (ids) => {
     modal.addEventListener('close', saveTaskChanges, {once: true});
 };
 
-const saveEditedTask = () => {
+export const saveEditedTask = () => {
     const editedTaskData = {
         title: $('#fullscreen-task-modal #title').value,
         description: $('#fullscreen-task-modal #description').value,
@@ -110,7 +124,7 @@ const saveEditedTask = () => {
     toggleFullscreenState();
 }
 
-const saveTaskChanges = () => {
+export const saveTaskChanges = () => {
     const updatedTask = SELECTED_TASK;
 
     const differences = getJsonChanges(updatedTask, initialTask);
@@ -120,7 +134,7 @@ const saveTaskChanges = () => {
     }
 };
 
-const deleteTask = () => confirmation(`delete-task, {taskName: '${SELECTED_TASK.title}'}`, async () => {
+export const deleteTask = () => confirmation(`delete-task, {taskName: '${SELECTED_TASK.title}'}`, async () => {
     const {boardId, id, name} = SELECTED_TASK;
     const modal = $('#fullscreen-task-modal');
     const taskElement = $(`.task[data-id="${boardId}/${id}"]`);
@@ -133,7 +147,7 @@ const deleteTask = () => confirmation(`delete-task, {taskName: '${SELECTED_TASK.
     notification(`task-deleted, {taskName: '${name}'}`);
 })
 
-const getJsonChanges = (newJson, oldJson) => {
+export const getJsonChanges = (newJson, oldJson) => {
     let differences = {};
     for (const key in newJson) {
         if (typeof newJson[key] == "function") continue;
@@ -145,7 +159,7 @@ const getJsonChanges = (newJson, oldJson) => {
     return differences;
 };
 
-const changeSubtaskDoneState = async (subTaskName) => {
+export const changeSubtaskDoneState = async (subTaskName) => {
     const subTaskCheckBox = event.currentTarget;
     const isChecked = (subTaskCheckBox.checked);
 
@@ -159,7 +173,7 @@ const changeSubtaskDoneState = async (subTaskName) => {
     SELECTED_TASK.subTasks[subTaskIndex].done = isChecked;
 };
 
-const updateTaskUi = ({title = null, description = null, priority = null, assignedTo = null, subTasks = null}, initialTask) => {
+export const updateTaskUi = ({title = null, description = null, priority = null, assignedTo = null, subTasks = null}, initialTask) => {
     const taskContainer = $(`[data-id="${SELECTED_TASK.boardId}/${SELECTED_TASK.id}"]`);
     
     if (title) taskContainer.$('.task-title').textAnimation(title);
@@ -178,7 +192,7 @@ const updateTaskUi = ({title = null, description = null, priority = null, assign
     }
 };
 
-const editTaskInitializer = async () => {
+export const editTaskInitializer = async () => {
     const editTaskContainer = $('#edit-task');
     editTaskContainer.innerHTML = editTaskTemplate(SELECTED_TASK);
     await editTaskContainer.LANG_load();
@@ -188,7 +202,7 @@ const editTaskInitializer = async () => {
     toggleFullscreenState();
 };
 
-const renderAssignedContacts = async () => {
+export const renderAssignedContacts = async () => {
     renderAssignToContacts();
     await $(`.drp-contacts [data-id="${currentUserId()}"]`)?.LANG_load();
     $('.drp-contacts').$$('.drp-option').for(
@@ -196,7 +210,7 @@ const renderAssignedContacts = async () => {
     );
 };
 
-const toggleFullscreenState = () => {
+export const toggleFullscreenState = () => {
     const fullscreenModal = $('#fullscreen-task-modal');
     fullscreenModal.$$('#fullscreen-task, #edit-task').for(section => {
         section.initMenus();
@@ -206,7 +220,7 @@ const toggleFullscreenState = () => {
     fullscreenModal.setAttribute('static', (fullscreenModal.getAttribute('static') == "true") ? "false" : "true");
 };
 
-async function changeTaskType (taskId, newType) {
+export async function changeTaskType (taskId, newType) {
     SELECTED_BOARD.tasks[taskId].type = newType;
     await SELECTED_BOARD.update();
     return getBoards();

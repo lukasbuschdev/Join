@@ -1,7 +1,7 @@
 import { bindInlineFunctions, getContext } from '../../js/setup.js';
 
 bindInlineFunctions(getContext(), [
-    '/Join/init/init/init.js',
+    // '/Join/init/init/init.js',
     '/Join/js/utilities.js',
     '/Join/js/language.js'
 ])
