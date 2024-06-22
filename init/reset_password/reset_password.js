@@ -1,8 +1,19 @@
-const initPage = () => {
+import { bindInlineFunctions, getContext } from "../../js/setup.js";
+import { REMOTE_getData } from "../../js/storage.js";
+import { $, currentUserId, goTo, hashInputValue, notification, throwErrors } from "../../js/utilities.js";
+import { invalidPassword } from "../init/init.js";
+
+bindInlineFunctions(getContext(), [
+    '/Join/init/init/init.js',
+    '/Join/js/language.js'
+
+])
+
+export const initPage = () => {
     LANG_load();
 }
 
-const resetPassword = async () => {
+export const resetPassword = async () => {
     event.preventDefault();
 
     const newPasswordInput = $('#new-password input').value;
@@ -20,7 +31,7 @@ const resetPassword = async () => {
     initiatePasswordChange(newPasswordInput);
 }
 
-const initiatePasswordChange = async (newPasswordInput) => {
+export const initiatePasswordChange = async (newPasswordInput) => {
     const user = await REMOTE_getData(`users/${currentUserId()}`);
     await user.resetPassword(await hashInputValue(newPasswordInput));
     await notification("password-reset");

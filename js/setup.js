@@ -20,7 +20,7 @@ export function getContext() {
  * @returns 
  */
 export async function bindInlineFunctions(callerModulePath, importPaths = []) {    
-    if (currentDirectory(callerModulePath) !== currentDirectory()) return
+    if (!callerModulePath || currentDirectory(callerModulePath) !== currentDirectory()) return
     const allImportPaths = new Set(importPaths)
     if (!/setup/.test(callerModulePath)) allImportPaths.add(callerModulePath)
 
@@ -28,7 +28,7 @@ export async function bindInlineFunctions(callerModulePath, importPaths = []) {
         window.addEventListener("templatesIncluded", resolve, { once: true })
     })
 
-    // console.log('importing modules: ', allImportPaths)
+    console.log('importing modules: ', allImportPaths, callerModulePath)
     const modules = await Promise.all([...allImportPaths].map((path) => import(path)))
     console.log(modules)
     
