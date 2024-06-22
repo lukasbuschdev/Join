@@ -1,10 +1,10 @@
-import { goTo, renderUserData } from "../../js/setup.js";
 import { LANG_load } from "../../js/language.js";
 import { getAllUsers, getUser, getUsersById, LOCAL_getData, LOCAL_setData } from "../../js/storage.js";
-import { $, $$, currentDirectory, searchParams } from "../../js/utilities.js";
+import { $, $$, currentDirectory, renderUserData, searchParams, goTo } from "../../js/utilities.js";
 import { initWebsocket } from "../../js/websocket.js";
 import "/Join/js/prototype_extensions.js";
 import { initSummary } from "../summary/summary.js";
+import { initBoard } from "../board/board.js";
 
 export function initGlobalVariables() {
   window.ALL_USERS = {};
@@ -76,7 +76,7 @@ export async function loadContent() {
 }
 
 export function openAccountPanel() {
-  $("dialog#account-panel").openModal();
+$("dialog#account-panel").openModal();
   $("#account-panel-options button.active")?.click();
   $("#account-panel-options #notifications-btn")?.click();
 };
@@ -125,6 +125,7 @@ export function noNotificationsYet() {
 export function toggleBoardTitleSelection() {
   const el = event.currentTarget
   el.classList.toggle('active');
+  let closeHandler
   if (el.classList.contains('active')) {
       window.addEventListener('pointerdown', closeHandler = () => {
           if (event.target.closest('#board-title-selection')) return;

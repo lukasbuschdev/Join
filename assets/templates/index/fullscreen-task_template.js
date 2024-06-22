@@ -1,4 +1,4 @@
-const fullscreenTaskTemplate = ({category, title, description, priority, dueDate, assignedTo, subTasks, boardId}) => {
+export const fullscreenTaskTemplate = ({category, title, description, priority, dueDate, assignedTo, subTasks, boardId}) => {
     const [categoryName = "Default",  categoryColor = "#d1d1d1"] = Object.entries(BOARDS[boardId].categories)?.find(([key]) => key == category) ?? [];
     return /*html*/`
     <div class="fullscreen-content">
@@ -36,7 +36,7 @@ const fullscreenTaskTemplate = ({category, title, description, priority, dueDate
     `
 };
 
-const fullscreenTaskAssignedTo = (assignedTo) => {
+export const fullscreenTaskAssignedTo = (assignedTo) => {
     const assignedUsers = Object.values(ALL_USERS).filter(({id}) => assignedTo.includes(id));
     return assignedUsers.reduce(
         (template, {name, color}) => template += /*html*/`
@@ -52,7 +52,7 @@ const fullscreenTaskAssignedTo = (assignedTo) => {
     , '');
 };
 
-const fullscreenTaskSubTasks = (subTasks) => {
+export const fullscreenTaskSubTasks = (subTasks) => {
     if (subTasks.length == 0) return '';
     return subTasks.reduce(
         (template, {name, done}) => template += /*html*/`

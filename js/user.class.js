@@ -2,7 +2,7 @@ import { Account } from "./account.class.js";
 import { Board } from "./board.class.js";
 import { Email } from "./email.class.js";
 import { getEmailLanguage } from "./language.js";
-import { goTo } from "./setup.js";
+import { goTo } from "./utilities.js";
 import { LOCAL_setData, REMOTE_getData, REMOTE_setData } from "./storage.js";
 
 export class User extends Account {

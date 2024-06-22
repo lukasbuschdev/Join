@@ -1,3 +1,5 @@
+import { throttle } from "./utilities.js";
+
 let task
 let taskWidth
 let offset = { x: 0, y: 0 }

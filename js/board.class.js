@@ -1,5 +1,5 @@
 import { BaseClass } from "./base.class.js";
-import { currentUserId } from "./setup.js";
+import { currentUserId } from "./utilities.js";
 
 export class Board extends BaseClass {
     constructor({

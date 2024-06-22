@@ -1,4 +1,4 @@
-const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, subTasks}) => {
+export const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, subTasks}) => {
     subtasks.length = 0;
     subTasks.for(({name}) => subtasks.push(name));
     selectedCollaborators.length = 0;
@@ -97,9 +97,9 @@ const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, su
     `
 }
 
-const editTaskAssignedTo = () => SELECTED_BOARD.collaborators.reduce((template, id) => `${template}${collaboratorTemplate(id)}`, ``);
+export const editTaskAssignedTo = () => SELECTED_BOARD.collaborators.reduce((template, id) => `${template}${collaboratorTemplate(id)}`, ``);
 
-const collaboratorTemplate = (id) => {
+export const collaboratorTemplate = (id) => {
     const {name, img, color} = ALL_USERS[id];
     const collaboratorIsAssigned = selectedCollaborators.includes(id);
     return /*html*/`
@@ -112,7 +112,7 @@ const collaboratorTemplate = (id) => {
     </div>`
 }
 
-const allSubtasksTemplate = (subtasks) => subtasks
+export const allSubtasksTemplate = (subtasks) => subtasks
     .reduce(
         (template, name, index) => {
             template += renderSubtaskTemplate(name, index);
@@ -120,7 +120,7 @@ const allSubtasksTemplate = (subtasks) => subtasks
         }, ''
     );
 
-function addEditSubtask() {
+export function addEditSubtask() {
     const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
     const subtask = $('#edit-task #subtask-input');
 
@@ -136,31 +136,31 @@ function addEditSubtask() {
     renderEditSubtasks();
 }
 
-function subtaskInvalidEdit() {
+export function subtaskInvalidEdit() {
     $('#edit-task #error-container').classList.remove('d-none');
     $('#edit-task #subtask-letters-only').classList.remove('error-inactive');
     $('#edit-task #add-subtask').classList.add('input-warning');
 }
 
-function subtaskTooLongEdit() {
+export function subtaskTooLongEdit() {
     $('#edit-task #error-container').classList.remove('d-none');
     $('#edit-task #add-subtask').classList.add('input-warning');
     $('#edit-task #subtask-letters-only').classList.add('error-inactive');
     $('#edit-task #subtask-too-long').classList.remove('error-inactive');
 }
 
-function subtaskValidEdit() {
+export function subtaskValidEdit() {
     $('#edit-task #subtask-letters-only').classList.add('error-inactive');
     $('#edit-task #subtask-too-long').classList.add('error-inactive');
     $('#edit-task #add-subtask').classList.remove('input-warning');
     $('#edit-task #error-container').classList.add('d-none');
 }
 
-function renderEditSubtasks() {
+export function renderEditSubtasks() {
     $('#edit-task #subtask-container').innerHTML = allSubtasksTemplate(SELECTED_TASK.subTasks.map(({name}) => name))
 }
 
-function editSubtaskEdit(i) {
+export function editSubtaskEdit(i) {
     const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
     const range = document.createRange();
     const selection = window.getSelection();
@@ -178,7 +178,7 @@ function editSubtaskEdit(i) {
     selection.addRange(range);
 }
 
-function saveEditedSubtaskEdit(i) {
+export function saveEditedSubtaskEdit(i) {
     const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
     subtasks[i] = subtaskInput.innerText;
     subtaskInput.setAttribute('contenteditable', 'false')

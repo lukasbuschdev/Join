@@ -1,4 +1,4 @@
-const taskTemplate = ({boardId, id, title, description, assignedTo, category, priority, subTasks}, filter) => {
+export const taskTemplate = ({boardId, id, title, description, assignedTo, category, priority, subTasks}, filter) => {
     const assignedAccounts = assignedTo.reduce((total, assignedToId) => {
         const {name, color: userColor} = CONTACTS[assignedToId] ?? USER;
         total.push({name, color: userColor});
@@ -19,9 +19,9 @@ const taskTemplate = ({boardId, id, title, description, assignedTo, category, pr
     </div>`
 }
 
-const highlight = (string, filter) => string.replaceAll(filter, item => `<span class="highlight">${item}</span>`);
+export const highlight = (string, filter) => string.replaceAll(filter, item => `<span class="highlight">${item}</span>`);
 
-const progressTemplate =  (subTasks) => {
+export const progressTemplate =  (subTasks) => {
     const finishedSubtasks = subTasks.filter( ({done}) => done);
     const progress = (finishedSubtasks == false) ? 0 : Math.roundTo(finishedSubtasks.length / subTasks.length, 2);
     return (subTasks.length == 0) ? '' :
@@ -38,7 +38,7 @@ const progressTemplate =  (subTasks) => {
     </div>`
 }
 
-const assignedToTemplate = (assignedAccounts) => {
+export const assignedToTemplate = (assignedAccounts) => {
     let template = '';
     for (let i = 0; i < assignedAccounts.length; i++){
         const {color, name} = assignedAccounts[i];

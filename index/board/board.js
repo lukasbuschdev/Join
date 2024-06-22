@@ -1,14 +1,21 @@
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
-import { getAllUsers, getBoards, SESSION_getData } from "../../js/storage.js";
-import { confirmation, debounce } from "../../js/utilities.js";
+import { getAllUsers, getBoards, REMOTE_removeData, SESSION_getData } from "../../js/storage.js";
+import { $, confirmation, debounce, notification, currentUserId, isEqual  } from "../../js/utilities.js";
 import { renderBoardTitleSelection } from "../summary/summary.js";
 import "../../js/prototype_extensions.js";
 import { Task } from "../../js/task.class.js";
+import { assignedToTemplate, progressTemplate, taskTemplate } from "../../assets/templates/index/task_template.js";
+import { fullscreenTaskTemplate } from "../../assets/templates/index/fullscreen-task_template.js";
+import { editTaskTemplate } from "../../assets/templates/index/edit-task_template.js";
+import { renderBoardIds, renderDate } from "../add_task/add_task.js";
 
 bindInlineFunctions(getContext(), [
+    '/Join/js/dragAndDrop.js',
     '/Join/index/index/index.js',
-    '/Join/js/utilities.js'
-    // '/Join/index/add_task/add_task.js'
+    '/Join/assets/templates/index/confirmation_template.js',
+    '/Join/js/utilities.js',
+    '/Join/index/add_task/add_task.js',
+    '/Join/js/storage.js'
 ])
 
 
@@ -152,7 +159,7 @@ export const getJsonChanges = (newJson, oldJson) => {
     for (const key in newJson) {
         if (typeof newJson[key] == "function") continue;
         if (typeof newJson[key] == "object") {
-            if (_.isEqual(newJson[key], oldJson[key]) == false) differences[key] = newJson[key];
+            if (isEqual(newJson[key], oldJson[key]) == false) differences[key] = newJson[key];
         }
         else if (newJson[key] !== oldJson[key]) differences[key] = newJson[key];
     };

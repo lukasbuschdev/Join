@@ -1,4 +1,4 @@
-import { renderUserData } from "./setup.js";
+import { confirmationTemplate } from "../assets/templates/index/confirmation_template.js";
 
 export const log = console.log;
 export const error = console.error;
@@ -266,7 +266,6 @@ export const removeUpload = async () => {
 }
 
 export function renderColorWheel() {
-  console.log("rendering color wheel")
   let clrBg = [];
   const factor = 12;
   for (let i = 0; i < 361; i+= 360 / factor) {
@@ -429,4 +428,95 @@ export async function hashInputValue(inputValue) {
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   return hashHex;
+}
+
+export function renderUserData() {
+    const { name, img, color } = window.USER;
+    (this ?? document.documentElement).$$('[data-user-data]').forEach(
+        (userField) => {
+            const dataType = userField.dataset.userData;
+            switch (dataType) {
+                case "img": return renderImage(userField, img);
+                case "name": return renderName(userField, name);
+                case "initials": return renderInitials(userField, name);
+                case "color": return renderColor(userField, color);
+                default: return;
+            }
+        }
+    );
+}
+
+export function currentUserId() {
+    return (searchParams().get('uid') == null) ? undefined : `${searchParams().get('uid')}`;
+}
+
+export const menuOptionInitator = new MutationObserver(([{target}]) => target.parentElement.closest('[type = "menu"]').initMenus());
+
+export const mutationObserverOptions = {
+    childList: true,
+    subTree: true
+};
+
+export const resetMenus = function () {
+    menuOptionInitator.disconnect();
+    this.$$('[type = "menu"]').for(menu => menuOptionInitator.observe(menu, mutationObserverOptions));
+}
+
+let inactivityTimer;
+export function addInactivityTimer(minutes = 5) {
+    return inactivityTimer = setTimeout(() => goTo('init/login/login', { search: '?expired' }), minutes * 60 * 1000);
+}
+
+export const initInactivity = () => {
+    window.addEventListener("visibilitychange", () => {
+        if (document.visibilityState == "hidden") return addInactivityTimer();
+        clearTimeout(inactivityTimer);
+    });
+}
+
+export const renderName = (userField, name) => {
+    userField.innerText = name;
+};
+export const renderImage = (userField, img) => {
+    userField.src = img;
+};
+export const renderInitials = (userField, name) => {
+    userField.innerText = name.slice(0, 2).toUpperCase();
+};
+export const renderColor = (userField, color) => {
+    userField.style.setProperty('--user-clr', color);
+};
+
+export function cloneDeep(input) {
+  return JSON.parse(JSON.stringify(input))
+}
+
+/**
+ * parses the specified directory and reloads the current page to it
+ * @param {string} directory 
+ * @param {any} options 
+ */
+export const goTo = (directory, options) => {
+    const url = `${window.location.origin}/Join/${directory}.html${(options?.search ?? location.search)}`
+    window.location.href = url;
+}
+
+
+export function isEqual(obj1, obj2, depth = Infinity) {
+    if (obj1 === obj2) return true;
+    if (typeof obj1 !== 'object' || obj1 === null || typeof obj2 !== 'object' || obj2 === null) {
+        return false;
+    }
+    const keys1 = Object.keys(obj1);
+    const keys2 = Object.keys(obj2);
+    if (keys1.length !== keys2.length) return false;
+
+    if (depth > 0) {
+        for (let key of keys1) {
+            if (!keys2.includes(key) || !isEqual(obj1[key], obj2[key], depth - 1)) {
+                return false;
+            }
+        }
+    }
+    return true;
 }

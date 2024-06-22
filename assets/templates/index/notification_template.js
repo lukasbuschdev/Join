@@ -1,4 +1,4 @@
-const notificationTemplate = (notification) => {
+export const notificationTemplate = (notification) => {
     switch (notification.type) {
         case "friendshipRequest": {
             const {userName, userId, id} = notification;
@@ -45,7 +45,7 @@ const notificationTemplate = (notification) => {
     }
 }
 
-async function acceptBoardInvite (boardId, boardName, notificationId) {
+export async function acceptBoardInvite (boardId, boardName, notificationId) {
     await removeNotification(notificationId);
     if (!await REMOTE_getData(`boards/${boardId}`)) return notification(`board-nonexistent, {boardName: '${boardName}'}`);
     const setUser = USER.setProperty('boards', [...USER.getPropertyValue('boards'), `${boardId}`]);
@@ -56,7 +56,7 @@ async function acceptBoardInvite (boardId, boardName, notificationId) {
     location.reload();
 }
 
-async function removeNotification (notificationId) {
+export async function removeNotification (notificationId) {
     delete USER.notifications[notificationId];
     await USER.update();
     await getUser();
@@ -64,12 +64,12 @@ async function removeNotification (notificationId) {
     checkNotifications();
 }
 
-async function removeFriendshipRequest(id, userId) {
+export async function removeFriendshipRequest(id, userId) {
     await REMOTE_removeData(`users/${userId}/pendingFriendshipRequests/${USER.id}`);
     return removeNotification(id);
 }
 
-async function acceptFriendshipRequest(id, userId, name) {
+export async function acceptFriendshipRequest(id, userId, name) {
     await REMOTE_setData(`users/${userId}/contacts`, USER.id.toString());
     USER.contacts.push(userId);
     await removeFriendshipRequest(id, userId);

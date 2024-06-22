@@ -2,9 +2,8 @@
 
 import { Account } from "./account.class.js";
 import { Board } from "./board.class.js";
-import { currentUserId } from "./setup.js";
 import { User } from "./user.class.js";
-import { error, notification, parse } from "./utilities.js";
+import { error, notification, parse, currentUserId } from "./utilities.js";
 import { initWebsocket } from "./websocket.js";
 
 const STORAGE_TOKEN = 'NVTVE0QJKQ005SECVM4281V290DQJKIG6V0LRBYV';

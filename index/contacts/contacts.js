@@ -1,4 +1,4 @@
-import { bindInlineFunctions, currentUserId, getContext } from "../../js/setup.js";
+import { bindInlineFunctions, getContext } from "../../js/setup.js";
 bindInlineFunctions(getContext(), [
     '/Join/index/index/index.js',
     '/Join/js/utilities.js',
@@ -7,7 +7,7 @@ bindInlineFunctions(getContext(), [
 
 import { Notify } from "../../js/notify.class.js";
 import { getContactsData, getUser } from "../../js/storage.js";
-import { $, debounce, notification, throwErrors } from "../../js/utilities.js";
+import { $, currentUserId, debounce, notification, throwErrors } from "../../js/utilities.js";
 
 
 

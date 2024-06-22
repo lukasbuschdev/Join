@@ -5,7 +5,7 @@ bindInlineFunctions(getContext(), [
 ])
 
 import { getBoards } from "../../js/storage.js";
-import { $, currentDirectory, dateFormat, notification } from "../../js/utilities.js";
+import { $, cloneDeep, currentDirectory, dateFormat, notification } from "../../js/utilities.js";
 import "/Join/js/prototype_extensions.js"
 
 export async function initAddTask() {
@@ -20,8 +20,7 @@ export const subtasks = [];
 export const selectedCollaborators = [];
 export const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
 
-export const newCollabArray = _.cloneDeep(selectedCollaborators);
-
+export const newCollabArray = cloneDeep(selectedCollaborators);
 
 export function renderBoardIds() {
     const drpContainer = $('#drp-board-container');
