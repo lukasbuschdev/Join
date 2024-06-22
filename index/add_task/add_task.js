@@ -1,5 +1,11 @@
+import { bindInlineFunctions, getContext } from "../../js/setup.js";
+bindInlineFunctions(getContext(), [
+    '/Join/index/index/index.js',
+    '/Join/js/utilities.js'
+])
+
 import { getBoards } from "../../js/storage.js";
-import { $, currentDirectory, dateFormat, notification } from "../../js/utilities";
+import { $, currentDirectory, dateFormat, notification } from "../../js/utilities.js";
 import "/Join/js/prototype_extensions.js"
 
 export async function initAddTask() {

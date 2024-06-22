@@ -100,7 +100,8 @@ export async function bindInlineFunctions(callerModulePath, importPaths = []) {
     bindFunctionsToWindow(modules, allFunctionNames);
     const onload = customOnloadFunction()
     console.log(onload)
-    onload()() // calls the oncustomload event
+    window.onload = onload
+    onload() // calls the oncustomload event
     window.dispatchEvent(new CustomEvent("EventsBound"))
 }
 
@@ -120,7 +121,7 @@ function getAllFunctionNames() {
 function customOnloadFunction() {
     const customOnloadEvalString = $('body').attributes.getNamedItem('oncustomload')?.value
     return !!customOnloadEvalString
-        ? parse.bind(customOnloadEvalString)
+        ? parse(customOnloadEvalString)
         : () => {}
 }
 
