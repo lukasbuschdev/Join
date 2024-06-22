@@ -2,7 +2,8 @@ import { bindInlineFunctions, getContext } from "../../js/setup.js";
 bindInlineFunctions(getContext(), [
     '/Join/index/index/index.js',
     '/Join/js/utilities.js',
-    '/Join/index/add_task/add_task.js'
+    '/Join/index/add_task/add_task.js',
+    '/Join/js/language.js'
 ]);
 
 import { Notify } from "../../js/notify.class.js";

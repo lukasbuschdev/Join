@@ -15,28 +15,9 @@
 
     <link rel="stylesheet" href="/Join/index/help/help.css">
     
-    <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
-    <script src="/Join/js/prototype_extensions.js"></script>
-    <script src="/Join/js/websocket.js"></script>
-    <script src="/Join/js/base.class.js"></script>
-    <script src="/Join/js/account.class.js"></script>
-    <script src="/Join/js/user.class.js"></script>
-    <script src="/Join/js/task.class.js"></script>
-    <script src="/Join/js/board.class.js"></script>
-    <script src="/Join/js/utilities.js"></script>
-    <script src="/Join/js/storage.js"></script>
-    <script src="/Join/js/email.class.js"></script>
-    <script src="/Join/js/notify.class.js"></script>
-    <script src="/Join/assets/templates/index/mail_templates.js"></script>
-    <script src="/Join/js/language.js"></script>
-    <script src="/Join/assets/templates/index/notification_template.js"></script>
-    <script src="/Join/assets/templates/index/confirmation_template.js"></script>
-    <script src="/Join/index/help/help.js"></script>
-    <script src="/Join/js/setup.js" defer></script>
-    <script src="/Join/index/index/index.js"></script>
+    <script type="module" src="help.js"></script>
 </head>
-<body onload="init('help')" style="background-color: #f5f5f5; font-family: 'Inter';">
+<body oncustomload="init('help')" style="background-color: #f5f5f5; font-family: 'Inter';">
     <nav include-Template="/Join/index/nav/nav.html"></nav>
 
     <header include-Template="/Join/index/header/header.html"></header>

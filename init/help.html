@@ -11,12 +11,9 @@
     <link rel="stylesheet" href="/Join/style.css">
     <link rel="stylesheet" href="/Join/index/help/help.css">
 
-    <script src="/Join/js/prototype_extensions.js"></script>
-    <script src="/Join/js/utilities.js"></script>
-    <script src="/Join/js/language.js"></script>
-    <script src="/Join/js/storage.js"></script>
+    <script type="module" src="../index/help/help.js"></script>
 </head>
-<body onload="$('div').includeTemplate({url: `/Join/assets/languages/help-${currentLang()}.html`, replace: false})" style="background-color: #f5f5f5; font-family: 'Inter';">
+<body oncustomload="initHelp()">
     <div></div>
 </body>
 </html>

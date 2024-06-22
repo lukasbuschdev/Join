@@ -11,12 +11,9 @@
     <link rel="stylesheet" href="/Join/index/privacy/privacy.css">
     <link rel="stylesheet" href="/Join/fonts/fonts.css">
 
-    <script src="/Join/js/prototype_extensions.js"></script>
-    <script src="/Join/js/language.js"></script>
-    <script src="/Join/js/storage.js"></script>
-    <script src="/Join/js/utilities.js"></script>
+    <script type="module" src="/Join/index/privacy/privacy.js"></script>
 </head>
-<body onload="$('body').includeTemplate({url: `/Join/assets/languages/privacy-${currentLang()}.html`, replace: false}), window.LANG_load()">
+<body oncustomload="initPrivacy()">
     
 </body>
 </html>

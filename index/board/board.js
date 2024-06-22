@@ -15,7 +15,8 @@ bindInlineFunctions(getContext(), [
     '/Join/assets/templates/index/confirmation_template.js',
     '/Join/js/utilities.js',
     '/Join/index/add_task/add_task.js',
-    '/Join/js/storage.js'
+    '/Join/js/storage.js',
+    '/Join/js/language.js'
 ])
 
 

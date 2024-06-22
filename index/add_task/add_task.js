@@ -1,7 +1,8 @@
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 bindInlineFunctions(getContext(), [
     '/Join/index/index/index.js',
-    '/Join/js/utilities.js'
+    '/Join/js/utilities.js',
+    '/Join/js/language.js'
 ])
 
 import { getBoards } from "../../js/storage.js";

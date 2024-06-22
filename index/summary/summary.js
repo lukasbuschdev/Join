@@ -7,7 +7,8 @@ import { bindInlineFunctions, getContext } from "../../js/setup.js";
 import { boardTitleSelectionTemplate } from "../index/index.js";
 bindInlineFunctions(getContext(), [
     '/Join/index/index/index.js',
-    '/Join/js/utilities.js'
+    '/Join/js/utilities.js',
+    '/Join/js/language.js'
 ])
 
 let newBoardCollaborators;
