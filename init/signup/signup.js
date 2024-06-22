@@ -2,7 +2,7 @@ import { bindInlineFunctions, getContext } from "../../js/setup.js";
 bindInlineFunctions(getContext(), [
     '/Join/init/init/init.js',
     '/Join/js/language.js',
-    '/Join/index/legal_notice/legal_notice.js'
+    '/Join/index/privacy/privacy.js'
 ]);
 
 import { getUserByInput } from "../../js/storage.js";
@@ -25,7 +25,7 @@ export function initPrivacyLink() {
     privacyContainer.removeAttribute('data-lang')
     privacyContainer.innerHTML = privacyContainer.innerHTML.replace(/%(.+)%/, (match, words) => {
         return /*html*/ `
-            <span class="txt-blue" style="cursor: pointer;" onclick="initPrivacy()">${words}</span>
+            <span class="txt-blue" style="cursor: pointer;" onclick="window.open('/Join/assets/templates/init/privacy.html', '_blank')">${words}</span>
         `});
 }
 
