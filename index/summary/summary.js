@@ -32,10 +32,11 @@ export function renderBoards() {
 }
 
 export function renderBoardEditButton(boardId) {
-    $('#summary-data').innerHTML += 
-    /*html*/`<button class="circle grid-center edit-btn" onclick="initEditBoard(${boardId})">
-        <img src="/Join/assets/img/icons/edit.svg" alt="">
-    </button>`;
+    $('#summary-data').innerHTML += /*html*/ `
+        <button class="circle grid-center edit-btn" onclick="initEditBoard(${boardId})">
+            <img src="/Join/assets/img/icons/edit.svg" alt="">
+        </button>
+    `;
 }
 
 export function boardSelectionTemplate({name, id}) {

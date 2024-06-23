@@ -1,5 +1,5 @@
 import { LANG_load } from "../../js/language.js";
-import { getAllUsers, getUser, getUsersById, LOCAL_getData, LOCAL_setData } from "../../js/storage.js";
+import { getAllUsers, getUser, getUsersById, LOCAL_getData, LOCAL_setData, SESSION_setData } from "../../js/storage.js";
 import { $, $$, currentDirectory, renderUserData, searchParams, goTo } from "../../js/utilities.js";
 import { initWebsocket } from "../../js/websocket.js";
 import "/Join/js/prototype_extensions.js";

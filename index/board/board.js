@@ -16,7 +16,8 @@ bindInlineFunctions(getContext(), [
     '/Join/js/utilities.js',
     '/Join/index/add_task/add_task.js',
     '/Join/js/storage.js',
-    '/Join/js/language.js'
+    '/Join/js/language.js',
+    '/Join/index/summary/summary.js'
 ])
 
 
@@ -28,6 +29,7 @@ export const initBoard = async () => {
     if (Object.values(BOARDS).length === 0) return
     renderBoardTitleSelection();
     renderTasks();
+    $('#tasks').classList.remove('d-none');
 }
 
 // export function renderBoardTitleSelection() {
@@ -86,6 +88,7 @@ export const addTaskModal = async () => {
     renderBoardIds();
     renderDate();
     const modal = $('#add-task-modal');
+    modal.$('.add-task-card').classList.remove('d-none');
     modal.openModal();
 }
 
