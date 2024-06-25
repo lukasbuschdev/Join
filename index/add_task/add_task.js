@@ -2,7 +2,8 @@ import { bindInlineFunctions, getContext } from "../../js/setup.js";
 bindInlineFunctions(getContext(), [
     '/Join/index/index/index.js',
     '/Join/js/utilities.js',
-    '/Join/js/language.js'
+    '/Join/js/language.js',
+    '/Join/index/summary/summary.js'
 ])
 
 import { getBoards } from "../../js/storage.js";
@@ -11,11 +12,13 @@ import "/Join/js/prototype_extensions.js"
 
 export async function initAddTask() {
     await getBoards();
+    if(!Object.values(BOARDS).length) return;
     renderBoardIds();
     renderDate();
     $('.add-task-card').LANG_load();
     // $('#add-task-modal #content').classList.remove('loading');
     resetArrays();
+    $('.add-task-card').classList.remove('d-none');
 }
 
 export const subtasks = [];

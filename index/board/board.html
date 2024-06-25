@@ -54,7 +54,7 @@
                 </button>
             </div>
 
-            <div id="tasks">
+            <div id="tasks" class="d-none">
 
                 <div class="column gap-15">
                     <div class="task-header">
@@ -89,6 +89,16 @@
                 </div>
 
             </div>
+            
+            <div class="summary-placeholder grid-center gap-35">
+                <img src="/Join/assets/img/icons/logo.svg" alt="">
+                <div class="btn-container flex-center">
+                    <h3 data-lang="no-boards" class="txt-blue">No boards yet?</h3>
+                    <button class="add-board btn btn-primary btn-add-task txt-normal txt-700" onclick="createBoardModal()">
+                        <span data-lang="add-board">Add board</span>
+                    </button>
+                </div>
+            </div>
 
             <dialog id="add-task-modal" type="modal" class="big-modal">
                 <div include-template="/Join/assets/templates/index/add_task.html"></div>
@@ -98,8 +108,19 @@
                 <div id="fullscreen-task" class="column"></div>
                 <div id="edit-task" class="column d-none"></div>
             </dialog>
-
         </div>
+
+        <dialog type="modal" id="add-board" class="big-modal" static="false">
+            <div class="add-board-content row">
+                <div class="add-board-header column">
+                    <img src="/Join/assets/img/icons/logo_white.svg">
+                    <h1 data-lang="add-board">New Board</h1>
+                    <h3 data-lang="add-board-subtext">Projects that change the world!</h3>
+                </div>
+                <div class="add-board-data column gap-35">
+                </div>
+            </div>
+        </dialog>
     </div>
 
     <div include-template="/Join/assets/templates/index/account_panel.html"></div>
