@@ -44,8 +44,9 @@ interface Array<T> {
 }
 
 interface HTMLElement {
-    $<T extends keyof HTMLElementTagNameMap>(selector: T): HTMLElementTagNameMap[T]
-    $$<T extends keyof HTMLElementTagNameMap>(selector: T): NodeListOf<HTMLElementTagNameMap[T]>
+    $(selector: string): HTMLElement | undefined
+    $$(selector: string): NodeListOf<HTMLElement>
+    initMenus(): void
 }
 
 /**

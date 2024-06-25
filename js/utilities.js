@@ -5,9 +5,8 @@ export const error = console.error;
 
 /**
  * shortcut of document.querySelector
- * @template {keyof HTMLElementTagNameMap} K
- * @param {K} selectors 
- * @returns {HTMLElementTagNameMap[K]}
+ * @param {string} selectors 
+ * @returns {HTMLElement | null}
  */
 export function $(selectors) {
   return document.querySelector(selectors)
@@ -15,9 +14,8 @@ export function $(selectors) {
 
 /**
  * shortcut of document.querySelectorAll()
- * @template {keyof HTMLElementTagNameMap} K
- * @param {K} selector
- * @returns {HTMLElementTagNameMap[T][]}
+ * @param {string} selector
+ * @returns {Element[]}
  */
 export function $$(selector) {
   return [...document.querySelectorAll(selector)]
@@ -25,6 +23,7 @@ export function $$(selector) {
 
 /**
  * returns the current directory name
+ * @param {string} path
  * @returns {'login' | 'signup' | 'forgot_password' | 'reset_password' | 'create_account' | 'verification' | 'summary' | 'board' | 'add_task' | 'contacts' | 'help' | 'privacy' | 'legal_notice' | 'privacy'}
  */
 export function currentDirectory(path = window.location.pathname) {

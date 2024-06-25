@@ -9,6 +9,7 @@ import { initWebsocket } from "./websocket.js";
 
 export class Storage {
     STORAGE_URL = 'https://join-storage-83306-default-rtdb.europe-west1.firebasedatabase.app';
+    // SOCKET = 
     #data
     #isLoaded = false
 
