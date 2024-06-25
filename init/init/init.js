@@ -1,9 +1,14 @@
 import { initGlobalVariables } from "../../index/index/index.js";
+import { STORAGE, Storage } from "../../js/storage.js";
 import { notification } from "../../js/utilities.js";
 import { $ } from "/Join/js/utilities.js";
 import "/join/js/prototype_extensions.js"
 
 export const init = async () => {
+
+    await STORAGE.init()
+    if(!STORAGE.data) return
+
     initGlobalVariables();
     isSessionExpired();
     $('.language-login').initMenus();

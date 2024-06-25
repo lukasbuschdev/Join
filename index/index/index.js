@@ -1,5 +1,5 @@
 import { LANG_load } from "../../js/language.js";
-import { getAllUsers, getUser, getUsersById, LOCAL_getData, LOCAL_setData } from "../../js/storage.js";
+import { getUser, LOCAL_getData, LOCAL_setData, STORAGE, Storage } from "../../js/storage.js";
 import { $, $$, currentDirectory, renderUserData, searchParams, goTo } from "../../js/utilities.js";
 import { initWebsocket } from "../../js/websocket.js";
 import "/Join/js/prototype_extensions.js";
@@ -23,12 +23,12 @@ export function initGlobalVariables() {
 }
 
 export async function init(directory) {
+  await STORAGE.init()
   initGlobalVariables();
   await Promise.all([
-    checkLogin(),
+    // checkLogin(),
     // includeTemplates(),
     getUser(),
-    getAllUsers(),
   ]);
   await initFunctions[directory]();
   $("#content").classList.remove("content-loading");
@@ -59,7 +59,7 @@ export const checkNotifications = async () => {
 export const checkLogin = async () => {
   const uid = searchParams().get("uid");
   if (!uid) return;
-  const isValidUser = !!(await getUsersById([uid]));
+  const isValidUser = !!STORAGE.getUsersById([uid]);
   if (!isValidUser) goTo("init/login/login", { search: "" });
 };
 

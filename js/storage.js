@@ -2,9 +2,105 @@
 
 import { Account } from "./account.class.js";
 import { Board } from "./board.class.js";
+import { Notify } from "./notify.class.js";
 import { User } from "./user.class.js";
 import { error, notification, parse, currentUserId } from "./utilities.js";
 import { initWebsocket } from "./websocket.js";
+
+export class Storage {
+    STORAGE_URL = 'https://join-storage-83306-default-rtdb.europe-west1.firebasedatabase.app';
+    #data
+    #isLoaded = false
+
+    get data() {
+        if(!this.#isLoaded) throw Error(`storage not yet initialized! await 'STORAGE.init()' to fix`);
+        return this.#data;
+    }
+
+  /**
+   * gets all data and returns a storage conainer
+   * @returns {Promise<any>}
+   */
+  async init() {
+    this.#data = await this.#download();
+    this.#isLoaded = true;
+    return this;
+  }
+
+  /**
+   *
+   * @param {string} path
+   * @returns {User | Board | Notify}
+   */
+  get(path) {
+
+  }
+
+  /**
+   *
+   * @param {string} path
+   * @param {any} value
+   */
+  set(path, value) {
+    if (Array.isArray(value)) console.log(`is array!`, value);
+  }
+
+  async #download(path = "") {
+    try {
+        const data = await (await fetch(`${this.STORAGE_URL}/${path}.json`)).text();
+        if(data) return this.#unpackArrays(data);
+        throw new Error(`download failed. '${path}' not found!`);
+    } catch(error) {
+        console.log(error);
+    }
+  }
+
+  async #upload(path, upload) {
+    try {
+        const data = await (await fetch(`${this.STORAGE_URL}/${path}.json`, {
+            method: 'PUT',
+            body: this.#packArrays(upload)
+        })).text();
+        if(data) return this.#unpackArrays(data)
+        throw new Error(`download failed. '${path}' not found!`)
+    } catch(error) {
+        console.log(error)
+    }
+  }
+
+  /**
+   * 
+   * @param {string} dataString 
+   * @returns {string}
+   */
+  #packArrays(upload) {
+    return JSON.stringify(upload).replaceAll( /\[\]/g, `["null"]`)
+  }
+
+    /**
+   * 
+   * @param {string} dataString 
+   * @returns {string}
+   */
+  #unpackArrays(dataString) {
+    return JSON.parse(dataString.replaceAll(/\["null"\]/g, `[]`))
+  }
+
+  getUserByInput(nameOrEmail) {
+    const userData = Object.values(this.data.users).find(({ name, email }) => name === nameOrEmail || email === nameOrEmail)
+    if(!userData) return undefined
+    return new User(userData)
+  }
+
+  getUsersById(ids) {
+    const users = Object.values(this.data.users)
+        .filter(({ id }) => ids.includes(id))
+        .map((userData) => new User(userData))
+    console.log(users)
+  }
+}
+
+export const STORAGE = new Storage()
 
 const STORAGE_TOKEN = 'NVTVE0QJKQ005SECVM4281V290DQJKIG6V0LRBYV';
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
@@ -47,12 +143,15 @@ export function REMOTE_upload(directory, data) {
  * @returns {Promise<User | Board | Task | any | undefined>};
  */
 export async function REMOTE_getData(path) {
+    return console.log("aaaaaaaaa")
     if (!path) return;
     const isValidPath = /^(?=[a-zA-Z0-9])(?!.*\/\/)[a-zA-Z0-9\/-]*[a-zA-Z0-9]$/.test(path);
     if (!isValidPath) return console.error(`'${path}' is not a valid path!`);
 
     let pathArray = path.split('/');
     const directory = pathArray[0];
+    // const data = await (await fetch(`${STORAGE_URL}/${path}.json`)).json();
+    // console.log(data)
     const pathSelector = pathArray.slice(1).map(directory => `["${directory}"]`).join('');
     const data = await REMOTE_download(directory);
     if(!data) return notification('network-error');
@@ -61,6 +160,7 @@ export async function REMOTE_getData(path) {
     if (!result) return error(`subdirectory '${path}' not found!`);
 
     const mainDirectory = pathArray.at(-2);
+    if(mainDirectory === "users") window.users = data
     switch (mainDirectory) {
         case "users": return new User(result);
         case "boards": return new Board(result);
@@ -277,7 +377,7 @@ export async function getBoards() {
 /**
  * updates the global ALL_USERS variable
  */
-export async function getAllUsers() {
-    const allUsers = await REMOTE_getData('users');
-    window.ALL_USERS = allUsers.map(user => new Account(user));
-};
+// export async function getAllUsers() {
+//     const allUsers = await REMOTE_getData('users');
+//     window.ALL_USERS = allUsers.map(user => new Account(user));
+// };

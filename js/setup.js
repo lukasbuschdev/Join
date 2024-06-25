@@ -7,7 +7,6 @@ import { LANG_load } from "./language.js";
 
 export function getContext() {
     const { stack } = new Error()
-    // console.log(stack)
     return getCallerModulePath(stack)
 }
 
@@ -28,9 +27,9 @@ export async function bindInlineFunctions(callerModulePath, importPaths = []) {
         window.addEventListener("templatesIncluded", resolve, { once: true })
     })
 
-    console.log('importing modules: ', allImportPaths, callerModulePath)
+    // console.log('importing modules: ', allImportPaths, callerModulePath)
     const modules = await Promise.all([...allImportPaths].map((path) => import(path)))
-    console.log(modules)
+    // console.log(modules)
     
     if (document.readyState === 'loading') await new Promise((resolve) => window.addEventListener("DOMContentLoaded", resolve))
     

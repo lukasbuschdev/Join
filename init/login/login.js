@@ -6,7 +6,7 @@ bindInlineFunctions(getContext(), [
     '/Join/js/language.js',
     '/Join/index/legal_notice/legal_notice.js'
 ])
-import { getUserByInput, LOCAL_getData, LOCAL_removeData, LOCAL_setData } from "../../js/storage.js";
+import { getUserByInput, LOCAL_getData, LOCAL_removeData, LOCAL_setData, STORAGE } from "../../js/storage.js";
 import { User } from "../../js/user.class.js";
 import { $, hashInputValue, throwErrors } from "../../js/utilities.js";
 
@@ -29,7 +29,7 @@ export const logIn = async () => {
     const password = $('#password input').value;
     const hash = await hashInputValue(password);
     
-    const user = await getUserByInput(emailOrUsername);
+    const user = STORAGE.getUserByInput(emailOrUsername);
     const passwordValidity = user?.password == hash || undefined;
     throwErrors(
         { identifier: 'invalid-email-or-username', bool: user == undefined },
@@ -43,7 +43,8 @@ export const logIn = async () => {
 
 export async function guestLogin() {
     event.preventDefault();
-    const guestUser = await getUserByInput('Guest');
+
+    const guestUser = STORAGE.getUserByInput('Guest');
     guestUser.logIn();
 }
 

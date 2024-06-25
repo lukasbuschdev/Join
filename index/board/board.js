@@ -1,14 +1,4 @@
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
-import { getAllUsers, getBoards, REMOTE_removeData, SESSION_getData } from "../../js/storage.js";
-import { $, confirmation, debounce, notification, currentUserId, isEqual  } from "../../js/utilities.js";
-import { renderBoardTitleSelection } from "../summary/summary.js";
-import "../../js/prototype_extensions.js";
-import { Task } from "../../js/task.class.js";
-import { assignedToTemplate, progressTemplate, taskTemplate } from "../../assets/templates/index/task_template.js";
-import { fullscreenTaskTemplate } from "../../assets/templates/index/fullscreen-task_template.js";
-import { editTaskTemplate } from "../../assets/templates/index/edit-task_template.js";
-import { renderBoardIds, renderDate } from "../add_task/add_task.js";
-
 bindInlineFunctions(getContext(), [
     '/Join/js/dragAndDrop.js',
     '/Join/index/index/index.js',
@@ -18,13 +8,20 @@ bindInlineFunctions(getContext(), [
     '/Join/js/storage.js',
     '/Join/js/language.js'
 ])
+import { getBoards, REMOTE_removeData, SESSION_getData } from "../../js/storage.js";
+import { $, confirmation, debounce, notification, currentUserId, isEqual  } from "../../js/utilities.js";
+import { renderBoardTitleSelection } from "../summary/summary.js";
+import "../../js/prototype_extensions.js";
+import { Task } from "../../js/task.class.js";
+import { assignedToTemplate, progressTemplate, taskTemplate } from "../../assets/templates/index/task_template.js";
+import { fullscreenTaskTemplate } from "../../assets/templates/index/fullscreen-task_template.js";
+import { editTaskTemplate } from "../../assets/templates/index/edit-task_template.js";
+import { renderBoardIds, renderDate } from "../add_task/add_task.js";
 
 
 let initialTask;
 
 export const initBoard = async () => {
-    await getAllUsers();
-    await getBoards();
     if (Object.values(BOARDS).length === 0) return
     renderBoardTitleSelection();
     renderTasks();
@@ -188,7 +185,7 @@ export const updateTaskUi = ({title = null, description = null, priority = null,
     if (title) taskContainer.$('.task-title').textAnimation(title);
     if (description) taskContainer.$('.task-description').textAnimation(description);
     if (priority) taskContainer.$('.task-priority').style.setProperty('--priority', `url(../assets/img/icons/prio_${priority}.svg)`);
-    if (assignedTo) taskContainer.$('.task-assigned-to').innerHTML = assignedToTemplate(assignedTo.map(id => ALL_USERS[id]));
+    if (assignedTo) taskContainer.$('.task-assigned-to').innerHTML = assignedToTemplate(assignedTo.map(id => STORAGE.users[id]));
     if (subTasks) {
         if (!SELECTED_TASK.subTasks.length) return taskContainer.$('.task-description').nextElementSibling.remove();
         if (!initialTask.subTasks.length) {

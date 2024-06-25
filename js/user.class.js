@@ -68,7 +68,7 @@ export class User extends Account {
     async logIn() {
         LOCAL_setData('loggedIn', true);
         this.loggedIn = 'true';
-        await this.update();
+        // await this.update();
         goTo('index/summary/summary', {search: `?uid=${this.id}`});
     }
 
