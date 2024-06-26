@@ -21,16 +21,15 @@ class Storage {
     get currentUser() {
         const userId = this.currentUserId();
         if(!userId) return
-        return new User(this.data.users[userId]);
+        return new User(this.data.users[userId])
     }
 
     get currentUserContacts() {
-        const contactIds = this.currentUser.contacts;
-        return contactIds.reduce((contacts, contactId) => {
-            const contact = this.data.users[contactId];
-            contacts[contactId] = new User(contact);
-            return contacts;
-        }, {});
+        return this.currentUser.contacts.reduce((contacts, contactId) => ({ ...contacts, [contactId]: new User(this.data.users[contactId]) }), {});
+    }
+
+    get currentUserBoards() {
+        return this.currentUser.boards.reduce((boards, boardId) => ({ ...boards, [boardId]: new Board(this.data.boards[boardId]) }), {});
     }
 
   /**
@@ -40,8 +39,8 @@ class Storage {
   async init() {
     this.#data = await this.#download();
     this.#isLoaded = true;
-
-    this.get(`users/${currentUserId()}`)
+    
+    console.log(this.currentUser.pendingFriendshipRequests)
 
     return this;
   }
@@ -67,7 +66,7 @@ class Storage {
    * @param {any} value
    */
   set(path, value) {
-    if (Array.isArray(value)) console.log(`is array!`, value);
+    return this.#upload(path, value)
   }
 
   async #download(path = "") {
@@ -81,13 +80,15 @@ class Storage {
   }
 
   async #upload(path, upload) {
+    console.log("aaaaaaaaa")
     try {
         const data = await (await fetch(`${this.STORAGE_URL}/${path}.json`, {
             method: 'PUT',
             body: this.#packArrays(upload)
         })).text();
+        console.log(`upload: `, data)
         if(data) return this.#unpackArrays(data)
-        throw new Error(`download failed. '${path}' not found!`)
+        throw new Error(`upload failed. '${path}' not found!`)
     } catch(error) {
         console.log(error)
     }

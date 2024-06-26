@@ -66,8 +66,8 @@ export function toggleLangSelection() {
 }
 
 export function checkKeys () {
-    event.preventDefault();
     if (!(event.key === "Enter")) return;
+    event.preventDefault();
     const submitBtn = $('button[type="submit"]');
 
     if (!$('form input:placeholder-shown')) submitBtn.click();

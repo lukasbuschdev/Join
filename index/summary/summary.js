@@ -1,5 +1,5 @@
 import { currentLang } from "../../js/language.js";
-import { getBoards, getContacts, REMOTE_removeData, SESSION_getData, SESSION_removeData, SESSION_setData } from "../../js/storage.js";
+import { getBoards, getContacts, REMOTE_removeData, SESSION_getData, SESSION_removeData, SESSION_setData, STORAGE } from "../../js/storage.js";
 import { $, $$, debounce, notification, throwErrors } from "../../js/utilities.js";
 import { Notify } from "../../js/notify.class.js";
 import * as _ from "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js";
@@ -13,11 +13,11 @@ bindInlineFunctions(getContext(), [
 
 let newBoardCollaborators;
 export async function initSummary() {
-    await getBoards();
     renderBoards();
-    if (USER.boards?.length) $('#summary-content').classList.remove('d-none')
-    else return
-    const boardId = SESSION_getData('activeBoard') || Object.keys(BOARDS)[0];
+    if(!STORAGE.currentUser.boards.length) return
+    $('#summary-content').classList.remove('d-none')
+
+    const boardId = SESSION_getData('activeBoard') || STORAGE.currentUser.boards[0];
     renderBoard(boardId);
     renderBoardTitleSelection();
 }
@@ -85,28 +85,25 @@ export function setBoardButtons({tasksInBoard, tasksInProgress, tasksAwaitingFee
 }
 
 
-export function renderBoard(id) {
-    if(!id) return
-    SELECTED_BOARD = BOARDS[id];
-    if(!SELECTED_BOARD) return;
-    const {tasks: tasksObj, owner} = SELECTED_BOARD;
+export function renderBoard(boardId) {
+    const { id, name, tasks: tasksObj, owner } = STORAGE.currentUserBoards[boardId];
     
     const taskStats = getTaskStats(tasksObj)  ;  
     SESSION_setData('activeBoard', Number(id));
 
-    if (owner == USER.id) renderBoardEditButton(id);
+    if (owner == STORAGE.currentUser.id) renderBoardEditButton(id);
     else $('#board-title .circle')?.remove();
 
     setBoardButtons(taskStats);
 
     const summaryHeader = $('.summary-header h2');
     delete summaryHeader.dataset.lang;
-    summaryHeader.innerText = SELECTED_BOARD.name;
+    summaryHeader.innerText = name;
 }
 
 export function renderBoardTitleSelection() {
   const activeBoardId = SESSION_getData("activeBoard");
-  $("#board-title-selection .options").innerHTML = Object.values(BOARDS).reduce(
+  $("#board-title-selection .options").innerHTML = Object.values(STORAGE.currentUserBoards).reduce(
     (template, board) => `${template}${ activeBoardId != board.id ? boardTitleSelectionTemplate(board) : "" }`, ``
   );
 }
@@ -301,5 +298,6 @@ export const deleteBoard = () => confirmation(`delete-board, {boardName: '${SELE
 })
 
 export function toggleBoardSelection() {
+    console.log(this)
     $('#summary-selection').classList.toggle('active');
 }

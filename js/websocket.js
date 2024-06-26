@@ -2,6 +2,29 @@ import { io } from "https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socke
 import { error, notification } from "./utilities.js";
 import { checkNotifications } from "../index/index/index.js";
 
+class Websocket {
+    url = "wss://join-websocket.onrender.com"
+    io
+
+    constructor(currentUser) {
+        this.io = io(this.url, { query: { uid: currentUser.id } });
+
+        
+    }
+
+    sendMessage(recipientIds) {
+
+    }
+
+    uploadImg(img) {
+
+    }
+
+    sendMessage() {
+
+    }
+}
+
 export function initWebsocket() {
     const url = "wss://join-websocket.onrender.com";
     // const url = "ws://localhost:10000";

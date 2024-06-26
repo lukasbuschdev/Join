@@ -1,12 +1,17 @@
+import { STORAGE } from "../../../js/storage.js";
+
 export const taskTemplate = ({boardId, id, title, description, assignedTo, category, priority, subTasks}, filter) => {
+    const board = STORAGE.currentUserBoards[boardId]
     const assignedAccounts = assignedTo.reduce((total, assignedToId) => {
-        const {name, color: userColor} = CONTACTS[assignedToId] ?? USER;
+        const {name, color: userColor} = STORAGE.currentUserContacts[assignedToId] ?? STORAGE.currentUser;
         total.push({name, color: userColor});
         return total;
     }, []); 
     return /*html*/`
     <div class="task txt-small" onpointerdown="addDragAndDrop()" data-id="${boardId}/${id}">
-        <div class="task-category" style="--clr: ${BOARDS[boardId].categories[category] ?? "#d1d1d1"};">${Object.keys(SELECTED_BOARD.categories).find(cat => cat == category) ?? "Default"}</div>
+        <div class="task-category" style="--clr: ${board.categories[category] ?? "#d1d1d1"};">
+            ${Object.keys(board.categories).find(cat => cat == category) ?? "Default"}
+        </div>
         <div class="task-title txt-700">${highlight(title, filter)}</div>
         <div class="task-description">${highlight(description, filter)}</div>
         ${progressTemplate(subTasks)}

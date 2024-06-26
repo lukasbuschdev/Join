@@ -93,7 +93,7 @@ function bindFunctionsToWindow(modules, allFunctionNames) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    initInactivity();
+    // initInactivity();
     includeTemplates();
 }, { once: true })
 

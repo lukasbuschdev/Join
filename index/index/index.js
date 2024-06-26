@@ -1,6 +1,6 @@
 import { LANG_load } from "../../js/language.js";
-import { LOCAL_getData, LOCAL_setData, STORAGE } from "../../js/storage.js";
-import { $, $$, currentDirectory, renderUserData, searchParams, goTo } from "../../js/utilities.js";
+import { LOCAL_getData, LOCAL_setData, SESSION_setData, STORAGE } from "../../js/storage.js";
+import { $, $$, currentDirectory, renderUserData, searchParams, goTo, confirmation } from "../../js/utilities.js";
 import { initWebsocket } from "../../js/websocket.js";
 import "/Join/js/prototype_extensions.js";
 import { initSummary } from "../summary/summary.js";
@@ -141,4 +141,8 @@ export function boardTitleSelectionTemplate({ id, name }) {
 export function switchBoards(id) {
   SESSION_setData("activeBoard", Number(id));
   location.reload();
+}
+
+export function initLogout() {
+  return confirmation('logout', () => STORAGE.currentUser.logOut())
 }

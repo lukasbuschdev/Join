@@ -1,5 +1,7 @@
+import { STORAGE } from "../../../js/storage.js";
+
 export const fullscreenTaskTemplate = ({category, title, description, priority, dueDate, assignedTo, subTasks, boardId}) => {
-    const [categoryName = "Default",  categoryColor = "#d1d1d1"] = Object.entries(BOARDS[boardId].categories)?.find(([key]) => key == category) ?? [];
+    const [categoryName = "Default",  categoryColor = "#d1d1d1"] = Object.entries(STORAGE.currentUserBoards[boardId].categories)?.find(([key]) => key == category) ?? [];
     return /*html*/`
     <div class="fullscreen-content">
         <button onclick="this.closest('dialog').closeModal()" class="close-btn grid-center">

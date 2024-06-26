@@ -9,8 +9,8 @@ bindInlineFunctions(getContext(), [
     '/Join/js/language.js',
     '/Join/index/summary/summary.js'
 ])
-import { getBoards, REMOTE_removeData, SESSION_getData } from "../../js/storage.js";
-import { $, confirmation, debounce, notification, currentUserId, isEqual  } from "../../js/utilities.js";
+import { getBoards, REMOTE_removeData, SESSION_getData, STORAGE } from "../../js/storage.js";
+import { $, confirmation, debounce, notification, currentUserId, isEqual, cloneDeep  } from "../../js/utilities.js";
 import { renderBoardTitleSelection } from "../summary/summary.js";
 import "../../js/prototype_extensions.js";
 import { Task } from "../../js/task.class.js";
@@ -23,16 +23,16 @@ import { renderBoardIds, renderDate } from "../add_task/add_task.js";
 let initialTask;
 
 export const initBoard = async () => {
-    if (Object.values(BOARDS).length === 0) return
+    if (!STORAGE.currentUser.boards.length) return
     renderBoardTitleSelection();
     renderTasks();
     $('#tasks').classList.remove('d-none');
 }
 
 export const renderTasks = async (filter) => {
-    let boardId = SESSION_getData('activeBoard');
-    if (!(boardId in BOARDS)) boardId = Object.keys(BOARDS)[0];
-    const {tasks, name} = BOARDS[boardId];
+    const boardId = SESSION_getData('activeBoard');
+    if (!(boardId in STORAGE.currentUserBoards)) boardId = STORAGE.currentUser.boards[0];
+    const {tasks, name} = STORAGE.currentUserBoards[boardId];
 
     const boardHeader = $('#board-header h2');
     delete boardHeader.dataset.lang;
@@ -87,13 +87,13 @@ export const renderFullscreenTask = (ids) => {
     if (event.which !== 1) return;
     const modal = $('#fullscreen-task-modal');
     const [boardId, taskId] = ids.split('/');
-    const taskData = BOARDS[boardId].tasks[taskId];
-    SELECTED_TASK = new Task(taskData);
-    initialTask = _.cloneDeep(SELECTED_TASK);
+    const taskData = STORAGE.currentUserBoards[boardId].tasks[taskId];
+    const task = new Task(taskData);
+    const initialTask = cloneDeep(task);
     modal.$('#fullscreen-task').innerHTML = fullscreenTaskTemplate(taskData);
     modal.LANG_load();
     modal.openModal();
-    modal.addEventListener('close', saveTaskChanges, {once: true});
+    modal.addEventListener('close', () => saveTaskChanges(initialTask), {once: true});
 };
 
 export const saveEditedTask = () => {
@@ -115,7 +115,7 @@ export const saveEditedTask = () => {
     toggleFullscreenState();
 }
 
-export const saveTaskChanges = () => {
+export const saveTaskChanges = (initialTask) => {
     const updatedTask = SELECTED_TASK;
 
     const differences = getJsonChanges(updatedTask, initialTask);

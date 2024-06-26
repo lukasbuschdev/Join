@@ -4,16 +4,14 @@ import { Email } from "./email.class.js";
 import { getEmailLanguage } from "./language.js";
 import { goTo } from "./utilities.js";
 import { LOCAL_setData, REMOTE_getData, REMOTE_setData } from "./storage.js";
-import { deleteContact } from "../index/contacts/contacts.js";
 import { Notify } from "./notify.class.js";
 
 export class User extends Account {
     socket
+
     constructor(userData) {
         super(userData);
         this.password = userData.password;
-        this.color = userData.color ?? '#D1D1D1';
-        this.pendingFriendshipRequests = userData.pendingFriendshipRequests ?? [];
     }
 
     async setPicture(img) {
@@ -82,9 +80,6 @@ export class User extends Account {
         goTo('init/login/login', {search: ''});
     }
 
-    async update() {
-        return Promise.resolve(false);
-    }
 
     generateVerificationCode() {
         const charSet = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789';
@@ -116,7 +111,7 @@ export class User extends Account {
         return REMOTE_getData(`boards/${boardId}`);
     }
 
-    addContact(contactId) {
+    async addContact(contactId) {
         if(this.pendingFriendshipRequests.includes(contactId)) return;
         this.pendingFriendshipRequests.push(contactId);
         
@@ -127,7 +122,7 @@ export class User extends Account {
             type: 'friendshipRequest'
         });
         
-        notificationPrototype.send();
+        await notificationPrototype.send();
 
         // TO DO update data!
         return this.update();
@@ -136,5 +131,9 @@ export class User extends Account {
     async deleteContact(id) {
         this.contacts.remove(id);
         // TO DO update data!
+    }
+
+    async update() {
+        return super.update(`users/${this.id}`)
     }
 }
