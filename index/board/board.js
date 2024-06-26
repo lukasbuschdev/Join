@@ -29,24 +29,6 @@ export const initBoard = async () => {
     $('#tasks').classList.remove('d-none');
 }
 
-// export function renderBoardTitleSelection() {
-//     const activeBoardId = SESSION_getData('activeBoard');
-//     $('#board-title-selection .options').innerHTML = Object.values(BOARDS).reduce((template, board) => {
-//         return `${template}${(activeBoardId != board.id) ? boardTitleSelectionTemplate(board) : ''}`
-//     }, ``);
-// }
-
-// export function boardTitleSelectionTemplate({id, name}) {
-//     return/*html*/`
-//         <h4 class="option" onclick="switchBoards(${id})">${name}</h4>
-//     `
-// }
-
-// export function switchBoards(id) {
-//     SESSION_setData('activeBoard', Number(id));
-//     location.reload();
-// }
-
 export const renderTasks = async (filter) => {
     let boardId = SESSION_getData('activeBoard');
     if (!(boardId in BOARDS)) boardId = Object.keys(BOARDS)[0];

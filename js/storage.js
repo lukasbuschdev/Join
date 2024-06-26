@@ -40,6 +40,9 @@ class Storage {
   async init() {
     this.#data = await this.#download();
     this.#isLoaded = true;
+
+    this.get(`users/${currentUserId()}`)
+
     return this;
   }
 
@@ -53,7 +56,9 @@ class Storage {
    * @returns {User | Board | Notify}
    */
   get(path) {
-
+    const formattedPath = path.split('/').join('"]["')
+    const requestedData = parse(`${JSON.stringify(this.data)}["${formattedPath}"]`)
+    console.log(requestedData)
   }
 
   /**
@@ -121,6 +126,9 @@ class Storage {
 }
 
 export const STORAGE = new Storage()
+
+
+//________________________________________________
 
 const STORAGE_TOKEN = 'NVTVE0QJKQ005SECVM4281V290DQJKIG6V0LRBYV';
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';

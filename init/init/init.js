@@ -44,23 +44,20 @@ export const togglePasswordVisibility = () => {
 }
 
 export function changeLanguageImage() {
-    const selectElement = document.getElementById('language-selection');
+    const selectElement = $('#language-selection');
     const selectedValue = selectElement.value;
     const selectBox = selectElement.parentElement;
 
-    // Define a mapping of language codes to image URLs
     const languageImages = {
-        en: '/Join/assets/img/icons/english.png',
-        de: '/Join/assets/img/icons/german.png',
-        es: '/Join/assets/img/icons/spanish.png',
-        pg: '/Join/assets/img/icons/portuguese.png',
-        fr: '/Join/assets/img/icons/french.png',
-        it: '/Join/assets/img/icons/italian.png',
-        tk: '/Join/assets/img/icons/turkish.png',
+        en: 'english',
+        de: 'german',
+        es: 'spanish',
+        pg: 'portuguese',
+        fr: 'french',
+        it: 'italian',
+        tk: 'turkish',
     };
-
-    // Set the background image based on the selected language
-    selectBox.style.backgroundImage = `url(${languageImages[selectedValue]})`;
+    selectBox.style.backgroundImage = `url(/Join/assets/img/icons/${languageImages[selectedValue]}.png)`;
 }
 
 
@@ -69,8 +66,8 @@ export function toggleLangSelection() {
 }
 
 export function checkKeys () {
-    if (!(event.key === "Enter")) return;
     event.preventDefault();
+    if (!(event.key === "Enter")) return;
     const submitBtn = $('button[type="submit"]');
 
     if (!$('form input:placeholder-shown')) submitBtn.click();
