@@ -147,17 +147,17 @@
     gap: 54px;
 }
 
-.edit-contact {
+.contact-info-container {
     gap: 60px;
     height: 74px;
 }
 
-.edit-contact button {
+.contact-info-container button {
     color: var(--clr-dark);
     width: fit-content;
 }
 
-.edit-contact button::before {
+.contact-info-container button::before {
     content: '';
     background: url(../assets/img/icons/pencil.svg);
     height: 25px;
@@ -168,7 +168,7 @@
     background-repeat: no-repeat;
 }
 
-.edit-contact span:first-child {
+.contact-info-container span:first-child {
     font-size: 1.3125rem;
 }
 
@@ -450,7 +450,7 @@
         height: 40px;
     }
 
-    .edit-contact {
+    .contact-info-container {
         height: 30px;
     }
 

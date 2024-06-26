@@ -136,36 +136,57 @@ export function renderSelectedContact(selectedContact) {
 export function selectedContactTemplate({id, img, name, email, phone, color}) {
     return /*html*/`
         <div class="contact-container column">
-            <div class="img-name row">
-                <div class="user-img-container" style="--user-clr: ${color}">
-                    <h1>${name.slice(0, 2).toUpperCase()}</h1>
-                    <img src="${img}" alt="">
+            ${contactImgNameTemplate(color, name, img, id)}
+            ${contactInfoTemplate()}
+            ${contactMailTemplate(email)}
+            ${contactPhoneTemplate(phone)}
+        </div>
+    `;
+}
+
+export function contactImgNameTemplate(color, name, img, id) {
+    return /*html*/ `
+        <div class="img-name row">
+            <div class="user-img-container" style="--user-clr: ${color}">
+                <h1>${name.slice(0, 2).toUpperCase()}</h1>
+                <img src="${img}">
+            </div>
+
+            <div class="column contact-name">
+                <span>${name}</span>
+                <div class="row gap-30">
+                    <button class="delete-contact-btn row gap-10" onclick="confirmation('delete-contact', () => deleteContact(${id}))">
+                        <span data-lang="delete">Delete</span>
+                        <img src="/Join/assets/img/icons/trash_red.svg" width="20">
+                    </button>
                 </div>
-    
-                <div class="column contact-name">
-                    <span>${name}</span>
-                    <div class="row gap-30">
-                        <button class="delete-contact-btn row gap-10" onclick="confirmation('delete-contact', () => deleteContact(${id}))">
-                            <span data-lang="delete">Delete</span>
-                            <img src="/Join/assets/img/icons/trash_red.svg" width="20">
-                        </button>
-                    </div>
-                </div>
             </div>
-    
-            <div class="edit-contact row">
-                <span data-lang="contact-info">Contact Information</span>
-            </div>
-    
-            <div class="mail-container column">
-                <span class="txt-700">E-Mail</span>
-                <a class="email" href="mailto:${email}">${email}</a>                 
-            </div>
-    
-            <div class="phone-container column">
-                <span data-lang="phone" class="txt-700">Phone</span>
-                <a id="phone-number" href="${(phone == 'N/A') ? 'return false;' : 'tel:${phone}'}">${phone}</a>
-            </div>
+        </div>
+    `;
+}
+
+export function contactInfoTemplate() {
+    return /*html*/ `
+        <div class="contact-info-container row">
+            <span data-lang="contact-info">Contact Information</span>
+        </div>
+    `;
+}
+
+export function contactMailTemplate(email) {
+    return /*html*/ `
+        <div class="mail-container column">
+            <span class="txt-700">E-Mail</span>
+            <a class="email" href="mailto:${email}">${email}</a>                 
+        </div>
+    `;
+}
+
+export function contactPhoneTemplate(phone) {
+    return /*html*/ `
+        <div class="phone-container column">
+            <span data-lang="phone" class="txt-700">Phone</span>
+            <a id="phone-number" href="${(phone == 'N/A') ? 'return false;' : 'tel:${phone}'}">${phone}</a>
         </div>
     `;
 }
