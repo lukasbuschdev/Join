@@ -159,7 +159,7 @@ export function renderCollaboratorInput() {
     inputContainerCollaborator.innerHTML = '';
 
     selectedCollaborators.forEach((collaboratorId) => {
-        const users = ALL_USERS[collaboratorId];
+        const users = STORAGE.data.users[collaboratorId];
 
         inputContainerCollaborator.innerHTML += /*html*/ `
             <div class="input-collaborator user-img-container grid-center" style="--user-clr: ${users.color}">
