@@ -4,6 +4,8 @@ import { Email } from "./email.class.js";
 import { getEmailLanguage } from "./language.js";
 import { goTo } from "./utilities.js";
 import { LOCAL_setData, REMOTE_getData, REMOTE_setData } from "./storage.js";
+import { deleteContact } from "../index/contacts/contacts.js";
+import { Notify } from "./notify.class.js";
 
 export class User extends Account {
     socket
@@ -81,9 +83,7 @@ export class User extends Account {
     }
 
     async update() {
-        const allUsers = await REMOTE_setData('users', {[this.id]: this});
-        if (typeof CONTACTS === 'undefined') return;
-        USER = this
+        return Promise.resolve(false);
     }
 
     generateVerificationCode() {
@@ -116,10 +116,25 @@ export class User extends Account {
         return REMOTE_getData(`boards/${boardId}`);
     }
 
-    async getContacts() {
-        const allUsers = await REMOTE_getData('users');
-        return this.contacts.map(
-            contactId => allUsers[contactId]
-        );
+    addContact(contactId) {
+        if(this.pendingFriendshipRequests.includes(contactId)) return;
+        this.pendingFriendshipRequests.push(contactId);
+        
+        const notificationPrototype = new Notify({
+            recipients: [contactId],
+            userName: this.name,
+            userId: this.id,
+            type: 'friendshipRequest'
+        });
+        
+        notificationPrototype.send();
+
+        // TO DO update data!
+        return this.update();
+    }
+
+    async deleteContact(id) {
+        this.contacts.remove(id);
+        // TO DO update data!
     }
 }

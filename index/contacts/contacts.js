@@ -6,47 +6,27 @@ bindInlineFunctions(getContext(), [
     '/Join/js/language.js'
 ]);
 
-import { Notify } from "../../js/notify.class.js";
-import { getContactsData, getUser } from "../../js/storage.js";
-import { $, currentUserId, debounce, notification, throwErrors } from "../../js/utilities.js";
+import { STORAGE } from "../../js/storage.js";
+import { $, debounce, notification, throwErrors } from "../../js/utilities.js";
 
-
-
-export async function initContacts () {
-    await getUser();
+export function initContacts () {
     return renderContacts();
 }
 
-export async function renderContacts() {
-    const contactsData = Object.values(CONTACTS);
-    $('#selected-contact-container').classList.toggle('d-none', contactsData.length == 0);
-    // if(contactsData.length == 0) return noContactsYet();
-    // contactsExisting();
+export function renderContacts() {
+    const contactsData = Object.values(STORAGE.currentUserContacts);
+    $('#selected-contact-container').classList.toggle('d-none', !contactsData.length);
     
-    const initialLetters = [...new Set(
-        contactsData.map(
-            (singleContact) => singleContact.name[0]
-        )
-    )];
+    const initialLetters = new Set(contactsData.map((singleContact) => singleContact.name[0]));
+    const contactsContainer = $('#contacts-container');
+    contactsContainer.innerHTML = '';
 
-    $('#contacts-container').innerHTML = '';
-
-    initialLetters.for(letter => {
-        $('#contacts-container').innerHTML += contactListLetterTemplate(letter);
+    initialLetters.forEach(letter => {
+        contactsContainer.innerHTML += contactListLetterTemplate(letter);
         const filteredContacts = contactsData.filter(({name}) => name[0] == letter);
-        $('#contacts-container').renderItems(filteredContacts, contactListTemplate);
+        contactsContainer.renderItems(filteredContacts, contactListTemplate);
     });
 }
-
-// export function noContactsYet() {
-//     document.getElementById('contacts-empty')?.classList.remove('d-none');
-//     document.getElementById('selected-contact-container').classList.add('grid-center');
-// }
-
-// export function contactsExisting() {
-//     document.getElementById('contacts-empty')?.classList.add('d-none');
-//     document.getElementById('selected-contact-container').classList.remove('grid-center');
-// }
 
 export const contactListLetterTemplate = (letter) => {
     return /*html*/`
@@ -81,24 +61,16 @@ export function addContactModal() {
     modal.addEventListener('close', clearCloseAddContact, {once: true});
 }
 
-export function closeAddTaskModal() {
-    $('#add-task-modal').closeModal();
-}
-
 export function closeAddContact() {
     $('#add-contact-modal').closeModal();
 }
 
-export function clearInput(){
-    let input = $("#input-name");
-      if (input.value !== "") {
-          input.value = "";
-      }
+export function clearInput() {
+    $("#input-name").value = '';
 }
 
 export function clearImage() {
-    let userImgContainer = $('.add-contact-field .user-img-container');
-    userImgContainer.innerHTML = /*html*/ `
+    $('.add-contact-field .user-img-container').innerHTML = /*html*/ `
         <img class="user-img-gray" src="/Join/assets/img/icons/user_img_gray.svg">
     `;
 }
@@ -121,24 +93,17 @@ export function clearCloseAddContact() {
 }
 
 export const getInput = debounce(async function () {
-    let input = $('#input-name');
-    const userId = currentUserId();
-    $('#user-search-result').textContent.trim();
+    const inputValue = $('#input-name').value;
     
-    if(input.value.length > 0) {
-        const allUsers = ALL_USERS;
+    if(!inputValue.length) return unsetSearchResultStyle();
+    setSearchResultStyle();
 
-        const filteredUsers = Object.values(allUsers).filter(
-            user => ((user.name.toLowerCase().includes(input.value.toLowerCase())) && !(userId == user.id) && !(USER.contacts.includes(`${user.id}`)))
-        );
-    
-        const sortedUsers = filteredUsers.sort((a, b) => a.name > b.name);
-    
-        renderSearchResults(sortedUsers);
-        if (sortedUsers.length) setSearchResultStyle();
-    } else {
-        unsetSearchResultStyle();
-    }
+    const filteredUsers = Object.values(STORAGE.data.users).filter(
+        user => ((user.name.toLowerCase().includes(inputValue.toLowerCase())) && !(STORAGE.currentUser.id == user.id) && !(STORAGE.currentUser.contacts.includes(`${user.id}`)))
+    );
+
+    const sortedUsers = filteredUsers.sort((a, b) => a.name > b.name);
+    renderSearchResults(sortedUsers);
 }, 200);
 
 export function setSearchResultStyle() {
@@ -155,16 +120,9 @@ export function unsetSearchResultStyle() {
     $('#input-name').style.border = '1px solid #d1d1d1';
 }
 
-export async function selectContact(id) {
-    let userData = await getContactsData();
-    let selectedContact = userData.find(user => user.id == id);
-    renderSelectedContact(selectedContact);
-
-    if (window.innerWidth <= 800) {
-        $('#contacts-container').classList.add('d-none');
-    } else {
-        $('#contacts-container').classList.remove('d-none');
-    }
+export function selectContact(id) {
+    renderSelectedContact(STORAGE.currentUserContacts[id]);
+    $('#contacts-container').classList.toggle('d-none', window.innerWidth <= 800);
 }
 
 export function closeSelectedContact() {
@@ -172,8 +130,7 @@ export function closeSelectedContact() {
 }
 
 export function renderSelectedContact(selectedContact) {
-    const selectedContactContainer = $('#selected-contact-container');
-    selectedContactContainer.innerHTML = selectedContactTemplate(selectedContact);
+    $('#selected-contact-container').innerHTML = selectedContactTemplate(selectedContact);
 }
 
 export function selectedContactTemplate({id, img, name, email, phone, color}) {
@@ -188,8 +145,6 @@ export function selectedContactTemplate({id, img, name, email, phone, color}) {
                 <div class="column contact-name">
                     <span>${name}</span>
                     <div class="row gap-30">
-                        <!-- <button data-lang="add-task" class="row" onclick="addTaskModal()">Add Task</button> -->
-                        <!-- <div class="vertical-line"></div> -->
                         <button class="delete-contact-btn row gap-10" onclick="confirmation('delete-contact', () => deleteContact(${id}))">
                             <span data-lang="delete">Delete</span>
                             <img src="/Join/assets/img/icons/trash_red.svg" width="20">
@@ -246,9 +201,9 @@ export function selectNewContact(id, img, name, color) {
     clearImage();
     clearInput();
 
-    let input = document.getElementById('input-name');
-    let userImgContainer = document.querySelector('.add-contact-field .user-img-container');
-    let initials = name.slice(0, 2).toUpperCase();
+    const input = $('#input-name');
+    const userImgContainer = $('.add-contact-field .user-img-container');
+    const initials = name.slice(0, 2).toUpperCase();
 
     userImgContainer.innerHTML = img ? `<img src="${img}" alt="${name}">` : initials;
     userImgContainer.style.setProperty('--user-clr', color);
@@ -260,42 +215,24 @@ export function selectNewContact(id, img, name, color) {
 
 export async function addContact() {
     const selectedUser = $('#input-name');
-    const userExists = await getUserByInput(selectedUser.value)
-    throwErrors({identifier: 'select-valid-user', bool: !userExists})
-    if (!userExists) return
+    const userExists = STORAGE.getUserByInput(selectedUser.value);
+    throwErrors({identifier: 'select-valid-user', bool: !userExists});
+    if(!userExists) return;
+
     const selectedUserId = selectedUser.dataset.id;
-    const userName = USER.name;
-
-    const notificationPrototype = new Notify({
-        recipients: [`${selectedUserId}`],
-        userName,
-        userId: USER.id,
-        type: 'friendshipRequest'
-    });
-
-    if(USER.pendingFriendshipRequests.includes(selectedUserId)) {
-        return
-    }
-
-    USER.pendingFriendshipRequests.push(selectedUserId);
-    await USER.update();
-    await notificationPrototype.send();
-
-    notification(`friendship-request, {name: '${ALL_USERS[selectedUserId].name}'}`);
-
-    const modal = $('#add-contact-modal');
-    modal.closeModal();
+    const contactWasAdded = await STORAGE.currentUser.addContact(selectedUserId);
+    if(!contactWasAdded) return notification(`network-error`);
+    
+    $('#add-contact-modal').closeModal();
+    notification(`friendship-request, {name: '${STORAGE.data.users[selectedUserId].name}'}`);
 }
 
-export async function deleteContact(id) {
-    USER.contacts = USER.contacts.filter(item => item !== id.toString());
-    await USER.update();
-
-    CONTACTS[id].contacts = CONTACTS[id].contacts.filter(item => item !== USER.id);
-    await CONTACTS[id].update();
-    delete CONTACTS[id];
+export function deleteContact(id) {
+    const selectedContact = STORAGE.currentUserContacts[id];
+    selectedContact.deleteContact(STORAGE.currentUser.id);
+    STORAGE.currentUser.deleteContact(`${id}`);
 
     $('.contact-container').classList.add('d-none');
-    await renderContacts();
+    renderContacts();
     location.reload();
 }

@@ -1,4 +1,5 @@
 import { confirmationTemplate } from "../assets/templates/index/confirmation_template.js";
+import { STORAGE } from "./storage.js";
 
 export const log = console.log;
 export const error = console.error;
@@ -430,7 +431,7 @@ export async function hashInputValue(inputValue) {
 }
 
 export function renderUserData() {
-    const { name, img, color } = window.USER;
+    const { name, img, color } = STORAGE.currentUser;
     (this ?? document.documentElement).$$('[data-user-data]').forEach(
         (userField) => {
             const dataType = userField.dataset.userData;

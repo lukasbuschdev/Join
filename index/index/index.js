@@ -1,5 +1,5 @@
 import { LANG_load } from "../../js/language.js";
-import { getUser, LOCAL_getData, LOCAL_setData, STORAGE, Storage } from "../../js/storage.js";
+import { LOCAL_getData, LOCAL_setData, STORAGE } from "../../js/storage.js";
 import { $, $$, currentDirectory, renderUserData, searchParams, goTo } from "../../js/utilities.js";
 import { initWebsocket } from "../../js/websocket.js";
 import "/Join/js/prototype_extensions.js";
@@ -13,7 +13,7 @@ import { initPrivacy } from "../privacy/privacy.js";
 
 export function initGlobalVariables() {
   window.ALL_USERS = {};
-  window.USER = {};
+  // window.STORAGE.currentUser = {};
   window.BOARDS = {};
   window.SELECTED_BOARD = {};
   window.SELECTED_TASK = {};
@@ -23,13 +23,8 @@ export function initGlobalVariables() {
 }
 
 export async function init(directory) {
-  await STORAGE.init()
+  await STORAGE.init();
   initGlobalVariables();
-  await Promise.all([
-    // checkLogin(),
-    // includeTemplates(),
-    getUser(),
-  ]);
   await initFunctions[directory]();
   $("#content").classList.remove("content-loading");
   initWebsocket();
@@ -43,9 +38,8 @@ if (LOCAL_getData("rememberMe") == "false") {
   window.on("beforeunload", () => LOCAL_setData("loggedIn", false));
 }
 
-export const checkNotifications = async () => {
-  await getUser();
-  const notificationCount = Object.values(USER.notifications).length;
+export const checkNotifications = () => {
+  const notificationCount = Object.values(STORAGE.currentUser.notifications).length;
   const notificationCounters = $$(".notifications-counter");
 
   notificationCounters.forEach((counter) => counter.classList.toggle("d-none", !notificationCount));
@@ -56,7 +50,7 @@ export const checkNotifications = async () => {
   notificationCounters.forEach((counter) => (counter.innerText = notificationCount));
 };
 
-export const checkLogin = async () => {
+export const checkLogin = () => {
   const uid = searchParams().get("uid");
   if (!uid) return;
   const isValidUser = !!STORAGE.getUsersById([uid]);
@@ -73,7 +67,7 @@ export const initFunctions = {
   privacy: () => initPrivacy(),
 };
 
-export async function loadContent() {
+export function loadContent() {
   const btn = event.currentTarget ?? undefined;
   if (!btn) location.href = location.href;
   if (currentDirectory() === btn.id) return;
@@ -101,19 +95,19 @@ export async function loadAccountPanelContent() {
 
 export function initEditAccount() {
   const editAccountContent = $("#edit-account-content");
-  editAccountContent.renderUserData(USER);
+  editAccountContent.renderUserData(STORAGE.currentUser);
   renderColorWheel();
-  if (USER.img)
+  if (STORAGE.currentUser.img)
     editAccountContent.$(".user-img-container").dataset.img = "true";
 };
 
 export function loadNotifications() {
-  if (Object.values(USER.notifications).length == 0)
+  if (Object.values(STORAGE.currentUser.notifications).length == 0)
     return noNotificationsYet();
   const container = $("#notifications-content");
   container.innerHTML = "";
   container.renderItems(
-    Object.values(USER.notifications),
+    Object.values(STORAGE.currentUser.notifications),
     notificationTemplate
   );
 };

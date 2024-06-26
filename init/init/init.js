@@ -1,5 +1,5 @@
 import { initGlobalVariables } from "../../index/index/index.js";
-import { STORAGE, Storage } from "../../js/storage.js";
+import { STORAGE } from "../../js/storage.js";
 import { notification } from "../../js/utilities.js";
 import { $ } from "/Join/js/utilities.js";
 import "/join/js/prototype_extensions.js"

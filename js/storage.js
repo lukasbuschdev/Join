@@ -4,10 +4,10 @@ import { Account } from "./account.class.js";
 import { Board } from "./board.class.js";
 import { Notify } from "./notify.class.js";
 import { User } from "./user.class.js";
-import { error, notification, parse, currentUserId } from "./utilities.js";
+import { error, notification, parse, searchParams } from "./utilities.js";
 import { initWebsocket } from "./websocket.js";
 
-export class Storage {
+class Storage {
     STORAGE_URL = 'https://join-storage-83306-default-rtdb.europe-west1.firebasedatabase.app';
     // SOCKET = 
     #data
@@ -18,6 +18,21 @@ export class Storage {
         return this.#data;
     }
 
+    get currentUser() {
+        const userId = this.currentUserId();
+        if(!userId) return
+        return new User(this.data.users[userId]);
+    }
+
+    get currentUserContacts() {
+        const contactIds = this.currentUser.contacts;
+        return contactIds.reduce((contacts, contactId) => {
+            const contact = this.data.users[contactId];
+            contacts[contactId] = new User(contact);
+            return contacts;
+        }, {});
+    }
+
   /**
    * gets all data and returns a storage conainer
    * @returns {Promise<any>}
@@ -26,6 +41,10 @@ export class Storage {
     this.#data = await this.#download();
     this.#isLoaded = true;
     return this;
+  }
+
+  currentUserId() {
+    return (searchParams().get('uid') == null) ? undefined : `${searchParams().get('uid')}`;
   }
 
   /**
@@ -261,10 +280,10 @@ export async function getUsersById(uids) {
  * returns a promise which resolves to an array of all Users who are not already existing Contacts of the current User sorted by name
  * @returns {Promise<User[]>}
  */
-export async function getContactsData() {
-    const {contacts: contactIds} = await REMOTE_getData(`users/${currentUserId()}`);
-    if (!contactIds) return [];
-    const userData = await REMOTE_getData('users');
+export function getContactsData() {
+    const {contacts: contactIds} = STORAGE.currentUser;
+    if (!contactIds) return [];    
+    const userData = STORAGE.data.users;
     const accounts = Object.values(userData).reduce((allAccounts, account) => [...allAccounts, new Account(account)], [])
     const filteredContacts = accounts.filter(({id}) => contactIds.indexOf(`${id}`) !== -1);
     const sortedContacts = filteredContacts.sort(({name: name1}, {name: name2}) => {
@@ -330,31 +349,11 @@ export function SESSION_removeData(key) {
 };
 
 /**
- * returns a promise which resolves to an instance of the current User
- * @returns {Promise<User>}
- */
-export async function getCurrentUser() {
-    const uid = currentUserId();
-    if (!uid) return null;
-    const user = await REMOTE_getData(`users/${uid}`);
-    initWebsocket(user)
-    return user
-};
-
-/**
- * updates the global USER variable and calls getContacts()
- */
-export async function getUser() {
-    window.USER = await getCurrentUser();
-    return getContacts();
-};
-
-/**
  * updates the contacts property of the global USER variable
  */
-export async function getContacts() {
-    const allUsers = await REMOTE_getData('users');
-    window.USER.contacts.for(contactId => CONTACTS[contactId] = new User(allUsers[contactId]));
+export function getContacts() {
+    const allUsers = STORAGE.data.users;
+    STORAGE.currentUser.contacts.for(contactId => CONTACTS[contactId] = new User(allUsers[contactId]));
 };
 
 /**
