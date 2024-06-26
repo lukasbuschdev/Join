@@ -96,14 +96,14 @@ export const getInput = debounce(async function () {
     const inputValue = $('#input-name').value;
     
     if(!inputValue.length) return unsetSearchResultStyle();
-    setSearchResultStyle();
-
+    
     const filteredUsers = Object.values(STORAGE.data.users).filter(
         user => ((user.name.toLowerCase().includes(inputValue.toLowerCase())) && !(STORAGE.currentUser.id == user.id) && !(STORAGE.currentUser.contacts.includes(user.id)) && !(STORAGE.currentUser.pendingFriendshipRequests.includes(user.id)))
     );
 
     const sortedUsers = filteredUsers.sort((a, b) => a.name > b.name);
     renderSearchResults(sortedUsers);
+    setSearchResultStyle();
 }, 200);
 
 export function setSearchResultStyle() {
