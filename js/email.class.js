@@ -1,3 +1,4 @@
+import { SOCKET } from "./websocket.js";
 import { resetPasswordEmailTemplate, verificationEmailTemplate } from "/Join/assets/templates/index/mail_templates.js";
 
 export class Email {
@@ -12,8 +13,9 @@ export class Email {
         }
     }
 
-    async send(socket) {
-        console.log(socket)
+    async send() {
+        const { socket } = SOCKET;
+        // console.log(socket)
         const mailOptions = {
             to: this.recipient.email,
             subject: this.subject,
@@ -21,12 +23,8 @@ export class Email {
         }
         socket.emit('mail', mailOptions);
         return new Promise((resolve, reject) => {
-            socket.on('mailSent', () => {
-                resolve();
-            });
-            socket.on('mailFailed', () => {
-                reject()
-            })
-        })
+            socket.on('mailSent', resolve);
+            socket.on('mailFailed', reject)
+        });
     }
 }

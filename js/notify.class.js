@@ -1,3 +1,6 @@
+import { STORAGE } from "./storage.js";
+import { SOCKET } from "./websocket.js";
+
 export class Notify {
     constructor(notification) {
         Object.entries(notification).for(
@@ -7,8 +10,8 @@ export class Notify {
     }
 
     async send () {
-        if (SOCKET.disconnected) return error('network-error');
-        SOCKET.emit('notification', {to: this.recipients});
-        return this.recipients.forAwait((recipientId) => REMOTE_setData(`users/${recipientId}/notifications`, {[this.id]: this}));
+        if (SOCKET.socket.disconnected) return error('network-error');
+        SOCKET.socket.emit('notification', {to: this.recipients});
+        return this.recipients.forAwait((recipientId) => STORAGE.set(`users/${recipientId}/notifications/${this.id}`, this));
     };
 }

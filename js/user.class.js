@@ -3,7 +3,7 @@ import { Board } from "./board.class.js";
 import { Email } from "./email.class.js";
 import { getEmailLanguage } from "./language.js";
 import { goTo } from "./utilities.js";
-import { LOCAL_setData, REMOTE_getData, REMOTE_setData } from "./storage.js";
+import { LOCAL_setData, REMOTE_getData, REMOTE_setData, STORAGE } from "./storage.js";
 import { Notify } from "./notify.class.js";
 
 export class User extends Account {
@@ -33,7 +33,7 @@ export class User extends Account {
     async initVerification() {
         this.generateVerificationCode();
         await this.#sendMail("verification");
-        await REMOTE_setData('verification', {[this.id]: { verifyCode: this.verifyCode, userData: this }});
+        await STORAGE.set(`verification/${this.id}`, { verifyCode: this.verifyCode, userData: this });
         goTo('init/verify_account/verify_account', {reroute: true, search: `?uid=${this.id}`});
     }
 
@@ -49,11 +49,11 @@ export class User extends Account {
         }
         if (typeof options == "object") mailOptions.options = options;
         const mail = new Email(mailOptions);
-        return mail.send(this.socket);
+        return mail.send();
     }
 
-    async verify() {
-        await this.update();
+    verify() {
+        return this.update();
     }
 
     setCredentials(rawPassword) {
@@ -113,7 +113,6 @@ export class User extends Account {
 
     async addContact(contactId) {
         if(this.pendingFriendshipRequests.includes(contactId)) return;
-        this.pendingFriendshipRequests.push(contactId);
         
         const notificationPrototype = new Notify({
             recipients: [contactId],

@@ -1,7 +1,7 @@
 import { LANG_load } from "../../js/language.js";
 import { LOCAL_getData, LOCAL_setData, SESSION_setData, STORAGE } from "../../js/storage.js";
 import { $, $$, currentDirectory, renderUserData, searchParams, goTo, confirmation } from "../../js/utilities.js";
-import { initWebsocket } from "../../js/websocket.js";
+import { SOCKET } from "../../js/websocket.js";
 import "/Join/js/prototype_extensions.js";
 import { initSummary } from "../summary/summary.js";
 import { initBoard } from "../board/board.js";
@@ -11,23 +11,11 @@ import { initAddTask } from "../add_task/add_task.js";
 import { initContacts } from "../contacts/contacts.js";
 import { initPrivacy } from "../privacy/privacy.js";
 
-export function initGlobalVariables() {
-  window.ALL_USERS = {};
-  // window.STORAGE.currentUser = {};
-  window.BOARDS = {};
-  window.SELECTED_BOARD = {};
-  window.SELECTED_TASK = {};
-  window.CONTACTS = {};
-  // window.SOCKET = {};
-  window.notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wav');
-}
-
 export async function init(directory) {
   await STORAGE.init();
-  initGlobalVariables();
+  SOCKET.init();
   await initFunctions[directory]();
   $("#content").classList.remove("content-loading");
-  initWebsocket();
   $(`#${directory}`).classList.add("active");
   renderUserData();
   checkNotifications();
