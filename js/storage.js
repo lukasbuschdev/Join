@@ -40,8 +40,6 @@ class Storage {
     this.#data = await this.#download();
     this.#isLoaded = true;
     
-    console.log(this.currentUser.pendingFriendshipRequests)
-
     return this;
   }
 
@@ -80,7 +78,6 @@ class Storage {
   }
 
   async #upload(path, upload) {
-    console.log("aaaaaaaaa")
     try {
         const data = await (await fetch(`${this.STORAGE_URL}/${path}.json`, {
             method: 'PUT',

@@ -99,7 +99,7 @@ export const getInput = debounce(async function () {
     setSearchResultStyle();
 
     const filteredUsers = Object.values(STORAGE.data.users).filter(
-        user => ((user.name.toLowerCase().includes(inputValue.toLowerCase())) && !(STORAGE.currentUser.id == user.id) && !(STORAGE.currentUser.contacts.includes(`${user.id}`)))
+        user => ((user.name.toLowerCase().includes(inputValue.toLowerCase())) && !(STORAGE.currentUser.id == user.id) && !(STORAGE.currentUser.contacts.includes(user.id)) && !(STORAGE.currentUser.pendingFriendshipRequests.includes(user.id)))
     );
 
     const sortedUsers = filteredUsers.sort((a, b) => a.name > b.name);
@@ -239,8 +239,8 @@ export async function addContact() {
     const userExists = STORAGE.getUserByInput(selectedUser.value);
     throwErrors({identifier: 'select-valid-user', bool: !userExists});
     if(!userExists) return;
-
     const selectedUserId = selectedUser.dataset.id;
+
     const contactWasAdded = await STORAGE.currentUser.addContact(selectedUserId);
     if(!contactWasAdded) return notification(`network-error`);
     
