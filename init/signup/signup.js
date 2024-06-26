@@ -81,6 +81,5 @@ export async function signupInit() {
     const hash = await hashInputValue(dataInput.password);
     dataInput.password = hash;
     const user = new User(dataInput);
-    initWebsocket(user)
     user.initVerification();
 }

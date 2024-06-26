@@ -5,7 +5,6 @@ import { Board } from "./board.class.js";
 import { Notify } from "./notify.class.js";
 import { User } from "./user.class.js";
 import { error, notification, parse, searchParams } from "./utilities.js";
-import { initWebsocket } from "./websocket.js";
 
 class Storage {
     STORAGE_URL = 'https://join-storage-83306-default-rtdb.europe-west1.firebasedatabase.app';
@@ -39,7 +38,7 @@ class Storage {
   async init() {
     this.#data = await this.#download();
     this.#isLoaded = true;
-    
+    console.log(Object.values(this.data.users).find(({name}) => name === "Lukasius"))
     return this;
   }
 
@@ -88,6 +87,17 @@ class Storage {
         throw new Error(`upload failed. '${path}' not found!`)
     } catch(error) {
         console.log(error)
+    }
+  }
+
+  async #delete(path) {
+    try {
+        const data = await (await fetch(`${this.STORAGE_URL}/${path}.json`, {
+            method: 'DELETE'
+        })).json();
+        return data;
+    } catch(e) {
+
     }
   }
 
