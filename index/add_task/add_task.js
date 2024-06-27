@@ -1,3 +1,4 @@
+import { renderEditSubtasks } from "../../assets/templates/index/edit-task_template.js";
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 bindInlineFunctions(getContext(), [
     '/Join/index/index/index.js',
@@ -6,13 +7,12 @@ bindInlineFunctions(getContext(), [
     '/Join/index/summary/summary.js'
 ])
 
-import { getBoards } from "../../js/storage.js";
+import { STORAGE } from "../../js/storage.js";
 import { $, cloneDeep, currentDirectory, dateFormat, notification } from "../../js/utilities.js";
 import "/Join/js/prototype_extensions.js"
 
-export async function initAddTask() {
-    await getBoards();
-    if(!Object.values(BOARDS).length) return;
+export function initAddTask() {
+    if(!Object.values(STORAGE.currentUserBoards).length) return;
     renderBoardIds();
     renderDate();
     $('.add-task-card').LANG_load();
@@ -31,7 +31,7 @@ export function renderBoardIds() {
     const drpContainer = $('#drp-board-container');
     drpContainer.innerHTML = ''; 
 
-    BOARDS.for(board => {
+    Object.values(STORAGE.currentUserBoards).forEach(board => {
         drpContainer.innerHTML += /*html*/ `
             <div class="drp-option" onclick="selectBoard(${board.id})">${board.name}</div>
         `;    
@@ -39,7 +39,7 @@ export function renderBoardIds() {
 }
 
 export function selectBoard(boardId) {
-    const selectedBoard = BOARDS[boardId];
+    const selectedBoard = STORAGE.currentUserBoards[boardId];
     SELECTED_BOARD = selectedBoard;
     event.currentTarget.toggleDropDown();
 
@@ -74,7 +74,7 @@ export function renderCategories(selectedBoard) {
     const drpContainer = $('#drp-categories');
     drpContainer.innerHTML = '';
 
-    Object.entries(selectedBoard.categories).for(([name, color]) => {
+    Object.entries(selectedBoard.categories).forEach(([name, color]) => {
         drpContainer.innerHTML += /*html*/ `
             <div class="drp-option row" id="category" data-color="${color}" onclick="this.toggleActive(), renderSelectedCategory('${name}')">
                 <span>${name}</span>
@@ -94,9 +94,9 @@ export function renderAssignToContacts() {
     drpContainer.append(assignToUser.children[0]);
 
     SELECTED_BOARD.collaborators.forEach(collaboratorId => {
-        const collaborator = CONTACTS[collaboratorId];
-        if (collaborator == USER.id) return;
-        if (!collaborator) return;
+        const collaborator = STORAGE.currentUserContacts[collaboratorId];
+        if(collaborator == STORAGE.currentUser.id) return;
+        if(!collaborator) return;
 
         const collaboratorOption = document.createElement('div');
         collaboratorOption.innerHTML = renderCollaboratorsToAssign(collaborator);
@@ -108,10 +108,10 @@ export function renderAssignToContacts() {
 
 export function renderSelfToAssign() {
     return /*html*/`
-        <div class="drp-option" data-id="${USER.id}" onclick="selectCollaborator()">
-            <div class="user-img-container grid-center" style="--user-clr: ${USER.color}">
-                <span>${USER.name.slice(0, 2).toUpperCase()}</span>
-                <img src="${USER.img}">
+        <div class="drp-option" data-id="${STORAGE.currentUser.id}" onclick="selectCollaborator()">
+            <div class="user-img-container grid-center" style="--user-clr: ${STORAGE.currentUser.color}">
+                <span>${STORAGE.currentUser.name.slice(0, 2).toUpperCase()}</span>
+                <img src="${STORAGE.currentUser.img}">
             </div>
             <span data-lang="assigned-you"></span>
         </div>
@@ -135,7 +135,7 @@ export function selectCollaborator() {
     const collaboratorId = event.currentTarget.dataset.id;
     const index = selectedCollaborators.indexOf(collaboratorId.toString());
     
-    if (index === -1) {
+    if(index === -1) {
         selectedCollaborators.push(collaboratorId.toString());
     } else {
         selectedCollaborators.splice(index, 1);
@@ -158,8 +158,8 @@ export function renderCollaboratorInput() {
     const inputContainerCollaborator = $('#selected-collaborator-input');
     inputContainerCollaborator.innerHTML = '';
 
-    selectedCollaborators.for((collaboratorId) => {
-        const users = ALL_USERS[collaboratorId];
+    selectedCollaborators.forEach((collaboratorId) => {
+        const users = STORAGE.data.users[collaboratorId];
 
         inputContainerCollaborator.innerHTML += /*html*/ `
             <div class="input-collaborator user-img-container grid-center" style="--user-clr: ${users.color}">
@@ -173,9 +173,9 @@ export function renderCollaboratorInput() {
 export function getTitle() {
     const title = $('#title').value;
   
-    if (title === '') {
+    if(title === '') {
         titleEmpty();
-    } else if (!letterRegex.test(title)) {
+    } else if(!letterRegex.test(title)) {
         titleInvalid();
     } else if(title.length > 15) {
         titleTooLong();
@@ -218,9 +218,9 @@ export function getDescription() {
     const description = $('#description').value;
     const letterRegexDiscription = /^[A-Za-zäöüßÄÖÜ\-\/_'., "0-9]{3,150}$/;
   
-    if (description === '') {
+    if(description === '') {
         descriptionEmpty();
-    } else if (!letterRegexDiscription.test(description)) {
+    } else if(!letterRegexDiscription.test(description)) {
         descriptionInvalid();
     } else {
         descriptionValid();
@@ -322,8 +322,8 @@ export function dateValid() {
 export function checkPriority() {
     const activeButton = $('.btn-priority button.active');
     
-    if (activeButton) {
-        $('#select-a-priority').classList.add('error-inactive')
+    if(activeButton) {
+        $('#select-a-priority').classList.add('error-inactive');
         return activeButton.$('.priority').dataset.lang;
     } else {
         return $('#select-a-priority').classList.remove('error-inactive');
@@ -350,11 +350,11 @@ export async function addTask() {
     const subtasks = getSubtasks();
     const addTaskData = [title, description, category ,collaborators, dueDate, priority, subtasks]; 
 
-    if (checkAddTaskInputs(addTaskData)) return;
+    if(checkAddTaskInputs(addTaskData)) return;
     await createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
     notification('task-created');
     resetArrays();
-    if (dir === "board") location.reload();
+    if(dir === "board") location.reload();
     else $('#board').click();
 }
 
@@ -366,17 +366,17 @@ export async function createNewTask(SELECTED_BOARD, title,
     description, category, selectedCollaborators, 
     dueDate, priority, subtasks) {
 
-        const newTask = {
-            title: title,
-            description: description,
-            category: category,
-            assignedTo: selectedCollaborators,
-            dueDate: dueDate,
-            priority: priority,
-            subTasks: subtasks
-        }
+    const newTask = {
+        title: title,
+        description: description,
+        category: category,
+        assignedTo: selectedCollaborators,
+        dueDate: dueDate,
+        priority: priority,
+        subTasks: subtasks
+    }
 
-        await SELECTED_BOARD.addTask(newTask);
+    await SELECTED_BOARD.addTask(newTask);
 }
 
 export function clearSubtaskInput() {
@@ -469,7 +469,7 @@ export function saveEditedSubtask(i) {
 
     const allSaveButtons = $$('.save-edited-subtask-btn');
 
-    allSaveButtons.for((button) => {
+    allSaveButtons.forEach((button) => {
         button.classList.toggle('d-none');
     });
 
@@ -500,7 +500,7 @@ export function renderSubtaskTemplate(subtask, i) {
 }
 
 export function deleteSubtask(i) {
-    if (event.currentTarget.closest('#edit-task')) {
+    if(event.currentTarget.closest('#edit-task')) {
         SELECTED_TASK.subTasks.splice(i, 1);
         renderEditSubtasks();
         return;
@@ -516,5 +516,5 @@ export function resetArrays() {
 
 export function resetPriorityButton() {
     const buttons = $$('.btn-priority button');
-    buttons.for((button) => button.classList.remove('active'));
+    buttons.forEach((button) => button.classList.remove('active'));
 }
