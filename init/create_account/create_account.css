@@ -22,12 +22,6 @@
     }
 }
 
-@media (hover: hover) {
-    :is(label[for="choose-image"], #user-color):hover {
-    opacity: 1;
-}
-}
-
 #user-name {
     font-size: 3rem;
 }
@@ -50,18 +44,6 @@ label[for="choose-image"],
 label[for="choose-image"] {
     background-image: url(/Join/assets/img/icons/edit.svg);
     inset: auto 0 0 auto;
-}
-
-@media (hover: hover) {
-    label[for="choose-image"]:hover {
-    background-color: var(--clr-dark);
-}
-}
-
-@media (hover: hover) {
-    label[for="choose-image"].border:hover {
-    border: 1px solid white;
-}
 }
 
 #user-color {
@@ -90,21 +72,9 @@ label[for="choose-image"] {
     transition-property: background-color;
 }
 
-@media (hover: hover) {
-    #user-color.active:hover {
-    background-color: var(--clr-dark);
-}
-}
-
 #user-color.active + #accept-user-color.active {
     display: unset;
     inset: auto 0 0 auto;
-}
-
-@media (hover: hover) {
-    #user-color.active + #accept-user-color:hover {
-    background-color: var(--clr-dark);
-}
 }
 
 #color-wheel {

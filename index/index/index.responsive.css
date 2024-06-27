@@ -1,0 +1,319 @@
+@media(hover: hover) {
+    .btn-nav:hover {
+        background-color: var(--clr-active);
+    }
+
+    header :is(#help, .user-img-container):hover {
+        box-shadow: var(--btn-hover-shadow);
+    }
+
+    .close-btn:hover {
+        background-color: #e3eeff;
+    }
+
+    #account-panel-options button:hover {
+        color: var(--clr-blue);
+    }
+
+    #board-title-selection > .row:hover {
+        cursor: pointer;
+        background-color: white;
+        border-radius: 10px;
+    }
+
+    #board-title-selection .option:hover {
+        background-color: var(--clr-placeholder);
+        cursor: pointer;
+    }
+
+    :is(.add-board-data, .edit-board-data) .inp-wrapper .contact button:hover {
+        background-color: var(--clr-dark);
+    }
+
+    dialog:is(#add-board, #edit-board) .task-category button:hover {
+        background-color: #00000040;
+    }
+}
+
+
+
+@media(max-width: 1000px) {
+    #account-panel-options button span {
+        font-size: 1rem;
+    }
+
+    #account-panel-content {
+        min-width: none;
+    }
+
+    #board-title-selection {
+        margin-right: 100%;
+    }
+    #board-title-selection {
+        flex-shrink: 0;
+    }
+}
+
+
+
+@media (max-width: 800px) {
+    body {
+        grid-template-columns: 1fr;
+        grid-template-rows: 85px 1fr 80px;
+    }
+
+    nav {
+        grid-row: 3 / 4;
+        flex-direction: row;
+        padding: unset;
+        padding: 0 15px;
+        gap: unset;
+    }
+
+    .btn-nav {
+        flex: 1;
+        width: unset;
+        height: 100%;
+        padding: 0 10px;
+    }
+
+    .btn-nav span {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 0;
+        gap: 5px;
+        margin: 0 auto;
+        white-space: nowrap;
+    }
+
+    .btn-nav span::after {
+        position: static;
+        margin: unset;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    #legal_notice span::after {
+        display: block;
+    }
+
+    #privacy {
+        display: none;
+    }
+    
+    .summary-header {
+        flex-direction: column;
+        align-items: unset;
+    }
+
+    #notifications-container h1 {
+        font-size: 3rem;
+        text-align: center;
+    }
+
+    #edit-account-content h1 {
+        font-size: 3rem;
+        text-align: center;
+    }
+
+    #settings-container h1 {
+        font-size: 3rem;
+        text-align: center;
+    }
+
+    #settings-content {
+        width: 100%;
+    }
+
+    #settings-content > div{
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    #account-panel > div {
+        flex-direction: column-reverse;
+    }
+
+    #account-panel-options {
+        width: 100%;
+    }
+
+    #account-panel-options button {
+        height: 55px;
+    }
+
+    #account-panel-content {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    #account-panel-options {
+        width: 100%;
+        flex-direction: row;
+        height: unset;
+        padding: 0;
+        gap: 0;
+    }
+
+    #account-panel-options::after {
+        content: none;
+    }
+
+    :is(.add-board-content, .edit-board-content) {
+        flex-direction: column;
+        width: calc((100vw - 6px) - 2em);
+        height: calc((100dvh - 165px) - 2em);;
+    }
+
+    :is(.add-board-header, .edit-board-header) {
+        max-width: unset !important;
+    }
+
+    :is(.add-board-header, .edit-board-header) h3::after {
+        margin-top: -35px !important;
+    }
+
+    :is(.add-board-header, .edit-board-header) img {
+        position: absolute;
+        right: 46px;
+    }
+
+    :is(.add-board-data, .edit-board-data) {
+        padding: 25px !important;
+    }
+
+    dialog:is(#add-board, #edit-board) .task-category {
+        font-size: 12px;
+    }
+
+    :is(.add-board-header, .edit-board-header) img {
+        display: none;
+    }
+
+    :is(.add-board-header, .edit-board-header) {
+        text-align: center;
+    }
+
+    :is(.add-board-header, .edit-board-header) h3 {
+        position: relative;
+    }
+
+    :is(.add-board-header, .edit-board-header) h3::after {
+        margin: auto !important;
+        position: absolute;
+        inset: -10px 0 auto;
+    }
+
+    :is(.add-board-content, .edit-board-content) > div {
+        padding: 2rem !important;
+    }
+}
+
+
+
+@media(max-width: 650px) {
+    #account-panel-options button span {
+        display: none;
+    }
+}
+
+
+
+@media(max-width: 600px) {
+    nav {
+        padding: unset;
+    }
+    #notification .btn {
+        font-size: var(--txt-tiny) !important;
+    }
+
+    #settings-container h1 {
+        font-size: 2.5rem;
+    }
+
+    #settings-content > div {
+        justify-content: center;
+    }
+
+    #account-panel-options button {
+        height: 40px;
+    }
+}
+
+
+@media(max-width: 500px) {
+    #account-panel-content #notifications-container > h1 {
+        font-size: 2rem;
+    }
+
+    #settings-container h1 {
+        font-size: 2rem;
+    }
+
+    #notifications-content .btn-container {
+        font-size: 0.825rem;
+    }
+
+    #edit-account-content h1 {
+        font-size: 2rem;
+    }
+
+    nav span {
+        font-size: 0;
+        gap: 0;
+        padding: 0 !important;
+    }
+
+    nav button:not(:is(#privacy, #legal-notice)) {
+        display: grid !important;
+        place-content: center;
+    }
+
+    :is(.add-board-content, .edit-board-content) > div {
+        padding: 1.5rem !important;
+    }
+}
+
+
+
+@media(max-width: 400px) {
+    .notifications > div span {
+        font-size: 0.825rem;
+    }
+
+    #account-panel-content #notifications-container > h1 {
+        font-size: 1.625rem;
+    }
+
+    #settings-container h1 {
+        font-size: 1.625rem;
+    }
+
+    header {
+        padding: 20px 10px;
+    }
+
+    #header-title {
+        margin-left: 5%;
+    }
+
+    #edit-account-content h1 {
+        font-size: 1.625rem;
+    }
+
+    .summary-placeholder .btn-container {
+        flex-direction: column;
+    }
+}
+
+
+
+@media(max-width: 350px) {
+    #account-panel-content {
+        padding: 1.5rem 1rem;
+    }
+}

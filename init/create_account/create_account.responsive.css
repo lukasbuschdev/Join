@@ -1,0 +1,21 @@
+@media(hover: hover) {
+    :is(label[for="choose-image"], #user-color):hover {
+        opacity: 1;
+    }
+
+    label[for="choose-image"]:hover {
+        background-color: var(--clr-dark);
+    }
+
+    label[for="choose-image"].border:hover {
+        border: 1px solid white;
+    }
+
+    #user-color.active:hover {
+        background-color: var(--clr-dark);
+    }
+
+    #user-color.active + #accept-user-color:hover {
+        background-color: var(--clr-dark);
+    }
+}

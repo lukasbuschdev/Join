@@ -1,0 +1,5 @@
+@media(max-width: 550px) {
+    .help-container {
+        padding: 60px 25px 130px;
+    }
+}

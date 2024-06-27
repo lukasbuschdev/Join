@@ -10,31 +10,3 @@ body > div {
 .privacy-main-chapters-headings {
     font-size: 40px !important;
 }
-
-@media(max-width: 550px) {
-    .privacy-container {
-        padding: 60px 25px 130px;
-    }
-
-    .privacy-container h2 {
-        font-size: 45px !important;
-    }
-
-    .privacy-main-chapters-headings {
-        font-size: 35px !important;
-    }    
-}
-
-@media(max-width: 400px) {
-    .privacy-container {
-        padding: 60px 15px 130px;
-    }
-
-    .privacy-container h2 {
-        font-size: 35px !important;
-    }
-
-    .privacy-main-chapters-headings {
-        font-size: 30px !important;
-    }    
-}

@@ -1,0 +1,163 @@
+@media(hover: hover) {
+    .btn-priority:hover {
+        height: 61px;
+    }
+}
+
+
+
+@media(max-width: 1100px) {
+    #logo img {
+        scale: .6;
+        top: 30px;
+        left: 35px;
+    }
+}
+
+
+
+@media(max-width: 950px) {
+    #sign-up .row > span {
+        display: none;
+    }
+}
+
+
+
+@media(max-width: 800px) {
+    #content {
+        background-color: var(--clr-white);
+    }
+
+    #logo {
+        background-color: var(--clr-dark);
+    }
+
+    #logo img:first-of-type {
+        animation: var(--translation), logo-fade 500ms 200ms ease-in-out forwards;
+    }
+    
+    #logo img:last-of-type {
+        animation: var(--translation), logo-fade 500ms 200ms ease-in-out reverse forwards;
+    }
+
+    @keyframes logo-fade {
+        to {
+            opacity: 1;
+        }
+    }
+
+    .card {
+        width: 100%;
+        height: 60vh;
+        border-radius: 0;
+        margin-top: unset;
+        justify-content: center;
+        gap: 2rem;
+        box-shadow: unset;
+    }
+
+    .login-options {
+        height: unset;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .btn-container {
+        height: unset;
+    }
+    
+    .login-options {
+        align-items: unset;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-container {
+        min-width: 180px;
+        gap: 17px;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    #sign-up {
+        align-items: center;
+    }
+
+    .veryfiy-account-help {
+        right: 5%;
+    }
+}
+
+
+
+@media(max-width: 600px) {
+    .header-container h2 {
+        font-size: 2.5rem;
+    }
+
+    .btn-container button {
+        height: 40px;
+        font-size: 0.8rem;
+    }
+
+    #login button[type="submit"] {
+        width: 120px;
+    }
+
+    form {
+        gap: 15px;
+    }
+
+    .sign-up-btn {
+        font-size: 0.75rem;
+        padding: 10px;
+        height: 25px;
+    }
+
+    .language-login.active {
+        padding: 0;
+    }
+
+    .header-buttons {
+        position: unset; 
+        height: fit-content;   
+    }
+
+    #help {
+        position: absolute;
+        top: 5%;
+        right: 5%;
+    }
+
+    #sign-up {
+        height: fit-content;
+        flex-direction: column-reverse;
+    }
+
+    .language-btn img {
+        height: 25px;
+        width: 25px;
+    }
+
+    #content {
+        gap: 30px;
+    }
+}
+
+
+
+@media(max-width: 500px) {
+    .header-container h2 {
+        font-size: 2rem;
+    }
+}
+
+
+
+@media(max-width: 400px) {
+    .card > a + .header-container {
+        margin-top: 4rem;
+    }
+}
