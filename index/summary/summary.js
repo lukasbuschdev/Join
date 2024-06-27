@@ -1,10 +1,10 @@
 import { currentLang } from "../../js/language.js";
-import { getBoards, getContacts, REMOTE_removeData, SESSION_getData, SESSION_removeData, SESSION_setData, STORAGE } from "../../js/storage.js";
+import { getContacts, REMOTE_removeData, SESSION_getData, SESSION_removeData, SESSION_setData, STORAGE } from "../../js/storage.js";
 import { $, $$, debounce, notification, throwErrors } from "../../js/utilities.js";
 import { Notify } from "../../js/notify.class.js";
-import * as _ from "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js";
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 import { boardTitleSelectionTemplate } from "../index/index.js";
+import { summaryTemplate } from "../../assets/templates/index/summary_template.js";
 bindInlineFunctions(getContext(), [
     '/Join/index/index/index.js',
     '/Join/js/utilities.js',
@@ -13,22 +13,12 @@ bindInlineFunctions(getContext(), [
 
 let newBoardCollaborators;
 export async function initSummary() {
-    renderBoards();
     if(!STORAGE.currentUser.boards.length) return
-    $('#summary-content').classList.remove('d-none')
-
+    
     const boardId = SESSION_getData('activeBoard') || STORAGE.currentUser.boards[0];
     renderBoard(boardId);
     renderBoardTitleSelection();
-}
-
-export function renderBoards() {
-    if (!SESSION_getData('activeBoard')) SESSION_setData('activeBoard', Number(Object.keys(BOARDS)[0]));
-
-    const activeBoard = SESSION_getData('activeBoard');
-    const activeBoardButton = $(`#summary-selection [data-id="${activeBoard}"]`) || $('#summary-selection button');
-    activeBoardButton?.click();
-    activeBoardButton?.classList.add('active');
+    $('#summary-content').classList.remove('d-none')
 }
 
 export function renderBoardEditButton(boardId) {
@@ -49,6 +39,9 @@ export function boardSelectionTemplate({name, id}) {
 export function getTaskStats(tasksObj) {
     const tasks = Object.values(tasksObj);
     const now = new Date();
+    
+    
+
     return {
         tasksInBoard: tasks.length,
         tasksInProgress: tasks.filter(({type}) => type == "in-progress").length,
@@ -90,11 +83,11 @@ export function renderBoard(boardId) {
     
     const taskStats = getTaskStats(tasksObj)  ;  
     SESSION_setData('activeBoard', Number(id));
-
+    $('#summary-content').innerHTML = summaryTemplate(taskStats)
     if (owner == STORAGE.currentUser.id) renderBoardEditButton(id);
     else $('#board-title .circle')?.remove();
 
-    setBoardButtons(taskStats);
+    // setBoardButtons(taskStats);
 
     const summaryHeader = $('.summary-header h2');
     delete summaryHeader.dataset.lang;
