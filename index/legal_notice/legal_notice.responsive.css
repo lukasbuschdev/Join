@@ -1,0 +1,26 @@
+@media(max-width: 800px) {
+    .legal-notice-container {
+        gap: 20px;
+    }
+
+    .legal-notice-container h3 {
+        font-weight: 600 !important;
+    }
+}
+
+
+
+@media(max-width: 550px) {
+    .legal-notice-container {
+        padding: 4vh 2rem;
+        align-items: flex-start;
+    }
+}
+
+
+
+@media(max-width: 400px) {
+    .legal-notice-container {
+        padding: 4vh 1rem;
+    }
+}

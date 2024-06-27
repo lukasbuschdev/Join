@@ -55,12 +55,6 @@ header {
     padding-left: 35%;
 }
 
-@media (hover: hover) {
-    .btn-nav:hover {
-    background-color: var(--clr-active);
-}
-}
-
 .btn-nav span {
     display: flex;
     gap: 20px;
@@ -117,16 +111,6 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     --outline-thickness: 0px;
 }
 
-@media (hover: hover) {
-    header :is(#help, .user-img-container):hover {
-        box-shadow: var(--btn-hover-shadow);
-    }
-
-    .close-btn:hover {
-        background-color: #e3eeff;
-    }
-}
-
 .close {
     height: 25px;
     width: 25px;
@@ -181,12 +165,6 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 :is(#settings-btn, #logout-btn) img {
     height: 25px;
     width: 25px;
-}
-
-@media (hover: hover) {
-    #account-panel-options button:hover {
-    color: var(--clr-blue);
-    }
 }
 
 .notifications-counter {
@@ -296,216 +274,6 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     font-family: 'Open Sans';
 }
 
-@media(max-width: 1000px) {
-    #account-panel-options button span {
-        font-size: 1rem;
-    }
-
-    #account-panel-content {
-        min-width: none;
-    }
-}
-
-
-@media (max-width: 800px) {
-    body {
-        grid-template-columns: 1fr;
-        grid-template-rows: 85px 1fr 80px;
-    }
-
-    nav {
-        grid-row: 3 / 4;
-        flex-direction: row;
-        padding: unset;
-        padding: 0 15px;
-        gap: unset;
-    }
-
-    .btn-nav {
-        flex: 1;
-        width: unset;
-        height: 100%;
-        padding: 0 10px;
-    }
-
-    .btn-nav span {
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
-        justify-content: space-between;
-        padding: 15px 0;
-        gap: 5px;
-        margin: 0 auto;
-        white-space: nowrap;
-    }
-
-    .btn-nav span::after {
-        position: static;
-        margin: unset;
-    }
-
-    .logo {
-        display: none;
-    }
-
-    #legal_notice span::after {
-        display: block;
-    }
-
-    #privacy {
-        display: none;
-    }
-    
-    .summary-header {
-        flex-direction: column;
-        align-items: unset;
-    }
-
-    #notifications-container h1 {
-        font-size: 3rem;
-        text-align: center;
-    }
-
-    #edit-account-content h1 {
-        font-size: 3rem;
-        text-align: center;
-    }
-
-    #settings-container h1 {
-        font-size: 3rem;
-        text-align: center;
-    }
-
-    #settings-content {
-        width: 100%;
-    }
-
-    #settings-content > div{
-        width: 100%;
-        flex-wrap: wrap;
-    }
-
-    #account-panel > div {
-        flex-direction: column-reverse;
-    }
-
-    #account-panel-options {
-        width: 100%;
-    }
-
-    #account-panel-options button {
-        height: 55px;
-    }
-
-    #account-panel-content {
-        width: 100%;
-        min-width: 100%;
-    }
-
-    #account-panel-options {
-        width: 100%;
-        flex-direction: row;
-        height: unset;
-        padding: 0;
-        gap: 0;
-    }
-
-    #account-panel-options::after {
-        content: none;
-    }
-}
-
-@media(max-width: 650px) {
-    #account-panel-options button span {
-        display: none;
-    }
-}
-
-
-@media (max-width: 600px) {
-    nav {
-        padding: unset;
-    }
-    #notification .btn {
-        font-size: var(--txt-tiny) !important;
-    }
-
-    #settings-container h1 {
-        font-size: 2.5rem;
-    }
-
-    #settings-content > div {
-        justify-content: center;
-    }
-
-    #account-panel-options button {
-        height: 40px;
-    }
-}
-
-
-@media(max-width: 500px) {
-    #account-panel-content #notifications-container > h1 {
-        font-size: 2rem;
-    }
-
-    #settings-container h1 {
-        font-size: 2rem;
-    }
-
-    #notifications-content .btn-container {
-        font-size: 0.825rem;
-    }
-
-    #edit-account-content h1 {
-        font-size: 2rem;
-    }
-
-    nav span {
-        font-size: 0;
-        gap: 0;
-        padding: 0 !important;
-    }
-
-    nav button:not(:is(#privacy, #legal-notice)) {
-        display: grid !important;
-        place-content: center;
-    }
-}
-
-
-@media(max-width: 400px) {
-    .notifications > div span {
-        font-size: 0.825rem;
-    }
-
-    #account-panel-content #notifications-container > h1 {
-        font-size: 1.625rem;
-    }
-
-    #settings-container h1 {
-        font-size: 1.625rem;
-    }
-
-    header {
-        padding: 20px 10px;
-    }
-
-    #header-title {
-        margin-left: 5%;
-    }
-
-    #edit-account-content h1 {
-        font-size: 1.625rem;
-    }
-}
-
-@media(max-width: 350px) {
-    #account-panel-content {
-        padding: 1.5rem 1rem;
-    }
-}
-
 #board-title-selection:not(:has( .option)) {
     pointer-events: none;
 }
@@ -540,14 +308,6 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     transition: background-color var(--transition-fast);
     border: solid transparent;
     border-width: 1px 1px 0 1px;
-}
-
-@media (hover: hover) {
-    #board-title-selection > .row:hover {
-        cursor: pointer;
-        background-color: white;
-        border-radius: 10px;
-    }
 }
 
 #board-title-selection:has( .option) > .row img {
@@ -586,22 +346,6 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     padding: 5px 18px;
 }
 
-@media (hover: hover) {
-    #board-title-selection .option:hover {
-        background-color: var(--clr-placeholder);
-        cursor: pointer;
-    }
-}
-
-@media(max-width: 1000px) {
-    #board-title-selection {
-        margin-right: 100%;
-    }
-    #board-title-selection {
-        flex-shrink: 0;
-    }
-}
-
 .summary-placeholder {
     margin: auto;
     grid-area: a;
@@ -632,7 +376,6 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 }
 
 :is(.add-board-content, .edit-board-content) > div {
-    /* max-width: 400px; */
     padding: 66px 46px;
 }
 
@@ -674,7 +417,6 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 
 :is(.add-board-data, .edit-board-data) .btn-container {
     margin-top: auto;
-    /* margin-left: auto; */
 }
 
 :is(:is(.add-board-data, .edit-board-data), .subtasks) .inp-buttons button {
@@ -682,7 +424,6 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 }
 
 :is(:is(.add-board-data, .edit-board-data), .subtasks) input:placeholder-shown + .inp-buttons {
-    /* visibility: hidden; */
     display: none;
     pointer-events: none;
 }
@@ -703,19 +444,8 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     transition: var(--transition-fast);
 }
 
-@media (hover: hover) {
-    :is(.add-board-data, .edit-board-data) .inp-wrapper .contact button:hover {
-    background-color: var(--clr-dark);
-}
-}
-
 :is(.add-board-data, .edit-board-data) .inp-wrapper .contact button:hover img {
     filter: unset;
-}
-
-:is(.add-board-data, .edit-board-data) .inp-wrapper .contact img {
-    /* width: 50%;
-    filter: invert(1); */
 }
 
 :is(.add-board-data, .edit-board-data):has(:is(#add-board-title, #edit-board-title) input:placeholder-shown) .btn-primary {
@@ -745,7 +475,6 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 }
 
 .categories-collaborators .inp-wrapper {
-    /* width: 50%; */
     flex-shrink: 0;
 }
 
@@ -820,12 +549,6 @@ dialog:is(#add-board, #edit-board) .task-category button {
 
 dialog:is(#add-board, #edit-board) .task-category button img {
     height: 100%;
-}
-
-@media (hover: hover) {
-    dialog:is(#add-board, #edit-board) .task-category button:hover {
-        background-color: #00000040;
-    }
 }
 
 .collaborators-container:not(:empty) {
