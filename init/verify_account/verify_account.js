@@ -1,12 +1,11 @@
 import { bindInlineFunctions, currentUserId, getContext, goTo } from "../../js/setup.js";
-import { LANG_load } from "../../js/language.js";
 import { REMOTE_getData } from "../../js/storage.js";
 import { User } from "../../js/user.class.js";
 import { $, $$, isLetterOrNumber } from "../../js/utilities.js";
 bindInlineFunctions(getContext())
 
 export function initVerifyAccount() {
-    LANG_load();
+    LANG.init();
     initTimer();
     checkEmailVerification();
 }

@@ -1,4 +1,4 @@
-import { LANG_load } from "./language.js";
+import { LANG } from "./language.js";
 
 NodeList.prototype.for = function(cb) {
     for (let i = 0; i < this.length; i++){
@@ -173,7 +173,7 @@ HTMLDialogElement.prototype.showNotification = function () {
 }
 
 HTMLElement.prototype.LANG_load = function() {
-    return (LANG_load.bind(this))();
+    return LANG.render(this);
 };
 
 HTMLElement.prototype.renderUserData = function () {

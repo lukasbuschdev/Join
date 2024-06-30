@@ -37,12 +37,17 @@ class Storage {
 
   get currentUserBoards() {
     return this.currentUser.boards.reduce(
-      (boards, boardId) => ({
-        ...boards,
-        [boardId]: new Board(this.data.boards[boardId]),
-      }),
-      {}
+      (boards, boardId) => {
+        if(boardId in this.data.boards) boards[boardId] = new Board(this.data.boards[boardId]); // TO DO handle deletion of boadId for userL
+        return boards;
+      }, {}
     )
+  }
+
+  // TO DO
+  get activeBoard() {
+    const boardId = SESSION_getData('activeBoardId') || this.currentUser.boards[0]
+    
   }
 
   /**
@@ -52,10 +57,6 @@ class Storage {
   async init() {
     this.#data = await this.#download()
     this.#isLoaded = true
-
-    const allUsers = await REMOTE_download("users");
-    console.log(allUsers)
-    // this.#upload("users", allUsers)
 
     return this
   }
@@ -76,7 +77,7 @@ class Storage {
     const requestedData = parse(
       `${JSON.stringify(this.data)}["${formattedPath}"]`
     )
-    console.log(requestedData)
+    // console.log(requestedData)
   }
 
   /**
@@ -109,7 +110,7 @@ class Storage {
         })
       ).text()
 
-    //   console.log(`upload: `, data)
+      // console.log(`upload: `, data)
       if (data) return this.#unpackArrays(data)
 
       throw new Error(`upload failed. '${path}' not found!`)
@@ -140,7 +141,7 @@ class Storage {
       if (Array.isArray(value)) {
         delete upload[key]
         upload[`_${key}`] = this.#arrayToJSON(value)
-        if(!value.length) upload[`_${key}`] = {'place':'holder'}
+        if(!value.length) upload[`_${key}`] = {'_placeholder': ''}
       }
       this.#packArrays(value)
     })
@@ -148,14 +149,14 @@ class Storage {
   }
 
   #unpackArrays(data) {
-    if(data === null || !(typeof data === "object")) return;
+    if(!data || !(typeof data === "object")) return;
     Object.entries(data).forEach(([key, value]) => {
-        if(key.startsWith("_")) {
-            delete data[key];
-            data[key.slice(1)] = Object.values(value);
-        }
-        this.#unpackArrays(value);
-    })
+      if(key.startsWith("_")) {
+        delete data[key];
+        data[key.slice(1)] = (value.hasOwnProperty("_placeholder")) ? [] : Object.values(value);
+      }
+      this.#unpackArrays(value);
+    });
     return data;
   }
 
@@ -171,7 +172,6 @@ class Storage {
     const users = Object.values(this.data.users)
       .filter(({ id }) => ids.includes(id))
       .map((userData) => new User(userData))
-    console.log(users);
   }
 
   #arrayToJSON(array) {
@@ -234,7 +234,6 @@ export function REMOTE_upload(directory, data) {
  * @returns {Promise<User | Board | Task | any | undefined>};
  */
 export async function REMOTE_getData(path) {
-  return console.log("aaaaaaaaa")
   if (!path) return
   const isValidPath =
     /^(?=[a-zA-Z0-9])(?!.*\/\/)[a-zA-Z0-9\/-]*[a-zA-Z0-9]$/.test(path)

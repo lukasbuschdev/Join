@@ -1,6 +1,6 @@
 import { BaseClass } from "./base.class.js";
 import { Notify } from "./notify.class.js";
-import { REMOTE_removeData, REMOTE_setData, getBoards, getUsersById } from "./storage.js";
+import { REMOTE_removeData, REMOTE_setData, STORAGE, getBoards, getUsersById } from "./storage.js";
 import { Task } from "./task.class.js";
 import { currentUserId, error } from "./utilities.js";
 
@@ -8,7 +8,7 @@ export class Board extends BaseClass {
     constructor({
         name,
         owner = currentUserId(),
-        id = Date.now(),
+        id = Date.now().toString(),
         collaborators = [],
         dateOfCreation = Date.now(),
         dateOfLastEdit = Date.now(),
@@ -33,16 +33,16 @@ export class Board extends BaseClass {
         task.boardId = this.id;
         this.tasks[task.id] = task;
 
+        const user = STORAGE.currentUser;
         const notification = new Notify({
-            userName: USER.name,
-            recipients: task.assignedTo.filter(id => id !== USER.id),
+            userName: STORAGE.currentUser.name,
+            recipients: task.assignedTo.filter(id => id !== user.id),
             type: "assignTo",
             taskName: task.title,
             boardName: this.name
         });
         notification.send();
         await this.update();
-        await getBoards();
         return task;
     }
 
@@ -66,12 +66,11 @@ export class Board extends BaseClass {
         return getUsersById(this.collaborators);
     }
 
-    update = async () => {
-        await REMOTE_setData(`boards`, {[this.id]: this});
-        return getBoards();
+    update() {
+        return STORAGE.set(`boards/${this.id}`, this)
     }
 
-    delete = () => {
+    delete() {
         if (USER.id !== this.owner) return error(`not the owner of "${this.name}"!`);
         delete BOARDS[this.id];
         return REMOTE_removeData(`boards/${this.id}`);

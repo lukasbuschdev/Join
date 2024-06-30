@@ -1,6 +1,5 @@
-import { LANG_load } from "../../js/language.js";
 import { LOCAL_getData, LOCAL_setData, SESSION_setData, STORAGE } from "../../js/storage.js";
-import { $, $$, currentDirectory, renderUserData, searchParams, goTo, confirmation } from "../../js/utilities.js";
+import { $, $$, currentDirectory, renderUserData, searchParams, goTo, confirmation, popUpNotificationTemplate } from "../../js/utilities.js";
 import { SOCKET } from "../../js/websocket.js";
 import "/Join/js/prototype_extensions.js";
 import { initSummary } from "../summary/summary.js";
@@ -11,6 +10,8 @@ import { initAddTask } from "../add_task/add_task.js";
 import { initContacts } from "../contacts/contacts.js";
 import { initPrivacy } from "../privacy/privacy.js";
 
+export let SELECTED_BOARD;
+
 export async function init(directory) {
   await STORAGE.init();
   SOCKET.init();
@@ -18,8 +19,8 @@ export async function init(directory) {
   $("#content").classList.remove("content-loading");
   $(`#${directory}`).classList.add("active");
   renderUserData();
-  checkNotifications();
-  LANG_load();
+  // checkNotifications(); TO DO
+  LANG.init();
 }
 
 if (LOCAL_getData("rememberMe") == "false") {
@@ -96,7 +97,7 @@ export function loadNotifications() {
   container.innerHTML = "";
   container.renderItems(
     Object.values(STORAGE.currentUser.notifications),
-    notificationTemplate
+    popUpNotificationTemplate
   );
 };
 
@@ -112,13 +113,13 @@ export function noNotificationsYet() {
 export function toggleBoardTitleSelection() {
   const el = event.currentTarget
   el.classList.toggle('active');
-  let closeHandler
   if (el.classList.contains('active')) {
-      window.addEventListener('pointerdown', closeHandler = () => {
-          if (event.target.closest('#board-title-selection')) return;
-          el.classList.remove('active');
-          window.removeEventListener('pointerdown', closeHandler);
-      })
+    let closeHandler
+    window.addEventListener('pointerdown', closeHandler = () => {
+        if (event.target.closest('#board-title-selection')) return;
+        el.classList.remove('active');
+        window.removeEventListener('pointerdown', closeHandler);
+    })
   }
 }
 
@@ -127,10 +128,14 @@ export function boardTitleSelectionTemplate({ id, name }) {
 }
 
 export function switchBoards(id) {
-  SESSION_setData("activeBoard", Number(id));
+  SESSION_setData("activeBoard", id);
   location.reload();
 }
 
 export function initLogout() {
   return confirmation('logout', () => STORAGE.currentUser.logOut())
+}
+
+export function changeLanguage(targetLanguage) {
+    LANG.change(targetLanguage);
 }

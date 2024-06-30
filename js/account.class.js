@@ -5,7 +5,7 @@ export class Account extends BaseClass {
         name,
         email,
         color = '#D1D1D1',
-        id = `${Date.now()}`,
+        id = Date.now().toString(),
         img = "",
         loggedIn = 'false',
         boards = [],

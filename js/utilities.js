@@ -1,5 +1,7 @@
 import { confirmationTemplate } from "../assets/templates/index/confirmation_template.js";
+import { LANG } from "./language.js";
 import { STORAGE } from "./storage.js";
+import { SOCKET } from "./websocket.js";
 
 export const log = console.log;
 export const error = console.error;
@@ -257,12 +259,13 @@ export const removeUpload = async () => {
   $('[type="file"]').value = '';
   container.dataset.img = 'false';
   img.src = '';
-  SOCKET.emit('deleteImg');
-  if (typeof USER !== "undefined") {
-    USER.img = "";
+  SOCKET.socket.emit('deleteImg');
+  const user = STORAGE.currentUser;
+  if (user) {
+    user.img = "";
+    await user.update();
     renderUserData();
   }
-  REMOTE_setData(`users/${currentUserId()}`, {img: ""});
 }
 
 export function renderColorWheel() {
@@ -370,7 +373,7 @@ export function isLetterOrNumber(input) {
  */
 export async function confirmation(type, cb) {
   const dataLang = (type.includes(',')) ? type.slice(0, type.indexOf(',')) : type;
-  if (!LANG[`confirmation-${dataLang}`]) return error('message unknown!');
+  if (!LANG.currentLangData[`confirmation-${dataLang}`]) return error('message unknown!');
   const confirmationContainer = document.createElement('dialog');
   confirmationContainer.type = "modal";
   confirmationContainer.innerHTML = confirmationTemplate(type);
@@ -386,7 +389,7 @@ export async function confirmation(type, cb) {
 }
 
 /**
- * if 'input' is a valid date, a new date is returned. if invalid, returns undefined
+ * if 'input' is a valid date (and the date is in the future), a new date is returned. if invalid, returns undefined
  * @param {string} input 
  * @returns {Date | undefined}
  */
@@ -399,7 +402,7 @@ export function dateFormat(input) {
   if (isInvalidDate(input, date)) return
 
   const now = Date.now();
-  if (date < now && date.getDate() !== date.getDate()) return;
+  if (date < now || date.getDate() !== date.getDate()) return;
   return date;
 }
 

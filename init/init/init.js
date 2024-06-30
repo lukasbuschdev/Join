@@ -1,7 +1,7 @@
+import { LANG } from "../../js/language.js";
 import { STORAGE } from "../../js/storage.js";
-import { notification } from "../../js/utilities.js";
-import { $ } from "/Join/js/utilities.js";
-import "/join/js/prototype_extensions.js"
+import { notification, $ } from "../../js/utilities.js";
+import "/Join/js/prototype_extensions.js";
 
 export const init = async () => {
 
@@ -69,4 +69,8 @@ export function checkKeys () {
     const submitBtn = $('button[type="submit"]');
 
     if (!$('form input:placeholder-shown')) submitBtn.click();
+}
+
+export function changeLanguage(targetLanguage) {
+    LANG.change(targetLanguage);
 }

@@ -9,17 +9,16 @@ import { getUserByInput } from "../../js/storage.js";
 import { User } from "../../js/user.class.js";
 import { $, hashInputValue, throwErrors } from "../../js/utilities.js";
 
-import { initWebsocket } from "../../js/websocket.js";
 import { invalidEmail, invalidName, invalidPassword } from "../init/init.js";
 
 export let SOCKET;
 
 export function initSignup() {
     window.addEventListener('langLoaded', initPrivacyLink, {once: true});
-    initWebsocket();
 }
 
 export function initPrivacyLink() {
+    console.log(`init privacy link`)
     const privacyContainer = $('[data-lang="register-privacy"]');  
     if (!privacyContainer) return
     privacyContainer.removeAttribute('data-lang')
@@ -28,10 +27,6 @@ export function initPrivacyLink() {
             <span class="txt-blue" style="cursor: pointer;" onclick="window.open('/Join/assets/templates/init/privacy.html', '_blank')">${words}</span>
         `});
 }
-
-// export function initPrivacy() {
-//     window.open(`/Join/assets/templates/init/privacy.html`, '_blank')
-// }
 
 export async function validateInputs({ name, email, password, confirmPassword }) {
     const nameValidity = invalidName(name);

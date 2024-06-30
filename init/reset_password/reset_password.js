@@ -10,7 +10,7 @@ bindInlineFunctions(getContext(), [
 ])
 
 export const initPage = () => {
-    LANG_load();
+    LANG.init();
 }
 
 export const resetPassword = async () => {

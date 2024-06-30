@@ -1,7 +1,6 @@
 import { $, $$, currentDirectory, includeTemplates, initInactivity, parse } from "./utilities.js";
 import './prototype_extensions.js';
-import { LANG_load } from "./language.js";
-
+import { LANG } from "./language.js";
 
 // HELPER
 
@@ -58,7 +57,7 @@ function getAllFunctionNames() {
 function customOnloadFunction() {
     const customOnloadEvalString = $('body').attributes.getNamedItem('oncustomload')?.value
     return !!customOnloadEvalString
-        ? parse(`() => {${customOnloadEvalString.replace(',', ';')}}`)
+        ? parse(`() => {${customOnloadEvalString}}`)
         : () => {}
 }
 
@@ -97,7 +96,8 @@ window.addEventListener("DOMContentLoaded", () => {
     includeTemplates();
 }, { once: true })
 
-window.addEventListener("EventsBound", () => {
-    LANG_load();
+window.addEventListener("EventsBound", async () => {
+    await LANG.init();
+    LANG.render();
     $('body').initMenus();
 }, { once: true })

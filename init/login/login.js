@@ -3,7 +3,7 @@ import { bindInlineFunctions, getContext } from '../../js/setup.js';
 bindInlineFunctions(getContext(), [
     '/Join/init/init/init.js',
     '/Join/js/utilities.js',
-    '/Join/js/language.js',
+    // '/Join/js/language.js',
     '/Join/index/legal_notice/legal_notice.js'
 ])
 import { getUserByInput, LOCAL_getData, LOCAL_removeData, LOCAL_setData, STORAGE } from "../../js/storage.js";

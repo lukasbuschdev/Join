@@ -1,5 +1,6 @@
 import { renderEditSubtasks } from "../../assets/templates/index/edit-task_template.js";
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
+import { LANG } from "../../js/language.js";
 bindInlineFunctions(getContext(), [
     '/Join/index/index/index.js',
     '/Join/js/utilities.js',
@@ -9,7 +10,9 @@ bindInlineFunctions(getContext(), [
 
 import { STORAGE } from "../../js/storage.js";
 import { $, cloneDeep, currentDirectory, dateFormat, notification } from "../../js/utilities.js";
-import "/Join/js/prototype_extensions.js"
+// import "/Join/js/prototype_extensions.js"
+
+let SELECTED_BOARD;
 
 export function initAddTask() {
     if(!Object.values(STORAGE.currentUserBoards).length) return;
@@ -21,11 +24,11 @@ export function initAddTask() {
     $('.add-task-card').classList.remove('d-none');
 }
 
-export const subtasks = [];
-export const selectedCollaborators = [];
-export const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
+const subtasks = [];
+const selectedCollaborators = [];
+const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
 
-export const newCollabArray = cloneDeep(selectedCollaborators);
+const newCollabArray = cloneDeep(selectedCollaborators);
 
 export function renderBoardIds() {
     const drpContainer = $('#drp-board-container');
@@ -42,8 +45,6 @@ export function selectBoard(boardId) {
     const selectedBoard = STORAGE.currentUserBoards[boardId];
     SELECTED_BOARD = selectedBoard;
     event.currentTarget.toggleDropDown();
-
-    SELECTED_BOARD = selectedBoard;
 
     renderSelectedBoard(selectedBoard);
     renderCategories(selectedBoard);
@@ -288,15 +289,17 @@ export function renderDate() {
 }
 
 export function getDueDate() {
-    const date = $('#date');
+    const dateString = $('#date').value;
+    if(dateString == '') return dateEmpty();
 
-    if(date.value == '') {
-        dateEmpty();
-    } else if(!dateFormat(date.value)) {
+    // const formattedDate = dateFormat(dateString);
+    // const now = Date.now();
+    // if (formattedDate < now && formattedDate.getDate() !== formattedDate.getDate()) return;
+    if(!dateFormat(dateString)) {
         dateWrongFormat();
-    } else if(dateFormat(date.value)) {
+    } else if(dateFormat(dateString)) {
         dateValid();
-        return date.value;
+        return dateString;
     }
 }
 
