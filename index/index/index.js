@@ -1,5 +1,5 @@
 import { LOCAL_getData, LOCAL_setData, SESSION_setData, STORAGE } from "../../js/storage.js";
-import { $, $$, currentDirectory, renderUserData, searchParams, goTo, confirmation, popUpNotificationTemplate } from "../../js/utilities.js";
+import { $, $$, currentDirectory, renderUserData, searchParams, goTo, confirmation, popUpNotificationTemplate, currentUserId } from "../../js/utilities.js";
 import { SOCKET } from "../../js/websocket.js";
 import "/Join/js/prototype_extensions.js";
 import { initSummary } from "../summary/summary.js";
@@ -10,33 +10,31 @@ import { initAddTask } from "../add_task/add_task.js";
 import { initContacts } from "../contacts/contacts.js";
 import { initPrivacy } from "../privacy/privacy.js";
 
-export let SELECTED_BOARD;
-
 export async function init(directory) {
   await STORAGE.init();
+  await LANG.init();
   SOCKET.init();
   await initFunctions[directory]();
   $("#content").classList.remove("content-loading");
   $(`#${directory}`).classList.add("active");
   renderUserData();
-  // checkNotifications(); TO DO
-  LANG.init();
+  checkNotifications();
 }
 
-if (LOCAL_getData("rememberMe") == "false") {
+if (LOCAL_getData("rememberMe") === "false") {
   window.on("beforeunload", () => LOCAL_setData("loggedIn", false));
 }
 
-export const checkNotifications = () => {
+export function checkNotifications() {
   const notificationCount = Object.values(STORAGE.currentUser.notifications).length;
   const notificationCounters = $$(".notifications-counter");
 
-  notificationCounters.forEach((counter) => counter.classList.toggle("d-none", !notificationCount));
-  document.title = `${notificationCount ? `(${notificationCount}) ` : ""}${
-    window.LANG[`title-${currentDirectory().replace("_", "-")}`]
-  }`;
-  if (!notificationCount) return;
-  notificationCounters.forEach((counter) => (counter.innerText = notificationCount));
+  notificationCounters.forEach((counter) => {
+    counter.innerText = notificationCount;
+    counter.classList.toggle("d-none", !notificationCount);
+  });
+
+  if(notificationCount) document.title = `(${notificationCount}) ${document.title}`;
 };
 
 export const checkLogin = () => {

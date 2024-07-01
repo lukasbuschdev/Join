@@ -1,6 +1,6 @@
 import { STORAGE } from "../../../js/storage.js";
 
-export const fullscreenTaskTemplate = ({category, title, description, priority, dueDate, assignedTo, subTasks, boardId}) => {
+export const fullscreenTaskTemplate = ({id, category, title, description, priority, dueDate, assignedTo, subTasks, boardId}) => {
     const [categoryName = "Default",  categoryColor = "#d1d1d1"] = Object.entries(STORAGE.currentUserBoards[boardId].categories)?.find(([key]) => key == category) ?? [];
     return /*html*/`
     <div class="fullscreen-content">
@@ -33,13 +33,13 @@ export const fullscreenTaskTemplate = ({category, title, description, priority, 
     <div class="btn-container txt-small gap-8">
         <button class="row gap-8" data-lang="delete" onclick="deleteTask()">Delete</button>
         <div class="line"></div>
-        <button class="row gap-8" onclick="editTaskInitializer()" data-lang="edit">Edit</button>
+        <button class="row gap-8" onclick="editTaskInitializer(${id})" data-lang="edit">Edit</button>
     </div>
     `
 };
 
 export const fullscreenTaskAssignedTo = (assignedTo) => {
-    const assignedUsers = Object.values(ALL_USERS).filter(({id}) => assignedTo.includes(id));
+    const assignedUsers = Object.values(STORAGE.allUsers).filter(({id}) => assignedTo.includes(id));
     return assignedUsers.reduce(
         (template, {name, color}) => template += /*html*/`
             <div class="assigned-to-contact row gap-15">
@@ -47,7 +47,7 @@ export const fullscreenTaskAssignedTo = (assignedTo) => {
                     <span>${name.slice(0, 2).toUpperCase()}</span>
                 </div>
                 <div class="row gap-8">
-                    <span>${name}</span>${(name == USER.name) ? '<span data-lang="assigned-you-parentheses"></span>' : ''}
+                    <span>${name}</span>${(name === STORAGE.currentUser.name) ? '<span data-lang="assigned-you-parentheses"></span>' : ''}
                 </div>
             </div>
         `
@@ -55,7 +55,7 @@ export const fullscreenTaskAssignedTo = (assignedTo) => {
 };
 
 export const fullscreenTaskSubTasks = (subTasks) => {
-    if (subTasks.length == 0) return '';
+    if (!subTasks.length) return '';
     return subTasks.reduce(
         (template, {name, done}) => template += /*html*/`
             <div class="fullscreen-subtask row gap-15">

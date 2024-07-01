@@ -32,12 +32,6 @@ declare class Board {
     })
 }
 
-interface Window {
-    USER: User | undefined
-    BOARDS: Board[] | undefined
-    SELECTED_BOARD: Board | undefined
-}
-
 interface Array<T> {
     filteredMap(cb: (item: T, index?: number, filteredMap?: typeof this) => any): Array<T>
     filteredFlatMap(cb: (item: T, index: number, filteredMap: typeof this) => any, depth?: number): Array<T>

@@ -1,35 +1,35 @@
+import { LANG } from "../../../js/language.js";
 import { STORAGE } from "../../../js/storage.js";
 
 export const taskTemplate = ({boardId, id, title, description, assignedTo, category, priority, subTasks}, filter) => {
     const board = STORAGE.currentUserBoards[boardId]
     const assignedAccounts = assignedTo.reduce((total, assignedToId) => {
-        const {name, color: userColor} = STORAGE.currentUserContacts[assignedToId] ?? STORAGE.currentUser;
+        const { name, color: userColor } = STORAGE.currentUserContacts[assignedToId] ?? STORAGE.currentUser;
         total.push({name, color: userColor});
         return total;
-    }, []); 
+    }, []);
+    const categoryString = Object.keys(board.categories).find(cat => cat === category);
     return /*html*/`
     <div class="task txt-small" onpointerdown="addDragAndDrop()" data-id="${boardId}/${id}">
-        <div class="task-category" style="--clr: ${board.categories[category] ?? "#d1d1d1"};">
-            ${Object.keys(board.categories).find(cat => cat == category) ?? "Default"}
-        </div>
-        <div class="task-title txt-700">${highlight(title, filter)}</div>
-        <div class="task-description">${highlight(description, filter)}</div>
+        <div class="task-category" style="--clr: ${ board.categories[category] ?? "#d1d1d1" };"${ !categoryString ? 'data-lang="default"' : '' }>${ categoryString ? categoryString : '' }</div>
+        <div class="task-title txt-700">${ highlight(title, filter) }</div>
+        <div class="task-description">${ highlight(description, filter) }</div>
         ${progressTemplate(subTasks)}
         <div class="task-footer">
             <div class="task-assigned-to">
                 ${assignedToTemplate(assignedAccounts)}
             </div>
-            <div class="task-priority" data-priority="${priority}" style="--priority: url(/Join/assets/img/icons/prio_${priority}.svg)"></div>
+            <div class="task-priority" data-priority="${ priority }" style="--priority: url(/Join/assets/img/icons/prio_${ priority }.svg)"></div>
         </div>
     </div>`
 }
 
-export const highlight = (string, filter) => string.replaceAll(filter, item => `<span class="highlight">${item}</span>`);
+export const highlight = (string, filter) => string.replaceAll(filter, item => `<span class="highlight">${ item }</span>`);
 
 export const progressTemplate =  (subTasks) => {
-    const finishedSubtasks = subTasks.filter( ({done}) => done);
+    const finishedSubtasks = subTasks.filter( ({ done }) => done);
     const progress = (finishedSubtasks == false) ? 0 : Math.roundTo(finishedSubtasks.length / subTasks.length, 2);
-    return (subTasks.length == 0) ? '' :
+    return (!subTasks.length) ? '' :
     /*html*/`
     <div class="column gap-5 txt-tiny">
         <span data-lang="subtasks" style="margin-left: auto;"></span>

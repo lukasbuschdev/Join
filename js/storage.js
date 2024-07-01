@@ -19,6 +19,10 @@ class Storage {
     return this.#data
   }
 
+  get allUsers() {
+    return Object.entries(this.data.users).reduce((all, [id, user]) => ({ ...all, [id]: new User(user) }), {});
+  }
+
   get currentUser() {
     const userId = this.currentUserId()
     if (!userId) return
@@ -94,7 +98,7 @@ class Storage {
       const data = await (
         await fetch(`${this.STORAGE_URL}/${path}.json`)
       ).json();
-      if (data) return this.#unpackArrays(data)
+      if (data) return this.#unpackData(data)
       throw new Error(`download failed. '${path}' not found!`)
     } catch (error) {
       console.log(error)
@@ -106,12 +110,12 @@ class Storage {
       const data = await (
         await fetch(`${this.STORAGE_URL}/${path}.json`, {
           method: "PUT",
-          body: JSON.stringify(this.#packArrays(upload)),
+          body: JSON.stringify(this.#packData(upload)),
         })
       ).text()
 
       // console.log(`upload: `, data)
-      if (data) return this.#unpackArrays(data)
+      if (data) return this.#unpackData(data)
 
       throw new Error(`upload failed. '${path}' not found!`)
     } catch (error) {
@@ -121,13 +125,12 @@ class Storage {
 
   async #delete(path) {
     try {
-      const data = await (
-        await fetch(`${this.STORAGE_URL}/${path}.json`, {
-          method: "DELETE",
-        })
-      ).json()
-      return data
+      return (await fetch(`${this.STORAGE_URL}/${path}.json`, { method: "DELETE", })).json();
     } catch (e) {}
+  }
+
+  async #updateAllUsers() {
+    return this.set('users', this.allUsers)
   }
 
   /**
@@ -135,27 +138,40 @@ class Storage {
    * @param {string} dataString
    * @returns {string}
    */
-  #packArrays(upload) {
+  #packData(upload) {
     if (upload === null || !(typeof upload === "object")) return
     Object.entries(upload).forEach(([key, value]) => {
+
+      //handle array
       if (Array.isArray(value)) {
         delete upload[key]
         upload[`_${key}`] = this.#arrayToJSON(value)
         if(!value.length) upload[`_${key}`] = {'_placeholder': ''}
       }
-      this.#packArrays(value)
+    
+      // handle empty object
+      else if(typeof value === "object" && !Object.values(value).length) {
+        upload[key] = { "null": "null" }
+      }
+
+      this.#packData(value)
     })
     return upload
   }
 
-  #unpackArrays(data) {
+  #unpackData(data) {
     if(!data || !(typeof data === "object")) return;
     Object.entries(data).forEach(([key, value]) => {
+
+      // handle arrays
       if(key.startsWith("_")) {
         delete data[key];
         data[key.slice(1)] = (value.hasOwnProperty("_placeholder")) ? [] : Object.values(value);
       }
-      this.#unpackArrays(value);
+
+      // handle empty object
+      else if(value.hasOwnProperty("null") && value["null"] === "null") data[key] = {};
+      this.#unpackData(value);
     });
     return data;
   }
@@ -465,31 +481,3 @@ export function getContacts() {
     (contactId) => (CONTACTS[contactId] = new User(allUsers[contactId]))
   )
 }
-
-/**
- * updates the global BOARDS variable and also sets the SELECTED_BOARD variable
- */
-export async function getBoards() {
-  if (!window.USER?.boards?.length) return
-  const allBoards = await REMOTE_getData("boards")
-  for await (const boardId of USER.boards) {
-    if (boardId in allBoards) BOARDS[boardId] = new Board(allBoards[boardId])
-    else {
-      log(boardId, allBoards)
-      // USER.boards.remove(`${boardId}`);
-      // delete BOARDS[boardId];
-      // await USER.update();
-    }
-  }
-  window.SELECTED_BOARD =
-    window.BOARDS[SESSION_getData("activeBoard")] ??
-    window.BOARDS[Object.keys(BOARDS)[0]]
-}
-
-/**
- * updates the global ALL_USERS variable
- */
-// export async function getAllUsers() {
-//     const allUsers = await REMOTE_getData('users');
-//     window.ALL_USERS = allUsers.map(user => new Account(user));
-// };

@@ -1,6 +1,10 @@
 import { BaseClass } from "./base.class.js";
 
 export class Account extends BaseClass {
+    /**
+     * 
+     * @param {{name: string, email: string, color: string | undefined, id: string | undefined, img: string, loggedIn: string, boards: string[], contacts: string[], phone: string, notifications: {id: Notify}, pendingFriendshipRequests: string[]}} param0 
+     */
     constructor({
         name,
         email,
@@ -11,7 +15,7 @@ export class Account extends BaseClass {
         boards = [],
         contacts = [],
         phone = 'N/A',
-        notifications = [],
+        notifications = {},
         pendingFriendshipRequests = []
     }) {
         super();

@@ -7,20 +7,17 @@ bindInlineFunctions(getContext(), [
     '/Join/index/add_task/add_task.js',
     '/Join/js/storage.js',
     '/Join/js/language.js',
+    '/Join/assets/templates/index/edit-task_template.js',
     '/Join/index/summary/summary.js'
 ])
-import { getBoards, REMOTE_removeData, SESSION_getData, STORAGE } from "../../js/storage.js";
+import { REMOTE_removeData, SESSION_getData, STORAGE } from "../../js/storage.js";
 import { $, confirmation, debounce, notification, currentUserId, isEqual, cloneDeep  } from "../../js/utilities.js";
 import { renderBoardTitleSelection } from "../summary/summary.js";
-import "../../js/prototype_extensions.js";
-import { Task } from "../../js/task.class.js";
 import { assignedToTemplate, progressTemplate, taskTemplate } from "../../assets/templates/index/task_template.js";
 import { fullscreenTaskTemplate } from "../../assets/templates/index/fullscreen-task_template.js";
 import { editTaskTemplate } from "../../assets/templates/index/edit-task_template.js";
 import { renderBoardIds, renderDate } from "../add_task/add_task.js";
-
-
-let initialTask;
+import { STATE } from "../../js/state.js";
 
 export const initBoard = async () => {
     if (!STORAGE.currentUser.boards.length) return
@@ -30,9 +27,7 @@ export const initBoard = async () => {
 }
 
 export const renderTasks = async (filter) => {
-    const boardId = SESSION_getData('activeBoard');
-    if (!(boardId in STORAGE.currentUserBoards)) boardId = STORAGE.currentUser.boards[0];
-    const {tasks, name} = STORAGE.currentUserBoards[boardId];
+    const {tasks, name} = STATE.selectedBoard;
 
     const boardHeader = $('#board-header h2');
     delete boardHeader.dataset.lang;
@@ -83,14 +78,11 @@ export const addTaskModal = async () => {
 //     }
 // }
 
-export const renderFullscreenTask = (ids) => {
+export const renderFullscreenTask = (task) => {
     if (event.which !== 1) return;
     const modal = $('#fullscreen-task-modal');
-    const [boardId, taskId] = ids.split('/');
-    const taskData = STORAGE.currentUserBoards[boardId].tasks[taskId];
-    const task = new Task(taskData);
     const initialTask = cloneDeep(task);
-    modal.$('#fullscreen-task').innerHTML = fullscreenTaskTemplate(taskData);
+    modal.$('#fullscreen-task').innerHTML = fullscreenTaskTemplate(task);
     modal.LANG_load();
     modal.openModal();
     modal.addEventListener('close', () => saveTaskChanges(initialTask), {once: true});
@@ -106,27 +98,27 @@ export const saveEditedTask = () => {
         subTasks: [...$$('#edit-task #subtask-container li')].map(({innerText: name}) => {
             return {
                 name,
-                done: SELECTED_TASK.subTasks.find(({name: subTaskName}) => subTaskName === name)?.done || false
+                done: STATE.selectedTask.subTasks.find(({name: subTaskName}) => subTaskName === name)?.done || false
             }
         })
     }
-    Object.assign(SELECTED_TASK, editedTaskData);
+    Object.assign(STATE.selectedTask, editedTaskData);
     $('#fullscreen-task-modal').closeModal();
     toggleFullscreenState();
 }
 
 export const saveTaskChanges = (initialTask) => {
-    const updatedTask = SELECTED_TASK;
+    const updatedTask = STATE.selectedTask;
 
     const differences = getJsonChanges(updatedTask, initialTask);
     if (Object.values(differences).length > 0) {
         updateTaskUi(differences, initialTask);
-        SELECTED_TASK.update();
+        return STATE.selectedTask.update();
     }
 };
 
-export const deleteTask = () => confirmation(`delete-task, {taskName: '${SELECTED_TASK.title}'}`, async () => {
-    const {boardId, id, name} = SELECTED_TASK;
+export const deleteTask = () => confirmation(`delete-task, {taskName: '${STATE.selectedTask.title}'}`, async () => {
+    const {boardId, id, name} = STATE.selectedTask;
     const modal = $('#fullscreen-task-modal');
     const taskElement = $(`.task[data-id="${boardId}/${id}"]`);
     const taskContainer = taskElement.parentElement;
@@ -155,37 +147,38 @@ export const changeSubtaskDoneState = async (subTaskName) => {
     const isChecked = (subTaskCheckBox.checked);
 
     let subTaskIndex;
-    for(let i = 0; i < SELECTED_TASK.subTasks.length; i++) {
-        if (SELECTED_TASK.subTasks[i].name === subTaskName) {
+    for(let i = 0; i < STATE.selectedTask.subTasks.length; i++) {
+        if (STATE.selectedTask.subTasks[i].name === subTaskName) {
             subTaskIndex = i;
             break;
         };
     };
-    SELECTED_TASK.subTasks[subTaskIndex].done = isChecked;
+    STATE.selectedTask.subTasks[subTaskIndex].done = isChecked;
 };
 
 export const updateTaskUi = ({title = null, description = null, priority = null, assignedTo = null, subTasks = null}, initialTask) => {
-    const taskContainer = $(`[data-id="${SELECTED_TASK.boardId}/${SELECTED_TASK.id}"]`);
+    const taskContainer = $(`[data-id="${STATE.selectedTask.boardId}/${STATE.selectedTask.id}"]`);
     
     if (title) taskContainer.$('.task-title').textAnimation(title);
     if (description) taskContainer.$('.task-description').textAnimation(description);
     if (priority) taskContainer.$('.task-priority').style.setProperty('--priority', `url(../assets/img/icons/prio_${priority}.svg)`);
     if (assignedTo) taskContainer.$('.task-assigned-to').innerHTML = assignedToTemplate(assignedTo.map(id => STORAGE.users[id]));
     if (subTasks) {
-        if (!SELECTED_TASK.subTasks.length) return taskContainer.$('.task-description').nextElementSibling.remove();
+        if (!STATE.selectedTask.subTasks.length) return taskContainer.$('.task-description').nextElementSibling.remove();
         if (!initialTask.subTasks.length) {
-            taskContainer.$('.task-description').insertAdjacentHTML('afterend', progressTemplate(SELECTED_TASK.subTasks));
+            taskContainer.$('.task-description').insertAdjacentHTML('afterend', progressTemplate(STATE.selectedTask.subTasks));
         }
-        const currentSubtaskCount = SELECTED_TASK.subTasks.filter(({done}) => done == true).length;
-        const totalSubtaskCount = SELECTED_TASK.subTasks.length;
+        const currentSubtaskCount = STATE.selectedTask.subTasks.filter(({done}) => done == true).length;
+        const totalSubtaskCount = STATE.selectedTask.subTasks.length;
         taskContainer.$('.task-progress-counter span').innerText = `${currentSubtaskCount} / ${totalSubtaskCount}`;
         taskContainer.$('.task-progress-bar').style.setProperty('--progress', `${currentSubtaskCount/totalSubtaskCount}`);
     }
 };
 
-export const editTaskInitializer = async () => {
+export const editTaskInitializer = async (id) => {
     const editTaskContainer = $('#edit-task');
-    editTaskContainer.innerHTML = editTaskTemplate(SELECTED_TASK);
+    console.log(STATE.selectedBoard.getTasks(), id)
+    editTaskContainer.innerHTML = editTaskTemplate(STATE.selectedBoard.getTasks()[id]);
     await editTaskContainer.LANG_load();
     await renderAssignedContacts();
     editTaskContainer.initMenus();
@@ -197,7 +190,7 @@ export const renderAssignedContacts = async () => {
     renderAssignToContacts();
     await $(`.drp-contacts [data-id="${currentUserId()}"]`)?.LANG_load();
     $('.drp-contacts').$$('.drp-option').for(
-        contact => contact.classList.toggle('active', SELECTED_TASK.assignedTo.includes(contact.dataset.id))
+        contact => contact.classList.toggle('active', STATE.selectedTask.assignedTo.includes(contact.dataset.id))
     );
 };
 
@@ -210,9 +203,3 @@ export const toggleFullscreenState = () => {
     });
     fullscreenModal.setAttribute('static', (fullscreenModal.getAttribute('static') == "true") ? "false" : "true");
 };
-
-export async function changeTaskType (taskId, newType) {
-    SELECTED_BOARD.tasks[taskId].type = newType;
-    await SELECTED_BOARD.update();
-    return getBoards();
-}

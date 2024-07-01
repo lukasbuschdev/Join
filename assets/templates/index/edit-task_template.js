@@ -1,6 +1,10 @@
+import { selectedCollaborators } from "../../../index/add_task/add_task.js";
+import { STORAGE } from "../../../js/storage.js";
+import { STATE } from "../../../js/state.js";
+
 export const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, subTasks}) => {
-    subtasks.length = 0;
-    subTasks.for(({name}) => subtasks.push(name));
+    subTasks.length = 0;
+    subTasks.for(({name}) => subTasks.push(name));
     selectedCollaborators.length = 0;
     assignedTo.for(id => selectedCollaborators.push(id));
     return /*html*/`
@@ -82,7 +86,7 @@ export const editTaskTemplate = ({title, description, priority, dueDate, assigne
                     <span class="error-inactive error-enter-input" data-lang="subtask-too-long" id="subtask-too-long">Subtask too long!</span>
                 </div>
             </div>
-            <div id="subtask-container" class="column">${allSubtasksTemplate(subtasks)}</div>
+            <div id="subtask-container" class="column">${allSubtasksTemplate(subTasks)}</div>
         </div>
 
     </div>
@@ -97,10 +101,10 @@ export const editTaskTemplate = ({title, description, priority, dueDate, assigne
     `
 }
 
-export const editTaskAssignedTo = () => SELECTED_BOARD.collaborators.reduce((template, id) => `${template}${collaboratorTemplate(id)}`, ``);
+export const editTaskAssignedTo = () => STATE.selectedBoard.collaborators.reduce((template, id) => `${template}${collaboratorTemplate(id)}`, ``);
 
 export const collaboratorTemplate = (id) => {
-    const {name, img, color} = ALL_USERS[id];
+    const {name, img, color} = STORAGE.allUsers[id];
     const collaboratorIsAssigned = selectedCollaborators.includes(id);
     return /*html*/`
     <div class="drp-option ${collaboratorIsAssigned ? 'active' : ''}" data-id="${id}" onclick="selectCollaborator()">
@@ -112,7 +116,7 @@ export const collaboratorTemplate = (id) => {
     </div>`
 }
 
-export const allSubtasksTemplate = (subtasks) => subtasks
+export const allSubtasksTemplate = (subTasks) => subTasks
     .reduce(
         (template, name, index) => {
             template += renderSubtaskTemplate(name, index);
@@ -130,7 +134,7 @@ export function addEditSubtask() {
         subtaskTooLongEdit();
     } else {
         subtaskValidEdit();
-        SELECTED_TASK.addSubtask(subtask.value);
+        STATE.selectedTask.addSubtask(subtask.value);
         subtask.value = '';
     }
     renderEditSubtasks();
@@ -157,7 +161,7 @@ export function subtaskValidEdit() {
 }
 
 export function renderEditSubtasks() {
-    $('#edit-task #subtask-container').innerHTML = allSubtasksTemplate(SELECTED_TASK.subTasks.map(({name}) => name))
+    $('#edit-task #subtask-container').innerHTML = allSubtasksTemplate(STATE.selectedTask.subTasks.map(({name}) => name))
 }
 
 export function editSubtaskEdit(i) {
@@ -180,7 +184,7 @@ export function editSubtaskEdit(i) {
 
 export function saveEditedSubtaskEdit(i) {
     const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
-    subtasks[i] = subtaskInput.innerText;
+    subTasks[i] = subtaskInput.innerText;
     subtaskInput.setAttribute('contenteditable', 'false')
 
     const allSaveButtons = $$('#edit-task .save-edited-subtask-btn');

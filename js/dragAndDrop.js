@@ -1,6 +1,9 @@
+import { STATE } from "./state.js";
+import { STORAGE } from "./storage.js";
+import { Task } from "./task.class.js";
 import { throttle } from "./utilities.js";
 
-let task
+let TASK_ELEMENT
 let taskWidth
 let offset = { x: 0, y: 0 }
 let scrollInterval
@@ -11,40 +14,43 @@ export const throttleDelay = 10
 // SETUP
 
 export function addDragAndDrop() {
-    task = event.currentTarget
-    const taskBBox = task.getBoundingClientRect()
+    TASK_ELEMENT = event.currentTarget
+    const taskBBox = TASK_ELEMENT.getBoundingClientRect()
     offset.x = event.pageX - taskBBox.x
     offset.y = event.pageY - taskBBox.y
 
-    task.style.maxWidth = `${taskBBox.width}px`
+    TASK_ELEMENT.style.maxWidth = `${taskBBox.width}px`
     
-    task.addEventListener('pointerup', fullscreenFunctionality, { once: true })
-    task.addEventListener('pointermove', dragFunctionality, { once: true })
+    TASK_ELEMENT.addEventListener('pointerup', fullscreenFunctionality, { once: true })
+    TASK_ELEMENT.addEventListener('pointermove', dragFunctionality, { once: true })
 }
 
 // FULLSCREEN FUNC
 
 export function fullscreenFunctionality() {
-    task.removeEventListener('pointermove', dragFunctionality)
+    TASK_ELEMENT.removeEventListener('pointermove', dragFunctionality)
     fullscreenHandler()
 }
 
 export function fullscreenHandler() {
-    renderFullscreenTask(task.dataset.id)
+    const [boardId, taskId] = TASK_ELEMENT.dataset.id.split('/');
+    console.log(STATE.selectedBoard.tasks[taskId], taskId)
+    STATE.selectedTask = new Task(STATE.selectedBoard.tasks[taskId]);
+    renderFullscreenTask(STATE.selectedTask);
 }
 
 // DRAG FUNC
 
 export function dragFunctionality() {
         // remove fullscreenListener
-        task.removeEventListener('pointerup', fullscreenFunctionality, { once: true })
+        TASK_ELEMENT.removeEventListener('pointerup', fullscreenFunctionality, { once: true })
 
         // add moveListener
         window.addEventListener('pointermove', dragHandler)
         startScroll()
 
         const placeholderElement = '<div class="element-placeholder"></div>'
-        task.insertAdjacentHTML('beforebegin', placeholderElement)
+        TASK_ELEMENT.insertAdjacentHTML('beforebegin', placeholderElement)
 
         window.addEventListener('pointerup', () => {
             // remove moveListener
@@ -52,7 +58,7 @@ export function dragFunctionality() {
             window.removeEventListener('pointermove', dragHandler)
             dropHandler()
         }, { once: true })
-        task.classList.add('active')
+        TASK_ELEMENT.classList.add('active')
 }
 
 export const dragHandler = throttle(() => {
@@ -64,8 +70,8 @@ export const dragHandler = throttle(() => {
 }, throttleDelay)
 
 export function moveTask(x, y) {
-    task.style.top = `${y}px`
-    task.style.left = `${x}px`
+    TASK_ELEMENT.style.top = `${y}px`
+    TASK_ELEMENT.style.left = `${x}px`
 }
 
 // SCROLL FUNC
@@ -83,7 +89,7 @@ export function checkScrollSoft(taskContainer) {
 }
 
 export function checkScrollHard(taskContainer) {
-    const taskBBox = task.getBoundingClientRect()
+    const taskBBox = TASK_ELEMENT.getBoundingClientRect()
     const taskContainerBBox = taskContainer.getBoundingClientRect()
     const yOffset = 50
 
@@ -113,21 +119,25 @@ export function stopScroll() {
 // DROP FUNC
 
 export async function dropHandler() {
-    task.classList.remove('active')
-    task.style.maxWidth = ''
+    TASK_ELEMENT.classList.remove('active')
+    TASK_ELEMENT.style.maxWidth = ''
 
     const targetContainer = checkDropContainers()
     $('.element-placeholder')?.remove()
     if (!targetContainer) return taskDropAnimation()
 
     const el = targetContainer.$('.task-container')
+    const [boardId, taskId] = TASK_ELEMENT.dataset.id.split('/');
+    
+    const activeBoard = STORAGE.currentUserBoards[boardId];
+    const activeTask = activeBoard.tasks[taskId];
 
-    const taskId = task.dataset.id.split('/')[1]
-    const taskType = SELECTED_BOARD.tasks[taskId].type
+    const newType = el.id;
+    const taskType = activeTask.type
 
-    if (taskType != el.id) {
-        el.append(task)
-        changeTaskType(taskId, el.id)
+    if (taskType !== newType) {
+        el.append(TASK_ELEMENT)
+        changeTaskType(activeBoard, activeTask, newType)
     }
     taskDropAnimation()
     moveTask(0, 0)
@@ -136,18 +146,18 @@ export async function dropHandler() {
 
 export function taskDropAnimation() {
     const {pageX, pageY} = event
-    const taskBBox = task.getBoundingClientRect()
+    const taskBBox = TASK_ELEMENT.getBoundingClientRect()
 
     // snap to drop start position
     const x = Math.round(pageX - taskBBox.x - offset.x)
     const y = Math.round(pageY - taskBBox.y - offset.y)
-    task.style.translate = `${x}px ${y}px`
+    TASK_ELEMENT.style.translate = `${x}px ${y}px`
 
     // move to final position
     setTimeout(() => {
-        task.classList.add('drop-transition')
-        task.addEventListener('transitionend', () => task.classList.remove('drop-transition'), { once: true })
-        task.style.translate = '0 0'
+        TASK_ELEMENT.classList.add('drop-transition')
+        TASK_ELEMENT.addEventListener('transitionend', () => TASK_ELEMENT.classList.remove('drop-transition'), { once: true })
+        TASK_ELEMENT.style.translate = '0 0'
     }, 0)
 }
 
@@ -163,4 +173,10 @@ export function checkDropContainers() {
         if (!mouseInside) continue
         return container
     }
+}
+
+export async function changeTaskType (board, task, newType) {
+    task.type = newType;
+    await board.update();
+    return getBoards();
 }

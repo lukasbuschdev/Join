@@ -1,14 +1,17 @@
-import { Account } from "./account.class.js";
 import { Board } from "./board.class.js";
 import { Email } from "./email.class.js";
 import { getEmailLanguage } from "./language.js";
 import { goTo } from "./utilities.js";
-import { LOCAL_setData, REMOTE_getData, REMOTE_setData, STORAGE } from "./storage.js";
+import { LOCAL_setData, STORAGE } from "./storage.js";
 import { Notify } from "./notify.class.js";
+import { Account } from "./account.class.js";
+import { STATE } from "./state.js";
 
 export class User extends Account {
     socket
-
+    /** @type {string} */
+    password;
+    
     constructor(userData) {
         super(userData);
         this.password = userData.password;
@@ -105,10 +108,6 @@ export class User extends Account {
             this.update()
         ]);
         return board;
-    }
-
-    getBoard(boardId) {
-        return REMOTE_getData(`boards/${boardId}`);
     }
 
     async addContact(contactId) {

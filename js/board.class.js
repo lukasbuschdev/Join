@@ -1,6 +1,6 @@
 import { BaseClass } from "./base.class.js";
 import { Notify } from "./notify.class.js";
-import { REMOTE_removeData, REMOTE_setData, STORAGE, getBoards, getUsersById } from "./storage.js";
+import { REMOTE_removeData, REMOTE_setData, STORAGE, getUsersById } from "./storage.js";
 import { Task } from "./task.class.js";
 import { currentUserId, error } from "./utilities.js";
 
@@ -26,7 +26,7 @@ export class Board extends BaseClass {
         this.categories = categories;
     }
 
-    addTask = async (taskData) => {
+    async addTask(taskData) {
         if (typeof taskData !== "object") return;
         const task = new Task(taskData);
         task.color = this.categories[taskData.category];
@@ -46,23 +46,22 @@ export class Board extends BaseClass {
         return task;
     }
 
-    getTasks = () => {
-        let allTasks = BOARDS[this.id].tasks;
-        return allTasks.map(task => new Task(task));
+    getTasks() {
+        return this.tasks.map(task => new Task(task));
     }
     
-    addCollaborator = async (collaboratorId) => {
+    async addCollaborator(collaboratorId) {
         if (!USER.contacts.includes(collaboratorId)) return error('collaboratorId not in contacts!');
         this.collaborators.push(collaboratorId);
         return this.update();
     }
     
-    addCategory = async (name, color) => {
+    async addCategory(name, color) {
         this.categories[name] = color;
         return this.update();
     }
 
-    getCollaborators = async () => {
+    async getCollaborators() {
         return getUsersById(this.collaborators);
     }
 

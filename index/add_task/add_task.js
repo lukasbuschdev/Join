@@ -10,9 +10,7 @@ bindInlineFunctions(getContext(), [
 
 import { STORAGE } from "../../js/storage.js";
 import { $, cloneDeep, currentDirectory, dateFormat, notification } from "../../js/utilities.js";
-// import "/Join/js/prototype_extensions.js"
-
-let SELECTED_BOARD;
+import { STATE } from "../../js/state.js";
 
 export function initAddTask() {
     if(!Object.values(STORAGE.currentUserBoards).length) return;
@@ -25,7 +23,7 @@ export function initAddTask() {
 }
 
 const subtasks = [];
-const selectedCollaborators = [];
+export const selectedCollaborators = [];
 const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
 
 const newCollabArray = cloneDeep(selectedCollaborators);
@@ -43,7 +41,7 @@ export function renderBoardIds() {
 
 export function selectBoard(boardId) {
     const selectedBoard = STORAGE.currentUserBoards[boardId];
-    SELECTED_BOARD = selectedBoard;
+    STATE.selectedBoard = selectedBoard;
     event.currentTarget.toggleDropDown();
 
     renderSelectedBoard(selectedBoard);
@@ -75,6 +73,8 @@ export function renderCategories(selectedBoard) {
     const drpContainer = $('#drp-categories');
     drpContainer.innerHTML = '';
 
+    console.log(selectedBoard)
+
     Object.entries(selectedBoard.categories).forEach(([name, color]) => {
         drpContainer.innerHTML += /*html*/ `
             <div class="drp-option row" id="category" data-color="${color}" onclick="this.toggleActive(), renderSelectedCategory('${name}')">
@@ -94,9 +94,9 @@ export function renderAssignToContacts() {
     assignToUser.LANG_load();
     drpContainer.append(assignToUser.children[0]);
 
-    SELECTED_BOARD.collaborators.forEach(collaboratorId => {
+    STATE.selectedBoard.collaborators.forEach(collaboratorId => {
         const collaborator = STORAGE.currentUserContacts[collaboratorId];
-        if(collaborator == STORAGE.currentUser.id) return;
+        if(collaborator === STORAGE.currentUser.id) return;
         if(!collaborator) return;
 
         const collaboratorOption = document.createElement('div');
@@ -354,7 +354,7 @@ export async function addTask() {
     const addTaskData = [title, description, category ,collaborators, dueDate, priority, subtasks]; 
 
     if(checkAddTaskInputs(addTaskData)) return;
-    await createNewTask(SELECTED_BOARD, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
+    await createNewTask(STATE.selectedBoard, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
     notification('task-created');
     resetArrays();
     if(dir === "board") location.reload();
@@ -365,7 +365,7 @@ export function checkAddTaskInputs(addTaskData) {
     return addTaskData.some(singleInputField => singleInputField === undefined);
 }
 
-export async function createNewTask(SELECTED_BOARD, title, 
+export async function createNewTask(selectedBoard, title, 
     description, category, selectedCollaborators, 
     dueDate, priority, subtasks) {
 
@@ -379,7 +379,7 @@ export async function createNewTask(SELECTED_BOARD, title,
         subTasks: subtasks
     }
 
-    await SELECTED_BOARD.addTask(newTask);
+    await selectedBoard.addTask(newTask);
 }
 
 export function clearSubtaskInput() {
@@ -504,7 +504,7 @@ export function renderSubtaskTemplate(subtask, i) {
 
 export function deleteSubtask(i) {
     if(event.currentTarget.closest('#edit-task')) {
-        SELECTED_TASK.subTasks.splice(i, 1);
+        STATE.selectedTask.subTasks.splice(i, 1);
         renderEditSubtasks();
         return;
     };

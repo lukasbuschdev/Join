@@ -1,16 +1,16 @@
-import { getContacts, REMOTE_removeData, SESSION_getData, SESSION_removeData, SESSION_setData, STORAGE } from "../../js/storage.js";
-import { $, $$, dateFormat, debounce, notification, throwErrors } from "../../js/utilities.js";
+import { REMOTE_removeData, SESSION_getData, SESSION_removeData, SESSION_setData, STORAGE } from "../../js/storage.js";
+import { $, $$, dateFormat, debounce, isEqual, notification, throwErrors } from "../../js/utilities.js";
 import { Notify } from "../../js/notify.class.js";
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 import { boardTitleSelectionTemplate } from "../index/index.js";
 import { summaryTemplate } from "../../assets/templates/index/summary_template.js";
+import { STATE } from "../../js/state.js";
 bindInlineFunctions(getContext(), [
   "/Join/index/index/index.js",
   "/Join/js/utilities.js",
   "/Join/js/language.js"
 ]);
 
-let SELECTED_BOARD;
 let NEW_BOARD_COLLABORATORS = [];
 
 export async function initSummary() {
@@ -80,8 +80,8 @@ export function getTaskStats(tasksObj) {
 
 export function renderBoard(boardId) {
 
-  SELECTED_BOARD = STORAGE.currentUserBoards[boardId];
-  const { id, name, tasks: tasksObj, owner } = SELECTED_BOARD;
+  STATE.selectedBoard = STORAGE.currentUserBoards[boardId];
+  const { id, name, tasks: tasksObj, owner } = STATE.selectedBoard;
 
   const taskStats = getTaskStats(tasksObj);
   // SESSION_setData('activeBoard', Number(id));
@@ -110,10 +110,7 @@ export function renderBoardTitleSelection() {
 }
 
 export async function createBoardModal() {
-  await $("#add-board .add-board-data").includeTemplate({
-    url: "/Join/assets/templates/index/add-board.html",
-    replace: false
-  });
+  await $("#add-board .add-board-data").includeTemplate({ url: "/Join/assets/templates/index/add-board.html", replace: false });
   $("#add-board").openModal();
 }
 
@@ -123,10 +120,7 @@ export function addBoardCategory() {
   const titleValidity = title.length > 20;
   throwErrors({ identifier: "name-too-long", bool: titleValidity });
   if (titleValidity) return;
-  $(".categories-container").innerHTML += addBoardCategoryTemplate([
-    title,
-    color
-  ]);
+  $(".categories-container").innerHTML += addBoardCategoryTemplate([ title, color ]);
   $("#add-board-categories input").value = "";
 }
 
@@ -208,7 +202,7 @@ export function toggleDrp() {
   const drp = $(":is(.add-board-data, .edit-board-data) #drp-collaborators");
   const filteredContacts = !!event.currentTarget.closest(".edit-board-data")
     ? Object.values(STORAGE.currentUserContacts).filter(
-        ({ id }) => !SELECTED_BOARD.collaborators.includes(id)
+        ({ id }) => !STATE.selectedBoard.collaborators.includes(id)
       )
     : Object.values(STORAGE.currentUserContacts);
   const sortedContacts = filteredContacts.sort((a, b) =>
@@ -263,7 +257,7 @@ export function addCollaborator(id) {
 export function newBoardCollaboratorTemplate({ img, name, color, id }) {
   return /*html*/ `
     <button class="collaborator ${
-      !SELECTED_BOARD.collaborators.includes(id) ? "invitation" : ""
+      !STATE.selectedBoard.collaborators.includes(id) ? "invitation" : ""
     }" data-id="${id}">
         <div class="user-img-container" style="--user-clr: ${color}">
             <span>${name.slice(0, 2).toUpperCase()}</span>
@@ -274,7 +268,7 @@ export function newBoardCollaboratorTemplate({ img, name, color, id }) {
 }
 
 export function renderEditBoard() {
-  const { name, collaborators, categories } = SELECTED_BOARD;
+  const { name, collaborators, categories } = STATE.selectedBoard;
   const editBoardContainer = $(".edit-board-data");
   editBoardContainer.$(":scope > h3").innerText = name;
   editBoardContainer
@@ -295,25 +289,25 @@ export async function saveEditedBoard() {
   const categories = getTaskCategories();
 
   const notifyPromise = createBoardNotification(
-    SELECTED_BOARD,
+    STATE.selectedBoard,
     collaborators.filter(
-      (collabId) => !SELECTED_BOARD.collaborators.includes(collabId)
+      (collabId) => !STATE.selectedBoard.collaborators.includes(collabId)
     )
   );
   const categoryPromise = updateBoardCategories(categories);
   await Promise.all([notifyPromise, categoryPromise]);
-  await notification(`board-updated, {boardName: '${SELECTED_BOARD.name}'}`);
+  await notification(`board-updated, {boardName: '${STATE.selectedBoard.name}'}`);
   $("#edit-board").closeModal();
   location.reload();
 }
 
 export function updateBoardCategories(categories) {
-  if (_.isEqual(categories, SELECTED_BOARD.categories)) return;
-  SELECTED_BOARD.categories = {};
+  if (isEqual(categories, STATE.selectedBoard.categories)) return;
+  STATE.selectedBoard.categories = {};
   Object.entries(categories).for(
-    ([name, color]) => (SELECTED_BOARD.categories[name] = color)
+    ([name, color]) => (STATE.selectedBoard.categories[name] = color)
   );
-  return SELECTED_BOARD.update();
+  return STATE.selectedBoard.update();
 }
 
 export async function initEditBoard() {
@@ -330,16 +324,16 @@ export async function initEditBoard() {
 
 export const deleteBoard = () =>
   confirmation(
-    `delete-board, {boardName: '${SELECTED_BOARD.name}'}`,
+    `delete-board, {boardName: '${STATE.selectedBoard.name}'}`,
     async () => {
-      SELECTED_BOARD.collaborators.forAwait(async (collaboratorId) => {
+      STATE.selectedBoard.collaborators.forAwait(async (collaboratorId) => {
         await REMOTE_removeData(
-          `users/${collaboratorId}/boards/${SELECTED_BOARD.id}`
+          `users/${collaboratorId}/boards/${STATE.selectedBoard.id}`
         );
       });
       SESSION_removeData("activeBoard");
-      await SELECTED_BOARD.delete();
-      SELECTED_BOARD = Object.values(BOARDS)[0] || undefined;
+      await STATE.selectedBoard.delete();
+      STATE.selectedBoard = Object.values(BOARDS)[0] || undefined;
       await notification("board-deleted");
       $("#edit-board").closeModal();
       location.reload();

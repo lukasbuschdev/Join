@@ -1,4 +1,5 @@
 import { BaseClass } from "./base.class.js";
+import { STORAGE } from "./storage.js";
 
 export class Task extends BaseClass {
     constructor({ id = Date.now().toString(), type = "to-do", title, description, category = "default", assignedTo = [], dueDate, priority, subTasks = [], boardId }) {
@@ -48,8 +49,9 @@ export class Task extends BaseClass {
         return this.update();
     }
 
-    update() {
-        Object.assign(BOARDS[this.boardId].tasks[this.id], this);
-        return REMOTE_setData(`boards/${this.boardId}/tasks`, {[this.id]: this});
+    async update() {
+        const url = `boards/${this.boardId}/tasks/${this.id}`
+        const newTask = await STORAGE.set(url, this)
+        Object.assign(this, newTask)
     }
 }
