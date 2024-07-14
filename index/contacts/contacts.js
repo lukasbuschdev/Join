@@ -240,9 +240,8 @@ export async function addContact() {
     throwErrors({identifier: 'select-valid-user', bool: !userExists});
     if(!userExists) return unsetSearchResultStyle();
     const selectedUserId = selectedUser.dataset.id;
-
-    const contactWasAdded = await STORAGE.currentUser.addContact(selectedUserId);
-    if(!contactWasAdded) return notification(`network-error`);
+    
+    await STORAGE.currentUser.addContact(selectedUserId);
     
     $('#add-contact-modal').closeModal();
     notification(`friendship-request, {name: '${STORAGE.data.users[selectedUserId].name}'}`);
