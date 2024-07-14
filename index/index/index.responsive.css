@@ -308,6 +308,19 @@
     .summary-placeholder .btn-container {
         flex-direction: column;
     }
+
+    #board-title-selection h2 {
+        font-size: 2rem;
+    }
+
+    #board-title-selection:has( .option) > .row img {
+        margin-left: 5px;
+        width: 10px;
+    }
+
+    #board-title-selection > .row {
+        padding: 0 5px;
+    }
 }
 
 

@@ -279,8 +279,9 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 }
 
 #board-title-selection {
-    min-width: 15rem;
-    max-width: 80%;
+    width: fit-content;
+    /* min-width: 15rem;
+    max-width: 80%; */
     position: relative;
 }
 
@@ -321,11 +322,17 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     border-color: var(--clr-placeholder);
 }
 
+#board-title-selection.active > .row:hover {
+    border-radius: 10px 10px 0 0;
+}
+
 #board-title-selection h2 {
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 3rem;
+    padding: 5px;
 }
 
 #board-title-selection .options {

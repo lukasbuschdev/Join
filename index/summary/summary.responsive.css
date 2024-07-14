@@ -23,10 +23,11 @@
 
     .summary-header {
         padding-left: 4rem;
-    }
+    }  
 
-    .summary-header > button {
-        right: 0 !important;
+    .summary-header > button span {
+        font-size: 0;
+        gap: 0;
     }
 
     #summary-body {
@@ -119,6 +120,9 @@
         --diameter: 30px !important;
     }
 
+    .summary-header > button {
+        right: 0 !important;
+    } 
 }
 
 
@@ -164,9 +168,14 @@
         position: absolute;
         inset: 60px 6px 0px auto;
     }
+
 }
 
 @media(max-width: 400px) {
+    #summary-wrapper {
+        gap: 15px;
+    }
+    
     #summary-data {
         font-size: min(3vmin, 1.25rem);
         gap: 0.5rem;
@@ -174,5 +183,13 @@
     
     #summary-data > .row {
         gap: 0.5rem;
+    }
+
+    .summary-header {
+        gap: 10px;
+    }
+
+    .summary-header > button {
+        inset: 0px 0 auto auto;
     }
 }
