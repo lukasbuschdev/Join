@@ -92,6 +92,7 @@ export function initEditAccount() {
 export function loadNotifications() {
   if (Object.values(STORAGE.currentUser.notifications).length == 0)
     return noNotificationsYet();
+  console.log("loading notifications")
   const container = $("#notifications-content");
   container.innerHTML = "";
   container.renderItems(

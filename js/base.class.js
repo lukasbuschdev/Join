@@ -16,9 +16,8 @@ export class BaseClass {
 
     async update(path) {
         const className = this.constructor.name
-        if(!(className === "User" || className === "Board" || className === "Task") || !path) return console.log(`cant update this class!`)
+        if((className !== "User" && className !== "Board" && className !== "Task") || !path) return console.log(`cant update this class!`)
         const result = await STORAGE.set(path, this)
-        console.log(result)
         return result
     }
 }

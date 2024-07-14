@@ -10,7 +10,8 @@ import { LOCAL_getData, LOCAL_removeData, LOCAL_setData, STORAGE } from "../../j
 import { User } from "../../js/user.class.js";
 import { $, hashInputValue, throwErrors } from "../../js/utilities.js";
 
-export function initLogin() {
+export async function initLogin() {
+    await STORAGE.init();
     rememberLoginDetails();
     initAutomaticLogin();
 }
@@ -63,7 +64,7 @@ export const rememberLoginDetails = async () => {
     if (!rememberedData) return;
     const { name, password } = rememberedData;
     if (name === "Guest") return
-    const user = await getUserByInput(name)
+    const user = STORAGE.getUserByInput(name)
     if (!user || (await hashInputValue(password) !== user.password)) return
     $('#email input').value = name;
     $('#password input').value = password;

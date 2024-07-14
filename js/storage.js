@@ -40,9 +40,14 @@ class Storage {
   }
 
   get currentUserBoards() {
-    return this.currentUser.boards.reduce(
+    const user = this.currentUser;
+    return user.boards.reduce(
       (boards, boardId) => {
-        if(boardId in this.data.boards) boards[boardId] = new Board(this.data.boards[boardId]); // TO DO handle deletion of boadId for userL
+        if(boardId in this.data.boards) boards[boardId] = new Board(this.data.boards[boardId]);
+        else {
+          user.boards.remove(boardId);
+          user.update();
+        } 
         return boards;
       }, {}
     )
@@ -123,7 +128,7 @@ class Storage {
     }
   }
 
-  async #delete(path) {
+  async delete(path) {
     try {
       return (await fetch(`${this.STORAGE_URL}/${path}.json`, { method: "DELETE", })).json();
     } catch (e) {}

@@ -326,14 +326,8 @@ export const deleteBoard = () =>
   confirmation(
     `delete-board, {boardName: '${STATE.selectedBoard.name}'}`,
     async () => {
-      STATE.selectedBoard.collaborators.forAwait(async (collaboratorId) => {
-        await REMOTE_removeData(
-          `users/${collaboratorId}/boards/${STATE.selectedBoard.id}`
-        );
-      });
-      SESSION_removeData("activeBoard");
       await STATE.selectedBoard.delete();
-      STATE.selectedBoard = Object.values(BOARDS)[0] || undefined;
+      STATE.selectedBoard = Object.values(STORAGE.currentUserBoards)[0] || undefined;
       await notification("board-deleted");
       $("#edit-board").closeModal();
       location.reload();

@@ -11,7 +11,7 @@ bindInlineFunctions(getContext(), [
     '/Join/index/summary/summary.js'
 ])
 import { REMOTE_removeData, STORAGE } from "../../js/storage.js";
-import { $, confirmation, debounce, notification, currentUserId, isEqual, cloneDeep  } from "../../js/utilities.js";
+import { $, confirmation, debounce, notification, currentUserId, isEqual, cloneDeep } from "../../js/utilities.js";
 import { renderBoardTitleSelection } from "../summary/summary.js";
 import { assignedToTemplate, progressTemplate, taskTemplate } from "../../assets/templates/index/task_template.js";
 import { fullscreenTaskTemplate } from "../../assets/templates/index/fullscreen-task_template.js";

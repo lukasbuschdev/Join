@@ -51,7 +51,7 @@ export class Board extends BaseClass {
     }
     
     async addCollaborator(collaboratorId) {
-        if (!USER.contacts.includes(collaboratorId)) return error('collaboratorId not in contacts!');
+        if (!STORAGE.currentUser.contacts.includes(collaboratorId)) return error('collaboratorId not in contacts!');
         this.collaborators.push(collaboratorId);
         return this.update();
     }
@@ -66,12 +66,16 @@ export class Board extends BaseClass {
     }
 
     update() {
-        return STORAGE.set(`boards/${this.id}`, this)
+        return super.update(`boards/${this.id}`);
     }
 
-    delete() {
-        if (USER.id !== this.owner) return error(`not the owner of "${this.name}"!`);
-        delete BOARDS[this.id];
-        return REMOTE_removeData(`boards/${this.id}`);
+    async delete() {
+        if (STORAGE.currentUserId() !== this.owner) return error(`not the owner of "${this.name}"!`);
+        await Promise.all(this.collaborators.map((collaboratorId) => {
+            const collaborator = STORAGE.allUsers[collaboratorId];
+            collaborator.boards.remove(this.id);
+            return collaborator.update();            
+        }))
+        return STORAGE.delete(`boards/${this.id}`);
     }
 }
