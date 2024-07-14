@@ -285,14 +285,14 @@ button.bg-dark {
 }
 
 h1 {
-    font-size: min(8vmin, 3rem);
+    font-size: min(8vmin, 3rem) !important;
     font-weight: 600;
     line-height: initial;
     letter-spacing: -1.2px;
 }
 
 h2 {
-    font-size: min(8vmin, 2.5rem);
+    font-size: min(8vmin, 2.5rem) !important;
     font-weight: 700;
     line-height: 120%;
     letter-spacing: -1px;
