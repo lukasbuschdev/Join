@@ -143,7 +143,7 @@
     "accept": "Annehmen",
     "decline": "Ablehnen",
     "user-has-sent-friendship-request": "%ownerName% hat dir eine Freundschaftsanfrage gesendet!",
-    "user-invited-you-to-board": "%ownerName% hat dich eingeladen, mit ihnen an der Tafel %boardName% zusammenzuarbeiten!",
+    "user-invited-you-to-board": "%ownerName% hat dich eingeladen, mit dir an der Tafel %boardName% zusammenzuarbeiten!",
     "assigned-you-to-task": "%ownerName% hat dich %taskName% in %boardName% zugeteilt!",
     "understood": "Verstanden",
     "board-nonexistent": "Tafel %boardName% existiert nicht!",
