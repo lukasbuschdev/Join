@@ -248,10 +248,12 @@ export async function addContact() {
     notification(`friendship-request, {name: '${STORAGE.data.users[selectedUserId].name}'}`);
 }
 
-export function deleteContact(id) {
+export async function deleteContact(id) {
     const selectedContact = STORAGE.currentUserContacts[id];
-    selectedContact.deleteContact(STORAGE.currentUser.id);
-    STORAGE.currentUser.deleteContact(`${id}`);
+    await Promise.all([
+        selectedContact.deleteContact(STORAGE.currentUser.id),
+        STORAGE.currentUser.deleteContact(`${id}`)
+    ]);
 
     $('.contact-container').classList.add('d-none');
     renderContacts();
