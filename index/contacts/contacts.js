@@ -238,7 +238,7 @@ export async function addContact() {
     const selectedUser = $('#input-name');
     const userExists = STORAGE.getUserByInput(selectedUser.value);
     throwErrors({identifier: 'select-valid-user', bool: !userExists});
-    if(!userExists) return;
+    if(!userExists) return unsetSearchResultStyle();
     const selectedUserId = selectedUser.dataset.id;
 
     const contactWasAdded = await STORAGE.currentUser.addContact(selectedUserId);

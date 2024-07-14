@@ -29,14 +29,12 @@
     gap: 35px;
 }
 
-@container (max-width: 300px) {
+@container(max-width: 300px) {
     .contact {
         gap: 10px;
         padding: 15px;
     }
-    .contact .column {
-        /* width: calc(100%) !important; */
-    }
+
     .contact-img {
         display: none;
     }
@@ -66,7 +64,6 @@
 }
 
 .contact .column {
-    width: calc(100% - 40px - 25px);
     gap: 5px;
 }
 
@@ -291,7 +288,7 @@
 
 .user-search-result {
     height: fit-content;
-    max-height: 320px;
+    max-height: 181px;
     width: 100%;
     border-radius: 0 0 10px 10px;
     overflow: auto;

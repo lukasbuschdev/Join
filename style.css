@@ -257,7 +257,7 @@ button.bg-dark {
 }
 
 .txt-small {
-    font-size: .875rem;
+    font-size: min(4vmin, 0.875rem);
 }
 
 .txt-tiny {
