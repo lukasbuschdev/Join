@@ -1,3 +1,7 @@
+import { checkNotifications } from "../../../index/index/index.js";
+import { STORAGE } from "../../../js/storage.js";
+import { $, notification } from "../../../js/utilities.js";
+
 export const notificationTemplate = (notification) => {
     switch (notification.type) {
         case "friendshipRequest": {
@@ -46,32 +50,31 @@ export const notificationTemplate = (notification) => {
 }
 
 export async function acceptBoardInvite (boardId, boardName, notificationId) {
+    const USER = STORAGE.currentUser;
     await removeNotification(notificationId);
-    if (!await REMOTE_getData(`boards/${boardId}`)) return notification(`board-nonexistent, {boardName: '${boardName}'}`);
+    if (!(boardId in STORAGE.data.boards)) return notification(`board-nonexistent, {boardName: '${boardName}'}`);
     const setUser = USER.setProperty('boards', [...USER.getPropertyValue('boards'), `${boardId}`]);
-    const setBoard = REMOTE_setData(`boards/${boardId}/collaborators`, USER.id);
+    const setBoard = STORAGE.set(`boards/${boardId}/collaborators`, USER.id);
     await Promise.all([setUser, setBoard]);
-    await getBoards();
     await notification(`board-joined, {boardName: '${boardName}'}`);
     location.reload();
 }
 
 export async function removeNotification (notificationId) {
+    const USER = STORAGE.currentUser;
     delete USER.notifications[notificationId];
     await USER.update();
-    await getUser();
     $(`.notification[data-id="${notificationId}"]`).remove();
     checkNotifications();
 }
 
 export async function removeFriendshipRequest(id, userId) {
-    await REMOTE_removeData(`users/${userId}/pendingFriendshipRequests/${USER.id}`);
+    await STORAGE.delete(`users/${userId}/pendingFriendshipRequests/${USER.id}`);
     return removeNotification(id);
 }
 
 export async function acceptFriendshipRequest(id, userId, name) {
-    await REMOTE_setData(`users/${userId}/contacts`, USER.id.toString());
-    USER.contacts.push(userId);
+    await STORAGE.set(`users/${userId}/contacts`, USER.id.toString());
     await removeFriendshipRequest(id, userId);
     await notification(`friend-added, {name: '${name}'}`);
     location.reload();
