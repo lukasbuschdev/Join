@@ -1,4 +1,4 @@
-import { SOCKET } from "./websocket.js";
+import { STORAGE } from "./storage.js";
 import { resetPasswordEmailTemplate, verificationEmailTemplate } from "/Join/assets/templates/index/mail_templates.js";
 
 export class Email {
@@ -14,7 +14,7 @@ export class Email {
     }
 
     async send() {
-        const { socket } = SOCKET;
+        const { socket } = STORAGE.webSocket;
         // console.log(socket)
         const mailOptions = {
             to: this.recipient.email,

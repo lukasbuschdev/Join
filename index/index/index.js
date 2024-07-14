@@ -1,6 +1,5 @@
 import { LOCAL_getData, LOCAL_setData, SESSION_setData, STORAGE } from "../../js/storage.js";
 import { $, $$, currentDirectory, renderUserData, searchParams, goTo, confirmation, popUpNotificationTemplate, currentUserId } from "../../js/utilities.js";
-import { SOCKET } from "../../js/websocket.js";
 import "/Join/js/prototype_extensions.js";
 import { initSummary } from "../summary/summary.js";
 import { initBoard } from "../board/board.js";
@@ -14,7 +13,6 @@ import { notificationTemplate } from "../../assets/templates/index/notification_
 export async function init(directory) {
   await STORAGE.init();
   await LANG.init();
-  SOCKET.init();
   STORAGE.syncBoards();
 
   console.log(STORAGE.allUsers)

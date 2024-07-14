@@ -77,7 +77,6 @@ export async function removeFriendshipRequest(id, userId) {
 }
 
 export async function acceptFriendshipRequest(id, userId, name) {
-    // await STORAGE.set(`users/${userId}/contacts`, STORAGE.currentUserId().toString());
     const user = STORAGE.currentUser;
     const contact = STORAGE.allUsers[userId];
     user.contacts.push(userId);

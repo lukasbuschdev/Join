@@ -1,9 +1,8 @@
 import { io } from "https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.esm.min.js";
 import { error, notification } from "./utilities.js";
 import { checkNotifications } from "../index/index/index.js";
-import { STORAGE } from "./storage.js";
 
-class WebSocket {
+export class WebSocket {
     url = "wss://join-websocket.onrender.com";
     notifySound = new Audio('/Join/assets/audio/mixkit-soap-bubble-sound-2925.wav');
     #socket;
@@ -17,17 +16,19 @@ class WebSocket {
         this.#socket = value
     }
 
-    constructor() { }
+    constructor(storage) {
+        this.init(storage);
+    }
     
-    init() {
-        const user = STORAGE.currentUser
+    init(storage) {
+        const user = storage.currentUser
         if (!user) throw Error(`can't use websocket without a currentUser!`);
         this.socket = io(this.url, { query: { uid: user.id } });
         this.socket.io.on('close', () => notification('websocket-disconnect'));
         this.socket.io.on('reconnect', () => notification('websocket-reconnect'));
         this.socket.io.on('notification', async () => {
             this.notifySound.play();
-            await STORAGE.init();
+            await storage.init();
             checkNotifications();
         });
     }
@@ -46,5 +47,3 @@ class WebSocket {
         this.socket.emit('deleteImg');
     }
 }
-
-export const SOCKET = new WebSocket();

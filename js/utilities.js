@@ -1,7 +1,6 @@
 import { confirmationTemplate } from "../assets/templates/index/confirmation_template.js";
 import { LANG } from "./language.js";
 import { STORAGE } from "./storage.js";
-import { SOCKET } from "./websocket.js";
 
 export const log = console.log;
 export const error = console.error;
@@ -195,7 +194,7 @@ export const submitUpload = async () => {
   const reader = new FileReader();
   reader.onload = (e) => {
     const arrayBuffer = e.target.result;
-    SOCKET.emit('uploadImg', arrayBuffer);
+    STORAGE.webSocket.socket.emit('uploadImg', arrayBuffer);
   }
   reader.readAsArrayBuffer(img)
   $('.loading').classList.add('active');
@@ -223,7 +222,7 @@ export function isInvalidImg(file) {
  */
 export function getImgUrl() {
   return new Promise(resolve => {
-    SOCKET.on('imgURL', async (imgURL) => {
+    STORAGE.webSocket.socket.on('imgURL', async (imgURL) => {
           const uid = currentUserId();
           REMOTE_setData(`users/${uid}`, {img: imgURL});
           resolve(imgURL);
@@ -259,7 +258,7 @@ export const removeUpload = async () => {
   $('[type="file"]').value = '';
   container.dataset.img = 'false';
   img.src = '';
-  SOCKET.socket.emit('deleteImg');
+  STORAGE.webSocket.socket.emit('deleteImg');
   const user = STORAGE.currentUser;
   if (user) {
     user.img = "";

@@ -1,5 +1,4 @@
 import { STORAGE } from "./storage.js";
-import { SOCKET } from "./websocket.js";
 
 export class Notify {
     constructor(notification) {

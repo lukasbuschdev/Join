@@ -5,6 +5,7 @@ import { Board } from "./board.class.js"
 import { Notify } from "./notify.class.js"
 import { User } from "./user.class.js"
 import { error, notification, parse, searchParams } from "./utilities.js"
+import { WebSocket } from "./websocket.js"
 
 class Storage {
   STORAGE_URL =
@@ -12,6 +13,7 @@ class Storage {
   // SOCKET =
   #data
   #isLoaded = false
+  webSocket
 
   get data() {
     if (!this.#isLoaded)
@@ -56,7 +58,7 @@ class Storage {
   // TO DO
   get activeBoard() {
     const boardId = SESSION_getData('activeBoardId') || this.currentUser.boards[0]
-    
+    return boardId
   }
 
   /**
@@ -64,16 +66,16 @@ class Storage {
    * @returns {Promise<any>}
    */
   async init() {
-    this.#data = await this.#download()
-    this.#isLoaded = true
-
-    return this
+    this.#data = await this.#download();
+    this.#isLoaded = true;
+    this.webSocket = new WebSocket(this);
+    return this;
   }
 
   currentUserId() {
     return searchParams().get("uid") == null
       ? undefined
-      : `${searchParams().get("uid")}`
+      : `${searchParams().get("uid")}`;
   }
 
   /**
