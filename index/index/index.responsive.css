@@ -166,7 +166,7 @@
     :is(.add-board-content, .edit-board-content) {
         flex-direction: column;
         width: calc((100vw - 6px) - 2em);
-        height: calc((100dvh - 165px) - 2em);;
+        height: 90vh;
     }
 
     :is(.add-board-header, .edit-board-header) {
@@ -199,7 +199,7 @@
     }
 
     :is(.add-board-header, .edit-board-header) h3 {
-        position: relative;
+        display: none;
     }
 
     :is(.add-board-header, .edit-board-header) h3::after {
