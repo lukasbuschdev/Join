@@ -1,8 +1,11 @@
 import { checkNotifications } from "../../../index/index/index.js";
+import { bindInlineFunctions, getContext } from "../../../js/setup.js";
 import { STORAGE } from "../../../js/storage.js";
 import { $, notification } from "../../../js/utilities.js";
 
-export const notificationTemplate = (notification) => {
+bindInlineFunctions(getContext());
+
+export function notificationTemplate(notification) {
     switch (notification.type) {
         case "friendshipRequest": {
             const {userName, userId, id} = notification;
@@ -49,7 +52,7 @@ export const notificationTemplate = (notification) => {
     }
 }
 
-export async function acceptBoardInvite (boardId, boardName, notificationId) {
+export async function acceptBoardInvite(boardId, boardName, notificationId) {
     const USER = STORAGE.currentUser;
     await removeNotification(notificationId);
     if (!(boardId in STORAGE.data.boards)) return notification(`board-nonexistent, {boardName: '${boardName}'}`);
@@ -60,7 +63,7 @@ export async function acceptBoardInvite (boardId, boardName, notificationId) {
     location.reload();
 }
 
-export async function removeNotification (notificationId) {
+export async function removeNotification(notificationId) {
     const USER = STORAGE.currentUser;
     delete USER.notifications[notificationId];
     await USER.update();

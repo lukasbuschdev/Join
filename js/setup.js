@@ -19,7 +19,7 @@ export function getContext() {
  */
 export async function bindInlineFunctions(callerModulePath, importPaths = []) {    
     if (!callerModulePath || currentDirectory(callerModulePath) !== currentDirectory()) return
-    const allImportPaths = new Set(importPaths)
+    const allImportPaths = new Set([...importPaths, '/Join/assets/templates/index/notification_template.js'])
     if (!/setup/.test(callerModulePath)) allImportPaths.add(callerModulePath)
 
     await new Promise((resolve) => {
@@ -68,19 +68,7 @@ export function getCallerModulePath(stack) {
 }
 
 function bindFunctionsToWindow(modules, allFunctionNames) {
-    // const missingFunctions = modules.reduce((allMissing, module) => {
-    //     allFunctionNames.forEach((name) => {
-    //         if (name in module) {
-        //             window[name] = module[name]
-        
-        //             allMissing.delete(name)
-        //         }
-        //     })
-        //     return allMissing
-        // }, new Set(allFunctionNames));
-        
         const missingFunctions = new Set();
-        
         modules.forEach((mod) => {
             for(const func in mod) {
             // console.log(`binding function ${func} to window!`)
