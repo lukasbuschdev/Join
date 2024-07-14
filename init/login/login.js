@@ -6,7 +6,7 @@ bindInlineFunctions(getContext(), [
     // '/Join/js/language.js',
     '/Join/index/legal_notice/legal_notice.js'
 ])
-import { getUserByInput, LOCAL_getData, LOCAL_removeData, LOCAL_setData, STORAGE } from "../../js/storage.js";
+import { LOCAL_getData, LOCAL_removeData, LOCAL_setData, STORAGE } from "../../js/storage.js";
 import { User } from "../../js/user.class.js";
 import { $, hashInputValue, throwErrors } from "../../js/utilities.js";
 
