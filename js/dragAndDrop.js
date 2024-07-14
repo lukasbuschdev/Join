@@ -177,6 +177,5 @@ export function checkDropContainers() {
 
 export async function changeTaskType (board, task, newType) {
     task.type = newType;
-    await board.update();
-    return getBoards();
+    return board.update();
 }
