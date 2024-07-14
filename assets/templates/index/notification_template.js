@@ -72,12 +72,18 @@ export async function removeNotification(notificationId) {
 }
 
 export async function removeFriendshipRequest(id, userId) {
-    await STORAGE.delete(`users/${userId}/pendingFriendshipRequests/${USER.id}`);
+    await STORAGE.delete(`users/${userId}/pendingFriendshipRequests/${STORAGE.currentUserId()}`);
     return removeNotification(id);
 }
 
 export async function acceptFriendshipRequest(id, userId, name) {
-    await STORAGE.set(`users/${userId}/contacts`, USER.id.toString());
+    // await STORAGE.set(`users/${userId}/contacts`, STORAGE.currentUserId().toString());
+    const user = STORAGE.currentUser;
+    const contact = STORAGE.allUsers[userId];
+    user.contacts.push(userId);
+    contact.contacts.push(STORAGE.currentUserId());
+
+    await Promise.all([user.update(), contact.update()]);
     await removeFriendshipRequest(id, userId);
     await notification(`friend-added, {name: '${name}'}`);
     location.reload();
