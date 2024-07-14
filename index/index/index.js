@@ -9,12 +9,16 @@ import { initHelp } from "../help/help.js";
 import { initAddTask } from "../add_task/add_task.js";
 import { initContacts } from "../contacts/contacts.js";
 import { initPrivacy } from "../privacy/privacy.js";
+import { notificationTemplate } from "../../assets/templates/index/notification_template.js";
 
 export async function init(directory) {
   await STORAGE.init();
   await LANG.init();
   SOCKET.init();
   STORAGE.syncBoards();
+
+  console.log(STORAGE.allUsers)
+  
   await initFunctions[directory]();
   $("#content").classList.remove("content-loading");
   $(`#${directory}`).classList.add("active");
@@ -90,15 +94,13 @@ export function initEditAccount() {
 };
 
 export function loadNotifications() {
-  if (Object.values(STORAGE.currentUser.notifications).length == 0)
+  const notifications = Object.values(STORAGE.currentUser.notifications)
+  if (notifications.length === 0)
     return noNotificationsYet();
   console.log("loading notifications")
   const container = $("#notifications-content");
   container.innerHTML = "";
-  container.renderItems(
-    Object.values(STORAGE.currentUser.notifications),
-    popUpNotificationTemplate
-  );
+  notifications.forEach((notification) => container.innerHTML += notificationTemplate(notification))
 };
 
 export function noNotificationsYet() {

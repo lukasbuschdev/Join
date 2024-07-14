@@ -298,7 +298,7 @@ export async function saveEditedBoard() {
   await Promise.all([notifyPromise, categoryPromise]);
   await notification(`board-updated, {boardName: '${STATE.selectedBoard.name}'}`);
   $("#edit-board").closeModal();
-  location.reload();
+  // location.reload();
 }
 
 export function updateBoardCategories(categories) {
