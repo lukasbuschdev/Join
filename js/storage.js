@@ -180,7 +180,7 @@ class Storage {
     const userData = Object.values(this.data.users).find(
       ({ name, email }) => name === nameOrEmail || email === nameOrEmail
     )
-    if (!userData) return undefined;
+    if(!userData) return undefined;
     return new User(userData);
   }
 
@@ -192,6 +192,20 @@ class Storage {
 
   #arrayToJSON(array) {
     return array.reduce((json, item, index) => ({ ...json, [index]: item }), {})
+  }
+
+
+  // DEV
+  async syncBoards() {
+    Object.values(this.allUsers).forEach((user) => {
+      user.boards.forEach((boardId) => {
+        if(!(boardId in this.data.boards)) {
+          console.log(`removing boardId '${boardId}' from User '${user.name}'`);
+          user.boards.remove(boardId);
+          user.update();
+        }
+      })
+    });
   }
 }
 
@@ -337,74 +351,6 @@ export async function REMOTE_removeData(path) {
 }
 
 /**
- * clears all expired verification from the data
- * @returns {Promise<Response | undefined>};
- */
-export async function REMOTE_clearVerifications() {
-  const verifications = await REMOTE_getData("verification")
-  for (const verification in verifications) {
-    if (verifications[verification].verifyCode.expires < Date.now()) {
-      delete verifications[verification]
-    }
-  }
-  return REMOTE_upload("verification", verifications)
-}
-
-/**
- * gets a user by name or email and if successful returns a new User instance
- * @param {string} input name or email of user
- * @returns {Promise<User | undefined>}
- */
-export async function getUserByInput(input) {
-  const allUsers = await REMOTE_getData("users")
-  if (!allUsers) return undefined
-  const [userData] = Object.values(allUsers).filter(
-    ({ name, email }) => name == input || email == input
-  )
-  return userData ? new User(userData) : undefined
-}
-
-/**
- * returns a Promise resolving to an array containing a User instance for every found User
- * @param {string[]} uids array of user ids
- * @returns {Promise<User[]>}
- */
-export async function getUsersById(uids) {
-  const allUsers = await REMOTE_getData(`users`)
-  const foundUsers = uids.reduce((users, uid) => {
-    return allUsers.hasOwnProperty(uid)
-      ? { ...users, [uid]: allUsers[uid] }
-      : users
-  }, {})
-  if (Object.values(foundUsers).length === 0) return
-  return foundUsers
-}
-
-/**
- * returns a promise which resolves to an array of all Users who are not already existing Contacts of the current User sorted by name
- * @returns {Promise<User[]>}
- */
-export function getContactsData() {
-  const { contacts: contactIds } = STORAGE.currentUser
-  if (!contactIds) return []
-  const userData = STORAGE.data.users
-  const accounts = Object.values(userData).reduce(
-    (allAccounts, account) => [...allAccounts, new Account(account)],
-    []
-  )
-  const filteredContacts = accounts.filter(
-    ({ id }) => contactIds.indexOf(`${id}`) !== -1
-  )
-  const sortedContacts = filteredContacts.sort(
-    ({ name: name1 }, { name: name2 }) => {
-      if (name1 > name2) return 1
-      else return -1
-    }
-  )
-  return sortedContacts
-}
-
-/**
  * sets an item in local storage
  * @param {string} key
  * @param {any} value
@@ -470,14 +416,4 @@ export function SESSION_getData(key) {
  */
 export function SESSION_removeData(key) {
   sessionStorage.removeItem(key)
-}
-
-/**
- * updates the contacts property of the global USER variable
- */
-export function getContacts() {
-  const allUsers = STORAGE.data.users
-  STORAGE.currentUser.contacts.for(
-    (contactId) => (CONTACTS[contactId] = new User(allUsers[contactId]))
-  )
 }

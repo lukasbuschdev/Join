@@ -1,7 +1,7 @@
 import { User } from "./user.class.js";
 import { Board } from "./board.class.js";
 import { Task } from "./task.class.js";
-import { SESSION_getData, SESSION_removeData, SESSION_setData, STORAGE } from "./storage.js";
+import { SESSION_getData, SESSION_setData, STORAGE } from "./storage.js";
 
 class State {
   /** @type {User | undefined} */

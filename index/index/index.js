@@ -14,6 +14,7 @@ export async function init(directory) {
   await STORAGE.init();
   await LANG.init();
   SOCKET.init();
+  STORAGE.syncBoards();
   await initFunctions[directory]();
   $("#content").classList.remove("content-loading");
   $(`#${directory}`).classList.add("active");

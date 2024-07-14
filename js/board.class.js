@@ -1,6 +1,6 @@
 import { BaseClass } from "./base.class.js";
 import { Notify } from "./notify.class.js";
-import { REMOTE_removeData, REMOTE_setData, STORAGE, getUsersById } from "./storage.js";
+import { REMOTE_removeData, STORAGE } from "./storage.js";
 import { Task } from "./task.class.js";
 import { currentUserId, error } from "./utilities.js";
 
@@ -62,7 +62,7 @@ export class Board extends BaseClass {
     }
 
     async getCollaborators() {
-        return getUsersById(this.collaborators);
+        return STORAGE.getUsersById(this.collaborators);
     }
 
     update() {

@@ -10,7 +10,7 @@ bindInlineFunctions(getContext(), [
     '/Join/assets/templates/index/edit-task_template.js',
     '/Join/index/summary/summary.js'
 ])
-import { REMOTE_removeData, SESSION_getData, STORAGE } from "../../js/storage.js";
+import { REMOTE_removeData, STORAGE } from "../../js/storage.js";
 import { $, confirmation, debounce, notification, currentUserId, isEqual, cloneDeep  } from "../../js/utilities.js";
 import { renderBoardTitleSelection } from "../summary/summary.js";
 import { assignedToTemplate, progressTemplate, taskTemplate } from "../../assets/templates/index/task_template.js";
