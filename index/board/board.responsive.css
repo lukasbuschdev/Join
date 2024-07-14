@@ -60,7 +60,7 @@
         --rows: 1;
     }
     #board-header {
-        gap: 10px;
+        gap: 30px;
     }
     #board-wrapper {
         gap: 10px;
