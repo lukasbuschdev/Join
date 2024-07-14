@@ -122,7 +122,7 @@ export const deleteTask = () => confirmation(`delete-task, {taskName: '${STATE.s
     const modal = $('#fullscreen-task-modal');
     const taskElement = $(`.task[data-id="${boardId}/${id}"]`);
     const taskContainer = taskElement.parentElement;
-    await REMOTE_removeData(`boards/${boardId}/tasks/${id}`);
+    await STORAGE.delete(`boards/${boardId}/tasks/${id}`);
     modal.removeEventListener('close', saveTaskChanges, {once: true});
     modal.closeModal();
     taskElement.remove();
