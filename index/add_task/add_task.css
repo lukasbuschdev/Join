@@ -90,6 +90,14 @@ textarea {
     overflow: auto;
 }
 
+dialog .add-task-rows {
+    max-height: 425px;
+}
+
+dialog .add-task-card {
+    gap: 0;
+}
+
 .add-task-rows .inputs {
     width: 100%;
     align-items: flex-start;
