@@ -128,7 +128,7 @@ export class User extends Account {
 
     async deleteContact(id) {
         this.contacts.remove(id);
-        // TO DO update data!
+        return this.update()
     }
 
     async update() {
