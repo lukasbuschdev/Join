@@ -25,9 +25,9 @@ export class WebSocket {
         const user = storage.currentUser
         if (!user) throw Error(`can't use websocket without a currentUser!`);
         this.socket = io(this.url, { query: { uid: user.id } });
-        this.socket.io.on('close', () => notification('websocket-disconnect'));
-        this.socket.io.on('reconnect', () => notification('websocket-reconnect'));
-        this.socket.io.on('notification', async () => {
+        this.socket.on('close', () => notification('websocket-disconnect'));
+        this.socket.on('reconnect', () => notification('websocket-reconnect'));
+        this.socket.on('notification', async () => {
             console.log('notification recieved!')
             this.notifySound.play();
             await storage.init();
