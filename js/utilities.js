@@ -201,6 +201,7 @@ export const submitUpload = async () => {
   
   const imgURL = await getImgUrl();
 
+  renderUserData();
   renderUploadedImg(imgURL);
 }
 
@@ -223,8 +224,9 @@ export function isInvalidImg(file) {
 export function getImgUrl() {
   return new Promise(resolve => {
     STORAGE.webSocket.socket.on('imgURL', async (imgURL) => {
-          const uid = currentUserId();
-          STORAGE.set(`users/${uid}/img`, imgURL);
+          const user = STORAGE.currentUser;
+          user.img = imgURL;
+          await user.update();
           resolve(imgURL);
       });
   });
@@ -235,17 +237,13 @@ export function getImgUrl() {
  * @param {string} imgURL 
  */
 export function renderUploadedImg(imgURL) {
-  const imgContainer = $('.user-img');
-  imgContainer.src = imgURL;
-  imgContainer.onload = () => {
-      $('.loading').classList.remove('active');
+  const imgContainers = $$('.user-img');
+  imgContainers.forEach((container) => container.src = imgURL)
+  imgContainers[0].onload = () => {
+      $('.account .loading').classList.remove('active');
       $('[type="file"]').value = '';
       $('.account.user-img-container').dataset.img = 'true';
   }
-  if (typeof USER !== "undefined") {
-      USER.img = imgURL;
-      renderUserData();
-  }  
 }
 
 export const removeUpload = async () => {
