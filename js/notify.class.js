@@ -9,8 +9,8 @@ export class Notify {
     }
 
     async send() {
-        if(SOCKET.socket.disconnected) return error('network-error');
-        SOCKET.socket.emit('notification', { to: this.recipients });
+        if(STORAGE.webSocket.socket.disconnected) return error('network-error');
+        STORAGE.webSocket.socket.emit('notification', { to: this.recipients });
         console.log(`sending notification to ${this.recipients.map((rec) => STORAGE.allUsers[rec].name).join(', ')}`)
         return Promise.all( this.recipients.map((id) => STORAGE.set(`users/${ id }/notifications`, { [this.id]: this })));
     };
