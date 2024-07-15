@@ -224,7 +224,7 @@ export function getImgUrl() {
   return new Promise(resolve => {
     STORAGE.webSocket.socket.on('imgURL', async (imgURL) => {
           const uid = currentUserId();
-          STORAGE.set(`users/${uid}`, {img: imgURL});
+          STORAGE.set(`users/${uid}/img`, imgURL);
           resolve(imgURL);
       });
   });

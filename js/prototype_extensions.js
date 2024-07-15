@@ -1,4 +1,5 @@
 import { LANG } from "./language.js";
+import { renderUserData } from "./utilities.js";
 
 NodeList.prototype.for = function(cb) {
     for (let i = 0; i < this.length; i++){
@@ -177,7 +178,7 @@ HTMLElement.prototype.LANG_load = function() {
 };
 
 HTMLElement.prototype.renderUserData = function () {
-    (renderUserData.bind(this))();
+    renderUserData.apply(this);
 }
 
 HTMLElement.prototype.toggleDropDown = function () {

@@ -1,4 +1,4 @@
-import { LOCAL_getData, LOCAL_setData, SESSION_setData, STORAGE } from "../../js/storage.js";
+import { LOCAL_getData, LOCAL_setData, REMOTE_download, REMOTE_getData, SESSION_setData, STORAGE } from "../../js/storage.js";
 import { $, $$, currentDirectory, renderUserData, searchParams, goTo, confirmation, popUpNotificationTemplate, currentUserId } from "../../js/utilities.js";
 import "/Join/js/prototype_extensions.js";
 import { initSummary } from "../summary/summary.js";
@@ -15,8 +15,6 @@ export async function init(directory) {
   await LANG.init();
   STORAGE.syncBoards();
 
-  console.log(STORAGE.allUsers)
-  
   await initFunctions[directory]();
   $("#content").classList.remove("content-loading");
   $(`#${directory}`).classList.add("active");
