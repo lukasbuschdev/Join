@@ -333,6 +333,7 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     white-space: nowrap;
     font-size: 3rem;
     padding: 5px;
+    min-width: 60px;
 }
 
 #board-title-selection .options {
