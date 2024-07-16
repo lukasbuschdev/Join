@@ -1,5 +1,13 @@
-import { REMOTE_removeData, SESSION_getData, SESSION_removeData, SESSION_setData, STORAGE } from "../../js/storage.js";
-import { $, $$, dateFormat, debounce, isEqual, notification, throwErrors } from "../../js/utilities.js";
+import { SESSION_getData, SESSION_setData, STORAGE } from "../../js/storage.js";
+import {
+  $,
+  $$,
+  dateFormat,
+  debounce,
+  isEqual,
+  notification,
+  throwErrors
+} from "../../js/utilities.js";
 import { Notify } from "../../js/notify.class.js";
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 import { boardTitleSelectionTemplate } from "../index/index.js";
@@ -60,17 +68,30 @@ export function getTaskStats(tasksObj) {
           }, [])
           .sort()
           .at(0)
-          ?.toLocaleDateString(LANG.currentLang, { year: "numeric", month: "long", day: "numeric" }) || undefined : 0
+          ?.toLocaleDateString(LANG.currentLang, {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+          }) || undefined
+      : 0
   };
 
   if (!tasks.length) return allStats;
   tasks.forEach((task) => {
-    if(task.type === "in-progress") allStats.tasksInProgress++ 
+    if (task.type === "in-progress") allStats.tasksInProgress++;
     switch (task.type) {
-      case "in-progress": allStats.tasksInProgress++; break;
-      case "awaiting-feedback": allStats.tasksAwaitingFeedback++; break;
-      case "to-do": allStats.tasksToDo++; break;
-      case "done": allStats.tasksDone++; break;
+      case "in-progress":
+        allStats.tasksInProgress++;
+        break;
+      case "awaiting-feedback":
+        allStats.tasksAwaitingFeedback++;
+        break;
+      case "to-do":
+        allStats.tasksToDo++;
+        break;
+      case "done":
+        allStats.tasksDone++;
+        break;
     }
     if (task.priority === "urgent") allStats.tasksUrgent++;
   });
@@ -79,7 +100,6 @@ export function getTaskStats(tasksObj) {
 }
 
 export function renderBoard(boardId) {
-
   STATE.selectedBoard = STORAGE.currentUserBoards[boardId];
   const { id, name, tasks: tasksObj, owner } = STATE.selectedBoard;
 
@@ -110,7 +130,10 @@ export function renderBoardTitleSelection() {
 }
 
 export async function createBoardModal() {
-  await $("#add-board .add-board-data").includeTemplate({ url: "/Join/assets/templates/index/add-board.html", replace: false });
+  await $("#add-board .add-board-data").includeTemplate({
+    url: "/Join/assets/templates/index/add-board.html",
+    replace: false
+  });
   $("#add-board").openModal();
 }
 
@@ -120,7 +143,10 @@ export function addBoardCategory() {
   const titleValidity = title.length > 20;
   throwErrors({ identifier: "name-too-long", bool: titleValidity });
   if (titleValidity) return;
-  $(".categories-container").innerHTML += addBoardCategoryTemplate([ title, color ]);
+  $(".categories-container").innerHTML += addBoardCategoryTemplate([
+    title,
+    color
+  ]);
   $("#add-board-categories input").value = "";
 }
 
@@ -246,13 +272,12 @@ export function addCollaborator(id) {
   else NEW_BOARD_COLLABORATORS.push(`${id}`);
   const collabContainer = $(".collaborators-container");
   collabContainer.innerHTML = "";
-  collabContainer.renderItems(
-    Object.values(STORAGE.currentUserContacts).filter((contact) =>
-      NEW_BOARD_COLLABORATORS.includes(contact.id)
-    ),
-    newBoardCollaboratorTemplate
+  Object.values(STORAGE.currentUserContacts).forEach((contact) => {
+      if (!NEW_BOARD_COLLABORATORS.includes(contact.id)) return;
+      collabContainer += newBoardCollaboratorTemplate(contact);
+    }
   );
-}
+};
 
 export function newBoardCollaboratorTemplate({ img, name, color, id }) {
   return /*html*/ `
@@ -296,7 +321,9 @@ export async function saveEditedBoard() {
   );
   const categoryPromise = updateBoardCategories(categories);
   await Promise.all([notifyPromise, categoryPromise]);
-  await notification(`board-updated, {boardName: '${STATE.selectedBoard.name}'}`);
+  await notification(
+    `board-updated, {boardName: '${STATE.selectedBoard.name}'}`
+  );
   $("#edit-board").closeModal();
   // location.reload();
 }
@@ -327,7 +354,8 @@ export const deleteBoard = () =>
     `delete-board, {boardName: '${STATE.selectedBoard.name}'}`,
     async () => {
       await STATE.selectedBoard.delete();
-      STATE.selectedBoard = Object.values(STORAGE.currentUserBoards)[0] || undefined;
+      STATE.selectedBoard =
+        Object.values(STORAGE.currentUserBoards)[0] || undefined;
       await notification("board-deleted");
       $("#edit-board").closeModal();
       location.reload();

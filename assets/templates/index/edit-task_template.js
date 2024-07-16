@@ -2,12 +2,19 @@ import { selectedCollaborators } from "../../../index/add_task/add_task.js";
 import { STORAGE } from "../../../js/storage.js";
 import { STATE } from "../../../js/state.js";
 
-export const editTaskTemplate = ({title, description, priority, dueDate, assignedTo, subTasks}) => {
-    subTasks.length = 0;
-    subTasks.for(({name}) => subTasks.push(name));
-    selectedCollaborators.length = 0;
-    assignedTo.for(id => selectedCollaborators.push(id));
-    return /*html*/`
+export const editTaskTemplate = ({
+  title,
+  description,
+  priority,
+  dueDate,
+  assignedTo,
+  subTasks
+}) => {
+  subTasks.length = 0;
+  subTasks.for(({ name }) => subTasks.push(name));
+  selectedCollaborators.length = 0;
+  assignedTo.for((id) => selectedCollaborators.push(id));
+  return /*html*/ `
     <div class="fullscreen-content column gap-25">
         <div class="column gap-8">
             <span data-lang="title">Title</span>
@@ -42,9 +49,15 @@ export const editTaskTemplate = ({title, description, priority, dueDate, assigne
         <div id="priority" class="column gap-8">
             <span data-lang="priority">Prio</span>
             <div class="btn-priority" type="menu">
-                <button class="btn btn-secondary prio-btn txt-normal ${(priority == 'urgent')?'active':''}" type="option"><span data-lang="urgent" class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_urgent.svg)">Urgent</span></button>
-                <button class="btn btn-secondary prio-btn txt-normal ${(priority == 'medium')?'active':''}" type="option"><span data-lang="medium" class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_medium.svg)">Medium</span></button>
-                <button class="btn btn-secondary prio-btn txt-normal ${(priority == 'low')?'active':''}" type="option"><span data-lang="low" class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_low.svg)">Low</span></button>
+                <button class="btn btn-secondary prio-btn txt-normal ${
+                  priority == "urgent" ? "active" : ""
+                }" type="option"><span data-lang="urgent" class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_urgent.svg)">Urgent</span></button>
+                <button class="btn btn-secondary prio-btn txt-normal ${
+                  priority == "medium" ? "active" : ""
+                }" type="option"><span data-lang="medium" class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_medium.svg)">Medium</span></button>
+                <button class="btn btn-secondary prio-btn txt-normal ${
+                  priority == "low" ? "active" : ""
+                }" type="option"><span data-lang="low" class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_low.svg)">Low</span></button>
             </div>
             <div class="error-inactive error-enter-input" id="select-a-priority">
                 <span data-lang="select-a-priority">Select a priority!</span>
@@ -86,7 +99,9 @@ export const editTaskTemplate = ({title, description, priority, dueDate, assigne
                     <span class="error-inactive error-enter-input" data-lang="subtask-too-long" id="subtask-too-long">Subtask too long!</span>
                 </div>
             </div>
-            <div id="subtask-container" class="column">${allSubtasksTemplate(subTasks)}</div>
+            <div id="subtask-container" class="column">${allSubtasksTemplate(
+              subTasks
+            )}</div>
         </div>
 
     </div>
@@ -98,102 +113,108 @@ export const editTaskTemplate = ({title, description, priority, dueDate, assigne
             <span>OK</span>
         </button>
     </div>
-    `
-}
+    `;
+};
 
-export const editTaskAssignedTo = () => STATE.selectedBoard.collaborators.reduce((template, id) => `${template}${collaboratorTemplate(id)}`, ``);
+export const editTaskAssignedTo = () =>
+  STATE.selectedBoard.collaborators.reduce(
+    (template, id) => `${template}${collaboratorTemplate(id)}`,
+    ``
+  );
 
 export const collaboratorTemplate = (id) => {
-    const {name, img, color} = STORAGE.allUsers[id];
-    const collaboratorIsAssigned = selectedCollaborators.includes(id);
-    return /*html*/`
-    <div class="drp-option ${collaboratorIsAssigned ? 'active' : ''}" data-id="${id}" onclick="selectCollaborator()">
+  const { name, img, color } = STORAGE.allUsers[id];
+  const collaboratorIsAssigned = selectedCollaborators.includes(id);
+  return /*html*/ `
+    <div class="drp-option ${
+      collaboratorIsAssigned ? "active" : ""
+    }" data-id="${id}" onclick="selectCollaborator()">
         <div class="user-img-container grid-center" style="--user-clr: ${color}">
             <span>${name.slice(0, 2).toUpperCase()}</span>
             <img src="${img}">
         </div>
         <span>${name}</span>
-    </div>`
-}
+    </div>`;
+};
 
-export const allSubtasksTemplate = (subTasks) => subTasks
-    .reduce(
-        (template, name, index) => {
-            template += renderSubtaskTemplate(name, index);
-            return template;
-        }, ''
-    );
+export const allSubtasksTemplate = (subTasks) =>
+  subTasks.reduce((template, name, index) => {
+    template += renderSubtaskTemplate(name, index);
+    return template;
+  }, "");
 
 export function addEditSubtask() {
-    const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
-    const subtask = $('#edit-task #subtask-input');
+  const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
+  const subtask = $("#edit-task #subtask-input");
 
-    if(!letterRegex.test(subtask.value)) {
-        subtaskInvalidEdit();
-    } else if(subtask.value.length > 30) {
-        subtaskTooLongEdit();
-    } else {
-        subtaskValidEdit();
-        STATE.selectedTask.addSubtask(subtask.value);
-        subtask.value = '';
-    }
-    renderEditSubtasks();
+  if (!letterRegex.test(subtask.value)) {
+    subtaskInvalidEdit();
+  } else if (subtask.value.length > 30) {
+    subtaskTooLongEdit();
+  } else {
+    subtaskValidEdit();
+    STATE.selectedTask.addSubtask(subtask.value);
+    subtask.value = "";
+  }
+  renderEditSubtasks();
 }
 
 export function subtaskInvalidEdit() {
-    $('#edit-task #error-container').classList.remove('d-none');
-    $('#edit-task #subtask-letters-only').classList.remove('error-inactive');
-    $('#edit-task #add-subtask').classList.add('input-warning');
+  $("#edit-task #error-container").classList.remove("d-none");
+  $("#edit-task #subtask-letters-only").classList.remove("error-inactive");
+  $("#edit-task #add-subtask").classList.add("input-warning");
 }
 
 export function subtaskTooLongEdit() {
-    $('#edit-task #error-container').classList.remove('d-none');
-    $('#edit-task #add-subtask').classList.add('input-warning');
-    $('#edit-task #subtask-letters-only').classList.add('error-inactive');
-    $('#edit-task #subtask-too-long').classList.remove('error-inactive');
+  $("#edit-task #error-container").classList.remove("d-none");
+  $("#edit-task #add-subtask").classList.add("input-warning");
+  $("#edit-task #subtask-letters-only").classList.add("error-inactive");
+  $("#edit-task #subtask-too-long").classList.remove("error-inactive");
 }
 
 export function subtaskValidEdit() {
-    $('#edit-task #subtask-letters-only').classList.add('error-inactive');
-    $('#edit-task #subtask-too-long').classList.add('error-inactive');
-    $('#edit-task #add-subtask').classList.remove('input-warning');
-    $('#edit-task #error-container').classList.add('d-none');
+  $("#edit-task #subtask-letters-only").classList.add("error-inactive");
+  $("#edit-task #subtask-too-long").classList.add("error-inactive");
+  $("#edit-task #add-subtask").classList.remove("input-warning");
+  $("#edit-task #error-container").classList.add("d-none");
 }
 
 export function renderEditSubtasks() {
-    $('#edit-task #subtask-container').innerHTML = allSubtasksTemplate(STATE.selectedTask.subTasks.map(({name}) => name))
+  $("#edit-task #subtask-container").innerHTML = allSubtasksTemplate(
+    STATE.selectedTask.subTasks.map(({ name }) => name)
+  );
 }
 
 export function editSubtaskEdit(i) {
-    const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
-    const range = document.createRange();
-    const selection = window.getSelection();
-    subtaskInput.focus();
-    subtaskInput.setAttribute('contenteditable', 'true')
+  const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
+  const range = document.createRange();
+  const selection = window.getSelection();
+  subtaskInput.focus();
+  subtaskInput.setAttribute("contenteditable", "true");
 
-    $('#edit-task #single-subtask'+ i).classList.toggle('edit-btn-active');
-    $('#edit-task .subtask-edit-btn'+ i).classList.toggle('d-none');
-    $('#edit-task .save-edited-subtask-btn'+ i).classList.toggle('d-none');
-    
-    range.selectNodeContents(subtaskInput);
-    range.collapse(false);
+  $("#edit-task #single-subtask" + i).classList.toggle("edit-btn-active");
+  $("#edit-task .subtask-edit-btn" + i).classList.toggle("d-none");
+  $("#edit-task .save-edited-subtask-btn" + i).classList.toggle("d-none");
 
-    selection.removeAllRanges();
-    selection.addRange(range);
+  range.selectNodeContents(subtaskInput);
+  range.collapse(false);
+
+  selection.removeAllRanges();
+  selection.addRange(range);
 }
 
 export function saveEditedSubtaskEdit(i) {
-    const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
-    subTasks[i] = subtaskInput.innerText;
-    subtaskInput.setAttribute('contenteditable', 'false')
+  const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
+  subTasks[i] = subtaskInput.innerText;
+  subtaskInput.setAttribute("contenteditable", "false");
 
-    const allSaveButtons = $$('#edit-task .save-edited-subtask-btn');
+  const allSaveButtons = $$("#edit-task .save-edited-subtask-btn");
 
-    allSaveButtons.for((button) => {
-        button.classList.toggle('d-none');
-    });
+  allSaveButtons.for((button) => {
+    button.classList.toggle("d-none");
+  });
 
-    $('#edit-task #single-subtask'+ i).classList.toggle('edit-btn-active');
-    $('#edit-task .subtask-edit-btn'+ i).classList.toggle('d-none');
-    $('#edit-task .save-edited-subtask-btn'+ i).classList.toggle('d-none');
+  $("#edit-task #single-subtask" + i).classList.toggle("edit-btn-active");
+  $("#edit-task .subtask-edit-btn" + i).classList.toggle("d-none");
+  $("#edit-task .save-edited-subtask-btn" + i).classList.toggle("d-none");
 }

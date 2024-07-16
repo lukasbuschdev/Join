@@ -1,12 +1,12 @@
-import '/Join/js/prototype_extensions.js'
+import "/Join/js/prototype_extensions.js";
 
 /**
  * gets the template for the confirmation box depending on the type
- * @param {"delete-contact" | "delete-category" | "delete-board", | "delete-task" | "reset-password" | "save-edited-task" | "save-edited-board" | "logout"} type 
+ * @param {"delete-contact" | "delete-category" | "delete-board", | "delete-task" | "reset-password" | "save-edited-task" | "save-edited-board" | "logout"} type
  * @returns {string}
  */
 export function confirmationTemplate(type) {
-  return /*html*/`
+  return /*html*/ `
   <div class="confirmation-dialog column gap-25">
     <span data-lang="confirmation-${type}"></span>
     <div class="btn-container gap-15">

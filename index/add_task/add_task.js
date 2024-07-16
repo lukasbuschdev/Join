@@ -2,115 +2,104 @@ import { renderEditSubtasks } from "../../assets/templates/index/edit-task_templ
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 import { LANG } from "../../js/language.js";
 bindInlineFunctions(getContext(), [
-    '/Join/index/index/index.js',
-    '/Join/js/utilities.js',
-    '/Join/js/language.js',
-    '/Join/index/summary/summary.js'
-])
+  "/Join/index/index/index.js",
+  "/Join/js/utilities.js",
+  "/Join/js/language.js",
+  "/Join/index/summary/summary.js"
+]);
 
 import { STORAGE } from "../../js/storage.js";
 import { $, cloneDeep, currentDirectory, dateFormat, notification } from "../../js/utilities.js";
 import { STATE } from "../../js/state.js";
 
 export function initAddTask() {
-    if(!Object.values(STORAGE.currentUserBoards).length) return;
-    renderBoardIds();
-    renderDate();
-    $('.add-task-card').LANG_load();
-    // $('#add-task-modal #content').classList.remove('loading');
-    resetArrays();
-    $('.add-task-card').classList.remove('d-none');
+  if (!Object.values(STORAGE.currentUserBoards).length) return;
+  renderBoardIds();
+  renderDate();
+  $(".add-task-card").LANG_load();
+  resetArrays();
+  $(".add-task-card").classList.remove("d-none");
 }
 
 const subtasks = [];
 export const selectedCollaborators = [];
 const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
 
-const newCollabArray = cloneDeep(selectedCollaborators);
-
 export function renderBoardIds() {
-    const drpContainer = $('#drp-board-container');
-    drpContainer.innerHTML = ''; 
-
-    Object.values(STORAGE.currentUserBoards).forEach(board => {
-        drpContainer.innerHTML += /*html*/ `
+  const drpContainer = $("#drp-board-container");
+  drpContainer.innerHTML = "";
+  Object.values(STORAGE.currentUserBoards).forEach((board) => {
+    drpContainer.innerHTML += /*html*/ `
             <div class="drp-option" onclick="selectBoard(${board.id})">${board.name}</div>
-        `;    
-    });
+        `;
+  });
 }
 
 export function selectBoard(boardId) {
-    const selectedBoard = STORAGE.currentUserBoards[boardId];
-    STATE.selectedBoard = selectedBoard;
-    event.currentTarget.toggleDropDown();
+  const selectedBoard = STORAGE.currentUserBoards[boardId];
+  STATE.selectedBoard = selectedBoard;
+  event.currentTarget.toggleDropDown();
 
-    renderSelectedBoard(selectedBoard);
-    renderCategories(selectedBoard);
-    renderAssignToContacts();
+  renderSelectedBoard(selectedBoard);
+  renderCategories(selectedBoard);
+  renderAssignToContacts();
 }
 
 export function renderSelectedBoard(selectedBoard) {
-    const selectedBoardField = $('#selected-board');
-    const selectedBoardName = selectedBoard.name;
+  const selectedBoardField = $("#selected-board");
+  const selectedBoardName = selectedBoard.name;
 
-    selectedBoardField.innerText = selectedBoardName;
+  selectedBoardField.innerText = selectedBoardName;
 }
 
 export function checkSelectedBoard() {
-    const boardInput = $('#selected-board').innerText;
-    
-    if(boardInput === LANG['select-board']) {
-        $('#select-a-board').classList.remove('error-inactive');
-        $('#drp-wrapper-board').classList.add('input-warning');
-        return
-    } else if(boardInput.length >= 3) {
-        $('#select-a-board').classList.add('error-inactive');
-        $('#drp-wrapper-board').classList.remove('input-warning'); 
-    }
+  const boardInput = $("#selected-board").innerText;
+
+  if (boardInput === LANG["select-board"]) {
+    $("#select-a-board").classList.remove("error-inactive");
+    $("#drp-wrapper-board").classList.add("input-warning");
+  } else if (boardInput.length >= 3) {
+    $("#select-a-board").classList.add("error-inactive");
+    $("#drp-wrapper-board").classList.remove("input-warning");
+  }
 }
 
 export function renderCategories(selectedBoard) {
-    const drpContainer = $('#drp-categories');
-    drpContainer.innerHTML = '';
-
-    console.log(selectedBoard)
-
-    Object.entries(selectedBoard.categories).forEach(([name, color]) => {
-        drpContainer.innerHTML += /*html*/ `
+  const drpContainer = $("#drp-categories");
+  drpContainer.innerHTML = "";
+  Object.entries(selectedBoard.categories).forEach(([name, color]) => {
+    drpContainer.innerHTML += /*html*/ `
             <div class="drp-option row" id="category" data-color="${color}" onclick="this.toggleActive(), renderSelectedCategory('${name}')">
                 <span>${name}</span>
                 <div class="category-color" style="--clr: ${color}"></div>
             </div>
-        `;    
-    });
+        `;
+  });
 }
 
 export function renderAssignToContacts() {
-    const drpContainer = $('#drp-collab-container');
-    const assignToUser = document.createElement('div');
-    assignToUser.innerHTML = renderSelfToAssign();
+  const drpContainer = $("#drp-collab-container");
+  const assignToUser = document.createElement("div");
+  assignToUser.innerHTML = renderSelfToAssign();
 
-    drpContainer.innerHTML = '';
-    assignToUser.LANG_load();
-    drpContainer.append(assignToUser.children[0]);
+  drpContainer.innerHTML = "";
+  assignToUser.LANG_load();
+  drpContainer.append(assignToUser.children[0]);
 
-    STATE.selectedBoard.collaborators.forEach(collaboratorId => {
-        const collaborator = STORAGE.currentUserContacts[collaboratorId];
-        if(collaborator === STORAGE.currentUser.id) return;
-        if(!collaborator) return;
-
-        const collaboratorOption = document.createElement('div');
-        collaboratorOption.innerHTML = renderCollaboratorsToAssign(collaborator);
-
-        drpContainer.append(collaboratorOption.children[0]);
-    });
-    drpContainer.LANG_load();
+  STATE.selectedBoard.collaborators.forEach((collaboratorId) => {
+    const collaborator = STORAGE.currentUserContacts[collaboratorId];
+    if (!collaborator || collaborator === STORAGE.currentUser.id) return;
+    const collaboratorOption = document.createElement("div");
+    collaboratorOption.innerHTML = renderCollaboratorsToAssign(collaborator);
+    drpContainer.append(collaboratorOption.children[0]);
+  });
+  drpContainer.LANG_load();
 }
 
 export function renderSelfToAssign() {
-    return /*html*/`
-        <div class="drp-option" data-id="${STORAGE.currentUser.id}" onclick="selectCollaborator()">
-            <div class="user-img-container grid-center" style="--user-clr: ${STORAGE.currentUser.color}">
+  return /*html*/ `
+        <div class="drp-option" data-id="${ STORAGE.currentUser.id }" onclick="selectCollaborator()">
+            <div class="user-img-container grid-center" style="--user-clr: ${ STORAGE.currentUser.color }">
                 <span>${STORAGE.currentUser.name.slice(0, 2).toUpperCase()}</span>
                 <img src="${STORAGE.currentUser.img}">
             </div>
@@ -120,7 +109,7 @@ export function renderSelfToAssign() {
 }
 
 export function renderCollaboratorsToAssign(collaborator) {
-    return /*html*/ `
+  return /*html*/ `
         <div class="drp-option" data-id="${collaborator.id}" onclick="selectCollaborator()">
             <div class="user-img-container grid-center" style="--user-clr: ${collaborator.color}">
                 <span>${collaborator.name.slice(0, 2).toUpperCase()}</span>
@@ -132,358 +121,349 @@ export function renderCollaboratorsToAssign(collaborator) {
 }
 
 export function selectCollaborator() {
-    event.currentTarget.classList.toggle('active');
-    const collaboratorId = event.currentTarget.dataset.id;
-    const index = selectedCollaborators.indexOf(collaboratorId.toString());
-    
-    if(index === -1) {
-        selectedCollaborators.push(collaboratorId.toString());
-    } else {
-        selectedCollaborators.splice(index, 1);
-    }
-    renderCollaboratorInput();
+  event.currentTarget.classList.toggle("active");
+  const collaboratorId = event.currentTarget.dataset.id;
+  const index = selectedCollaborators.indexOf(collaboratorId.toString());
+
+  if (index === -1) {
+    selectedCollaborators.push(collaboratorId.toString());
+  } else {
+    selectedCollaborators.splice(index, 1);
+  }
+  renderCollaboratorInput();
 }
 
 export function checkSelectedCollaborator() {
-    if(selectedCollaborators.length == 0) {
-        $('#select-a-collaborator').classList.remove('error-inactive');
-        $('#drp-wrapper-collaborator').classList.add('input-warning');
-        return
-    } else if(selectedCollaborators.length >= 1) {
-        $('#select-a-collaborator').classList.add('error-inactive');
-        $('#drp-wrapper-collaborator').classList.remove('input-warning');
-    }
+  if (selectedCollaborators.length == 0) {
+    $("#select-a-collaborator").classList.remove("error-inactive");
+    $("#drp-wrapper-collaborator").classList.add("input-warning");
+    return;
+  }
+  $("#select-a-collaborator").classList.add("error-inactive");
+  $("#drp-wrapper-collaborator").classList.remove("input-warning");
 }
 
 export function renderCollaboratorInput() {
-    const inputContainerCollaborator = $('#selected-collaborator-input');
-    inputContainerCollaborator.innerHTML = '';
-
-    selectedCollaborators.forEach((collaboratorId) => {
-        const users = STORAGE.data.users[collaboratorId];
-
-        inputContainerCollaborator.innerHTML += /*html*/ `
-            <div class="input-collaborator user-img-container grid-center" style="--user-clr: ${users.color}">
-                <span>${(users.name).slice(0, 2).toUpperCase()}</span>
-                <img src="${users.img}">
-            </div>
-        `;
-    });
+  const inputContainerCollaborator = $("#selected-collaborator-input");
+  inputContainerCollaborator.innerHTML = "";
+  selectedCollaborators.forEach((collaboratorId) => {
+    const users = STORAGE.data.users[collaboratorId];
+    inputContainerCollaborator.innerHTML += /*html*/ `
+      <div class="input-collaborator user-img-container grid-center" style="--user-clr: ${ users.color }">
+        <span>${users.name.slice(0, 2).toUpperCase()}</span>
+        <img src="${users.img}">
+      </div>
+    `;
+  });
 }
 
 export function getTitle() {
-    const title = $('#title').value;
-  
-    if(title === '') {
-        titleEmpty();
-    } else if(!letterRegex.test(title)) {
-        titleInvalid();
-    } else if(title.length > 15) {
-        titleTooLong();
-    } else {
-        titleValid();
-        return title
-    }
+  const title = $("#title").value;
+  if (title === "") {
+    titleEmpty();
+  } else if (!letterRegex.test(title)) {
+    titleInvalid();
+  } else if (title.length > 15) {
+    titleTooLong();
+  } else {
+    titleValid();
+    return title;
+  }
 }
 
 export function titleEmpty() {
-    $('#enter-a-title').classList.remove('error-inactive');
-    $('#title').classList.add('input-warning');
-    $('#title-too-long').classList.add('error-inactive');
-    return
+  $("#enter-a-title").classList.remove("error-inactive");
+  $("#title").classList.add("input-warning");
+  $("#title-too-long").classList.add("error-inactive");
 }
 
 export function titleInvalid() {
-    $('#enter-a-title').classList.add('error-inactive');
-    $('#title-letters-only').classList.remove('error-inactive');
-    $('#title').classList.add('input-warning');
-    $('#title-too-long').classList.add('error-inactive');
-    return
+  $("#enter-a-title").classList.add("error-inactive");
+  $("#title-letters-only").classList.remove("error-inactive");
+  $("#title").classList.add("input-warning");
+  $("#title-too-long").classList.add("error-inactive");
 }
 
 export function titleTooLong() {
-    $('#title').classList.add('input-warning');
-    $('#title-letters-only').classList.add('error-inactive');
-    $('#enter-a-title').classList.add('error-inactive');
-    $('#title').classList.add('input-warning');
-    $('#title-too-long').classList.remove('error-inactive');
+  $("#title").classList.add("input-warning");
+  $("#title-letters-only").classList.add("error-inactive");
+  $("#enter-a-title").classList.add("error-inactive");
+  $("#title").classList.add("input-warning");
+  $("#title-too-long").classList.remove("error-inactive");
 }
 
 export function titleValid() {
-    $('#title-letters-only').classList.add('error-inactive');
-    $('#title-too-long').classList.add('error-inactive');
-    $('#title').classList.remove('input-warning');
+  $("#title-letters-only").classList.add("error-inactive");
+  $("#title-too-long").classList.add("error-inactive");
+  $("#title").classList.remove("input-warning");
 }
 
 export function getDescription() {
-    const description = $('#description').value;
-    const letterRegexDiscription = /^[A-Za-zäöüßÄÖÜ\-\/_'., "0-9]{3,150}$/;
-  
-    if(description === '') {
-        descriptionEmpty();
-    } else if(!letterRegexDiscription.test(description)) {
-        descriptionInvalid();
-    } else {
-        descriptionValid();
-        return description;
-    }
+  const description = $("#description").value;
+  const letterRegexDiscription = /^[A-Za-zäöüßÄÖÜ\-\/_'., "0-9]{3,150}$/;
+  if (description === "") {
+    descriptionEmpty();
+  } else if (!letterRegexDiscription.test(description)) {
+    descriptionInvalid();
+  } else {
+    descriptionValid();
+    return description;
+  }
 }
 
 export function descriptionEmpty() {
-    $('#enter-a-description').classList.remove('error-inactive');
-    $('#description').classList.add('input-warning');
-    return;
+  $("#enter-a-description").classList.remove("error-inactive");
+  $("#description").classList.add("input-warning");
 }
 
 export function descriptionInvalid() {
-    $('#enter-a-description').classList.add('error-inactive');
-    $('#description').classList.add('input-warning');
-    $('#description-letters-only').classList.remove('error-inactive');
-    return;
+  $("#enter-a-description").classList.add("error-inactive");
+  $("#description").classList.add("input-warning");
+  $("#description-letters-only").classList.remove("error-inactive");
 }
 
 export function descriptionValid() {
-    $('#description-letters-only').classList.add('error-inactive');
-    $('#enter-a-description').classList.add('error-inactive');
-    $('#description').classList.remove('input-warning');
+  $("#description-letters-only").classList.add("error-inactive");
+  $("#enter-a-description").classList.add("error-inactive");
+  $("#description").classList.remove("input-warning");
 }
 
 export function renderSelectedCategory(category) {
-    const selected = $('#select-task-category');
-    event.currentTarget.toggleDropDown();
-    return selected.innerHTML = category;
+  const selected = $("#select-task-category");
+  event.currentTarget.toggleDropDown();
+  selected.innerHTML = category;
 }
 
 export function getSelectedCategory() {
-    const category = $('#select-task-category').innerText;
-    
-    if(category === LANG['select-task-category']) {
-        return noCategorySelected();
-    }
-    categorySelected();
-    return category; 
+  const category = $("#select-task-category").innerText;
+  if (category === LANG["select-task-category"]) return noCategorySelected();
+  categorySelected();
+  return category;
 }
 
 export function noCategorySelected() {
-    $('#select-a-category').classList.remove('error-inactive');
-    $('#category-drp-wrapper').classList.add('input-warning');
-    return
+  $("#select-a-category").classList.remove("error-inactive");
+  $("#category-drp-wrapper").classList.add("input-warning");
 }
 
 export function categorySelected() {
-    $('#select-a-category').classList.add('error-inactive');
-    $('#category-drp-wrapper').classList.remove('input-warning');
+  $("#select-a-category").classList.add("error-inactive");
+  $("#category-drp-wrapper").classList.remove("input-warning");
 }
 
 export function getFormattedDate() {
-    const today = new Date();
-    const day = String(today.getDate()).padStart(2, '0');
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const year = today.getFullYear();
-  
-    return `${day}/${month}/${year}`;
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, "0");
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const year = today.getFullYear();
+
+  return `${day}/${month}/${year}`;
 }
 
 export function renderDate() {
-    $('#date').value = getFormattedDate();
+  $("#date").value = getFormattedDate();
 }
 
 export function getDueDate() {
-    const dateString = $('#date').value;
-    if(dateString == '') return dateEmpty();
+  const dateString = $("#date").value;
+  if (dateString == "") return dateEmpty();
 
-    // const formattedDate = dateFormat(dateString);
-    // const now = Date.now();
-    // if (formattedDate < now && formattedDate.getDate() !== formattedDate.getDate()) return;
-    if(!dateFormat(dateString)) {
-        dateWrongFormat();
-    } else if(dateFormat(dateString)) {
-        dateValid();
-        return dateString;
-    }
+  // const formattedDate = dateFormat(dateString);
+  // const now = Date.now();
+  // if (formattedDate < now && formattedDate.getDate() !== formattedDate.getDate()) return;
+  if (!dateFormat(dateString)) {
+    dateWrongFormat();
+  } else if (dateFormat(dateString)) {
+    dateValid();
+    return dateString;
+  }
 }
 
 export function dateEmpty() {
-    $('#enter-a-dueDate').classList.remove('error-inactive');
-    $('#date').classList.add('input-warning');     
-    return
+  $("#enter-a-dueDate").classList.remove("error-inactive");
+  $("#date").classList.add("input-warning");
+  return;
 }
 
 export function dateWrongFormat() {
-    $('#enter-a-dueDate').classList.add('error-inactive');
-    $('#date').classList.add('input-warning');     
-    $('#wrong-date-format').classList.remove('error-inactive');
-    return
+  $("#enter-a-dueDate").classList.add("error-inactive");
+  $("#date").classList.add("input-warning");
+  $("#wrong-date-format").classList.remove("error-inactive");
+  return;
 }
 
 export function dateValid() {
-    $('#enter-a-dueDate').classList.add('error-inactive');
-    $('#date').classList.remove('input-warning');
-    $('#wrong-date-format').classList.add('error-inactive');
+  $("#enter-a-dueDate").classList.add("error-inactive");
+  $("#date").classList.remove("input-warning");
+  $("#wrong-date-format").classList.add("error-inactive");
 }
 
 export function checkPriority() {
-    const activeButton = $('.btn-priority button.active');
-    
-    if(activeButton) {
-        $('#select-a-priority').classList.add('error-inactive');
-        return activeButton.$('.priority').dataset.lang;
-    } else {
-        return $('#select-a-priority').classList.remove('error-inactive');
-    }
+  const activeButton = $(".btn-priority button.active");
+
+  if (activeButton) {
+    $("#select-a-priority").classList.add("error-inactive");
+    return activeButton.$(".priority").dataset.lang;
+  } else {
+    return $("#select-a-priority").classList.remove("error-inactive");
+  }
 }
 
 export function getSubtasks() {
-    return subtasks.map((subtaskName) => {
-        return {name: subtaskName, done: false}
-    });
+  return subtasks.map((subtaskName) => {
+    return { name: subtaskName, done: false };
+  });
 }
 
 export async function addTask() {
-    const dir = currentDirectory();
-    checkSelectedBoard();
-    checkSelectedCollaborator();
+  const dir = currentDirectory();
+  checkSelectedBoard();
+  checkSelectedCollaborator();
 
-    const title = getTitle();
-    const description = getDescription();
-    const category = getSelectedCategory();
-    const collaborators = selectedCollaborators;
-    const dueDate = getDueDate();
-    const priority = checkPriority();
-    const subtasks = getSubtasks();
-    const addTaskData = [title, description, category ,collaborators, dueDate, priority, subtasks]; 
+  const title = getTitle();
+  const description = getDescription();
+  const category = getSelectedCategory();
+  const collaborators = selectedCollaborators;
+  const dueDate = getDueDate();
+  const priority = checkPriority();
+  const subtasks = getSubtasks();
+  const addTaskData = [
+    title,
+    description,
+    category,
+    collaborators,
+    dueDate,
+    priority,
+    subtasks
+  ];
 
-    if(checkAddTaskInputs(addTaskData)) return;
-    await createNewTask(STATE.selectedBoard, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
-    notification('task-created');
-    resetArrays();
-    if(dir === "board") location.reload();
-    else $('#board').click();
+  if (checkAddTaskInputs(addTaskData)) return;
+  await createNewTask(STATE.selectedBoard, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
+  notification("task-created");
+  resetArrays();
+  if (dir === "board") location.reload();
+  else $("#board").click();
 }
 
 export function checkAddTaskInputs(addTaskData) {
-    return addTaskData.some(singleInputField => singleInputField === undefined);
+  return addTaskData.some((singleInputField) => singleInputField === undefined);
 }
 
-export async function createNewTask(selectedBoard, title, 
-    description, category, selectedCollaborators, 
-    dueDate, priority, subtasks) {
+export async function createNewTask( selectedBoard, title, description, category, selectedCollaborators, dueDate, priority, subtasks) {
+  const newTask = {
+    title: title,
+    description: description,
+    category: category,
+    assignedTo: selectedCollaborators,
+    dueDate: dueDate,
+    priority: priority,
+    subTasks: subtasks
+  };
 
-    const newTask = {
-        title: title,
-        description: description,
-        category: category,
-        assignedTo: selectedCollaborators,
-        dueDate: dueDate,
-        priority: priority,
-        subTasks: subtasks
-    }
-
-    await selectedBoard.addTask(newTask);
+  await selectedBoard.addTask(newTask);
 }
 
 export function clearSubtaskInput() {
-    const subtaskInputContainer = $('.subtasks input');
-    subtaskInputContainer.value = '';
+  const subtaskInputContainer = $(".subtasks input");
+  subtaskInputContainer.value = "";
 }
 
 export function checkSubtaskInput() {
-    const inputField = $('.subtasks input').value;
-    const inputButtons = $('.subtasks .inp-buttons');
+  const inputField = $(".subtasks input").value;
+  const inputButtons = $(".subtasks .inp-buttons");
 
-    if(inputField.length >= 1) {
-        inputButtons.classList.remove('d-none');
-    } else if(inputField.length == 0) {
-        inputButtons.classList.add('d-none');
-    }
+  if (inputField.length >= 1) {
+    inputButtons.classList.remove("d-none");
+  } else if (inputField.length == 0) {
+    inputButtons.classList.add("d-none");
+  }
 }
 
 export function addSubtask() {
-    const subtaskValue = $('.subtasks input');
-    const inputButtons = $('.subtasks .inp-buttons');
+  const subtaskValue = $(".subtasks input");
+  const inputButtons = $(".subtasks .inp-buttons");
 
-    if(!letterRegex.test(subtaskValue.value)) {
-        subtaskInvalid();
-    } else if(subtaskValue.value.length > 30) {
-        subtaskTooLong();
-    } else {
-        subtaskValid();
-        subtasks.push(subtaskValue.value);
-        subtaskValue.value = '';
-    }
-    inputButtons.classList.add('d-none');   
-    renderSubtasks();
+  if (!letterRegex.test(subtaskValue.value)) {
+    subtaskInvalid();
+  } else if (subtaskValue.value.length > 30) {
+    subtaskTooLong();
+  } else {
+    subtaskValid();
+    subtasks.push(subtaskValue.value);
+    subtaskValue.value = "";
+  }
+  inputButtons.classList.add("d-none");
+  renderSubtasks();
 }
 
 export function subtaskInvalid() {
-    $('#error-container').classList.remove('d-none');
-    $('#subtask-letters-only').classList.remove('error-inactive');
-    $('#add-subtask').classList.add('input-warning');
-    return
+  $("#error-container").classList.remove("d-none");
+  $("#subtask-letters-only").classList.remove("error-inactive");
+  $("#add-subtask").classList.add("input-warning");
+  return;
 }
 
 export function subtaskTooLong() {
-    $('#error-container').classList.remove('d-none');
-    $('#add-subtask').classList.add('input-warning');
-    $('#subtask-letters-only').classList.add('error-inactive');
-    $('#subtask-too-long').classList.remove('error-inactive');
-    return 
+  $("#error-container").classList.remove("d-none");
+  $("#add-subtask").classList.add("input-warning");
+  $("#subtask-letters-only").classList.add("error-inactive");
+  $("#subtask-too-long").classList.remove("error-inactive");
+  return;
 }
 
 export function subtaskValid() {
-    $('#subtask-letters-only').classList.add('error-inactive');
-    $('#subtask-too-long').classList.add('error-inactive');
-    $('#add-subtask').classList.remove('input-warning');
-    $('#error-container').classList.add('d-none');
+  $("#subtask-letters-only").classList.add("error-inactive");
+  $("#subtask-too-long").classList.add("error-inactive");
+  $("#add-subtask").classList.remove("input-warning");
+  $("#error-container").classList.add("d-none");
 }
 
 export function renderSubtasks() {
-    const subtaskContainer = $('#subtask-container');
-    subtaskContainer.innerHTML = '';
+  const subtaskContainer = $("#subtask-container");
+  subtaskContainer.innerHTML = "";
 
-    for(let i = 0; i < subtasks.length; i++) {
-        const subtask = subtasks[i];
-        subtaskContainer.innerHTML += renderSubtaskTemplate(subtask, i);
-    }
+  for (let i = 0; i < subtasks.length; i++) {
+    const subtask = subtasks[i];
+    subtaskContainer.innerHTML += renderSubtaskTemplate(subtask, i);
+  }
 }
 
 export function editSubtask(i) {
-    const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
-    const range = document.createRange();
-    const selection = window.getSelection();
-    subtaskInput.focus();
-    subtaskInput.setAttribute('contenteditable', 'true')
+  const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
+  const range = document.createRange();
+  const selection = window.getSelection();
+  subtaskInput.focus();
+  subtaskInput.setAttribute("contenteditable", "true");
 
-    $('#single-subtask'+ i).classList.toggle('edit-btn-active');
-    $('.subtask-edit-btn'+ i).classList.toggle('d-none');
-    $('.save-edited-subtask-btn'+ i).classList.toggle('d-none');
-    
-    range.selectNodeContents(subtaskInput);
-    range.collapse(false);
+  $("#single-subtask" + i).classList.toggle("edit-btn-active");
+  $(".subtask-edit-btn" + i).classList.toggle("d-none");
+  $(".save-edited-subtask-btn" + i).classList.toggle("d-none");
 
-    selection.removeAllRanges();
-    selection.addRange(range);
+  range.selectNodeContents(subtaskInput);
+  range.collapse(false);
+
+  selection.removeAllRanges();
+  selection.addRange(range);
 }
 
 export function saveEditedSubtask(i) {
-    const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
-    subtasks[i] = subtaskInput.innerText;
-    subtaskInput.setAttribute('contenteditable', 'false')
+  const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
+  subtasks[i] = subtaskInput.innerText;
+  subtaskInput.setAttribute("contenteditable", "false");
 
-    const allSaveButtons = $$('.save-edited-subtask-btn');
+  const allSaveButtons = $$(".save-edited-subtask-btn");
 
-    allSaveButtons.forEach((button) => {
-        button.classList.toggle('d-none');
-    });
+  allSaveButtons.forEach((button) => {
+    button.classList.toggle("d-none");
+  });
 
-    $('#single-subtask'+ i).classList.toggle('edit-btn-active');
-    $('.subtask-edit-btn'+ i).classList.toggle('d-none');
-    $('.save-edited-subtask-btn'+ i).classList.toggle('d-none');
+  $("#single-subtask" + i).classList.toggle("edit-btn-active");
+  $(".subtask-edit-btn" + i).classList.toggle("d-none");
+  $(".save-edited-subtask-btn" + i).classList.toggle("d-none");
 }
 
-
 export function renderSubtaskTemplate(subtask, i) {
-    return /*html*/ `
+  return /*html*/ `
         <div class="row single-subtask" id="single-subtask${i}">
             <li>${subtask}</li>
             <div class="row gap-10 subtask-edit-delete-btns" id="subtask-edit-delete-btns${i}">
@@ -503,21 +483,21 @@ export function renderSubtaskTemplate(subtask, i) {
 }
 
 export function deleteSubtask(i) {
-    if(event.currentTarget.closest('#edit-task')) {
-        STATE.selectedTask.subTasks.splice(i, 1);
-        renderEditSubtasks();
-        return;
-    };
-    subtasks.splice(i, 1);
-    renderSubtasks();
+  if (event.currentTarget.closest("#edit-task")) {
+    STATE.selectedTask.subTasks.splice(i, 1);
+    renderEditSubtasks();
+    return;
+  }
+  subtasks.splice(i, 1);
+  renderSubtasks();
 }
 
 export function resetArrays() {
-    selectedCollaborators.length = 0;
-    subtasks.length = 0;
+  selectedCollaborators.length = 0;
+  subtasks.length = 0;
 }
 
 export function resetPriorityButton() {
-    const buttons = $$('.btn-priority button');
-    buttons.forEach((button) => button.classList.remove('active'));
+  const buttons = $$(".btn-priority button");
+  buttons.forEach((button) => button.classList.remove("active"));
 }

@@ -1,5 +1,18 @@
-import { LOCAL_getData, LOCAL_setData, REMOTE_download, REMOTE_getData, SESSION_setData, STORAGE } from "../../js/storage.js";
-import { $, $$, currentDirectory, renderUserData, searchParams, goTo, confirmation, popUpNotificationTemplate, currentUserId } from "../../js/utilities.js";
+import {
+  LOCAL_getData,
+  LOCAL_setData,
+  SESSION_setData,
+  STORAGE
+} from "../../js/storage.js";
+import {
+  $,
+  $$,
+  currentDirectory,
+  renderUserData,
+  searchParams,
+  goTo,
+  confirmation,
+} from "../../js/utilities.js";
 import "/Join/js/prototype_extensions.js";
 import { initSummary } from "../summary/summary.js";
 import { initBoard } from "../board/board.js";
@@ -27,7 +40,9 @@ if (LOCAL_getData("rememberMe") === "false") {
 }
 
 export function checkNotifications() {
-  const notificationCount = Object.values(STORAGE.currentUser.notifications).length;
+  const notificationCount = Object.values(
+    STORAGE.currentUser.notifications
+  ).length;
   const notificationCounters = $$(".notifications-counter");
 
   notificationCounters.forEach((counter) => {
@@ -35,8 +50,9 @@ export function checkNotifications() {
     counter.classList.toggle("d-none", !notificationCount);
   });
 
-  if(notificationCount) document.title = `(${notificationCount}) ${document.title}`;
-};
+  if (notificationCount)
+    document.title = `(${notificationCount}) ${document.title}`;
+}
 
 export const checkLogin = () => {
   const uid = searchParams().get("uid");
@@ -52,7 +68,7 @@ export const initFunctions = {
   add_task: () => initAddTask(),
   help: () => initHelp(),
   legal_notice: () => initLegalNotice(),
-  privacy: () => initPrivacy(),
+  privacy: () => initPrivacy()
 };
 
 export function loadContent() {
@@ -63,10 +79,10 @@ export function loadContent() {
 }
 
 export function openAccountPanel() {
-$("dialog#account-panel").openModal();
+  $("dialog#account-panel").openModal();
   $("#account-panel-options button.active")?.click();
   $("#account-panel-options #notifications-btn")?.click();
-};
+}
 
 export async function loadAccountPanelContent() {
   const btn = event.currentTarget;
@@ -79,7 +95,7 @@ export async function loadAccountPanelContent() {
   if (template == "edit-account") initEditAccount();
   accountPanelContent.LANG_load();
   accountPanelContent.initMenus();
-};
+}
 
 export function initEditAccount() {
   const editAccountContent = $("#edit-account-content");
@@ -87,17 +103,18 @@ export function initEditAccount() {
   renderColorWheel();
   if (STORAGE.currentUser.img)
     editAccountContent.$(".user-img-container").dataset.img = "true";
-};
+}
 
 export function loadNotifications() {
-  const notifications = Object.values(STORAGE.currentUser.notifications)
-  if (notifications.length === 0)
-    return noNotificationsYet();
-  console.log("loading notifications")
+  const notifications = Object.values(STORAGE.currentUser.notifications);
+  if (notifications.length === 0) return noNotificationsYet();
   const container = $("#notifications-content");
   container.innerHTML = "";
-  notifications.forEach((notification) => container.innerHTML += notificationTemplate(notification))
-};
+  notifications.forEach(
+    (notification) =>
+      (container.innerHTML += notificationTemplate(notification))
+  );
+}
 
 export function noNotificationsYet() {
   const notificaitionsContent = $("#notifications-content");
@@ -109,15 +126,18 @@ export function noNotificationsYet() {
 }
 
 export function toggleBoardTitleSelection() {
-  const el = event.currentTarget
-  el.classList.toggle('active');
-  if (el.classList.contains('active')) {
-    let closeHandler
-    window.addEventListener('pointerdown', closeHandler = () => {
-        if (event.target.closest('#board-title-selection')) return;
-        el.classList.remove('active');
-        window.removeEventListener('pointerdown', closeHandler);
-    })
+  const el = event.currentTarget;
+  el.classList.toggle("active");
+  if (el.classList.contains("active")) {
+    let closeHandler;
+    window.addEventListener(
+      "pointerdown",
+      (closeHandler = () => {
+        if (event.target.closest("#board-title-selection")) return;
+        el.classList.remove("active");
+        window.removeEventListener("pointerdown", closeHandler);
+      })
+    );
   }
 }
 
@@ -131,9 +151,9 @@ export function switchBoards(id) {
 }
 
 export function initLogout() {
-  return confirmation('logout', () => STORAGE.currentUser.logOut())
+  return confirmation("logout", () => STORAGE.currentUser.logOut());
 }
 
 export function changeLanguage(targetLanguage) {
-    LANG.change(targetLanguage);
+  LANG.change(targetLanguage);
 }
