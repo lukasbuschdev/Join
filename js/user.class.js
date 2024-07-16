@@ -128,10 +128,11 @@ export class User extends Account {
 
     async deleteContact(id) {
         this.contacts.remove(id);
-        return this.update()
+        return this.update();
     }
 
     async update() {
-        return super.update(`users/${this.id}`)
+        STORAGE.data.users[this.id] = JSON.parse(JSON.stringify(this));
+        return super.update(`users/${this.id}`);
     }
 }

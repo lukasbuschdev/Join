@@ -319,11 +319,13 @@ export function addAcceptColor(userColor) {
   let colorPicker
   try {$('#accept-user-color').removeEventListener("click", colorPicker, { once: true })}catch(e){};
   $('#accept-user-color').addEventListener("click", colorPicker = () => {
+    console.log("aaaaaaaaaaaa")
       event.stopPropagation();
       $$('.user-img-container.account').for(button => button.style.setProperty('--user-clr', userColor));
-      if (typeof USER !== "undefined") {
-          USER.color = userColor;
-          USER.update();
+      if (STORAGE.currentUser) {
+        STORAGE.currentUser.setColor(userColor)
+          // STORAGE.currentUser.color = userColor;
+          // STORAGE.currentUser.update();
           renderUserData();
       };
       $('#user-color').click();

@@ -17,11 +17,6 @@ export class WebSocket {
     }
 
     constructor(storage) {
-        this.init(storage);
-    }
-    
-    init(storage) {
-        console.log('initializing websocket')
         const user = storage.currentUser
         if (!user) throw Error(`can't use websocket without a currentUser!`);
         this.socket = io(this.url, { query: { uid: user.id } });
@@ -34,7 +29,7 @@ export class WebSocket {
             checkNotifications();
         });
     }
-
+    
     sendMessage(recipientIds) {
         if (!recipientIds.every(id => STORAGE.currentUserContacts.hasOwnProperty(id))) return error(`user '${id}' not in contacts!`);
         this.socket.emit('notification', { to: recipientIds });

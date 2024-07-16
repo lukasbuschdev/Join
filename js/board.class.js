@@ -66,6 +66,7 @@ export class Board extends BaseClass {
     }
 
     update() {
+        STORAGE.data.boards[this.id] = JSON.parse(JSON.stringify(this));
         return super.update(`boards/${this.id}`);
     }
 
