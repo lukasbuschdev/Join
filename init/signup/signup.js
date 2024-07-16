@@ -5,7 +5,7 @@ bindInlineFunctions(getContext(), [
   "/Join/index/privacy/privacy.js"
 ]);
 
-import { getUserByInput } from "../../js/storage.js";
+// import { getUserByInput } from "../../js/storage.js";
 import { User } from "../../js/user.class.js";
 import { $, hashInputValue, throwErrors } from "../../js/utilities.js";
 
