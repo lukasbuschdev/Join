@@ -91,11 +91,11 @@ textarea {
 }
 
 dialog .add-task-rows {
-    max-height: 425px;
+    max-height: 450px;
 }
 
 dialog .add-task-card {
-    gap: 0;
+    gap: 15px;
 }
 
 .add-task-rows .inputs {
