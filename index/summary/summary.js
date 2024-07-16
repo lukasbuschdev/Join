@@ -274,7 +274,7 @@ export function addCollaborator(id) {
   collabContainer.innerHTML = "";
   Object.values(STORAGE.currentUserContacts).forEach((contact) => {
       if (!NEW_BOARD_COLLABORATORS.includes(contact.id)) return;
-      collabContainer += newBoardCollaboratorTemplate(contact);
+      collabContainer.innerHTML += newBoardCollaboratorTemplate(contact);
     }
   );
 };
