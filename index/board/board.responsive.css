@@ -67,3 +67,16 @@
         padding: 2vh 1rem 0;
     }
 }
+
+
+
+@media(max-width: 500px) {
+    #fullscreen-task-modal :is(#fullscreen-task, #edit-task) {
+        min-width: none;
+    }
+
+    #fullscreen-task-modal .btn-container {
+        margin-left: auto;
+        width: 100%;
+    }
+}

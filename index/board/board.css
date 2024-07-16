@@ -214,6 +214,7 @@
     width: 100%;
     max-height: 90vh;
     max-width: 525px;
+    min-width: 400px;
     padding: 30px 20px;
 }
 
