@@ -282,7 +282,7 @@ export function addCollaborator(id) {
 export function newBoardCollaboratorTemplate({ img, name, color, id }) {
   return /*html*/ `
     <button class="collaborator ${
-      !STATE.selectedBoard.collaborators.includes(id) ? "invitation" : ""
+      !STATE.selectedBoard?.collaborators.includes(id) ? "invitation" : ""
     }" data-id="${id}">
         <div class="user-img-container" style="--user-clr: ${color}">
             <span>${name.slice(0, 2).toUpperCase()}</span>

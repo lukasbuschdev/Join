@@ -347,7 +347,6 @@ export function addAcceptColor(userColor) {
   $("#accept-user-color").addEventListener(
     "click",
     (colorPicker = () => {
-      console.log("aaaaaaaaaaaa");
       event.stopPropagation();
       $$(".user-img-container.account").for((button) =>
         button.style.setProperty("--user-clr", userColor)
