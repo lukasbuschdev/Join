@@ -440,8 +440,10 @@ export function dateFormat(input) {
   const date = new Date(year, month - 1, day);
   if (isInvalidDate(input, date)) return;
 
-  const now = Date.now();
-  if (date < now || date.getDate() !== date.getDate()) return;
+  const now = new Date();
+  const normalizedDate = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  console.log(date, normalizedDate)
+  if (date < normalizedDate || date.getDate() !== date.getDate()) return;
   return date;
 }
 
