@@ -55,7 +55,7 @@ export function renderSelectedBoard(selectedBoard) {
 export function checkSelectedBoard() {
   const boardInput = $("#selected-board").innerText;
 
-  if (boardInput === LANG["select-board"]) {
+  if (boardInput === LANG.currentLangData["select-board"]) {
     $("#select-a-board").classList.remove("error-inactive");
     $("#drp-wrapper-board").classList.add("input-warning");
   } else if (boardInput.length >= 3) {
