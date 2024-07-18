@@ -38,7 +38,6 @@ export function fullscreenFunctionality() {
 
 export function fullscreenHandler() {
   const [boardId, taskId] = TASK_ELEMENT.dataset.id.split("/");
-  console.log(STATE.selectedBoard.tasks[taskId], taskId);
   STATE.selectedTask = new Task(STATE.selectedBoard.tasks[taskId]);
   renderFullscreenTask(STATE.selectedTask);
 }
