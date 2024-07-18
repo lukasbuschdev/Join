@@ -1,4 +1,3 @@
-import { selectedCollaborators } from "../../../index/add_task/add_task.js";
 import { STORAGE } from "../../../js/storage.js";
 import { STATE } from "../../../js/state.js";
 
@@ -10,10 +9,10 @@ export const editTaskTemplate = ({
   assignedTo,
   subTasks
 }) => {
-  subTasks.length = 0;
-  subTasks.for(({ name }) => subTasks.push(name));
-  selectedCollaborators.length = 0;
-  assignedTo.for((id) => selectedCollaborators.push(id));
+
+  // assignedTo.for((id) => selectedCollaborators.push(id));
+  // selectedCollaborators.length = 0;
+
   return /*html*/ `
     <div class="fullscreen-content column gap-25">
         <div class="column gap-8">
@@ -70,7 +69,7 @@ export const editTaskTemplate = ({
                 <div id="selected-collaborator-input" data-lang="select-collaborators" class="drp-title" onclick="this.toggleDropDown()"></div>
                 <div class="drp-option-wrapper" id="drp-collaborators">
                     <div class="drp-contacts" id="drp-collab-container">
-                        ${editTaskAssignedTo()}
+                        ${editTaskAssignedTo(assignedTo)}
                     </div>
                 </div>
             </div>
@@ -100,7 +99,7 @@ export const editTaskTemplate = ({
                 </div>
             </div>
             <div id="subtask-container" class="column">${allSubtasksTemplate(
-              subTasks
+              subTasks.map(({ name }) => name)
             )}</div>
         </div>
 
@@ -116,15 +115,15 @@ export const editTaskTemplate = ({
     `;
 };
 
-export const editTaskAssignedTo = () =>
+export const editTaskAssignedTo = (assignedTo) =>
   STATE.selectedBoard.collaborators.reduce(
-    (template, id) => `${template}${collaboratorTemplate(id)}`,
+    (template, id) => `${template}${collaboratorTemplate(id, assignedTo)}`,
     ``
   );
 
-export const collaboratorTemplate = (id) => {
+export const collaboratorTemplate = (id, assignedTo) => {
   const { name, img, color } = STORAGE.allUsers[id];
-  const collaboratorIsAssigned = selectedCollaborators.includes(id);
+  const collaboratorIsAssigned = assignedTo.includes(id);
   return /*html*/ `
     <div class="drp-option ${
       collaboratorIsAssigned ? "active" : ""
@@ -144,6 +143,7 @@ export const allSubtasksTemplate = (subTasks) =>
   }, "");
 
 export function addEditSubtask() {
+  log(STATE.selectedTask);
   const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
   const subtask = $("#edit-task #subtask-input");
 
@@ -180,7 +180,7 @@ export function subtaskValidEdit() {
 }
 
 export function renderEditSubtasks() {
-  log(STATE.selectedTask);
+  console.log(STATE.selectedTask)
   $("#edit-task #subtask-container").innerHTML = allSubtasksTemplate(
     STATE.selectedTask.subTasks.map(({ name }) => name)
   );

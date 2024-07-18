@@ -52,6 +52,7 @@ class State {
   set selectedTask(task) {
     if (!task.constructor.name === "Task") throw Error(task, " is not a Task!");
     this.#selectedTask = task;
+    console.log(this.#selectedTask)
   }
 }
 

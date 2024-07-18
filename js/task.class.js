@@ -1,5 +1,6 @@
 import { BaseClass } from "./base.class.js";
 import { STORAGE } from "./storage.js";
+import { cloneDeep } from "./utilities.js";
 
 export class Task extends BaseClass {
   constructor({
@@ -63,7 +64,7 @@ export class Task extends BaseClass {
 
   async update() {
     const url = `boards/${this.boardId}/tasks/${this.id}`;
-    const newTask = await STORAGE.set(url, this);
+    const newTask = await STORAGE.set(url, cloneDeep(this));
     Object.assign(this, newTask);
   }
 }
