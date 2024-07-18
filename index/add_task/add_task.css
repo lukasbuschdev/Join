@@ -175,7 +175,9 @@ dialog .add-task-card {
 
 #description {
     padding: 18px 21px;
-    height: 119px;
+    min-height: 5rem;
+    max-height: 119px;
+    overflow: auto;
 }
 
 .width-btn {
