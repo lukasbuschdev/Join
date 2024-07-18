@@ -180,6 +180,7 @@ export function subtaskValidEdit() {
 }
 
 export function renderEditSubtasks() {
+  log(STATE.selectedTask);
   $("#edit-task #subtask-container").innerHTML = allSubtasksTemplate(
     STATE.selectedTask.subTasks.map(({ name }) => name)
   );

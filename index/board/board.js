@@ -213,7 +213,7 @@ export const updateTaskUi = (
       .$(".task-priority")
       .style.setProperty(
         "--priority",
-        `url(../assets/img/icons/prio_${priority}.svg)`
+        `url(/Join/assets/img/icons/prio_${priority}.svg)`
       );
   if (assignedTo)
     taskContainer.$(".task-assigned-to").innerHTML = assignedToTemplate(
