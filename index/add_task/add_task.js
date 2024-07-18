@@ -163,7 +163,7 @@ export function getTitle() {
     titleEmpty();
   } else if (!letterRegex.test(title)) {
     titleInvalid();
-  } else if (title.length > 15) {
+  } else if (title.length > 50) {
     titleTooLong();
   } else {
     titleValid();
@@ -200,7 +200,7 @@ export function titleValid() {
 
 export function getDescription() {
   const description = $("#description").value;
-  const letterRegexDiscription = /^[A-Za-zäöüßÄÖÜ\-\/_'., "0-9]{3,150}$/;
+  const letterRegexDiscription = /^[A-Za-zäöüßÄÖÜ\-\/\_\'\.\, \!\?"0-9\n;:()\[\]]*$/g;
   if (description === "") {
     descriptionEmpty();
   } else if (!letterRegexDiscription.test(description)) {
