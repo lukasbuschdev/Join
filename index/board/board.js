@@ -28,7 +28,7 @@ import {
 } from "../../assets/templates/index/task_template.js";
 import { fullscreenTaskTemplate } from "../../assets/templates/index/fullscreen-task_template.js";
 import { editTaskTemplate } from "../../assets/templates/index/edit-task_template.js";
-import { renderBoardIds, renderDate } from "../add_task/add_task.js";
+import { renderBoardIds, renderDate, renderSubtasks } from "../add_task/add_task.js";
 import { STATE } from "../../js/state.js";
 
 export const initBoard = async () => {
@@ -87,18 +87,6 @@ export const addTaskModal = async () => {
   modal.$(".add-task-card").classList.remove("d-none");
   modal.openModal();
 };
-
-// export function toggleBoardTitleSelection() {
-//     const el = event.currentTarget
-//     el.classList.toggle('active');
-//     if (el.classList.contains('active')) {
-//         window.addEventListener('pointerdown', closeHandler = () => {
-//             if (event.target.closest('#board-title-selection')) return;
-//             el.classList.remove('active');
-//             window.removeEventListener('pointerdown', closeHandler);
-//         })
-//     }
-// }
 
 export const renderFullscreenTask = (task) => {
   if (event.which !== 1) return;
@@ -249,7 +237,7 @@ export const updateTaskUi = (
 export const editTaskInitializer = async (id) => {
   const editTaskContainer = $("#edit-task");
   editTaskContainer.innerHTML = editTaskTemplate(
-    STATE.selectedBoard.getTasks()[id]
+    STATE.selectedTask
   );
   await editTaskContainer.LANG_load();
   await renderAssignedContacts();

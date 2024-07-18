@@ -4,12 +4,11 @@ import { Task } from "./task.class.js";
 import { throttle } from "./utilities.js";
 
 let TASK_ELEMENT;
-let taskWidth;
 let offset = { x: 0, y: 0 };
 let scrollInterval;
 
-export const scrollFrequency = 20;
-export const throttleDelay = 10;
+const SCROLL_FREQUENCY = 20;
+const THROTTLE_DELAY = 10;
 
 // SETUP
 
@@ -21,12 +20,8 @@ export function addDragAndDrop() {
 
   TASK_ELEMENT.style.maxWidth = `${taskBBox.width}px`;
 
-  TASK_ELEMENT.addEventListener("pointerup", fullscreenFunctionality, {
-    once: true
-  });
-  TASK_ELEMENT.addEventListener("pointermove", dragFunctionality, {
-    once: true
-  });
+  TASK_ELEMENT.addEventListener("pointerup", fullscreenFunctionality, { once: true });
+  TASK_ELEMENT.addEventListener("pointermove", dragFunctionality, { once: true });
 }
 
 // FULLSCREEN FUNC
@@ -46,9 +41,7 @@ export function fullscreenHandler() {
 
 export function dragFunctionality() {
   // remove fullscreenListener
-  TASK_ELEMENT.removeEventListener("pointerup", fullscreenFunctionality, {
-    once: true
-  });
+  TASK_ELEMENT.removeEventListener("pointerup", fullscreenFunctionality, { once: true });
 
   // add moveListener
   window.addEventListener("pointermove", dragHandler);
@@ -57,9 +50,7 @@ export function dragFunctionality() {
   const placeholderElement = '<div class="element-placeholder"></div>';
   TASK_ELEMENT.insertAdjacentHTML("beforebegin", placeholderElement);
 
-  window.addEventListener(
-    "pointerup",
-    () => {
+  window.addEventListener( "pointerup", () => {
       // remove moveListener
       stopScroll();
       window.removeEventListener("pointermove", dragHandler);
@@ -71,12 +62,13 @@ export function dragFunctionality() {
 }
 
 export const dragHandler = throttle(() => {
-  checkDropContainers();
-  const { pageX, pageY } = event;
-  const x = Math.round(pageX - offset.x);
-  const y = Math.round(pageY - offset.y);
-  moveTask(x, y);
-}, throttleDelay);
+    checkDropContainers();
+    const { pageX, pageY } = event;
+    const x = Math.round(pageX - offset.x);
+    const y = Math.round(pageY - offset.y);
+    moveTask(x, y);
+  },
+THROTTLE_DELAY);
 
 export function moveTask(x, y) {
   TASK_ELEMENT.style.top = `${y}px`;
@@ -120,7 +112,7 @@ export function customScroll(direction) {
 }
 
 export function startScroll() {
-  scrollInterval = setInterval(scrollFunctionality, scrollFrequency);
+  scrollInterval = setInterval(scrollFunctionality, SCROLL_FREQUENCY);
 }
 
 export function stopScroll() {
