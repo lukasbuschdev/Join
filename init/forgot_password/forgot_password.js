@@ -1,12 +1,13 @@
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
+import { STORAGE } from "../../js/storage.js";
 bindInlineFunctions(getContext(), [
   "/Join/init/init/init.js",
   "/Join/js/utilities.js",
   "/Join/js/language.js"
 ]);
-import { getUserByInput } from "../../js/storage.js";
+// import { getUserByInput } from "../../js/storage.js";
 import { $, notification, throwErrors, goTo } from "../../js/utilities.js";
-import { initWebsocket } from "../../js/websocket.js";
+// import { initWebsocket } from "../../js/websocket.js";
 import { invalidEmail } from "../init/init.js";
 
 export const forgotPassword = async () => {
@@ -14,7 +15,7 @@ export const forgotPassword = async () => {
 
   const email = $("input").value;
 
-  const user = await getUserByInput(email);
+  const user = STORAGE.getUserByInput(email);
   const emailValidity = invalidEmail(email);
 
   throwErrors({ identifier: "invalid-email", bool: emailValidity });
