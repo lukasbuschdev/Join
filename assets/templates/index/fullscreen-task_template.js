@@ -36,8 +36,7 @@ export const fullscreenTaskTemplate = ({
   )}</span>
             </div>
             <div class="fullscreen-task-assignedTo column gap-8">
-                <span class="fullscreen-task-label">Assigned To: </span>
-                <div>${fullscreenTaskAssignedTo(assignedTo)}</div>
+              ${fullscreenTaskAssignedTo(assignedTo)}
             </div>
             
             <div class="fullscreen-task-subTasks column gap-8">
@@ -60,7 +59,11 @@ export const fullscreenTaskAssignedTo = (assignedTo) => {
   const assignedUsers = Object.values(STORAGE.allUsers).filter(({ id }) =>
     assignedTo.includes(id)
   );
-  return assignedUsers.reduce(
+  if (!assignedTo.length) return "";
+  return /*html*/`
+    <span class="fullscreen-task-label">Assigned To: </span><div>
+  ` +
+  assignedUsers.reduce(
     (template, { name, color }) =>
       (template += /*html*/ `
             <div class="assigned-to-contact row gap-15">
@@ -77,7 +80,7 @@ export const fullscreenTaskAssignedTo = (assignedTo) => {
             </div>
         `),
     ""
-  );
+  ) + /*html*/`</div>`;
 };
 
 export const fullscreenTaskSubTasks = (subTasks) => {
