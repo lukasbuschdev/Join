@@ -2,10 +2,10 @@ import { renderEditSubtasks } from "../../assets/templates/index/edit-task_templ
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 import { LANG } from "../../js/language.js";
 bindInlineFunctions(getContext(), [
-  "/Join/index/index/index.js",
-  "/Join/js/utilities.js",
-  "/Join/js/language.js",
-  "/Join/index/summary/summary.js"
+	"/Join/index/index/index.js",
+	"/Join/js/utilities.js",
+	"/Join/js/language.js",
+	"/Join/index/summary/summary.js"
 ]);
 
 import { STORAGE } from "../../js/storage.js";
@@ -22,23 +22,23 @@ const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
  * If no boards are available, it exits early.
  */
 export function initAddTask() {
-  if (!Object.values(STORAGE.currentUserBoards).length) return;
-  renderBoardIds();
-  renderDate();
-  $(".add-task-card").LANG_load();
-  resetArrays();
-  $(".add-task-card").classList.remove("d-none");
+	if (!Object.values(STORAGE.currentUserBoards).length) return;
+	renderBoardIds();
+	renderDate();
+	$(".add-task-card").LANG_load();
+	resetArrays();
+	$(".add-task-card").classList.remove("d-none");
 }
 
 /**
  * Renders the available board IDs in the dropdown menu.
  */
 export function renderBoardIds() {
-  const drpContainer = $("#drp-board-container");
-  drpContainer.innerHTML = "";
-  Object.values(STORAGE.currentUserBoards).forEach((board) => {
-    drpContainer.innerHTML += `<div class="drp-option" onclick="selectBoard(${board.id})">${board.name}</div>`;
-  });
+	const drpContainer = $("#drp-board-container");
+	drpContainer.innerHTML = "";
+	Object.values(STORAGE.currentUserBoards).forEach((board) => {
+		drpContainer.innerHTML += `<div class="drp-option" onclick="selectBoard(${board.id})">${board.name}</div>`;
+	});
 }
 
 /**
@@ -46,13 +46,13 @@ export function renderBoardIds() {
  * @param {string} boardId - The ID of the board to select.
  */
 export function selectBoard(boardId) {
-  const selectedBoard = STORAGE.currentUserBoards[boardId];
-  STATE.selectedBoard = selectedBoard;
-  event.currentTarget.toggleDropDown();
+	const selectedBoard = STORAGE.currentUserBoards[boardId];
+	STATE.selectedBoard = selectedBoard;
+	event.currentTarget.toggleDropDown();
 
-  renderSelectedBoard(selectedBoard);
-  renderCategories(selectedBoard);
-  renderAssignToContacts();
+	renderSelectedBoard(selectedBoard);
+	renderCategories(selectedBoard);
+	renderAssignToContacts();
 }
 
 /**
@@ -60,64 +60,65 @@ export function selectBoard(boardId) {
  * @param {Board} selectedBoard - The selected board object.
  */
 export function renderSelectedBoard(selectedBoard) {
-  $("#selected-board").innerText = selectedBoard.name;
+	$("#selected-board").innerText = selectedBoard.name;
 }
 
 /**
  * Checks if a board is selected and updates UI elements accordingly.
  */
 export function checkSelectedBoard() {
-  const isDefaultSelection = $("#selected-board").innerText === LANG.currentLangData["select-board"];
-  $("#select-a-board").classList.toggle("error-inactive", !isDefaultSelection);
-  $("#drp-wrapper-board").classList.toggle("input-warning", isDefaultSelection);
+	const isDefaultSelection =
+		$("#selected-board").innerText === LANG.currentLangData["select-board"];
+	$("#select-a-board").classList.toggle("error-inactive", !isDefaultSelection);
+	$("#drp-wrapper-board").classList.toggle("input-warning", isDefaultSelection);
 }
 
 /**
  * Renders the list of collaborators to assign to the task.
  */
 export function renderAssignToContacts() {
-  const drpContainer = $("#drp-collab-container");
-  const assignToUser = document.createElement("div");
-  assignToUser.innerHTML = renderSelfToAssign();
+	const drpContainer = $("#drp-collab-container");
+	const assignToUser = document.createElement("div");
+	assignToUser.innerHTML = renderSelfToAssign();
 
-  drpContainer.innerHTML = "";
-  assignToUser.LANG_load();
-  drpContainer.append(assignToUser.children[0]);
+	drpContainer.innerHTML = "";
+	assignToUser.LANG_load();
+	drpContainer.append(assignToUser.children[0]);
 
-  STATE.selectedBoard.collaborators.forEach((collaboratorId) => {
-    const collaborator = STORAGE.currentUserContacts[collaboratorId];
-    if (!collaborator || collaborator === STORAGE.currentUser.id) return;
-    const collaboratorOption = document.createElement("div");
-    collaboratorOption.innerHTML = renderCollaboratorsToAssign(collaborator);
-    drpContainer.append(collaboratorOption.children[0]);
-  });
-  drpContainer.LANG_load();
+	STATE.selectedBoard.collaborators.forEach((collaboratorId) => {
+		const collaborator = STORAGE.currentUserContacts[collaboratorId];
+		if (!collaborator || collaborator === STORAGE.currentUser.id) return;
+		const collaboratorOption = document.createElement("div");
+		collaboratorOption.innerHTML = renderCollaboratorsToAssign(collaborator);
+		drpContainer.append(collaboratorOption.children[0]);
+	});
+	drpContainer.LANG_load();
 }
 
 /**
  * Toggles the selection of a collaborator and updates the UI.
  */
 export function selectCollaborator() {
-  event.currentTarget.classList.toggle("active");
-  const collaboratorId = event.currentTarget.dataset.id;
-  const index = selectedCollaborators.indexOf(collaboratorId.toString());
+	event.currentTarget.classList.toggle("active");
+	const collaboratorId = event.currentTarget.dataset.id;
+	const index = selectedCollaborators.indexOf(collaboratorId.toString());
 
-  index === -1 ? selectedCollaborators.push(collaboratorId.toString()) : selectedCollaborators.splice(index, 1);
+	index === -1 ? selectedCollaborators.push(collaboratorId.toString()) : selectedCollaborators.splice(index, 1);
 
-  renderCollaboratorInput(selectedCollaborators);
+	renderCollaboratorInput(selectedCollaborators);
 }
 
 /**
  * Checks if a collaborator is selected and updates UI elements accordingly.
  */
 export function checkSelectedCollaborator() {
-  if (selectedCollaborators.length == 0) {
-    $("#select-a-collaborator").classList.remove("error-inactive");
-    $("#drp-wrapper-collaborator").classList.add("input-warning");
-    return;
-  }
-  $("#select-a-collaborator").classList.add("error-inactive");
-  $("#drp-wrapper-collaborator").classList.remove("input-warning");
+	if (selectedCollaborators.length == 0) {
+		$("#select-a-collaborator").classList.remove("error-inactive");
+		$("#drp-wrapper-collaborator").classList.add("input-warning");
+		return;
+	}
+	$("#select-a-collaborator").classList.add("error-inactive");
+	$("#drp-wrapper-collaborator").classList.remove("input-warning");
 }
 
 /**
@@ -125,56 +126,56 @@ export function checkSelectedCollaborator() {
  * @returns {string|undefined} - The task title if valid, otherwise undefined.
  */
 export function getTitle() {
-  const title = $("#title").value;
-  if (title === "") {
-    titleEmpty();
-  } else if (!letterRegex.test(title)) {
-    titleInvalid();
-  } else if (title.length > 50) {
-    titleTooLong();
-  } else {
-    titleValid();
-    return title;
-  }
+	const title = $("#title").value;
+	if (title === "") {
+		titleEmpty();
+	} else if (!letterRegex.test(title)) {
+		titleInvalid();
+	} else if (title.length > 50) {
+		titleTooLong();
+	} else {
+		titleValid();
+		return title;
+	}
 }
 
 /**
  * Shows an error message when the title is empty.
  */
 export function titleEmpty() {
-  $("#enter-a-title").classList.remove("error-inactive");
-  $("#title").classList.add("input-warning");
-  $("#title-too-long").classList.add("error-inactive");
+	$("#enter-a-title").classList.remove("error-inactive");
+	$("#title").classList.add("input-warning");
+	$("#title-too-long").classList.add("error-inactive");
 }
 
 /**
  * Shows an error message when the title contains invalid characters.
  */
 export function titleInvalid() {
-  $("#enter-a-title").classList.add("error-inactive");
-  $("#title-letters-only").classList.remove("error-inactive");
-  $("#title").classList.add("input-warning");
-  $("#title-too-long").classList.add("error-inactive");
+	$("#enter-a-title").classList.add("error-inactive");
+	$("#title-letters-only").classList.remove("error-inactive");
+	$("#title").classList.add("input-warning");
+	$("#title-too-long").classList.add("error-inactive");
 }
 
 /**
  * Shows an error message when the title is too long.
  */
 export function titleTooLong() {
-  $("#title").classList.add("input-warning");
-  $("#title-letters-only").classList.add("error-inactive");
-  $("#enter-a-title").classList.add("error-inactive");
-  $("#title-too-long").classList.remove("error-inactive");
+	$("#title").classList.add("input-warning");
+	$("#title-letters-only").classList.add("error-inactive");
+	$("#enter-a-title").classList.add("error-inactive");
+	$("#title-too-long").classList.remove("error-inactive");
 }
 
 /**
  * Validates the title input.
  */
 export function titleValid() {
-  $("#enter-a-title").classList.add("error-inactive");
-  $("#title-letters-only").classList.add("error-inactive");
-  $("#title-too-long").classList.add("error-inactive");
-  $("#title").classList.remove("input-warning");
+	$("#enter-a-title").classList.add("error-inactive");
+	$("#title-letters-only").classList.add("error-inactive");
+	$("#title-too-long").classList.add("error-inactive");
+	$("#title").classList.remove("input-warning");
 }
 
 /**
@@ -182,42 +183,42 @@ export function titleValid() {
  * @returns {string|undefined} - The task description if valid, otherwise undefined.
  */
 export function getDescription() {
-  const description = $("#description").value;
-  const letterRegexDescription = /^[A-Za-zäöüßÄÖÜ\-\/\_\'\.\, \!\?"0-9\n;:()\[\]]*$/g;
-  if (description === "") {
-    descriptionEmpty();
-  } else if (!letterRegexDescription.test(description)) {
-    descriptionInvalid();
-  } else {
-    descriptionValid();
-    return description;
-  }
+	const description = $("#description").value;
+	const letterRegexDescription = /^[A-Za-zäöüßÄÖÜ\-\/\_\'\.\, \!\?"0-9\n;:()\[\]]*$/g;
+	if (description === "") {
+		descriptionEmpty();
+	} else if (!letterRegexDescription.test(description)) {
+		descriptionInvalid();
+	} else {
+		descriptionValid();
+		return description;
+	}
 }
 
 /**
  * Shows an error message when the description is empty.
  */
 export function descriptionEmpty() {
-  $("#enter-a-description").classList.remove("error-inactive");
-  $("#description").classList.add("input-warning");
+	$("#enter-a-description").classList.remove("error-inactive");
+	$("#description").classList.add("input-warning");
 }
 
 /**
  * Shows an error message when the description contains invalid characters.
  */
 export function descriptionInvalid() {
-  $("#enter-a-description").classList.add("error-inactive");
-  $("#description").classList.add("input-warning");
-  $("#description-letters-only").classList.remove("error-inactive");
+	$("#enter-a-description").classList.add("error-inactive");
+	$("#description").classList.add("input-warning");
+	$("#description-letters-only").classList.remove("error-inactive");
 }
 
 /**
  * Validates the description input.
  */
 export function descriptionValid() {
-  $("#description-letters-only").classList.add("error-inactive");
-  $("#enter-a-description").classList.add("error-inactive");
-  $("#description").classList.remove("input-warning");
+	$("#description-letters-only").classList.add("error-inactive");
+	$("#enter-a-description").classList.add("error-inactive");
+	$("#description").classList.remove("input-warning");
 }
 
 /**
@@ -225,10 +226,10 @@ export function descriptionValid() {
  * @param {Board} selectedBoard - The selected board object containing categories.
  */
 export function renderCategories(selectedBoard) {
-  const drpContainer = $("#drp-categories");
-  drpContainer.innerHTML = "";
+	const drpContainer = $("#drp-categories");
+	drpContainer.innerHTML = "";
 
-  Object.entries(selectedBoard.categories).forEach((category) => drpContainer.innerHTML += categoryTemplate(category));
+	Object.entries(selectedBoard.categories).forEach((category) => (drpContainer.innerHTML += categoryTemplate(category)));
 }
 
 /**
@@ -236,8 +237,8 @@ export function renderCategories(selectedBoard) {
  * @param {string} category - The selected category.
  */
 export function renderSelectedCategory(category) {
-  event.currentTarget.toggleDropDown();
-  $("#select-task-category").innerHTML = category;
+	event.currentTarget.toggleDropDown();
+	$("#select-task-category").innerHTML = category;
 }
 
 /**
@@ -245,7 +246,7 @@ export function renderSelectedCategory(category) {
  * @returns {string} - The selected category.
  */
 export function getSelectedCategory() {
-  return $("#select-task-category").innerText;
+	return $("#select-task-category").innerText;
 }
 
 /**
@@ -253,19 +254,19 @@ export function getSelectedCategory() {
  * @returns {string} - The formatted date.
  */
 export function getFormattedDate() {
-  const today = new Date();
-  const day = String(today.getDate()).padStart(2, "0");
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const year = today.getFullYear();
+	const today = new Date();
+	const day = String(today.getDate()).padStart(2, "0");
+	const month = String(today.getMonth() + 1).padStart(2, "0");
+	const year = today.getFullYear();
 
-  return `${day}/${month}/${year}`;
+	return `${day}/${month}/${year}`;
 }
 
 /**
  * Renders the current date in the date input field.
  */
 export function renderDate() {
-  $("#date").value = getFormattedDate();
+	$("#date").value = getFormattedDate();
 }
 
 /**
@@ -273,40 +274,40 @@ export function renderDate() {
  * @returns {string|undefined} - The due date if valid, otherwise undefined.
  */
 export function getDueDate() {
-  const dateString = $("#date").value;
-  if (dateString == "") return dateEmpty();
-  if (!dateFormat(dateString)) {
-    dateWrongFormat();
-  } else if (dateFormat(dateString)) {
-    dateValid();
-    return dateString;
-  }
+	const dateString = $("#date").value;
+	if (dateString == "") return dateEmpty();
+	if (!dateFormat(dateString)) {
+		dateWrongFormat();
+	} else if (dateFormat(dateString)) {
+		dateValid();
+		return dateString;
+	}
 }
 
 /**
  * Shows an error message when the due date is empty.
  */
 export function dateEmpty() {
-  $("#enter-a-dueDate").classList.remove("error-inactive");
-  $("#date").classList.add("input-warning");
+	$("#enter-a-dueDate").classList.remove("error-inactive");
+	$("#date").classList.add("input-warning");
 }
 
 /**
  * Shows an error message when the due date format is incorrect.
  */
 export function dateWrongFormat() {
-  $("#enter-a-dueDate").classList.add("error-inactive");
-  $("#date").classList.add("input-warning");
-  $("#wrong-date-format").classList.remove("error-inactive");
+	$("#enter-a-dueDate").classList.add("error-inactive");
+	$("#date").classList.add("input-warning");
+	$("#wrong-date-format").classList.remove("error-inactive");
 }
 
 /**
  * Validates the due date input.
  */
 export function dateValid() {
-  $("#enter-a-dueDate").classList.add("error-inactive");
-  $("#date").classList.remove("input-warning");
-  $("#wrong-date-format").classList.add("error-inactive");
+	$("#enter-a-dueDate").classList.add("error-inactive");
+	$("#date").classList.remove("input-warning");
+	$("#wrong-date-format").classList.add("error-inactive");
 }
 
 /**
@@ -314,10 +315,10 @@ export function dateValid() {
  * @returns {string|undefined} - The selected priority or undefined if not selected.
  */
 export function checkPriority() {
-  const activeButton = $(".btn-priority button.active");
+	const activeButton = $(".btn-priority button.active");
 
-  $("#select-a-priority").classList.toggle("error-inactive", activeButton);
-  return activeButton?.$(".priority").dataset.lang;
+	$("#select-a-priority").classList.toggle("error-inactive", activeButton);
+	return activeButton?.$(".priority").dataset.lang;
 }
 
 /**
@@ -325,7 +326,7 @@ export function checkPriority() {
  * @returns {Array} - An array of new subtasks.
  */
 export function getSubtasks() {
-  return subtasks.map((subtaskName) => ({ name: subtaskName, done: false }));
+	return subtasks.map((subtaskName) => ({ name: subtaskName, done: false }));
 }
 
 /**
@@ -333,29 +334,29 @@ export function getSubtasks() {
  * retuns early on erronious input
  */
 export async function addTask() {
-  const dir = currentDirectory();
-  checkSelectedBoard();
-  checkSelectedCollaborator();
+	const dir = currentDirectory();
+	checkSelectedBoard();
+	checkSelectedCollaborator();
 
-  const taskData = {
-    selectedBoard: STATE.selectedBoard,
-    title: getTitle(),
-    description: getDescription(),
-    category: getSelectedCategory(),
-    selectedCollaborators,
-    dueDate: getDueDate(),
-    priority: checkPriority(),
-    subtasks: getSubtasks()
-  };
+	const taskData = {
+		selectedBoard: STATE.selectedBoard,
+		title: getTitle(),
+		description: getDescription(),
+		category: getSelectedCategory(),
+		selectedCollaborators,
+		dueDate: getDueDate(),
+		priority: checkPriority(),
+		subtasks: getSubtasks()
+	};
 
-  if (checkAddTaskInputs(Object.values(taskData))) return;
+	if (checkAddTaskInputs(Object.values(taskData))) return;
 
-  await createNewTask(taskData);
+	await createNewTask(taskData);
 
-  notification("task-created");
-  resetArrays();
-  
-  dir === "board" ? location.reload() : $("#board").click();
+	notification("task-created");
+	resetArrays();
+
+	dir === "board" ? location.reload() : $("#board").click();
 }
 
 /**
@@ -364,39 +365,30 @@ export async function addTask() {
  * @returns {boolean} - True if any input field is invalid, otherwise false.
  */
 export function checkAddTaskInputs(addTaskData) {
-  return addTaskData.some((singleInputField) => singleInputField === undefined);
+	return addTaskData.some((singleInputField) => singleInputField === undefined);
 }
 
 /**
  * Creates a new task and adds it to the selected board.
  * @param {Object} taskData - The task data to add.
  */
-export async function createNewTask({ selectedBoard, title, description, category, selectedCollaborators, dueDate, priority, subtasks }) {
-  const newTask = {
-    title: title,
-    description: description,
-    category: category,
-    assignedTo: selectedCollaborators,
-    dueDate: dueDate,
-    priority: priority,
-    subTasks: subtasks
-  };
-
-  await selectedBoard.addTask(newTask);
+export async function createNewTask({ selectedBoard, title, description, category, selectedCollaborators, dueDate, priority, subTasks }) {
+	const newTask = { title, description, category, assignedTo: selectedCollaborators, dueDate, priority, subTasks };
+	return selectedBoard.addTask(newTask);
 }
 
 /**
  * Clears the subtask input field.
  */
 export function clearSubtaskInput() {
-  $(".subtasks input").value = "";
+	$(".subtasks input").value = "";
 }
 
 /**
  * Toggles the visibility of subtask input buttons based on input.
  */
 export function checkSubtaskInput() {
-  $(".subtasks .inp-buttons").classList.toggle("d-none", $(".subtasks input").value.length === 0);
+	$(".subtasks .inp-buttons").classList.toggle("d-none", $(".subtasks input").value.length === 0);
 }
 
 /**
@@ -404,61 +396,61 @@ export function checkSubtaskInput() {
  * renders subtasks
  */
 export function addSubtask() {
-  const subtaskValue = $(".subtasks input");
+	const subtaskValue = $(".subtasks input");
 
-  if (!letterRegex.test(subtaskValue.value)) {
-    subtaskInvalid();
-  } else if (subtaskValue.value.length > 30) {
-    subtaskTooLong();
-  } else {
-    subtaskValid();
-    subtasks.push(subtaskValue.value);
-    subtaskValue.value = "";
-  }
-  $(".subtasks .inp-buttons").classList.add("d-none");
-  renderSubtasks();
+	if (!letterRegex.test(subtaskValue.value)) {
+		subtaskInvalid();
+	} else if (subtaskValue.value.length > 30) {
+		subtaskTooLong();
+	} else {
+		subtaskValid();
+		subtasks.push(subtaskValue.value);
+		subtaskValue.value = "";
+	}
+	$(".subtasks .inp-buttons").classList.add("d-none");
+	renderSubtasks();
 }
 
 /**
  * Shows an error message when the subtask contains invalid characters.
  */
 export function subtaskInvalid() {
-  $("#error-container").classList.remove("d-none");
-  $("#subtask-letters-only").classList.remove("error-inactive");
-  $("#add-subtask").classList.add("input-warning");
+	$("#error-container").classList.remove("d-none");
+	$("#subtask-letters-only").classList.remove("error-inactive");
+	$("#add-subtask").classList.add("input-warning");
 }
 
 /**
  * Shows an error message when the subtask is too long.
  */
 export function subtaskTooLong() {
-  $("#error-container").classList.remove("d-none");
-  $("#add-subtask").classList.add("input-warning");
-  $("#subtask-letters-only").classList.add("error-inactive");
-  $("#subtask-too-long").classList.remove("error-inactive");
+	$("#error-container").classList.remove("d-none");
+	$("#add-subtask").classList.add("input-warning");
+	$("#subtask-letters-only").classList.add("error-inactive");
+	$("#subtask-too-long").classList.remove("error-inactive");
 }
 
 /**
  * Validates the subtask input.
  */
 export function subtaskValid() {
-  $("#subtask-letters-only").classList.add("error-inactive");
-  $("#subtask-too-long").classList.add("error-inactive");
-  $("#add-subtask").classList.remove("input-warning");
-  $("#error-container").classList.add("d-none");
+	$("#subtask-letters-only").classList.add("error-inactive");
+	$("#subtask-too-long").classList.add("error-inactive");
+	$("#add-subtask").classList.remove("input-warning");
+	$("#error-container").classList.add("d-none");
 }
 
 /**
  * Renders the list of subtasks.
  */
 export function renderSubtasks() {
-  const subtaskContainer = $("#subtask-container");
-  subtaskContainer.innerHTML = "";
+	const subtaskContainer = $("#subtask-container");
+	subtaskContainer.innerHTML = "";
 
-  for (let i = 0; i < subtasks.length; i++) {
-    const subtask = subtasks[i];
-    subtaskContainer.innerHTML += renderSubtaskTemplate(subtask, i);
-  }
+	for (let i = 0; i < subtasks.length; i++) {
+		const subtask = subtasks[i];
+		subtaskContainer.innerHTML += renderSubtaskTemplate(subtask, i);
+	}
 }
 
 /**
@@ -467,21 +459,21 @@ export function renderSubtasks() {
  * @param {number} i - The index of the subtask to edit.
  */
 export function editSubtask(i) {
-  const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
-  const range = document.createRange();
-  const selection = window.getSelection();
-  subtaskInput.focus();
-  subtaskInput.setAttribute("contenteditable", "true");
+	const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
+	const range = document.createRange();
+	const selection = window.getSelection();
+	subtaskInput.focus();
+	subtaskInput.setAttribute("contenteditable", "true");
 
-  $("#single-subtask" + i).classList.toggle("edit-btn-active");
-  $(".subtask-edit-btn" + i).classList.toggle("d-none");
-  $(".save-edited-subtask-btn" + i).classList.toggle("d-none");
+	$("#single-subtask" + i).classList.toggle("edit-btn-active");
+	$(".subtask-edit-btn" + i).classList.toggle("d-none");
+	$(".save-edited-subtask-btn" + i).classList.toggle("d-none");
 
-  range.selectNodeContents(subtaskInput);
-  range.collapse(false);
+	range.selectNodeContents(subtaskInput);
+	range.collapse(false);
 
-  selection.removeAllRanges();
-  selection.addRange(range);
+	selection.removeAllRanges();
+	selection.addRange(range);
 }
 
 /**
@@ -489,13 +481,13 @@ export function editSubtask(i) {
  * @param {number} i - The index of the subtask to save.
  */
 export function saveEditedSubtask(i) {
-  const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
-  subtasks[i] = subtaskInput.innerText;
-  subtaskInput.setAttribute("contenteditable", "false");
+	const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
+	subtasks[i] = subtaskInput.innerText;
+	subtaskInput.setAttribute("contenteditable", "false");
 
-  $$(`.save-edited-subtask-btn, .save-edited-subtask-btn${i}, .subtask-edit-btn${i}`).forEach((button) => button.classList.toggle("d-none"));
+	$$(`.save-edited-subtask-btn, .save-edited-subtask-btn${i}, .subtask-edit-btn${i}`).forEach((button) => button.classList.toggle("d-none"));
 
-  $("#single-subtask" + i).classList.toggle("edit-btn-active");
+	$("#single-subtask" + i).classList.toggle("edit-btn-active");
 }
 
 /**
@@ -503,23 +495,23 @@ export function saveEditedSubtask(i) {
  * @param {number} i - The index of the subtask to delete.
  */
 export function deleteSubtask(i) {
-  const isInEditTask = event.currentTarget.closest("#edit-task");
-  
-  (isInEditTask ? STATE.selectedTask.subTasks : subtasks).splice(i, 1);
-  isInEditTask ? renderEditSubtasks() : renderSubtasks();
+	const isInEditTask = event.currentTarget.closest("#edit-task");
+
+	(isInEditTask ? STATE.selectedTask.subTasks : subtasks).splice(i, 1);
+	isInEditTask ? renderEditSubtasks() : renderSubtasks();
 }
 
 /**
  * Resets the selected collaborators and subtasks arrays.
  */
 export function resetArrays() {
-  selectedCollaborators.length = 0;
-  subtasks.length = 0;
+	selectedCollaborators.length = 0;
+	subtasks.length = 0;
 }
 
 /**
  * Resets the priority button states.
  */
 export function resetPriorityButton() {
-  $$(".btn-priority button").forEach((button) => button.classList.remove("active"));
+	$$(".btn-priority button").forEach((button) => button.classList.remove("active"));
 }
