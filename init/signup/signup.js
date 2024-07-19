@@ -15,8 +15,8 @@ import { invalidEmail, invalidName, invalidPassword } from "../init/init.js";
 export let SOCKET;
 
 export async function initSignup() {
-  await STORAGE.init();
   window.addEventListener("langLoaded", initPrivacyLink, { once: true });
+  STORAGE.init();
 }
 
 export function initPrivacyLink() {
