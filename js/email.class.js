@@ -10,8 +10,8 @@ export class Email {
 	}
 
 	async send() {
-		const { socket } = STORAGE.webSocket;
 		STORAGE.webSocket.init(this.recipient);
+		const { socket } = STORAGE.webSocket;
 		const mailOptions = {
 			to: this.recipient.email,
 			subject: this.subject,
