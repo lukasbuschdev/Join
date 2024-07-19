@@ -1,4 +1,5 @@
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
+import { STORAGE } from "../../js/storage.js";
 bindInlineFunctions(getContext(), [
   "/Join/init/init/init.js",
   "/Join/js/language.js",
@@ -18,7 +19,6 @@ export function initSignup() {
 }
 
 export function initPrivacyLink() {
-  console.log(`init privacy link`);
   const privacyContainer = $('[data-lang="register-privacy"]');
   if (!privacyContainer) return;
   privacyContainer.removeAttribute("data-lang");
@@ -39,9 +39,9 @@ export async function validateInputs({
   confirmPassword
 }) {
   const nameValidity = invalidName(name);
-  const nameInUse = !!(await getUserByInput(name));
+  const nameInUse = !!(STORAGE.getUserByInput(name));
   const emailValidity = invalidEmail(email);
-  const emailInUse = !!(await getUserByInput(email));
+  const emailInUse = !!(STORAGE.getUserByInput(email));
   const passwordValidity = invalidPassword(password);
   const differentPasswords = password !== confirmPassword;
   const privacyAccepted = !$('[type="checkbox"]').checked;
