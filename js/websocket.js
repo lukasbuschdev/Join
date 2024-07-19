@@ -1,11 +1,12 @@
 import { io } from "https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.esm.min.js";
-import { error, notification } from "./utilities.js";
+import { currentUserId, error, notification } from "./utilities.js";
 import { checkNotifications } from "../index/index/index.js";
 
 export class WebSocket {
 	url = "wss://join-websocket.onrender.com";
 	notifySound = new Audio("/Join/assets/audio/mixkit-soap-bubble-sound-2925.wav");
 	#socket;
+	/**@type {string|null} */
 
 	get socket() {
 		if (!this.#socket) throw new Error(`io not defined! call SOCKET.init()`);
@@ -17,15 +18,17 @@ export class WebSocket {
 	}
 
 	constructor(storage) {
-		const user = storage.currentUser;
-		if (!user) throw Error(`can't use websocket without a currentUser!`);
-		this.socket = io(this.url, { query: { uid: user.id } });
+		this.storage = storage;
+	}
+	
+	init(userId) {
+		this.socket = io(this.url, { query: { uid: userId } });
 		this.socket.on("close", () => notification("websocket-disconnect"));
 		this.socket.on("reconnect", () => notification("websocket-reconnect"));
 		this.socket.on("notification", async () => {
 			console.log("notification recieved!");
 			this.notifySound.play();
-			await storage.init();
+			await this.storage.init();
 			checkNotifications();
 		});
 	}

@@ -75,7 +75,8 @@ class Storage {
   async init() {
     this.#data = await this.#download();
     this.#isLoaded = true;
-    if(this.currentUserId()) this.webSocket = new WebSocket(this);
+    this.webSocket = new WebSocket(this);
+    this.webSocket.init(this.currentUserId());
     return this;
   }
 
