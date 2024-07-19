@@ -1,3 +1,4 @@
+import { selectedCollaborators } from "../../../index/add_task/add_task.js";
 import { STORAGE } from "../../../js/storage.js";
 import { $, getInitialsOfName } from "../../../js/utilities.js";
 
@@ -47,11 +48,11 @@ export function renderCollaboratorsToAssign(collaborator) {
  * Renders the selected collaborators in the input container.
  * @param {Array<string>} collaboratorIds
  */
-export function renderCollaboratorInput(collaboratorIds) {
+export function renderCollaboratorInput() {
     const inputContainerCollaborator = $("#fullscreen-task-modal[open] #selected-collaborator-input") ?? $("#selected-collaborator-input");
     inputContainerCollaborator.innerHTML = "";
 
-    collaboratorIds.forEach((collaboratorId) => {
+    selectedCollaborators.forEach((collaboratorId) => {
         const users = STORAGE.data.users[collaboratorId];
         inputContainerCollaborator.innerHTML += /*html*/ `
           <div class="input-collaborator user-img-container grid-center" style="--user-clr: ${users.color}">

@@ -127,9 +127,7 @@ export const collaboratorTemplate = (id, assignedTo) => {
   const { name, img, color } = STORAGE.allUsers[id];
   const collaboratorIsAssigned = assignedTo.includes(id);
   return /*html*/ `
-    <div class="drp-option ${
-      collaboratorIsAssigned ? "active" : ""
-    }" onclick="selectCollaborator()">
+    <div data-id="${id}" class="drp-option ${ collaboratorIsAssigned ? "active" : "" }" onclick="selectCollaborator()">
         <div class="user-img-container grid-center" style="--user-clr: ${color}">
             <span>${getInitialsOfName(name)}</span>
             <img src="${img}">

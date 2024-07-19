@@ -105,7 +105,7 @@ export function selectCollaborator() {
 
 	index === -1 ? selectedCollaborators.push(collaboratorId.toString()) : selectedCollaborators.splice(index, 1);
 
-	renderCollaboratorInput(selectedCollaborators);
+	renderCollaboratorInput();
 }
 
 /**

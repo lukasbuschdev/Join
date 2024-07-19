@@ -20,14 +20,14 @@ import { renderBoardIds, renderDate, selectedCollaborators } from "../add_task/a
 import { STATE } from "../../js/state.js";
 import { renderCollaboratorInput } from "../../assets/templates/index/add_task_templates.js";
 
-export const initBoard = async () => {
+export async function initBoard() {
 	if (!STORAGE.currentUser.boards.length) return;
 	renderBoardTitleSelection();
 	renderTasks();
 	$("#tasks").classList.remove("d-none");
 };
 
-export const renderTasks = async (filter) => {
+export async function renderTasks(filter) {
 	const { tasks, name } = STATE.selectedBoard;
 
 	const boardHeader = $("#board-header h2");
@@ -58,16 +58,16 @@ export const searchTasks = debounce(() => {
 	renderTasks(searchInput);
 }, 200);
 
-export const focusInput = () => {
+export function focusInput() {
 	$("#search-task input").focus();
 };
 
-export const clearTaskSearch = () => {
+export function clearTaskSearch() {
 	$("#search-task input").value = "";
 	renderTasks();
 };
 
-export const addTaskModal = async () => {
+export async function addTaskModal() {
 	renderBoardIds();
 	renderDate();
 	const modal = $("#add-task-modal");
@@ -75,7 +75,7 @@ export const addTaskModal = async () => {
 	modal.openModal();
 };
 
-export const renderFullscreenTask = (task) => {
+export function renderFullscreenTask(task) {
 	if (event.which !== 1) return;
 	const modal = $("#fullscreen-task-modal");
 	const initialTask = cloneDeep(task);
@@ -87,7 +87,7 @@ export const renderFullscreenTask = (task) => {
 	});
 };
 
-export const saveEditedTask = () => {
+export function saveEditedTask() {
 	const editedTaskData = {
 		title: $("#fullscreen-task-modal #title").value,
 		description: $("#fullscreen-task-modal #description").value,
@@ -109,7 +109,7 @@ export const saveEditedTask = () => {
 	toggleFullscreenState();
 };
 
-export const saveTaskChanges = (initialTask) => {
+export function saveTaskChanges(initialTask) {
 	const updatedTask = STATE.selectedTask;
 
 	const differences = getJsonChanges(updatedTask, initialTask);
@@ -119,7 +119,7 @@ export const saveTaskChanges = (initialTask) => {
 	}
 };
 
-export const deleteTask = () =>
+export function deleteTask() {
 	confirmation(`delete-task, {taskName: '${STATE.selectedTask.title}'}`, async () => {
 		const { boardId, id, name } = STATE.selectedTask;
 		const modal = $("#fullscreen-task-modal");
@@ -132,8 +132,9 @@ export const deleteTask = () =>
 		taskContainer.innerHTML = taskContainer.innerHTML.trim();
 		notification(`task-deleted, {taskName: '${name}'}`);
 	});
+}
 
-export const getJsonChanges = (newJson, oldJson) => {
+export function getJsonChanges(newJson, oldJson) {
 	let differences = {};
 	for (const key in newJson) {
 		if (typeof newJson[key] == "function") continue;
@@ -144,7 +145,7 @@ export const getJsonChanges = (newJson, oldJson) => {
 	return differences;
 };
 
-export const changeSubtaskDoneState = async (subTaskName) => {
+export async function changeSubtaskDoneState(subTaskName) {
 	const subTaskCheckBox = event.currentTarget;
 	const isChecked = subTaskCheckBox.checked;
 
@@ -158,65 +159,45 @@ export const changeSubtaskDoneState = async (subTaskName) => {
 	STATE.selectedTask.subTasks[subTaskIndex].done = isChecked;
 };
 
-export const updateTaskUi = (
-	{ title = null, description = null, priority = null, assignedTo = null, subTasks = null },
-	initialTask
-) => {
+export function updateTaskUi({ title = null, description = null, priority = null, assignedTo = null, subTasks = null }, initialTask) {
 	const taskContainer = $(`[data-id="${STATE.selectedTask.boardId}/${STATE.selectedTask.id}"]`);
 
 	if (title) taskContainer.$(".task-title").textAnimation(title);
 	if (description) taskContainer.$(".task-description").textAnimation(description);
-	if (priority)
-		taskContainer
-			.$(".task-priority")
-			.style.setProperty("--priority", `url(/Join/assets/img/icons/prio_${priority}.svg)`);
-	if (assignedTo)
-		taskContainer.$(".task-assigned-to").innerHTML = assignedToTemplate(
-			assignedTo.map((id) => STORAGE.users[id])
-		);
-	if (subTasks) {
-		if (!STATE.selectedTask.subTasks.length)
-			return taskContainer.$(".task-description").nextElementSibling.remove();
-		if (!initialTask.subTasks.length) {
-			taskContainer
-				.$(".task-description")
-				.insertAdjacentHTML("afterend", progressTemplate(STATE.selectedTask.subTasks));
-		}
-		const currentSubtaskCount = STATE.selectedTask.subTasks.filter(
-			({ done }) => done == true
-		).length;
-		const totalSubtaskCount = STATE.selectedTask.subTasks.length;
-		taskContainer.$(
-			".task-progress-counter span"
-		).innerText = `${currentSubtaskCount} / ${totalSubtaskCount}`;
-		taskContainer
-			.$(".task-progress-bar")
-			.style.setProperty("--progress", `${currentSubtaskCount / totalSubtaskCount}`);
-	}
-};
+	if (priority) taskContainer.$(".task-priority").style.setProperty("--priority", `url(/Join/assets/img/icons/prio_${priority}.svg)`);
+	if (assignedTo) taskContainer.$(".task-assigned-to").innerHTML = assignedToTemplate(assignedTo.map((id) => STORAGE.allUsers[id]));
+	if (!subTasks) return;
 
-export const editTaskInitializer = () => {
+	if (!STATE.selectedTask.subTasks.length) return taskContainer.$(".task-description").nextElementSibling.remove();
+	if (!initialTask.subTasks.length) taskContainer.$(".task-description").insertAdjacentHTML("afterend", progressTemplate(STATE.selectedTask.subTasks));
+
+	const currentSubtaskCount = STATE.selectedTask.subTasks.filter(({ done }) => done == true).length;
+	const totalSubtaskCount = STATE.selectedTask.subTasks.length;
+	taskContainer.$(".task-progress-counter span").innerText = `${currentSubtaskCount} / ${totalSubtaskCount}`;
+	taskContainer.$(".task-progress-bar").style.setProperty("--progress", `${currentSubtaskCount / totalSubtaskCount}`);
+}
+export function editTaskInitializer() {
 	const task = STATE.selectedTask;
 	const editTaskContainer = $("#edit-task");
 	editTaskContainer.innerHTML = editTaskTemplate(task);
 	editTaskContainer.LANG_load();
-	renderAssignedContacts(task);
 	selectedCollaborators.length = 0;
 	selectedCollaborators.push(...task.assignedTo);
+	renderAssignedContacts(task);
 	editTaskContainer.initMenus();
 
 	toggleFullscreenState();
 };
 
-export const renderAssignedContacts = (task) => {
+export function renderAssignedContacts(task) {
 	$(`.drp-contacts [data-id="${currentUserId()}"]`)?.LANG_load();
 	$$(".drp-contacts .drp-option").forEach((contact) =>
 		contact.classList.toggle("active", task.assignedTo.includes(contact.dataset.id))
 	);
-	renderCollaboratorInput(task.assignedTo);
+	renderCollaboratorInput();
 };
 
-export const toggleFullscreenState = () => {
+export function toggleFullscreenState() {
 	const fullscreenModal = $("#fullscreen-task-modal");
 	fullscreenModal.$$("#fullscreen-task, #edit-task").for((section) => {
 		section.initMenus();
