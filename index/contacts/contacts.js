@@ -7,7 +7,7 @@ bindInlineFunctions(getContext(), [
 ]);
 
 import { STORAGE } from "../../js/storage.js";
-import { $, debounce, notification, throwErrors } from "../../js/utilities.js";
+import { $, debounce, getInitialsOfName, notification, throwErrors } from "../../js/utilities.js";
 
 export function initContacts() {
   return renderContacts();
@@ -47,7 +47,7 @@ export const contactListTemplate = ({ img, name, email, id, color }) => {
   return /*html*/ `
         <div class="contact row" onclick="selectContact(${id})">
             <div class="user-img-container" style="--user-clr: ${color}">
-                <span>${name.slice(0, 2).toUpperCase()}</span>
+                <span>${getInitialsOfName(name)}</span>
                 <img src="${img}" alt="">
             </div>
             <div class="column">
@@ -167,7 +167,7 @@ export function contactImgNameTemplate(color, name, img, id) {
   return /*html*/ `
         <div class="img-name row">
             <div class="user-img-container" style="--user-clr: ${color}">
-                <h1>${name.slice(0, 2).toUpperCase()}</h1>
+                <h1>${getInitialsOfName(name)}</h1>
                 <img src="${img}">
             </div>
 
@@ -228,7 +228,7 @@ export function searchResultTemplates({ id, img, name, email, color }) {
   return /*html*/ `
         <div class="search-result-contact row gap-10" id="search-result-contact" onclick="selectNewContact('${id}', '${img}', '${name}', '${color}')">
             <div class="contact-img user-img-container" data-img="false" style="--user-clr: ${color}">
-                <h3>${name.slice(0, 2).toUpperCase()}</h3>
+                <h3>${getInitialsOfName(name)}</h3>
                 <img src="${img}">
             </div>
             <span class="txt-normal result-name-email">${name}</span>
@@ -243,7 +243,7 @@ export function selectNewContact(id, img, name, color) {
 
   const input = $("#input-name");
   const userImgContainer = $(".add-contact-field .user-img-container");
-  const initials = name.slice(0, 2).toUpperCase();
+  const initials = getInitialsOfName(name);
 
   userImgContainer.innerHTML = img
     ? `<img src="${img}" alt="${name}">`

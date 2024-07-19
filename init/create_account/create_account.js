@@ -1,11 +1,12 @@
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
+import { getInitialsOfName } from "../../js/utilities.js";
 bindInlineFunctions(getContext(), ["/Join/js/utilities.js"]);
 
 export async function initCreateAccount() {
   renderColorWheel();
   initWebsocket();
   const { name } = await getCurrentUser();
-  $(".user-img-container h1").innerText = name.slice(0, 2).toUpperCase();
+  $(".user-img-container h1").innerText = getInitialsOfName(name);
   $("#user-name").innerText = name;
 }
 

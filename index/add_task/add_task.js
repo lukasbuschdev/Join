@@ -11,7 +11,7 @@ bindInlineFunctions(getContext(), [
 import { STORAGE } from "../../js/storage.js";
 import { $, currentDirectory, dateFormat, notification } from "../../js/utilities.js";
 import { STATE } from "../../js/state.js";
-import { renderCategories, renderCollaboratorInput, renderCollaboratorsToAssign, renderSelfToAssign, renderSubtaskTemplate } from "../../assets/templates/index/add_task_templates.js";
+import { categoryTemplate, renderCollaboratorInput, renderCollaboratorsToAssign, renderSelfToAssign, renderSubtaskTemplate } from "../../assets/templates/index/add_task_templates.js";
 
 const subtasks = [];
 export const selectedCollaborators = [];
@@ -104,7 +104,7 @@ export function selectCollaborator() {
 
   index === -1 ? selectedCollaborators.push(collaboratorId.toString()) : selectedCollaborators.splice(index, 1);
 
-  renderCollaboratorInput();
+  renderCollaboratorInput(selectedCollaborators);
 }
 
 /**
@@ -218,6 +218,17 @@ export function descriptionValid() {
   $("#description-letters-only").classList.add("error-inactive");
   $("#enter-a-description").classList.add("error-inactive");
   $("#description").classList.remove("input-warning");
+}
+
+/**
+ * Renders the categories of the selected board in the dropdown menu.
+ * @param {Board} selectedBoard - The selected board object containing categories.
+ */
+export function renderCategories(selectedBoard) {
+  const drpContainer = $("#drp-categories");
+  drpContainer.innerHTML = "";
+
+  Object.entries(selectedBoard.categories).forEach((category) => drpContainer.innerHTML += categoryTemplate(category));
 }
 
 /**

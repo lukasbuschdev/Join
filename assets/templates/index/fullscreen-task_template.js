@@ -1,4 +1,5 @@
 import { STORAGE } from "../../../js/storage.js";
+import { getInitialsOfName } from "../../../js/utilities.js";
 
 export const fullscreenTaskTemplate = ({
   id,
@@ -68,7 +69,7 @@ export const fullscreenTaskAssignedTo = (assignedTo) => {
       (template += /*html*/ `
             <div class="assigned-to-contact row gap-15">
                 <div class="user-img-container grid-center" style="--user-clr: ${color}; --outline-thickness: 0px;">
-                    <span>${name.slice(0, 2).toUpperCase()}</span>
+                    <span>${getInitialsOfName(name)}</span>
                 </div>
                 <div class="row gap-8">
                     <span>${name}</span>${

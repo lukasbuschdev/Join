@@ -4,6 +4,7 @@ import {
   $$,
   dateFormat,
   debounce,
+  getInitialsOfName,
   isEqual,
   notification,
   throwErrors
@@ -257,7 +258,7 @@ export function contactDropdownTemplate({ name, color, id, img }) {
           NEW_BOARD_COLLABORATORS.includes(id) ? "active" : ""
         }" onclick="addCollaborator(${id})">
             <div class="user-img-container" style="--user-clr: ${color};">
-                <span>${name.slice(0, 2).toUpperCase()}</span>
+                <span>${getInitialsOfName(name)}</span>
                 <img src="${img}">
             </div>
             <div>${name}</div>
@@ -285,7 +286,7 @@ export function newBoardCollaboratorTemplate({ img, name, color, id }) {
       !STATE.selectedBoard?.collaborators.includes(id) ? "invitation" : ""
     }" data-id="${id}">
         <div class="user-img-container" style="--user-clr: ${color}">
-            <span>${name.slice(0, 2).toUpperCase()}</span>
+            <span>${getInitialsOfName(name)}</span>
             <img src="${img}" alt="">
         </div>
     </button>

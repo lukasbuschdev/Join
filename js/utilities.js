@@ -540,3 +540,12 @@ export function isEqual(obj1, obj2, depth = Infinity) {
   }
   return true;
 }
+
+/**
+ * returns the initials of a name capitalized
+ * @param {string} name
+ * @returns {string} Initials 
+ */
+export function getInitialsOfName(name) {
+  return name.slice(0, 2).toUpperCase()
+}

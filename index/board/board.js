@@ -11,25 +11,14 @@ bindInlineFunctions(getContext(), [
   "/Join/index/summary/summary.js"
 ]);
 import { STORAGE } from "../../js/storage.js";
-import {
-  $,
-  confirmation,
-  debounce,
-  notification,
-  currentUserId,
-  isEqual,
-  cloneDeep
-} from "../../js/utilities.js";
+import { $, confirmation, debounce, notification, currentUserId, isEqual, cloneDeep, $$ } from "../../js/utilities.js";
 import { renderBoardTitleSelection } from "../summary/summary.js";
-import {
-  assignedToTemplate,
-  progressTemplate,
-  taskTemplate
-} from "../../assets/templates/index/task_template.js";
+import { assignedToTemplate, progressTemplate, taskTemplate } from "../../assets/templates/index/task_template.js";
 import { fullscreenTaskTemplate } from "../../assets/templates/index/fullscreen-task_template.js";
 import { editTaskTemplate } from "../../assets/templates/index/edit-task_template.js";
-import { renderBoardIds, renderDate, renderSubtasks } from "../add_task/add_task.js";
+import { renderBoardIds, renderDate, renderSubtasks, selectedCollaborators } from "../add_task/add_task.js";
 import { STATE } from "../../js/state.js";
+import { renderCollaboratorInput } from "../../assets/templates/index/add_task_templates.js";
 
 export const initBoard = async () => {
   if (!STORAGE.currentUser.boards.length) return;
@@ -106,9 +95,7 @@ export const saveEditedTask = () => {
     description: $("#fullscreen-task-modal #description").value,
     dueDate: $("#fullscreen-task-modal #date").value,
     priority: $("#fullscreen-task-modal .prio-btn.active span").dataset.lang,
-    assignedTo: [...$$("#edit-task .drp-contacts > div.active")].map(
-      (contact) => contact.dataset.id
-    ),
+    assignedTo: selectedCollaborators,
     subTasks: [...$$("#edit-task #subtask-container li")].map(
       ({ innerText: name }) => {
         return {
@@ -234,29 +221,25 @@ export const updateTaskUi = (
   }
 };
 
-export const editTaskInitializer = async (id) => {
+export const editTaskInitializer = () => {
+  const task = STATE.selectedTask;
   const editTaskContainer = $("#edit-task");
-  editTaskContainer.innerHTML = editTaskTemplate(
-    STATE.selectedTask
-  );
-  await editTaskContainer.LANG_load();
-  await renderAssignedContacts();
+  editTaskContainer.innerHTML = editTaskTemplate(task);
+  editTaskContainer.LANG_load();
+  renderAssignedContacts(task);
+  selectedCollaborators.length = 0;
+  selectedCollaborators.push(...task.assignedTo);
   editTaskContainer.initMenus();
 
   toggleFullscreenState();
 };
 
-export const renderAssignedContacts = async () => {
-  renderAssignToContacts();
-  await $(`.drp-contacts [data-id="${currentUserId()}"]`)?.LANG_load();
-  $(".drp-contacts")
-    .$$(".drp-option")
-    .for((contact) =>
-      contact.classList.toggle(
-        "active",
-        STATE.selectedTask.assignedTo.includes(contact.dataset.id)
-      )
-    );
+export const renderAssignedContacts = (task) => {
+  $(`.drp-contacts [data-id="${currentUserId()}"]`)?.LANG_load();
+  $$(".drp-contacts .drp-option").forEach(
+    (contact) => contact.classList.toggle("active", task.assignedTo.includes(contact.dataset.id))
+  );
+  renderCollaboratorInput(task.assignedTo);
 };
 
 export const toggleFullscreenState = () => {

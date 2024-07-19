@@ -1,4 +1,5 @@
 import { STORAGE } from "../../../js/storage.js";
+import { getInitialsOfName } from "../../../js/utilities.js";
 
 export const taskTemplate = (
   { boardId, id, title, description, assignedTo, category, priority, subTasks },
@@ -65,7 +66,7 @@ export const assignedToTemplate = (assignedAccounts) => {
             <div class="task-assigned-to">
                 <div style="--user-clr: ${
                   color !== "" ? color : "#D1D1D1"
-                };">${name.slice(0, 2).toUpperCase()}</div>
+                };">${getInitialsOfName(name)}</div>
             </div>
         `;
     if (assignedAccounts.length > 3 && i == 1) {

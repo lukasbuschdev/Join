@@ -1,6 +1,7 @@
 import { STORAGE } from "../../../js/storage.js";
 import { STATE } from "../../../js/state.js";
 import { renderSubtaskTemplate } from "./add_task_templates.js";
+import { getInitialsOfName } from "../../../js/utilities.js";
 
 export const editTaskTemplate = ({
   title,
@@ -128,9 +129,9 @@ export const collaboratorTemplate = (id, assignedTo) => {
   return /*html*/ `
     <div class="drp-option ${
       collaboratorIsAssigned ? "active" : ""
-    }" data-id="${id}" onclick="selectCollaborator()">
+    }" onclick="selectCollaborator()">
         <div class="user-img-container grid-center" style="--user-clr: ${color}">
-            <span>${name.slice(0, 2).toUpperCase()}</span>
+            <span>${getInitialsOfName(name)}</span>
             <img src="${img}">
         </div>
         <span>${name}</span>
