@@ -138,7 +138,7 @@ class Storage {
   /**
    * deletes the specified path
    * @param {string} path 
-   * @returns {null | undefined}
+   * @returns {Promise<null | undefined>}
    */
   async delete(path) {
     try {

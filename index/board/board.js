@@ -126,6 +126,7 @@ export function deleteTask() {
 		const taskElement = $(`.task[data-id="${boardId}/${id}"]`);
 		const taskContainer = taskElement.parentElement;
 		await STORAGE.delete(`boards/${boardId}/tasks/${id}`);
+		delete STORAGE.data.boards[boardId].tasks[id];
 		modal.removeEventListener("close", saveTaskChanges, { once: true });
 		modal.closeModal();
 		taskElement.remove();
