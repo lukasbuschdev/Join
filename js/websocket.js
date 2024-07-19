@@ -22,10 +22,10 @@ export class WebSocket {
 	}
 	
 	init(userId) {
-		this.socket = io(this.url, { query: { uid: userId } });
-		this.socket.on("close", () => notification("websocket-disconnect"));
-		this.socket.on("reconnect", () => notification("websocket-reconnect"));
-		this.socket.on("notification", async () => {
+		this.#socket = io(this.url, { query: { uid: userId } });
+		this.#socket.on("close", () => notification("websocket-disconnect"));
+		this.#socket.on("reconnect", () => notification("websocket-reconnect"));
+		this.#socket.on("notification", async () => {
 			console.log("notification recieved!");
 			this.notifySound.play();
 			await this.storage.init();
