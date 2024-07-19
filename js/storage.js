@@ -43,6 +43,10 @@ class Storage {
     );
   }
 
+  /**
+   * gets all boards the current user is collaborating on
+   * @returns {{[number]: Board}}
+   */
   get currentUserBoards() {
     const user = this.currentUser;
     return user.boards.reduce((boards, boardId) => {
@@ -56,11 +60,12 @@ class Storage {
     }, {});
   }
 
-  // TO DO
+  /**
+   * gets the active board or the newest board or undefined if the user is not collaborating on any board
+   * @returns {Board | undefined}
+   */
   get activeBoard() {
-    const boardId =
-      SESSION_getData("activeBoardId") || this.currentUser.boards[0];
-    return boardId;
+    return SESSION_getData("activeBoardId") || this.currentUser.boards.at(-1);
   }
 
   /**
@@ -81,21 +86,23 @@ class Storage {
   }
 
   /**
-   *
+   * gets data of the specified path. format: 'directory/subdirectory'
    * @param {string} path
-   * @returns {User | Board | Notify}
+   * @returns {User | Board | Notify | undefined}
    */
   get(path) {
     const formattedPath = path.split("/").join('"]["');
-    const requestedData = parse(
-      `${JSON.stringify(this.data)}["${formattedPath}"]`
-    );
+    try {
+      return parse(`${JSON.stringify(this.data)}["${formattedPath}"]`);
+    } catch(e) {
+      return undefined;
+    }
   }
 
   /**
-   *
+   * sets the provided value to the specified path. format: 'directory/subdirectory'
    * @param {string} path
-   * @param {any} value
+   * @param {Promise<any>} value
    */
   set(path, value) {
     return this.#upload(path, value);
@@ -123,25 +130,31 @@ class Storage {
       if (data) return this.#unpackData(data);
 
       throw new Error(`upload failed. '${path}' not found!`);
-    } catch (error) {}
+    } catch (error) {
+      return undefined;
+    }
   }
 
+  /**
+   * deletes the specified path
+   * @param {string} path 
+   * @returns {null | undefined}
+   */
   async delete(path) {
     try {
       return (
         await fetch(`${this.STORAGE_URL}/${path}.json`, { method: "DELETE" })
       ).json();
-    } catch (e) {}
-  }
-
-  async #updateAllUsers() {
-    return this.set("users", this.allUsers);
+    } catch (e) {
+      return undefined;
+    }
   }
 
   /**
-   *
-   * @param {string} dataString
-   * @returns {string}
+   * Parses the specified upload data in preparation for upload to firebase. Replaces Arrays with JSON and empty JSON and empty Arrays with placeholder elements.
+   *  @template T
+   *  @param {T} upload
+   * @returns {T}
    */
   #packData(upload) {
     if (upload === null || !(typeof upload === "object")) return;
@@ -164,8 +177,8 @@ class Storage {
   }
 
   /**
-   *
-   * @param {any} data upload data
+   * Parses the specified firebase download 
+   * @param {any} data download data
    * @returns {any | null}
    */
   #unpackData(data) {
@@ -269,18 +282,15 @@ export function SESSION_setData(key, value) {
 /**
  * gets an item from session storage by key
  * @param {string} key
- * @returns {any | undefined}
+ * @returns {string | undefined}
  */
 export function SESSION_getData(key) {
-  let data = sessionStorage.getItem(key);
-  if (
-    data === "null" ||
-    data === "undefined" ||
-    data === "NaN" ||
-    data === "false"
-  )
-    return undefined;
-  if (data) return data;
+  const data = sessionStorage.getItem(key);
+  switch(data) {
+    case "null": case "undefined": case "NaN": case "false":
+      return undefined;
+    default: return data;
+  }
 }
 
 /**

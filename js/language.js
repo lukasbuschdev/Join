@@ -101,13 +101,7 @@ class Language {
    */
   change(targetLanguage) {
     switch (targetLanguage) {
-      case "en":
-      case "de":
-      case "fr":
-      case "it":
-      case "es":
-      case "tk":
-      case "pg":
+      case "en": case "de": case "fr": case "it": case "es": case "tk": case "pg":
         this.#currentLang = targetLanguage;
         this.render();
         break;
