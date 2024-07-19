@@ -384,11 +384,9 @@ export function checkSubtaskInput() {
 export function addSubtask() {
 	const subtaskValue = $(".subtasks input");
 
-	if (!letterRegex.test(subtaskValue.value)) {
-		subtaskInvalid();
-	} else if (subtaskValue.value.length > 30) {
-		subtaskTooLong();
-	} else {
+	if (!letterRegex.test(subtaskValue.value)) subtaskInvalid();
+	else if (subtaskValue.value.length > 30) subtaskTooLong();
+	else {
 		subtaskValid();
 		subtasks.push(subtaskValue.value);
 		subtaskValue.value = "";
@@ -472,7 +470,6 @@ export function saveEditedSubtask(i) {
 	subtaskInput.setAttribute("contenteditable", "false");
 
 	$$(`.save-edited-subtask-btn, .save-edited-subtask-btn${i}, .subtask-edit-btn${i}`).forEach((button) => button.classList.toggle("d-none"));
-
 	$("#single-subtask" + i).classList.toggle("edit-btn-active");
 }
 
