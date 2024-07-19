@@ -1,8 +1,5 @@
 import { STORAGE } from "./storage.js";
-import {
-  resetPasswordEmailTemplate,
-  verificationEmailTemplate
-} from "/Join/assets/templates/index/mail_templates.js";
+import { resetPasswordEmailTemplate, verificationEmailTemplate } from "/Join/assets/templates/index/mail_templates.js";
 
 export class Email {
   constructor({ recipient, type = "", langData }) {

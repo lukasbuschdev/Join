@@ -55,18 +55,14 @@ export function hide(selectors) {
  * @param {NodeListOf<HTMLButtonElement> | HTMLButtonElement[]} buttons
  */
 export async function toggleActiveBtn(buttons) {
-  buttons.forEach((button) =>
-    button.classList.toggle("active", button === event.currentTarget)
-  );
+  buttons.forEach((button) => button.classList.toggle("active", button === event.currentTarget));
 }
 
 /**
  * adds the toggleActiveBtn() callback to all nav buttons
  */
 export function addNavToggleBtns() {
-  $$("nav button").forEach((btn, i, buttons) =>
-    btn.addEventListener("click", toggleActiveBtn.bind(btn, buttons))
-  );
+  $$("nav button").forEach((btn, i, buttons) => btn.addEventListener("click", toggleActiveBtn.bind(btn, buttons)));
 }
 
 /**
@@ -77,9 +73,7 @@ export function throwErrors(...errors) {
   errors.for(({ identifier, bool }) => {
     const errorContainer = $(`#${identifier}`);
     if (!errorContainer) console.log(identifier);
-    const inputContainer = errorContainer
-      .closest(".inp-wrapper")
-      ?.$(".inp-container");
+    const inputContainer = errorContainer.closest(".inp-wrapper")?.$(".inp-container");
     errorContainer.classList.toggle("active", bool);
     inputContainer?.classList.toggle("active", bool);
   });
@@ -208,9 +202,7 @@ export const submitUpload = async () => {
   };
   reader.readAsArrayBuffer(img);
   $(".loading").classList.add("active");
-
   const imgURL = await getImgUrl();
-
   renderUserData();
   renderUploadedImg(imgURL);
 };
@@ -257,8 +249,7 @@ export function renderUploadedImg(imgURL) {
 }
 
 export const removeUpload = async () => {
-  if (event.target.tagName == "LABEL" || event.target.tagName == "INPUT")
-    return;
+  if (event.target.tagName == "LABEL" || event.target.tagName == "INPUT") return;
   const container = event.currentTarget;
   if (!$("#color-wheel").classList.contains("d-none")) return;
   const img = container.$("img");
@@ -282,21 +273,14 @@ export function renderColorWheel() {
   for (let i = 0; i < 361; i += 360 / factor) {
     clrBg.push(`hsl(${i}, 100%, 50%)`);
   }
-  $(
-    "#color-wheel"
-  ).style.backgroundImage = `radial-gradient(white, transparent, black), conic-gradient(${clrBg.join(
-    ", "
-  )})`;
+  $("#color-wheel").style.backgroundImage = `radial-gradient(white, transparent, black), conic-gradient(${clrBg.join(", ")})`;
 }
 
 export function toggleColorPicker() {
   event.stopPropagation();
   $("#color-wheel").classList.toggle("d-none");
   $("label").classList.toggle("d-none");
-  if (
-    event.currentTarget.classList.contains("active") &&
-    $(".user-img-container").style.getPropertyValue("--user-clr") == false
-  ) {
+  if (event.currentTarget.classList.contains("active") && $(".user-img-container").style.getPropertyValue("--user-clr") == false) {
     $("#color-cursor").classList.add("d-none");
     $("#accept-user-color").classList.remove("active");
   }
@@ -311,11 +295,7 @@ export function pickColor() {
   const y = offsetY - heigth / 2;
 
   const hue = Math.round(Math.atan2(y, x) * (180 / Math.PI) + 450) % 360;
-  const lightness =
-    30 -
-    Math.round(
-      getFraction(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)) * 60, width / 2)
-    );
+  const lightness = 30 - Math.round(getFraction(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)) * 60, width / 2));
   const userColor = `hsl(${hue}, 100%, ${50 + lightness}%)`;
 
   moveColorCursor(offsetX, offsetY, userColor);
@@ -340,26 +320,17 @@ export function addAcceptColor(userColor) {
 
   let colorPicker;
   try {
-    $("#accept-user-color").removeEventListener("click", colorPicker, {
-      once: true
-    });
+    $("#accept-user-color").removeEventListener("click", colorPicker, { once: true });
   } catch (e) {}
-  $("#accept-user-color").addEventListener(
-    "click",
-    (colorPicker = () => {
+  $("#accept-user-color").addEventListener("click", colorPicker = () => {
       event.stopPropagation();
-      $$(".user-img-container.account").for((button) =>
-        button.style.setProperty("--user-clr", userColor)
-      );
+      $$(".user-img-container.account").for((button) => button.style.setProperty("--user-clr", userColor));
       if (STORAGE.currentUser) {
         STORAGE.currentUser.setColor(userColor);
-        // STORAGE.currentUser.color = userColor;
-        // STORAGE.currentUser.update();
         renderUserData();
       }
       $("#user-color").click();
-    }),
-    { once: true }
+    }, { once: true }
   );
 }
 
@@ -413,14 +384,11 @@ export async function confirmation(type, cb) {
   confirmationContainer.type = "modal";
   confirmationContainer.innerHTML = confirmationTemplate(type);
   confirmationContainer.LANG_load();
-  confirmationContainer.$(".btn-primary").addEventListener(
-    "click",
-    () => {
+  confirmationContainer.$(".btn-primary").addEventListener("click", () => {
       cb();
       confirmationContainer.closeModal();
       confirmationContainer.remove();
-    },
-    { once: true }
+    }, { once: true }
   );
 
   $("body").append(confirmationContainer);
@@ -470,9 +438,7 @@ export async function hashInputValue(inputValue) {
   const data = encoder.encode(inputValue);
   const hashBuffer = await crypto.subtle.digest("SHA-256", data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
   return hashHex;
 }
 
@@ -521,10 +487,7 @@ export const resetMenus = function () {
 
 let inactivityTimer;
 export function addInactivityTimer(minutes = 5) {
-  return (inactivityTimer = setTimeout(
-    () => goTo("init/login/login", { search: "?expired" }),
-    minutes * 60 * 1000
-  ));
+  return (inactivityTimer = setTimeout(() => goTo("init/login/login", { search: "?expired" }), minutes * 60 * 1000));
 }
 
 export const initInactivity = () => {
@@ -537,12 +500,15 @@ export const initInactivity = () => {
 export const renderName = (userField, name) => {
   userField.innerText = name;
 };
+
 export const renderImage = (userField, img) => {
   userField.src = img;
 };
+
 export const renderInitials = (userField, name) => {
   userField.innerText = name.slice(0, 2).toUpperCase();
 };
+
 export const renderColor = (userField, color) => {
   userField.style.setProperty("--user-clr", color);
 };
@@ -557,31 +523,19 @@ export function cloneDeep(input) {
  * @param {any} options
  */
 export const goTo = (directory, options) => {
-  const url = `${window.location.origin}/Join/${directory}.html${
-    options?.search ?? location.search
-  }`;
+  const url = `${window.location.origin}/Join/${directory}.html${ options?.search ?? location.search }`;
   window.location.href = url;
 };
 
 export function isEqual(obj1, obj2, depth = Infinity) {
   if (obj1 === obj2) return true;
-  if (
-    typeof obj1 !== "object" ||
-    obj1 === null ||
-    typeof obj2 !== "object" ||
-    obj2 === null
-  ) {
-    return false;
-  }
+  if (typeof obj1 !== "object" || obj1 === null || typeof obj2 !== "object" || obj2 === null) return false;
   const keys1 = Object.keys(obj1);
   const keys2 = Object.keys(obj2);
   if (keys1.length !== keys2.length) return false;
-
   if (depth > 0) {
     for (let key of keys1) {
-      if (!keys2.includes(key) || !isEqual(obj1[key], obj2[key], depth - 1)) {
-        return false;
-      }
+      if (!keys2.includes(key) || !isEqual(obj1[key], obj2[key], depth - 1)) return false;
     }
   }
   return true;

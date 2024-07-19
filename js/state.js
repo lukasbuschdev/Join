@@ -17,7 +17,7 @@ class State {
     if (!STORAGE.currentUser.boards.length) return null;
     if (this.#selectedBoard) return this.#selectedBoard;
 
-    let boardId = SESSION_getData("activeBoard");
+    const boardId = SESSION_getData("activeBoard");
     if (!boardId || !(boardId in STORAGE.currentUserBoards))
       boardId = STORAGE.currentUser.boards.at(-1);
     this.selectedBoard = STORAGE.currentUserBoards[boardId];
@@ -34,13 +34,13 @@ class State {
     return this.#currentUser;
   }
 
-  /** @param {User} */
+  /** @type {User} */
   set currentUser(user) {
-    if (!user.constructor.name === "User") throw Error(user, " is not a User!");
+    if (!user.constructor.name === "User") throw Error(user, "is not a User!");
     this.#currentUser = user;
   }
 
-  /** @param {Board} */
+  /** @type {Board} */
   set selectedBoard(board) {
     if (!board.constructor.name === "Board")
       throw Error(board, " is not a Board!");
@@ -50,9 +50,8 @@ class State {
 
   /** @param {Task} task */
   set selectedTask(task) {
-    if (!task.constructor.name === "Task") throw Error(task, " is not a Task!");
+    if (!task.constructor.name === "Task") throw Error(task, "is not a Task!");
     this.#selectedTask = task;
-    console.log(this.#selectedTask)
   }
 }
 
