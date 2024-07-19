@@ -33,7 +33,7 @@
     display: grid;
     grid-template-columns: repeat(var(--rows), 1fr);
     padding: 0 0 1rem;
-    gap: 38px;
+    gap: 15px;
     flex-grow: 1;
     overflow: auto;
     scrollbar-gutter: stable;

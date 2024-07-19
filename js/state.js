@@ -17,7 +17,7 @@ class State {
     if (!STORAGE.currentUser.boards.length) return null;
     if (this.#selectedBoard) return this.#selectedBoard;
 
-    const boardId = SESSION_getData("activeBoard");
+    let boardId = SESSION_getData("activeBoard");
     if (!boardId || !(boardId in STORAGE.currentUserBoards))
       boardId = STORAGE.currentUser.boards.at(-1);
     this.selectedBoard = STORAGE.currentUserBoards[boardId];
