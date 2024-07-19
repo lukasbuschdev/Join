@@ -1,11 +1,15 @@
 #board-wrapper {
     width: 100%;
     height: calc(100vh - 85px);
-    padding: 2vh 4rem 0;
+    padding: 2vh 0 0 4rem;
     display: flex;
     flex-direction: column;
     gap: 38px;
     overflow: hidden;
+}
+
+#board-header {
+    padding-right: 2rem;
 }
 
 #search-task {

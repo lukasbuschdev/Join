@@ -1,4 +1,3 @@
-import { LANG } from "../../../js/language.js";
 import { STORAGE } from "../../../js/storage.js";
 
 export const taskTemplate = (

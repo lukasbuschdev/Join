@@ -1,5 +1,6 @@
 import { STORAGE } from "../../../js/storage.js";
 import { STATE } from "../../../js/state.js";
+import { renderSubtaskTemplate } from "./add_task_templates.js";
 
 export const editTaskTemplate = ({
   title,

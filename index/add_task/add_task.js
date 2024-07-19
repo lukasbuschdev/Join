@@ -9,9 +9,18 @@ bindInlineFunctions(getContext(), [
 ]);
 
 import { STORAGE } from "../../js/storage.js";
-import { $, cloneDeep, currentDirectory, dateFormat, notification } from "../../js/utilities.js";
+import { $, currentDirectory, dateFormat, notification } from "../../js/utilities.js";
 import { STATE } from "../../js/state.js";
+import { renderCategories, renderCollaboratorInput, renderCollaboratorsToAssign, renderSelfToAssign, renderSubtaskTemplate } from "../../assets/templates/index/add_task_templates.js";
 
+const subtasks = [];
+export const selectedCollaborators = [];
+const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
+
+/**
+ * Initializes the Add Task UI.
+ * If no boards are available, it exits early.
+ */
 export function initAddTask() {
   if (!Object.values(STORAGE.currentUserBoards).length) return;
   renderBoardIds();
@@ -21,20 +30,21 @@ export function initAddTask() {
   $(".add-task-card").classList.remove("d-none");
 }
 
-const subtasks = [];
-export const selectedCollaborators = [];
-const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
-
+/**
+ * Renders the available board IDs in the dropdown menu.
+ */
 export function renderBoardIds() {
   const drpContainer = $("#drp-board-container");
   drpContainer.innerHTML = "";
   Object.values(STORAGE.currentUserBoards).forEach((board) => {
-    drpContainer.innerHTML += /*html*/ `
-            <div class="drp-option" onclick="selectBoard(${board.id})">${board.name}</div>
-        `;
+    drpContainer.innerHTML += `<div class="drp-option" onclick="selectBoard(${board.id})">${board.name}</div>`;
   });
 }
 
+/**
+ * Selects a board by its ID, updates the state, and renders related data.
+ * @param {string} boardId - The ID of the board to select.
+ */
 export function selectBoard(boardId) {
   const selectedBoard = STORAGE.currentUserBoards[boardId];
   STATE.selectedBoard = selectedBoard;
@@ -45,38 +55,26 @@ export function selectBoard(boardId) {
   renderAssignToContacts();
 }
 
+/**
+ * Renders the name of the selected board.
+ * @param {Board} selectedBoard - The selected board object.
+ */
 export function renderSelectedBoard(selectedBoard) {
-  const selectedBoardField = $("#selected-board");
-  const selectedBoardName = selectedBoard.name;
-
-  selectedBoardField.innerText = selectedBoardName;
+  $("#selected-board").innerText = selectedBoard.name;
 }
 
+/**
+ * Checks if a board is selected and updates UI elements accordingly.
+ */
 export function checkSelectedBoard() {
-  const boardInput = $("#selected-board").innerText;
-
-  if (boardInput === LANG.currentLangData["select-board"]) {
-    $("#select-a-board").classList.remove("error-inactive");
-    $("#drp-wrapper-board").classList.add("input-warning");
-  } else if (boardInput.length >= 3) {
-    $("#select-a-board").classList.add("error-inactive");
-    $("#drp-wrapper-board").classList.remove("input-warning");
-  }
+  const isDefaultSelection = $("#selected-board").innerText === LANG.currentLangData["select-board"];
+  $("#select-a-board").classList.toggle("error-inactive", !isDefaultSelection);
+  $("#drp-wrapper-board").classList.toggle("input-warning", isDefaultSelection);
 }
 
-export function renderCategories(selectedBoard) {
-  const drpContainer = $("#drp-categories");
-  drpContainer.innerHTML = "";
-  Object.entries(selectedBoard.categories).forEach(([name, color]) => {
-    drpContainer.innerHTML += /*html*/ `
-            <div class="drp-option row" id="category" data-color="${color}" onclick="this.toggleActive(), renderSelectedCategory('${name}')">
-                <span>${name}</span>
-                <div class="category-color" style="--clr: ${color}"></div>
-            </div>
-        `;
-  });
-}
-
+/**
+ * Renders the list of collaborators to assign to the task.
+ */
 export function renderAssignToContacts() {
   const drpContainer = $("#drp-collab-container");
   const assignToUser = document.createElement("div");
@@ -96,43 +94,22 @@ export function renderAssignToContacts() {
   drpContainer.LANG_load();
 }
 
-export function renderSelfToAssign() {
-  return /*html*/ `
-        <div class="drp-option" data-id="${ STORAGE.currentUser.id }" onclick="selectCollaborator()">
-            <div class="user-img-container grid-center" style="--user-clr: ${ STORAGE.currentUser.color }">
-                <span>${STORAGE.currentUser.name.slice(0, 2).toUpperCase()}</span>
-                <img src="${STORAGE.currentUser.img}">
-            </div>
-            <span data-lang="assigned-you"></span>
-        </div>
-    `;
-}
-
-export function renderCollaboratorsToAssign(collaborator) {
-  return /*html*/ `
-        <div class="drp-option" data-id="${collaborator.id}" onclick="selectCollaborator()">
-            <div class="user-img-container grid-center" style="--user-clr: ${collaborator.color}">
-                <span>${collaborator.name.slice(0, 2).toUpperCase()}</span>
-                <img src="${collaborator.img}">
-            </div>
-            <span>${collaborator.name}</span>
-        </div>
-    `;
-}
-
+/**
+ * Toggles the selection of a collaborator and updates the UI.
+ */
 export function selectCollaborator() {
   event.currentTarget.classList.toggle("active");
   const collaboratorId = event.currentTarget.dataset.id;
   const index = selectedCollaborators.indexOf(collaboratorId.toString());
 
-  if (index === -1) {
-    selectedCollaborators.push(collaboratorId.toString());
-  } else {
-    selectedCollaborators.splice(index, 1);
-  }
+  index === -1 ? selectedCollaborators.push(collaboratorId.toString()) : selectedCollaborators.splice(index, 1);
+
   renderCollaboratorInput();
 }
 
+/**
+ * Checks if a collaborator is selected and updates UI elements accordingly.
+ */
 export function checkSelectedCollaborator() {
   if (selectedCollaborators.length == 0) {
     $("#select-a-collaborator").classList.remove("error-inactive");
@@ -143,20 +120,10 @@ export function checkSelectedCollaborator() {
   $("#drp-wrapper-collaborator").classList.remove("input-warning");
 }
 
-export function renderCollaboratorInput() {
-  const inputContainerCollaborator = $("#selected-collaborator-input");
-  inputContainerCollaborator.innerHTML = "";
-  selectedCollaborators.forEach((collaboratorId) => {
-    const users = STORAGE.data.users[collaboratorId];
-    inputContainerCollaborator.innerHTML += /*html*/ `
-      <div class="input-collaborator user-img-container grid-center" style="--user-clr: ${ users.color }">
-        <span>${users.name.slice(0, 2).toUpperCase()}</span>
-        <img src="${users.img}">
-      </div>
-    `;
-  });
-}
-
+/**
+ * Gets the title of the task from the input field and validates it.
+ * @returns {string|undefined} - The task title if valid, otherwise undefined.
+ */
 export function getTitle() {
   const title = $("#title").value;
   if (title === "") {
@@ -171,12 +138,18 @@ export function getTitle() {
   }
 }
 
+/**
+ * Shows an error message when the title is empty.
+ */
 export function titleEmpty() {
   $("#enter-a-title").classList.remove("error-inactive");
   $("#title").classList.add("input-warning");
   $("#title-too-long").classList.add("error-inactive");
 }
 
+/**
+ * Shows an error message when the title contains invalid characters.
+ */
 export function titleInvalid() {
   $("#enter-a-title").classList.add("error-inactive");
   $("#title-letters-only").classList.remove("error-inactive");
@@ -184,26 +157,36 @@ export function titleInvalid() {
   $("#title-too-long").classList.add("error-inactive");
 }
 
+/**
+ * Shows an error message when the title is too long.
+ */
 export function titleTooLong() {
   $("#title").classList.add("input-warning");
   $("#title-letters-only").classList.add("error-inactive");
   $("#enter-a-title").classList.add("error-inactive");
-  $("#title").classList.add("input-warning");
   $("#title-too-long").classList.remove("error-inactive");
 }
 
+/**
+ * Validates the title input.
+ */
 export function titleValid() {
+  $("#enter-a-title").classList.add("error-inactive");
   $("#title-letters-only").classList.add("error-inactive");
   $("#title-too-long").classList.add("error-inactive");
   $("#title").classList.remove("input-warning");
 }
 
+/**
+ * Gets the description of the task from the input field and validates it.
+ * @returns {string|undefined} - The task description if valid, otherwise undefined.
+ */
 export function getDescription() {
   const description = $("#description").value;
-  const letterRegexDiscription = /^[A-Za-zäöüßÄÖÜ\-\/\_\'\.\, \!\?"0-9\n;:()\[\]]*$/g;
+  const letterRegexDescription = /^[A-Za-zäöüßÄÖÜ\-\/\_\'\.\, \!\?"0-9\n;:()\[\]]*$/g;
   if (description === "") {
     descriptionEmpty();
-  } else if (!letterRegexDiscription.test(description)) {
+  } else if (!letterRegexDescription.test(description)) {
     descriptionInvalid();
   } else {
     descriptionValid();
@@ -211,46 +194,53 @@ export function getDescription() {
   }
 }
 
+/**
+ * Shows an error message when the description is empty.
+ */
 export function descriptionEmpty() {
   $("#enter-a-description").classList.remove("error-inactive");
   $("#description").classList.add("input-warning");
 }
 
+/**
+ * Shows an error message when the description contains invalid characters.
+ */
 export function descriptionInvalid() {
   $("#enter-a-description").classList.add("error-inactive");
   $("#description").classList.add("input-warning");
   $("#description-letters-only").classList.remove("error-inactive");
 }
 
+/**
+ * Validates the description input.
+ */
 export function descriptionValid() {
   $("#description-letters-only").classList.add("error-inactive");
   $("#enter-a-description").classList.add("error-inactive");
   $("#description").classList.remove("input-warning");
 }
 
+/**
+ * Renders the selected category.
+ * @param {string} category - The selected category.
+ */
 export function renderSelectedCategory(category) {
-  const selected = $("#select-task-category");
   event.currentTarget.toggleDropDown();
-  selected.innerHTML = category;
+  $("#select-task-category").innerHTML = category;
 }
 
+/**
+ * Gets the selected category.
+ * @returns {string} - The selected category.
+ */
 export function getSelectedCategory() {
-  const category = $("#select-task-category").innerText;
-  if (category === LANG["select-task-category"]) return noCategorySelected();
-  categorySelected();
-  return category;
+  return $("#select-task-category").innerText;
 }
 
-export function noCategorySelected() {
-  $("#select-a-category").classList.remove("error-inactive");
-  $("#category-drp-wrapper").classList.add("input-warning");
-}
-
-export function categorySelected() {
-  $("#select-a-category").classList.add("error-inactive");
-  $("#category-drp-wrapper").classList.remove("input-warning");
-}
-
+/**
+ * Formats the current date as DD/MM/YYYY.
+ * @returns {string} - The formatted date.
+ */
 export function getFormattedDate() {
   const today = new Date();
   const day = String(today.getDate()).padStart(2, "0");
@@ -260,17 +250,20 @@ export function getFormattedDate() {
   return `${day}/${month}/${year}`;
 }
 
+/**
+ * Renders the current date in the date input field.
+ */
 export function renderDate() {
   $("#date").value = getFormattedDate();
 }
 
+/**
+ * Gets the due date of the task from the input field and validates it.
+ * @returns {string|undefined} - The due date if valid, otherwise undefined.
+ */
 export function getDueDate() {
   const dateString = $("#date").value;
   if (dateString == "") return dateEmpty();
-
-  // const formattedDate = dateFormat(dateString);
-  // const now = Date.now();
-  // if (formattedDate < now && formattedDate.getDate() !== formattedDate.getDate()) return;
   if (!dateFormat(dateString)) {
     dateWrongFormat();
   } else if (dateFormat(dateString)) {
@@ -279,77 +272,95 @@ export function getDueDate() {
   }
 }
 
+/**
+ * Shows an error message when the due date is empty.
+ */
 export function dateEmpty() {
   $("#enter-a-dueDate").classList.remove("error-inactive");
   $("#date").classList.add("input-warning");
-  return;
 }
 
+/**
+ * Shows an error message when the due date format is incorrect.
+ */
 export function dateWrongFormat() {
   $("#enter-a-dueDate").classList.add("error-inactive");
   $("#date").classList.add("input-warning");
   $("#wrong-date-format").classList.remove("error-inactive");
-  return;
 }
 
+/**
+ * Validates the due date input.
+ */
 export function dateValid() {
   $("#enter-a-dueDate").classList.add("error-inactive");
   $("#date").classList.remove("input-warning");
   $("#wrong-date-format").classList.add("error-inactive");
 }
 
+/**
+ * Checks the selected priority and returns its value.
+ * @returns {string|undefined} - The selected priority or undefined if not selected.
+ */
 export function checkPriority() {
   const activeButton = $(".btn-priority button.active");
 
-  if (activeButton) {
-    $("#select-a-priority").classList.add("error-inactive");
-    return activeButton.$(".priority").dataset.lang;
-  } else {
-    return $("#select-a-priority").classList.remove("error-inactive");
-  }
+  $("#select-a-priority").classList.toggle("error-inactive", activeButton);
+  return activeButton?.$(".priority").dataset.lang;
 }
 
+/**
+ * Gets the subtasks of the task.
+ * @returns {Array} - An array of new subtasks.
+ */
 export function getSubtasks() {
-  return subtasks.map((subtaskName) => {
-    return { name: subtaskName, done: false };
-  });
+  return subtasks.map((subtaskName) => ({ name: subtaskName, done: false }));
 }
 
+/**
+ * Adds a new task with the provided details and reloads page.
+ * retuns early on erronious input
+ */
 export async function addTask() {
   const dir = currentDirectory();
   checkSelectedBoard();
   checkSelectedCollaborator();
 
-  const title = getTitle();
-  const description = getDescription();
-  const category = getSelectedCategory();
-  const collaborators = selectedCollaborators;
-  const dueDate = getDueDate();
-  const priority = checkPriority();
-  const subtasks = getSubtasks();
-  const addTaskData = [
-    title,
-    description,
-    category,
-    collaborators,
-    dueDate,
-    priority,
-    subtasks
-  ];
+  const taskData = {
+    selectedBoard: STATE.selectedBoard,
+    title: getTitle(),
+    description: getDescription(),
+    category: getSelectedCategory(),
+    selectedCollaborators,
+    dueDate: getDueDate(),
+    priority: checkPriority(),
+    subtasks: getSubtasks()
+  };
 
-  if (checkAddTaskInputs(addTaskData)) return;
-  await createNewTask(STATE.selectedBoard, title, description, category, selectedCollaborators, dueDate, priority, subtasks);
+  if (checkAddTaskInputs(Object.values(taskData))) return;
+
+  await createNewTask(taskData);
+
   notification("task-created");
   resetArrays();
-  if (dir === "board") location.reload();
-  else $("#board").click();
+  
+  dir === "board" ? location.reload() : $("#board").click();
 }
 
+/**
+ * Checks if any task input fields are invalid.
+ * @param {Array} addTaskData - Array of task input fields.
+ * @returns {boolean} - True if any input field is invalid, otherwise false.
+ */
 export function checkAddTaskInputs(addTaskData) {
   return addTaskData.some((singleInputField) => singleInputField === undefined);
 }
 
-export async function createNewTask( selectedBoard, title, description, category, selectedCollaborators, dueDate, priority, subtasks) {
+/**
+ * Creates a new task and adds it to the selected board.
+ * @param {Object} taskData - The task data to add.
+ */
+export async function createNewTask({ selectedBoard, title, description, category, selectedCollaborators, dueDate, priority, subtasks }) {
   const newTask = {
     title: title,
     description: description,
@@ -363,25 +374,26 @@ export async function createNewTask( selectedBoard, title, description, category
   await selectedBoard.addTask(newTask);
 }
 
+/**
+ * Clears the subtask input field.
+ */
 export function clearSubtaskInput() {
-  const subtaskInputContainer = $(".subtasks input");
-  subtaskInputContainer.value = "";
+  $(".subtasks input").value = "";
 }
 
+/**
+ * Toggles the visibility of subtask input buttons based on input.
+ */
 export function checkSubtaskInput() {
-  const inputField = $(".subtasks input").value;
-  const inputButtons = $(".subtasks .inp-buttons");
-
-  if (inputField.length >= 1) {
-    inputButtons.classList.remove("d-none");
-  } else if (inputField.length == 0) {
-    inputButtons.classList.add("d-none");
-  }
+  $(".subtasks .inp-buttons").classList.toggle("d-none", $(".subtasks input").value.length === 0);
 }
 
+/**
+ * Adds a subtask to the task or throws the appropiate error messages.
+ * renders subtasks
+ */
 export function addSubtask() {
   const subtaskValue = $(".subtasks input");
-  const inputButtons = $(".subtasks .inp-buttons");
 
   if (!letterRegex.test(subtaskValue.value)) {
     subtaskInvalid();
@@ -392,25 +404,32 @@ export function addSubtask() {
     subtasks.push(subtaskValue.value);
     subtaskValue.value = "";
   }
-  inputButtons.classList.add("d-none");
+  $(".subtasks .inp-buttons").classList.add("d-none");
   renderSubtasks();
 }
 
+/**
+ * Shows an error message when the subtask contains invalid characters.
+ */
 export function subtaskInvalid() {
   $("#error-container").classList.remove("d-none");
   $("#subtask-letters-only").classList.remove("error-inactive");
   $("#add-subtask").classList.add("input-warning");
-  return;
 }
 
+/**
+ * Shows an error message when the subtask is too long.
+ */
 export function subtaskTooLong() {
   $("#error-container").classList.remove("d-none");
   $("#add-subtask").classList.add("input-warning");
   $("#subtask-letters-only").classList.add("error-inactive");
   $("#subtask-too-long").classList.remove("error-inactive");
-  return;
 }
 
+/**
+ * Validates the subtask input.
+ */
 export function subtaskValid() {
   $("#subtask-letters-only").classList.add("error-inactive");
   $("#subtask-too-long").classList.add("error-inactive");
@@ -418,6 +437,9 @@ export function subtaskValid() {
   $("#error-container").classList.add("d-none");
 }
 
+/**
+ * Renders the list of subtasks.
+ */
 export function renderSubtasks() {
   const subtaskContainer = $("#subtask-container");
   subtaskContainer.innerHTML = "";
@@ -428,6 +450,11 @@ export function renderSubtasks() {
   }
 }
 
+/**
+ * Enables editing of a subtask.
+ * Can only be used on HTML element.
+ * @param {number} i - The index of the subtask to edit.
+ */
 export function editSubtask(i) {
   const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
   const range = document.createRange();
@@ -446,58 +473,42 @@ export function editSubtask(i) {
   selection.addRange(range);
 }
 
+/**
+ * Saves the edited subtask and updates UI.
+ * @param {number} i - The index of the subtask to save.
+ */
 export function saveEditedSubtask(i) {
   const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
   subtasks[i] = subtaskInput.innerText;
   subtaskInput.setAttribute("contenteditable", "false");
 
-  const allSaveButtons = $$(".save-edited-subtask-btn");
-
-  allSaveButtons.forEach((button) => {
-    button.classList.toggle("d-none");
-  });
+  $$(`.save-edited-subtask-btn, .save-edited-subtask-btn${i}, .subtask-edit-btn${i}`).forEach((button) => button.classList.toggle("d-none"));
 
   $("#single-subtask" + i).classList.toggle("edit-btn-active");
-  $(".subtask-edit-btn" + i).classList.toggle("d-none");
-  $(".save-edited-subtask-btn" + i).classList.toggle("d-none");
 }
 
-export function renderSubtaskTemplate(subtask, i) {
-  return /*html*/ `
-        <div class="row single-subtask" id="single-subtask${i}">
-            <li>${subtask}</li>
-            <div class="row gap-10 subtask-edit-delete-btns" id="subtask-edit-delete-btns${i}">
-                <button class="grid-center subtask-edit-btn${i}" onclick="editSubtask(${i})">
-                    <img src="/Join/assets/img/icons/edit_dark.svg" width="20">
-                </button>
-                <button class="grid-center d-none save-edited-subtask-btn${i}" onclick="saveEditedSubtask(${i})">
-                    <img src="/Join/assets/img/icons/check_dark.svg" width="20">
-                </button>
-                <div class="vertical-line"></div>
-                <button class="grid-center" onclick="deleteSubtask(${i})">
-                    <img src="/Join/assets/img/icons/trash.svg" width="20">
-                </button>
-            </div>
-        </div>
-    `;
-}
-
+/**
+ * Deletes a subtask and updates UI.
+ * @param {number} i - The index of the subtask to delete.
+ */
 export function deleteSubtask(i) {
-  if (event.currentTarget.closest("#edit-task")) {
-    STATE.selectedTask.subTasks.splice(i, 1);
-    renderEditSubtasks();
-    return;
-  }
-  subtasks.splice(i, 1);
-  renderSubtasks();
+  const isInEditTask = event.currentTarget.closest("#edit-task");
+  
+  (isInEditTask ? STATE.selectedTask.subTasks : subtasks).splice(i, 1);
+  isInEditTask ? renderEditSubtasks() : renderSubtasks();
 }
 
+/**
+ * Resets the selected collaborators and subtasks arrays.
+ */
 export function resetArrays() {
   selectedCollaborators.length = 0;
   subtasks.length = 0;
 }
 
+/**
+ * Resets the priority button states.
+ */
 export function resetPriorityButton() {
-  const buttons = $$(".btn-priority button");
-  buttons.forEach((button) => button.classList.remove("active"));
+  $$(".btn-priority button").forEach((button) => button.classList.remove("active"));
 }
