@@ -109,19 +109,6 @@ export function selectCollaborator() {
 }
 
 /**
- * Checks if a collaborator is selected and updates UI elements accordingly.
- */
-export function checkSelectedCollaborator() {
-	if (selectedCollaborators.length == 0) {
-		$("#select-a-collaborator").classList.remove("error-inactive");
-		$("#drp-wrapper-collaborator").classList.add("input-warning");
-		return;
-	}
-	$("#select-a-collaborator").classList.add("error-inactive");
-	$("#drp-wrapper-collaborator").classList.remove("input-warning");
-}
-
-/**
  * Gets the title of the task from the input field and validates it.
  * @returns {string|undefined} - The task title if valid, otherwise undefined.
  */
@@ -336,7 +323,6 @@ export function getSubtasks() {
 export async function addTask() {
 	const dir = currentDirectory();
 	checkSelectedBoard();
-	checkSelectedCollaborator();
 
 	const taskData = {
 		selectedBoard: STATE.selectedBoard,
