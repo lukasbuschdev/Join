@@ -34,8 +34,10 @@ export const taskTemplate = (
     </div>`;
 };
 
-export const highlight = (string, filter) =>
-  string.replaceAll(filter, (item) => `<span class="highlight">${item}</span>`);
+export const highlight = (string, filter) => {
+  console.log(string, filter)
+  return string.replaceAll(new RegExp(`${filter}`, "ig"), (item) => `<span class="highlight">${item}</span>`);
+}
 
 export const progressTemplate = (subTasks) => {
   const finishedSubtasks = subTasks.filter(({ done }) => done);
