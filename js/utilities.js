@@ -327,26 +327,21 @@ export function moveColorCursor(offsetX, offsetY, userColor) {
 export function addAcceptColor(userColor) {
 	$("#accept-user-color").classList.add("active");
 	$("label").classList.remove("border");
+	
+	$("#accept-user-color").onclick = (event) => colorPicker(event, userColor);
+}
 
-	let colorPicker;
-	try {
-		$("#accept-user-color").removeEventListener("click", colorPicker, { once: true });
-	} catch (e) {}
-	$("#accept-user-color").addEventListener(
-		"click",
-		(colorPicker = () => {
-			event.stopPropagation();
-			$$(".user-img-container.account").for((button) =>
-				button.style.setProperty("--user-clr", userColor)
-			);
-			if (STORAGE.currentUser) {
-				STORAGE.currentUser.setColor(userColor);
-				renderUserData();
-			}
-			$("#user-color").click();
-		}),
-		{ once: true }
+function colorPicker(event, userColor) {
+	event.stopPropagation();
+	$$(".user-img-container.account").for((button) =>
+		button.style.setProperty("--user-clr", userColor)
 	);
+	if (STORAGE.currentUser) {
+		STORAGE.currentUser.setColor(userColor);
+		renderUserData();
+	}
+	console.log('picking color', userColor)
+	toggleColorPicker();
 }
 
 export function getRGBfromString(colorString) {

@@ -1,22 +1,22 @@
+import { LANG } from "../../js/language.js";
 import {
   bindInlineFunctions,
-  currentUserId,
-  getContext,
-  goTo
+  getContext
 } from "../../js/setup.js";
 import { STORAGE } from "../../js/storage.js";
 import { User } from "../../js/user.class.js";
-import { $, $$, isLetterOrNumber } from "../../js/utilities.js";
+import { $, $$, goTo, isLetterOrNumber } from "../../js/utilities.js";
 bindInlineFunctions(getContext());
 
-export function initVerifyAccount() {
+export async function initVerifyAccount() {
   LANG.init();
+  await STORAGE.init();
   initTimer();
   checkEmailVerification();
 }
 
 export async function checkEmailVerification() {
-  const uid = currentUserId();
+  const uid = STORAGE.currentUserId();
   const verificaiton = STORAGE.get(`verification/${uid}`);
   if (verificaiton === undefined) return;
   const {
@@ -27,7 +27,7 @@ export async function checkEmailVerification() {
 }
 
 export async function initTimer() {
-  const uid = currentUserId();
+  const uid = STORAGE.currentUserId();
   const {
     verifyCode: { expires }
   } = STORAGE.get(`verification/${uid}`);
@@ -53,7 +53,7 @@ export async function initTimer() {
 export async function processVerification() {
   event.preventDefault();
 
-  const uid = currentUserId();
+  const uid = STORAGE.currentUserId();
   const {
     verifyCode: { code, expires },
     userData
@@ -74,9 +74,9 @@ export async function processVerification() {
   goTo("init/create_account/create_account", { search: `?uid=${userData.id}` });
 }
 
-export async function sendNewCode() {
+export function sendNewCode() {
   event.preventDefault();
-  const { userData } = STORAGE.get(`verification/${currentUserId()}`);
+  const { userData } = STORAGE.get(`verification/${STORAGE.currentUserId()}`);
   const user = new User(userData);
   user.initVerification();
 }

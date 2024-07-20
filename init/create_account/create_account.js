@@ -1,11 +1,13 @@
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
+import { STORAGE } from "../../js/storage.js";
 import { getInitialsOfName } from "../../js/utilities.js";
+import { validPhone } from "../init/init.js";
 bindInlineFunctions(getContext(), ["/Join/js/utilities.js"]);
 
 export async function initCreateAccount() {
   renderColorWheel();
-  initWebsocket();
-  const { name } = await getCurrentUser();
+  await STORAGE.init();
+  const { name } = STORAGE.currentUser;
   $(".user-img-container h1").innerText = getInitialsOfName(name);
   $("#user-name").innerText = name;
 }
@@ -14,15 +16,15 @@ export async function finishSetup() {
   event.preventDefault();
 
   const phoneInput = $("#phone input").value;
-  const phoneValidity = phoneInput ? validPhone(phoneInput) : true;
+  const phoneValidity = phoneInput.length ? validPhone(phoneInput) : true;
   throwErrors({
     identifier: "invalid-phone-number",
-    bool: phoneInput == true && !phoneValidity
+    bool: !phoneValidity
   });
 
   if (phoneValidity == false) return;
 
-  const user = await getCurrentUser(true);
+  const user = STORAGE.currentUser;
   const userColor = HSLToHex(
     $(".user-img-container").style.getPropertyValue("--user-clr")
   );
