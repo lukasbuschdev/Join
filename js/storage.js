@@ -3,7 +3,7 @@
 import { Board } from "./board.class.js";
 import { Notify } from "./notify.class.js";
 import { User } from "./user.class.js";
-import { parse, searchParams } from "./utilities.js";
+import { HSLToHex, parse, searchParams } from "./utilities.js";
 import { WebSocket } from "./websocket.js";
 
 class Storage {

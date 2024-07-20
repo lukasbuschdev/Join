@@ -569,7 +569,8 @@ export function getInitialsOfName(name) {
  * @param {number} l - Lightness (0-100)
  * @returns {string} - HEX color code
  */
-export function HSLToHex(h, s, l) {
+export function HSLToHex(hslString) {
+	let [h, s, l] = hslString.match(/\d+/g).map((digit) => Number(digit));
     s /= 100;
     l /= 100;
 
