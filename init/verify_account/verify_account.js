@@ -4,7 +4,7 @@ import {
   getContext,
   goTo
 } from "../../js/setup.js";
-import { REMOTE_getData } from "../../js/storage.js";
+import { STORAGE } from "../../js/storage.js";
 import { User } from "../../js/user.class.js";
 import { $, $$, isLetterOrNumber } from "../../js/utilities.js";
 bindInlineFunctions(getContext());
@@ -17,7 +17,7 @@ export function initVerifyAccount() {
 
 export async function checkEmailVerification() {
   const uid = currentUserId();
-  const verificaiton = await REMOTE_getData(`verification/${uid}`);
+  const verificaiton = STORAGE.get(`verification/${uid}`);
   if (verificaiton === undefined) return;
   const {
     verifyCode: { code }
@@ -30,7 +30,7 @@ export async function initTimer() {
   const uid = currentUserId();
   const {
     verifyCode: { expires }
-  } = await REMOTE_getData(`verification/${uid}`);
+  } = STORAGE.get(`verification/${uid}`);
   if (expires == undefined) return;
   const timer = setInterval(() => {
     const now = Date.now();
@@ -57,7 +57,7 @@ export async function processVerification() {
   const {
     verifyCode: { code, expires },
     userData
-  } = await REMOTE_getData(`verification/${uid}`);
+  } = STORAGE.get(`verification/${uid}`);
 
   const inputCode = [...$$("input")].map((input) => input.value).join("");
 
@@ -76,7 +76,7 @@ export async function processVerification() {
 
 export async function sendNewCode() {
   event.preventDefault();
-  const { userData } = await REMOTE_getData(`verification/${currentUserId()}`);
+  const { userData } = STORAGE.get(`verification/${currentUserId()}`);
   const user = new User(userData);
   user.initVerification();
 }
