@@ -133,7 +133,16 @@
     "confirmation-logout": "Deseja sair?",
     "confirm-logout": "Sair",
 
-    "reset-password": "Redefinir sua senha",
+    "confirmation-delete-account1": "Do you really want to delete your account?",
+	"confirm-delete-account1": "I do", 
+	"confirmation-delete-account2": "Are you sure?",
+	"confirm-delete-account2": "I am",
+	"confirmation-delete-account3": "Really?",
+	"confirm-delete-account3": "REALLY!",  
+	"confirmation-delete-account4": "This account cannot be deleted!",
+
+	"reset-password": "Redefinir sua senha",
+	"delete-account": "Delete Account",
 
     "legal-notice-heading": "Aviso Legal",
     "legal-notice-heading-2": "Informações de acordo com o § 5 TMG",

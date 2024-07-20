@@ -133,7 +133,16 @@
     "confirmation-logout": "Çıkış yapmak istiyor musunuz?",
     "confirm-logout": "Çıkış",
 
-    "reset-password": "Şifre Sıfırla",
+    "confirmation-delete-account1": "Do you really want to delete your account?",
+	"confirm-delete-account1": "I do", 
+	"confirmation-delete-account2": "Are you sure?",
+	"confirm-delete-account2": "I am",
+	"confirmation-delete-account3": "Really?",
+	"confirm-delete-account3": "REALLY!",  
+	"confirmation-delete-account4": "This account cannot be deleted!",
+
+	"reset-password": "Şifre Sıfırla",
+	"delete-account": "Delete Account",
 
     "legal-notice-heading": "Hukuki Bildirim",
     "legal-notice-heading-2": "§ 5 TMG'ye göre bilgi",

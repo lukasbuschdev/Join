@@ -35,7 +35,16 @@
     "email-not-found": "Email desconhecido!",
     "email-sent": "Um email foi enviado para você",
 
-    "reset-password": "Redefinir sua senha",
+    "confirmation-delete-account1": "Do you really want to delete your account?",
+	"confirm-delete-account1": "I do", 
+	"confirmation-delete-account2": "Are you sure?",
+	"confirm-delete-account2": "I am",
+	"confirmation-delete-account3": "Really?",
+	"confirm-delete-account3": "REALLY!",  
+	"confirmation-delete-account4": "This account cannot be deleted!",
+
+	"reset-password": "Redefinir sua senha",
+	"delete-account": "Delete Account",
     "change-password": "Mudar a senha da sua conta",
     "different-passwords": "Senhas não coincidem!",
     "new-password": "Nova senha",

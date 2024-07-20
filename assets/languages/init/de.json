@@ -35,7 +35,16 @@
     "email-not-found": "Email unbekannt!",
     "email-sent": "An E-Mail has been sent to you",
 
-    "reset-password": "Password zurücksetzen",
+    "confirmation-delete-account1": "Do you really want to delete your account?",
+	"confirm-delete-account1": "I do", 
+	"confirmation-delete-account2": "Are you sure?",
+	"confirm-delete-account2": "I am",
+	"confirmation-delete-account3": "Really?",
+	"confirm-delete-account3": "REALLY!",  
+	"confirmation-delete-account4": "This account cannot be deleted!",
+
+	"reset-password": "Password zurücksetzen",
+	"delete-account": "Delete Account",
     "change-password": "Ändere dein Passwort",
     "different-passwords": "Passwörter stimmen nicht überein!",
     "new-password": "Neues Password",
