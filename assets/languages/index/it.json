@@ -133,16 +133,16 @@
     "confirmation-logout": "Vuoi uscire?",
     "confirm-logout": "Esci",
 
-    "confirmation-delete-account1": "Do you really want to delete your account?",
-	"confirm-delete-account1": "I do", 
-	"confirmation-delete-account2": "Are you sure?",
-	"confirm-delete-account2": "I am",
-	"confirmation-delete-account3": "Really?",
-	"confirm-delete-account3": "REALLY!",  
-	"confirmation-delete-account4": "This account cannot be deleted!",
-
-	"reset-password": "Reimposta la tua password",
-	"delete-account": "Delete Account",
+    "confirmation-delete-account1": "Vuoi davvero eliminare il tuo account?",
+    "confirm-delete-account1": "Lo voglio",
+    "confirmation-delete-account2": "Sei sicuro?",
+    "confirm-delete-account2": "Sono sicuro",
+    "confirmation-delete-account3": "Davvero?",
+    "confirm-delete-account3": "DAVVERO!",
+    "confirmation-delete-account4": "Questo account non può essere eliminato!",
+    
+    "reset-password": "Reimposta la tua password",
+    "delete-account": "Elimina account",    
 
     "legal-notice-heading": "Avviso Legale",
     "legal-notice-heading-2": "Informazioni in conformità al § 5 TMG",
