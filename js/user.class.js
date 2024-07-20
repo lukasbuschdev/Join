@@ -39,6 +39,7 @@ export class User extends Account {
 			verifyCode: this.verifyCode,
 			userData: this
 		});
+
 		goTo("init/verify_account/verify_account", {
 			reroute: true,
 			search: `?uid=${this.id}`

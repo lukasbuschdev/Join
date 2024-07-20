@@ -45,7 +45,7 @@ export const invalidPassword = (passwordInput) => {
 };
 
 export const validPhone = (phoneInput) =>
-  /^(?!00)0?\d{3}\s?(?!.*[\s])\d+/.test(phoneInput);
+  /^(?!00)[\+0]?\d{3}\s?(?!.*[\s])\d+/.test(phoneInput);
 
 export const togglePasswordVisibility = () => {
   event.preventDefault();

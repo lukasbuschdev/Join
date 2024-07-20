@@ -10,14 +10,16 @@ export class Email {
 	}
 
 	async send() {
-		STORAGE.webSocket.init(this.recipient.id);
+		if (!STORAGE.currentUserId()) STORAGE.webSocket.init(this.recipient.id);
 		const { socket } = STORAGE.webSocket;
 		const mailOptions = {
-			to: this.recipient.email,
+      to: this.recipient.email,
 			subject: this.subject,
 			html: this.message
 		};
+    
 		socket.emit("mail", mailOptions);
+    console.log(this)
 		return new Promise((resolve, reject) => {
 			socket.on("mailSent", resolve);
 			socket.on("mailFailed", reject);
