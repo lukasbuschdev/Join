@@ -586,5 +586,8 @@ export function HSLToHex(h, s, l) {
     const g = Math.round(f(8) * 255);
     const b = Math.round(f(4) * 255);
 
-    return'#' + [r, g, b].map(x => x.toString(16).length === 1 ? '0' + hex : hex).join('');
+    return'#' + [r, g, b].map(x => {
+		const hex = x.toString(16);
+		return hex.length === 1 ? '0' + hex : hex;
+	}).join('');
 }
