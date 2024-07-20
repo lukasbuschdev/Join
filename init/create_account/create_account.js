@@ -1,6 +1,6 @@
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 import { STORAGE } from "../../js/storage.js";
-import { getInitialsOfName } from "../../js/utilities.js";
+import { getInitialsOfName, HSLToHex } from "../../js/utilities.js";
 import { validPhone } from "../init/init.js";
 bindInlineFunctions(getContext(), ["/Join/js/utilities.js"]);
 
