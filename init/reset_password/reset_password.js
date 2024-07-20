@@ -1,5 +1,5 @@
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
-import { REMOTE_getData } from "../../js/storage.js";
+import { STORAGE } from "../../js/storage.js";
 import {
   $,
   currentUserId,
@@ -39,7 +39,7 @@ export const resetPassword = async () => {
 };
 
 export const initiatePasswordChange = async (newPasswordInput) => {
-  const user = await REMOTE_getData(`users/${currentUserId()}`);
+  const user = STORAGE.currentUser;
   await user.resetPassword(await hashInputValue(newPasswordInput));
   await notification("password-reset");
   goTo("index/summary/summary", { reroute: true, search: `?uid=${user.id}` });
