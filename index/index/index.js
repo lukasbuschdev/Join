@@ -125,6 +125,17 @@ export function noNotificationsYet() {
 `;
 }
 
+export function deleteAccount() {
+  confirmation('delete-account1', () => {
+    confirmation('delete-account2', () => {
+      confirmation('delete-account3', () => {
+        if(STORAGE.currentUser.name !== "Guest") STORAGE.currentUser.deleteAccount();
+        else confirmation('delete-account4');
+      })
+    })
+  })
+}
+
 export function toggleBoardTitleSelection() {
   const el = event.currentTarget;
   el.classList.toggle("active");

@@ -382,9 +382,10 @@ export function isLetterOrNumber(input) {
 }
 
 /**
- * TO DO
+ * @param {string} type
+ * @param {() => any}
  */
-export async function confirmation(type, cb) {
+export async function confirmation(type, cb, confirmBtn) {
 	const dataLang = type.includes(",") ? type.slice(0, type.indexOf(",")) : type;
 	if (!LANG.currentLangData[`confirmation-${dataLang}`]) return error("message unknown!");
 	const confirmationContainer = document.createElement("dialog");
@@ -420,7 +421,6 @@ export function dateFormat(input) {
 
 	const now = new Date();
 	const normalizedDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-	console.log(date, normalizedDate);
 	if (date < normalizedDate || date.getDate() !== date.getDate()) return;
 	return date;
 }

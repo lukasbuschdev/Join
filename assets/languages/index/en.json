@@ -143,6 +143,7 @@
 
 	"reset-password": "Reset your password",
 	"delete-account": "Delete Account",
+	"account-deleted": "Account has been deleted!",
 
     "legal-notice-heading": "Legal notice",
     "legal-notice-heading-2": "Information according to § 5 TMG",

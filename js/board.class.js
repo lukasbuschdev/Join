@@ -4,7 +4,37 @@ import { STORAGE } from "./storage.js";
 import { Task } from "./task.class.js";
 import { currentUserId, error } from "./utilities.js";
 
+/**
+ * @typedef {Object<string, string} Categories
+ * @property {string} name
+ * @property {string} color
+*/
+
 export class Board extends BaseClass {
+  /** @type {string} */
+  name;
+
+  /** @type {string} */
+  owner;
+
+  /** @type {string} */
+  id;
+
+  /** @type {Array<string>} */
+  collaborators;
+
+  /** @type {number} */
+  dateOfCreation;
+
+  /** @type {number} */
+  dateOfLastEdit;
+
+  /** @type {Object<string, Task>} */
+  tasks;
+  
+  /** @type {Categories} */
+  categories;
+
   constructor({
     name,
     owner = currentUserId(),

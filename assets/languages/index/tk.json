@@ -143,6 +143,7 @@
     
     "reset-password": "Şifreni sıfırlayın",
     "delete-account": "Hesabı Sil",
+	"account-deleted": "Hesabın silindi!",
 
     "legal-notice-heading": "Hukuki Bildirim",
     "legal-notice-heading-2": "§ 5 TMG'ye göre bilgi",

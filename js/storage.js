@@ -20,6 +20,10 @@ class Storage {
     return this.#data;
   }
 
+  // updateAllData() {
+  //   return this.set('', this.data)
+  // }
+
   get allUsers() {
     return Object.entries(this.data.users).reduce(
       (all, [id, user]) => ({ ...all, [id]: new User(user) }),
@@ -33,6 +37,9 @@ class Storage {
     return new User(this.data.users[userId]);
   }
 
+  /**
+   * @returns {Object<string, User}
+   */
   get currentUserContacts() {
     return this.currentUser.contacts.reduce(
       (contacts, contactId) => ({
@@ -45,7 +52,7 @@ class Storage {
 
   /**
    * gets all boards the current user is collaborating on
-   * @returns {{[number]: Board}}
+   * @returns {Object<string, Board>}
    */
   get currentUserBoards() {
     const user = this.currentUser;
@@ -105,7 +112,8 @@ class Storage {
   /**
    * sets the provided value to the specified path. format: 'directory/subdirectory'
    * @param {string} path
-   * @param {Promise<any>} value
+   * @param {any} upload
+   * @returns {Promise<any>}
    */
   set(path, value) {
     return this.#upload(path, value);

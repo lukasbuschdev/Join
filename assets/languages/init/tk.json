@@ -35,16 +35,7 @@
     "email-not-found": "E-posta bulunamadı!",
     "email-sent": "Bir E-Posta size gönderildi",
 
-    "confirmation-delete-account1": "Do you really want to delete your account?",
-	"confirm-delete-account1": "I do", 
-	"confirmation-delete-account2": "Are you sure?",
-	"confirm-delete-account2": "I am",
-	"confirmation-delete-account3": "Really?",
-	"confirm-delete-account3": "REALLY!",  
-	"confirmation-delete-account4": "This account cannot be deleted!",
-
 	"reset-password": "Şifrenizi Sıfırlayın",
-	"delete-account": "Delete Account",
     "change-password": "Hesap şifrenizi değiştirin",
     "different-passwords": "Şifreler uyuşmuyor!",
     "new-password": "Yeni şifre",

@@ -186,7 +186,7 @@ input {
     width: 145px;
 }
 
-form:has(:is(input:placeholder-shown, input[type="checkbox"]:not(:checked))) button[type="submit"] {
+form:has(:is(input:placeholder-shown, #privacy-checkbox:not(:checked))) button[type="submit"] {
     pointer-events: none;
     font-weight: 500;
     filter: invert(1);

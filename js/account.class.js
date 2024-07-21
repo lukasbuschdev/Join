@@ -1,10 +1,54 @@
 import { BaseClass } from "./base.class.js";
 
+/**
+ * @typedef {Object} Notification
+ * @property {Array<string>} recipients
+ * @property {string} boardName
+ * @property {string} boardId
+ * @property {string} id
+ * @property {string} ownerName
+ * @property {"boardInvite"|"assignTo"} type
+ */
+
 export class Account extends BaseClass {
     /**
      * 
      * @param {{name: string, email: string, color: string | undefined, id: string | undefined, img: string, loggedIn: string, boards: string[], contacts: string[], phone: string, notifications: {id: Notify}, pendingFriendshipRequests: string[]}} param0 
      */
+
+      /** @type {string} */
+    name;
+
+    /** @type {string} */
+    email;
+
+    /** @type {string} */
+    color;
+    
+    /** @type {string} */
+    id;
+
+    /** @type {string} */
+    img;
+
+    /** @type {"false"|"true"} */
+    loggedIn;
+
+    /** @type {Array<string>} */
+    boards = [];
+
+    /** @type {Array<string>} */
+    contacts = [];
+
+    /** @type {string} */
+    phone = 'N/A';
+
+    /** @type {Object<string, Notification} */
+    notifications = {};
+
+    /** @type {Array<string>} */
+    contacts = [];
+    
     constructor({
         name,
         email,

@@ -143,6 +143,7 @@
 
     "reset-password": "Setze Dein Passwort zurück",
     "delete-account": "Konto löschen",
+	"account-deleted": "Dein Konto wurde gelöscht!",
     
 
     "legal-notice-heading": "Impressum",

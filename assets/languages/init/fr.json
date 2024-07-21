@@ -35,16 +35,7 @@
     "email-not-found": "Email inconnu !",
     "email-sent": "Un email a été envoyé à votre adresse",
 
-    "confirmation-delete-account1": "Do you really want to delete your account?",
-	"confirm-delete-account1": "I do", 
-	"confirmation-delete-account2": "Are you sure?",
-	"confirm-delete-account2": "I am",
-	"confirmation-delete-account3": "Really?",
-	"confirm-delete-account3": "REALLY!",  
-	"confirmation-delete-account4": "This account cannot be deleted!",
-
 	"reset-password": "Réinitialiser votre mot de passe",
-	"delete-account": "Delete Account",
     "change-password": "Changer le mot de passe de votre compte",
     "different-passwords": "Mots de passe non identiques !",
     "new-password": "Nouveau mot de passe",
