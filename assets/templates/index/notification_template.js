@@ -58,12 +58,13 @@ export function notificationTemplate(notification) {
 
 export async function acceptBoardInvite(boardId, boardName, notificationId) {
   const USER = STORAGE.currentUser;
+  const BOARD = STORAGE.currentUserBoards[boardId];
   await removeNotification(notificationId);
-  if (!(boardId in STORAGE.data.boards))
-    return notification(`board-nonexistent, {boardName: '${boardName}'}`);
-  USER.boards.push(boardId)
-  const setBoard = STORAGE.set(`boards/${boardId}/_collaborators`, USER.id);
-  await Promise.all([USER.update(), setBoard]);
+  if (!(boardId in STORAGE.data.boards)) return notification(`board-nonexistent, {boardName: '${boardName}'}`);
+  USER.boards.push(boardId);
+  BOARD.collaborators.push(USER.id);
+  // const setBoard = STORAGE.set(`boards/${boardId}/_collaborators`, USER.id);
+  await Promise.all([USER.update(), BOARD.update()]);
   await notification(`board-joined, {boardName: '${boardName}'}`);
   location.reload();
 }
