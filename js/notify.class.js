@@ -13,7 +13,7 @@ export class Notify {
 				STORAGE.set(`users/${id}/notifications/${this.id}`, this)
 			)
 		);
+		console.log('recipients: ', this.recipients)
 		STORAGE.webSocket.socket.emit("notification", { to: this.recipients });
-		console.log('notification: ', this)
 	}
 }
