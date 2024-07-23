@@ -34,11 +34,11 @@ export class WebSocket {
 		});
 	}
 
-	sendMessage(recipientIds) {
-		if (!recipientIds.every((id) => STORAGE.currentUserContacts.hasOwnProperty(id)))
-			return error(`user '${id}' not in contacts!`);
-		this.socket.emit("notification", { to: recipientIds });
-	}
+	// sendMessage(recipientIds) {
+	// 	if (!recipientIds.every((id) => STORAGE.currentUserContacts.hasOwnProperty(id)))
+	// 		return error(`user '${id}' not in contacts!`);
+	// 	this.socket.emit("notification", { to: recipientIds });
+	// }
 
 	uploadImg(img) {
 		const extension = img.type.split("/")[1];
