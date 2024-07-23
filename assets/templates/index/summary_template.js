@@ -66,3 +66,11 @@ export function summaryTemplate({
         </div>
 `;
 }
+
+export function boardEditButtonTemplate(boardId) {
+	return /*html*/ `
+        <button class="circle grid-center edit-btn" onclick="initEditBoard(${boardId})">
+            <img src="/Join/assets/img/icons/edit.svg" alt="">
+        </button>
+    `;
+}

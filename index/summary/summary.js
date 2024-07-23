@@ -6,6 +6,7 @@ import { boardTitleSelectionTemplate } from "../index/index.js";
 import { summaryTemplate } from "../../assets/templates/index/summary_template.js";
 import { STATE } from "../../js/state.js";
 import { addBoardCategoryTemplate } from "../../assets/templates/index/task_template.js";
+import { boardEditButtonTemplate } from "../../assets/templates/index/summary_template.js";
 bindInlineFunctions(getContext(), [
 	"/Join/index/index/index.js",
 	"/Join/js/utilities.js",
@@ -25,21 +26,6 @@ export async function initSummary() {
 	renderBoard(boardId);
 	renderBoardTitleSelection();
 	$("#summary-content").classList.remove("d-none");
-}
-
-export function renderBoardEditButton(boardId) {
-	$("#summary-data").innerHTML += /*html*/ `
-        <button class="circle grid-center edit-btn" onclick="initEditBoard(${boardId})">
-            <img src="/Join/assets/img/icons/edit.svg" alt="">
-        </button>
-    `;
-}
-
-export function boardSelectionTemplate({ name, id }) {
-	return /*html*/ `
-        <button class="row" type="option" data-id="${id}" onclick="renderBoard(${id})">
-            <span>${name.replaceAll("-", " ")}</span>
-        </button>`;
 }
 
 export function getTaskStats(tasksObj) {
@@ -99,7 +85,7 @@ export function renderBoard(boardId) {
 	const taskStats = getTaskStats(tasksObj);
 	// SESSION_setData('activeBoard', Number(id));
 	$("#summary-content").innerHTML = summaryTemplate(taskStats);
-	if (owner == STORAGE.currentUser.id) renderBoardEditButton(id);
+	if (owner == STORAGE.currentUser.id) $("#summary-data").innerHTML += boardEditButtonTemplate(id);
 	else $("#board-title .circle")?.remove();
 
 	// setBoardButtons(taskStats);
