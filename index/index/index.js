@@ -40,10 +40,7 @@ if (LOCAL_getData("rememberMe") === "false") {
 }
 
 export function checkNotifications() {
-  const notificationCount = Object.values(
-    STORAGE.currentUser.notifications
-  ).length;
-  console.log(STORAGE.currentUser.notifications)
+  const notificationCount = Object.values(STORAGE.currentUser.notifications).length;
   const notificationCounters = $$(".notifications-counter");
 
   notificationCounters.forEach((counter) => {

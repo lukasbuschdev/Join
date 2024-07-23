@@ -27,18 +27,11 @@ export class WebSocket {
 		this.#socket.on("close", () => notification("websocket-disconnect"));
 		this.#socket.on("reconnect", () => notification("websocket-reconnect"));
 		this.#socket.on("notification", async () => {
-			console.log("notification recieved!");
 			this.notifySound.play();
 			await STORAGE.init();
 			checkNotifications();
 		});
 	}
-
-	// sendMessage(recipientIds) {
-	// 	if (!recipientIds.every((id) => STORAGE.currentUserContacts.hasOwnProperty(id)))
-	// 		return error(`user '${id}' not in contacts!`);
-	// 	this.socket.emit("notification", { to: recipientIds });
-	// }
 
 	uploadImg(img) {
 		const extension = img.type.split("/")[1];
