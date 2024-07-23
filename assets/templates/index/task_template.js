@@ -2,26 +2,22 @@ import { STORAGE } from "../../../js/storage.js";
 import { getInitialsOfName } from "../../../js/utilities.js";
 
 export const taskTemplate = (
-  { boardId, id, title, description, assignedTo, category, priority, subTasks },
-  filter
+	{ boardId, id, title, description, assignedTo, category, priority, subTasks },
+	filter
 ) => {
-  const board = STORAGE.currentUserBoards[boardId];
-  const assignedAccounts = assignedTo.reduce((total, assignedToId) => {
-    const { name, color: userColor } =
-      STORAGE.currentUserContacts[assignedToId] ?? STORAGE.currentUser;
-    total.push({ name, color: userColor });
-    return total;
-  }, []);
-  const categoryString = Object.keys(board.categories).find(
-    (cat) => cat === category
-  );
-  return /*html*/ `
+	const board = STORAGE.currentUserBoards[boardId];
+	const assignedAccounts = assignedTo.reduce((total, assignedToId) => {
+		const { name, color: userColor } =
+			STORAGE.currentUserContacts[assignedToId] ?? STORAGE.currentUser;
+		total.push({ name, color: userColor });
+		return total;
+	}, []);
+	const categoryString = Object.keys(board.categories).find((cat) => cat === category);
+	return /*html*/ `
     <div class="task txt-small" onpointerdown="addDragAndDrop()" data-id="${boardId}/${id}">
-        <div class="task-category" style="--clr: ${
-          board.categories[category] ?? "#d1d1d1"
-        };"${!categoryString ? 'data-lang="default"' : ""}>${
-    categoryString ? categoryString : ""
-  }</div>
+        <div class="task-category" style="--clr: ${board.categories[category] ?? "#d1d1d1"};"${
+		!categoryString ? 'data-lang="default"' : ""
+	}>${categoryString ? categoryString : ""}</div>
         <div class="task-title txt-700">${highlight(title, filter)}</div>
         <div class="task-description">${highlight(description, filter)}</div>
         ${progressTemplate(subTasks)}
@@ -35,18 +31,19 @@ export const taskTemplate = (
 };
 
 export const highlight = (string, filter) => {
-  return string.replaceAll(new RegExp(`${filter}`, "ig"), (item) => `<span class="highlight">${item}</span>`);
-}
+	return string.replaceAll(
+		new RegExp(`${filter}`, "ig"),
+		(item) => `<span class="highlight">${item}</span>`
+	);
+};
 
 export const progressTemplate = (subTasks) => {
-  const finishedSubtasks = subTasks.filter(({ done }) => done);
-  const progress =
-    finishedSubtasks == false
-      ? 0
-      : Math.roundTo(finishedSubtasks.length / subTasks.length, 2);
-  return !subTasks.length
-    ? ""
-    : /*html*/ `
+	const finishedSubtasks = subTasks.filter(({ done }) => done);
+	const progress =
+		finishedSubtasks == false ? 0 : Math.roundTo(finishedSubtasks.length / subTasks.length, 2);
+	return !subTasks.length
+		? ""
+		: /*html*/ `
     <div class="column gap-5 txt-tiny">
         <span data-lang="subtasks" style="margin-left: auto;"></span>
         <div class="task-progress">
@@ -60,25 +57,34 @@ export const progressTemplate = (subTasks) => {
 };
 
 export const assignedToTemplate = (assignedAccounts) => {
-  let template = "";
-  for (let i = 0; i < assignedAccounts.length; i++) {
-    const { color, name } = assignedAccounts[i];
-    template += /*html*/ `
+	let template = "";
+	for (let i = 0; i < assignedAccounts.length; i++) {
+		const { color, name } = assignedAccounts[i];
+		template += /*html*/ `
             <div class="task-assigned-to">
-                <div style="--user-clr: ${
-                  color !== "" ? color : "#D1D1D1"
-                };">${getInitialsOfName(name)}</div>
+                <div style="--user-clr: ${color !== "" ? color : "#D1D1D1"};">${getInitialsOfName(
+			name
+		)}</div>
             </div>
         `;
-    if (assignedAccounts.length > 3 && i == 1) {
-      template += /*html*/ `
+		if (assignedAccounts.length > 3 && i == 1) {
+			template += /*html*/ `
                 <div class="task-assigned-to">
-                    <div style="--user-clr: var(--clr-dark);">+${
-                      assignedAccounts.length - 2
-                    }</div>
+                    <div style="--user-clr: var(--clr-dark);">+${assignedAccounts.length - 2}</div>
                 </div>`;
-      break;
-    }
-  }
-  return template;
+			break;
+		}
+	}
+	return template;
 };
+
+export function addBoardCategoryTemplate([title, color]) {
+	return /*html*/ `
+        <div class="task-category" style="--clr: ${color};">
+            <span>${title}</span>
+            <button onclick="removeBoardCategory()">
+                <img src="/Join/assets/img/icons/close_white.svg" alt="">
+            </button>
+        </div>
+    `;
+}
