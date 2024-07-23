@@ -43,6 +43,7 @@ export function checkNotifications() {
   const notificationCount = Object.values(
     STORAGE.currentUser.notifications
   ).length;
+  console.log(STORAGE.currentUser.notifications)
   const notificationCounters = $$(".notifications-counter");
 
   notificationCounters.forEach((counter) => {
