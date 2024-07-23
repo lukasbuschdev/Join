@@ -133,8 +133,6 @@ class Storage {
   }
 
   async #upload(path, upload) {
-    // const dt = this.#packData(upload);
-    // return console.log(dt);
     try {
       const data = await (
         await fetch(`${this.STORAGE_URL}/${path}.json`, {
@@ -142,7 +140,10 @@ class Storage {
           body: JSON.stringify(this.#packData(upload))
         })
       ).text();
-      if (data) return this.#unpackData(data);
+      if (data) {
+        await STORAGE.delete(path.slice(0, path.lastIndexOf("/")) + '/null')
+        return this.#unpackData(data)
+      }
 
       throw new Error(`upload failed. '${path}' not found!`);
     } catch (error) {
