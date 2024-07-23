@@ -61,12 +61,9 @@ export async function acceptBoardInvite(boardId, boardName, notificationId) {
   await removeNotification(notificationId);
   if (!(boardId in STORAGE.data.boards))
     return notification(`board-nonexistent, {boardName: '${boardName}'}`);
-  const setUser = USER.setProperty("boards", [
-    ...USER.getPropertyValue("boards"),
-    `${boardId}`
-  ]);
-  const setBoard = STORAGE.set(`boards/${boardId}/collaborators`, USER.id);
-  await Promise.all([setUser, setBoard]);
+  USER.boards.push(boardId)
+  const setBoard = STORAGE.set(`boards/${boardId}/_collaborators`, USER.id);
+  await Promise.all([USER.update(), setBoard]);
   await notification(`board-joined, {boardName: '${boardName}'}`);
   location.reload();
 }

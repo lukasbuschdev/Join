@@ -76,6 +76,7 @@ Array.prototype.remove = function (...items) {
     if (!this.includes(item)) return false;
     this.splice(this.indexOf(item), 1);
   });
+  return this;
 };
 
 Object.prototype.filter = function (cb) {

@@ -340,7 +340,6 @@ function colorPicker(event, userColor) {
 		STORAGE.currentUser.setColor(userColor);
 		renderUserData();
 	}
-	console.log('picking color', userColor)
 	toggleColorPicker();
 }
 

@@ -140,12 +140,11 @@ export class User extends Account {
 
 	async deleteAccount() {
 		await Promise.all([
-			`users/${this.id}`,
-			// ATTENTION: array placeholder not properly stored yet (no underscore)
-			...allBoardCollaboratorPaths(),
-			...allTaskAssignedToPaths(),
-			...allContactPaths()
-			].map((path) => STORAGE.delete(path))
+			...allBoardCollaboratorPaths(this.id),
+			...allTaskAssignedToPaths(this.id),
+			...allContactPaths(this.id)
+			].map(([path, data]) => STORAGE.set(path, data)),
+			STORAGE.delete(`users/${this.id}`)
 		);
 		await notification('account-deleted');
 		goTo(`init/login/login`, { search: '' })
@@ -153,32 +152,32 @@ export class User extends Account {
 
 }
 
-function allBoardCollaboratorPaths() {
-	return Object.values(STORAGE.currentUserBoards).map((board, i) => `boards/${board.id}/_collaborators/${i}`)
+function allBoardCollaboratorPaths(userId) {
+	return Object.values(STORAGE.currentUserBoards).map((board) => [`boards/${board.id}/_collaborators`, board.collaborators.remove(userId)])
 }
 
-function allTaskAssignedToPaths() {
+function allTaskAssignedToPaths(userId) {
 	return Object.values(STORAGE.currentUserBoards).reduce(
 		(allAssignedTasks, { tasks }) => {
 			const assignedTasks = Object.values(tasks).reduce((taskMap, task) => {
-				if (task.assignedTo.includes(this.id)) taskMap.set(`${task.id}_${task.assignedTo.indexOf(this.id)}`, task)
+				if (task.assignedTo.includes(userId)) taskMap.set(`${task.id}_${userId}`, task)
 				return taskMap;
 			}, new Map())
 		
-			return [ ...allAssignedTasks, ...[...assignedTasks].map(singleTaskAssignedToPath()) ];
-		}, [])
+			return [ ...allAssignedTasks, ...[...assignedTasks].map(singleTaskAssignedToPath) ];
+		}, []
+	)
 }
 
 function singleTaskAssignedToPath([identifier, task]) {
-	const i = identifier.match(/(?<=_).*$/g);
-	return `boards/${task.boardId}/tasks/${task.id}/_assignedTo/${i}`;
+	const userId = identifier.match(/(?<=_).*$/g)[0];
+	return [`boards/${task.boardId}/tasks/${task.id}/_assignedTo`,
+		STORAGE.data.boards[task.boardId].tasks[task.id].assignedTo.remove(userId)
+	];
 }
 
-function allContactPaths() {
+function allContactPaths(userId) {
 	return Object.values(STORAGE.currentUserContacts).reduce(
-		(allContacts, contact) => {
-			const i = contact.contacts.indexOf(this.id);
-			return [...allContacts, `users/${contact.id}/_contacts/${i}`];
-		}, []
+		(allContacts, contact) => [...allContacts, [`users/${contact.id}/_contacts`, STORAGE.data.users[contact.id].contacts.remove(userId)]], []
 	)
 }
