@@ -62,7 +62,8 @@
     "description-placeholder": "Beschreibung hinzufügen",
     "category": "Kategorie",
     "select-task-category": "Wähle eine Kategorie",
-    "assigned-to": "Hinzufügen zu",
+    "select-collaborators": "Kontakt hinzufügen",
+	"assigned-to": "Hinzufügen zu",
 
     "assigned-you": "Du",
     "assigned-you-parentheses": "(Du)",

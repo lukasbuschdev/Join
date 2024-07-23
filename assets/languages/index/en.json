@@ -62,7 +62,8 @@
     "description-placeholder": "Enter a description",
     "category": "Category",
     "select-task-category": "Select task category",
-    "assigned-to": "Assigned to",
+    "select-collaborators": "Select collaborator",
+	"assigned-to": "Assigned to",
     "assigned-you-parentheses": "(You)",
 
     "assigned-you": "You",

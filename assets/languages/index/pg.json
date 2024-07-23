@@ -62,7 +62,8 @@
     "description-placeholder": "Digite uma descrição",
     "category": "Categoria",
     "select-task-category": "Selecionar categoria da tarefa",
-    "assigned-to": "Atribuído a",
+    "select-collaborators": "Selecione o colaborador",
+	"assigned-to": "Atribuído a",
     "assigned-you-parentheses": "(Você)",
 
     "assigned-you": "Você",

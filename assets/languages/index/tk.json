@@ -62,7 +62,8 @@
     "description-placeholder": "Açıklama Girin",
     "category": "Kategori",
     "select-task-category": "Görev Kategorisi Seçin",
-    "assigned-to": "Atanan Kişi",
+    "select-collaborators": "Ortak çalışan seçin",
+	"assigned-to": "Atanan Kişi",
     "assigned-you-parentheses": "(Siz)",
 
     "assigned-you": "Siz",
