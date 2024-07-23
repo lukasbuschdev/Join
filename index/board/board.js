@@ -19,6 +19,7 @@ import { editTaskTemplate } from "../../assets/templates/index/edit-task_templat
 import { renderBoardIds, renderDate, selectedCollaborators } from "../add_task/add_task.js";
 import { STATE } from "../../js/state.js";
 import { renderCollaboratorInput } from "../../assets/templates/index/add_task_templates.js";
+import { Task } from "../../js/task.class.js";
 
 export async function initBoard() {
 	if (!STORAGE.currentUser.boards.length) return;
@@ -75,8 +76,9 @@ export async function addTaskModal() {
 	modal.openModal();
 };
 
-export function renderFullscreenTask(task) {
-	if (event.which !== 1) return;
+export function renderFullscreenTask() {
+	const task = STATE.selectedTask;
+	if (event && event.which !== 1) return;
 	const modal = $("#fullscreen-task-modal");
 	const initialTask = cloneDeep(task);
 	modal.$("#fullscreen-task").innerHTML = fullscreenTaskTemplate(task);
@@ -88,6 +90,7 @@ export function renderFullscreenTask(task) {
 };
 
 export function saveEditedTask() {
+	const modal = $("#fullscreen-task-modal");
 	const editedTaskData = {
 		title: $("#fullscreen-task-modal #title").value,
 		description: $("#fullscreen-task-modal #description").value,
@@ -105,8 +108,9 @@ export function saveEditedTask() {
 		})
 	};
 	Object.assign(STATE.selectedTask, editedTaskData);
-	$("#fullscreen-task-modal").closeModal();
+	modal.closeModal();
 	toggleFullscreenState();
+	modal.$("#fullscreen-task").innerHTML = fullscreenTaskTemplate(STATE.selectedTask);
 };
 
 export function saveTaskChanges(initialTask) {

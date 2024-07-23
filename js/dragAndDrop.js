@@ -34,7 +34,7 @@ export function fullscreenFunctionality() {
 export function fullscreenHandler() {
   const [boardId, taskId] = TASK_ELEMENT.dataset.id.split("/");
   STATE.selectedTask = new Task(STATE.selectedBoard.tasks[taskId]);
-  renderFullscreenTask(STATE.selectedTask);
+  renderFullscreenTask();
 }
 
 // DRAG FUNC
@@ -50,7 +50,7 @@ export function dragFunctionality() {
   const placeholderElement = '<div class="element-placeholder"></div>';
   TASK_ELEMENT.insertAdjacentHTML("beforebegin", placeholderElement);
 
-  window.addEventListener( "pointerup", () => {
+  window.addEventListener("pointerup", () => {
       // remove moveListener
       stopScroll();
       window.removeEventListener("pointermove", dragHandler);

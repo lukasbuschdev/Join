@@ -64,6 +64,7 @@ export class Board extends BaseClass {
     this.tasks[task.id] = task;
 
     const user = STORAGE.currentUser;
+    await this.update();
     const notification = new Notify({
       userName: STORAGE.currentUser.name,
       recipients: task.assignedTo.filter((id) => id !== user.id),
@@ -72,7 +73,6 @@ export class Board extends BaseClass {
       boardName: this.name
     });
     notification.send();
-    await this.update();
     return task;
   }
 

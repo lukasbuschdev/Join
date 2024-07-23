@@ -19,7 +19,7 @@
     --load-animation-duration: 600ms ease-out;
     --transition-fast: 100ms ease-in-out;
     --transition-medium: 175ms ease-in-out;
-    --transition-slow: 250ms ease-in-out;
+    --transition-slow: 250ms;
 
     --header-height: 85px;
 
@@ -816,14 +816,13 @@ input[type="checkbox"]:checked {
     }
 }
 
-
 /* TO DO */
-.content-loading::after {
+
+#content::after {
     width: fit-content;
     position: absolute;
     inset: 0;
     margin: auto;
-    display: grid;
     place-items: center;
     content: '...';
     color: transparent;
@@ -844,9 +843,23 @@ input[type="checkbox"]:checked {
     }
 }
 
-.content-loading::before {
-    content: '';
+#content::before,
+#content::after {
+    display: none;
+    opacity: 0;
+    transition-property: display, opacity;
+    transition-duration: 500ms;
+    transition-behavior: allow-discrete;
+}
+
+#content.content-loading::before, 
+#content.content-loading::after {
     display: grid;
+    opacity: 1;
+}
+
+#content::before {
+    content: '';
     place-items: center;
     position: absolute;
     inset: 0;
@@ -854,6 +867,6 @@ input[type="checkbox"]:checked {
     z-index: 100;
 }
 
-.loading {
+#loading {
     position: relative;
 }
