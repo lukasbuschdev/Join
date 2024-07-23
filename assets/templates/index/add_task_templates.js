@@ -1,4 +1,5 @@
 import { selectedCollaborators } from "../../../index/add_task/add_task.js";
+import { LANG } from "../../../js/language.js";
 import { STORAGE } from "../../../js/storage.js";
 import { $, getInitialsOfName } from "../../../js/utilities.js";
 
@@ -51,7 +52,7 @@ export function renderCollaboratorsToAssign(collaborator) {
 export function renderCollaboratorInput() {
     const inputContainerCollaborator = $("#fullscreen-task-modal[open] #selected-collaborator-input") ?? $("#selected-collaborator-input");
     inputContainerCollaborator.innerHTML = "";
-
+    if(!selectedCollaborators.length) inputContainerCollaborator.innerHTML = LANG.currentLangData["select-collaborators"];
     selectedCollaborators.forEach((collaboratorId) => {
         const users = STORAGE.data.users[collaboratorId];
         inputContainerCollaborator.innerHTML += /*html*/ `

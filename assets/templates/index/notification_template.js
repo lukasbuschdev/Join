@@ -67,6 +67,7 @@ export async function acceptBoardInvite(boardId, boardName, notificationId) {
 	BOARD.collaborators.push(USER.id);
 	await Promise.all([USER.update(), BOARD.update()]);
 	await notification(`board-joined, {boardName: '${boardName}'}`);
+	LOCAL_setData("activeBoard", boardId);
 	goTo('index/board/board');
 }
 

@@ -2,6 +2,7 @@ import { STORAGE } from "../../../js/storage.js";
 import { STATE } from "../../../js/state.js";
 import { renderSubtaskTemplate } from "./add_task_templates.js";
 import { getInitialsOfName } from "../../../js/utilities.js";
+import { LANG } from "../../../js/language.js";
 
 export const editTaskTemplate = ({
   title,
@@ -117,11 +118,12 @@ export const editTaskTemplate = ({
     `;
 };
 
-export const editTaskAssignedTo = (assignedTo) =>
-  STATE.selectedBoard.collaborators.reduce(
+export function editTaskAssignedTo(assignedTo) {
+  return STATE.selectedBoard.collaborators.reduce(
     (template, id) => `${template}${collaboratorTemplate(id, assignedTo)}`,
     ``
   );
+}
 
 export const collaboratorTemplate = (id, assignedTo) => {
   const { name, img, color } = STORAGE.allUsers[id];
