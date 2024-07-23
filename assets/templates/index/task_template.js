@@ -35,7 +35,6 @@ export const taskTemplate = (
 };
 
 export const highlight = (string, filter) => {
-  console.log(string, filter)
   return string.replaceAll(new RegExp(`${filter}`, "ig"), (item) => `<span class="highlight">${item}</span>`);
 }
 

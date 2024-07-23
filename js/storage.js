@@ -20,9 +20,9 @@ class Storage {
     return this.#data;
   }
 
-  // updateAllData() {
-  //   return this.set('', this.data)
-  // }
+  updateAllData() {
+    return this.set('', this.data)
+  }
 
   get allUsers() {
     return Object.entries(this.data.users).reduce(
@@ -69,7 +69,7 @@ class Storage {
 
   /**
    * gets the active board or the newest board or undefined if the user is not collaborating on any board
-   * @returns {Board | undefined}
+   * @returns {Board|undefined}
    */
   get activeBoard() {
     return SESSION_getData("activeBoardId") || this.currentUser.boards.at(-1);
@@ -86,19 +86,22 @@ class Storage {
     if(this.currentUserId()) {
       this.webSocket.init(this.currentUserId());
     }
+    // this.updateAllData();
+    this.delete('boards/1695832128586/collaborators/0')
     return this;
   }
 
   currentUserId() {
-    return searchParams().get("uid") == null
+    const uid = searchParams().get("uid") 
+    return uid == null
       ? undefined
-      : `${searchParams().get("uid")}`;
+      : `${uid}`;
   }
 
   /**
    * gets data of the specified path. format: 'directory/subdirectory'
    * @param {string} path
-   * @returns {User | Board | Notify | undefined}
+   * @returns {User|Board|Notify|undefined}
    */
   get(path) {
     const formattedPath = path.split("/").join('"]["');
@@ -130,6 +133,8 @@ class Storage {
   }
 
   async #upload(path, upload) {
+    // const dt = this.#packData(upload);
+    // return console.log(dt);
     try {
       const data = await (
         await fetch(`${this.STORAGE_URL}/${path}.json`, {
@@ -137,7 +142,6 @@ class Storage {
           body: JSON.stringify(this.#packData(upload))
         })
       ).text();
-
       if (data) return this.#unpackData(data);
 
       throw new Error(`upload failed. '${path}' not found!`);
@@ -223,6 +227,7 @@ class Storage {
     const users = Object.values(this.data.users)
       .filter(({ id }) => ids.includes(id))
       .map((userData) => new User(userData));
+    return users;
   }
 
   #arrayToJSON(array) {

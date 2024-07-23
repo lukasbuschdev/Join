@@ -33,7 +33,7 @@ export function initAutomaticLogin() {
   );
 }
 
-export const logIn = async () => {
+export async function logIn () {
   event.preventDefault();
   const emailOrUsername = $("#email input").value;
   const password = $("#password input").value;
@@ -58,7 +58,7 @@ export async function guestLogin() {
   guestUser.logIn();
 }
 
-export const rememberMe = (user, password) => {
+export function rememberMe(user, password) {
   const shouldRemember = $("#remember-me").checked;
   if (!shouldRemember) return LOCAL_removeData("rememberMe");
 
@@ -68,7 +68,7 @@ export const rememberMe = (user, password) => {
   if ("PasswordCredential" in window) user.setCredentials(tempUser.password);
 };
 
-export const rememberLoginDetails = async () => {
+export async function rememberLoginDetails() {
   const rememberedData = LOCAL_getData("rememberMe");
   if (!rememberedData) return;
   const { name, password } = rememberedData;
@@ -80,7 +80,7 @@ export const rememberLoginDetails = async () => {
   $("#remember-me").setAttribute("checked", "true");
 };
 
-export const automaticLogin = async () => {
+export async function automaticLogin() {
   if (!("PasswordCredential" in window)) return;
   navigator.credentials.preventSilentAccess();
   const cred = await navigator.credentials.get({ password: true });
