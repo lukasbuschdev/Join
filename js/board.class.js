@@ -8,109 +8,109 @@ import { currentUserId, error } from "./utilities.js";
  * @typedef {Object<string, string} Categories
  * @property {string} name
  * @property {string} color
-*/
+ */
 
 export class Board extends BaseClass {
-  /** @type {string} */
-  name;
+	/** @type {string} */
+	name;
 
-  /** @type {string} */
-  owner;
+	/** @type {string} */
+	owner;
 
-  /** @type {string} */
-  id;
+	/** @type {string} */
+	id;
 
-  /** @type {Array<string>} */
-  collaborators;
+	/** @type {Array<string>} */
+	collaborators;
 
-  /** @type {number} */
-  dateOfCreation;
+	/** @type {number} */
+	dateOfCreation;
 
-  /** @type {number} */
-  dateOfLastEdit;
+	/** @type {number} */
+	dateOfLastEdit;
 
-  /** @type {Object<string, Task>} */
-  tasks;
-  
-  /** @type {Categories} */
-  categories;
+	/** @type {Object<string, Task>} */
+	tasks;
 
-  constructor({
-    name,
-    owner = currentUserId(),
-    id = Date.now().toString(),
-    collaborators = [],
-    dateOfCreation = Date.now(),
-    dateOfLastEdit = Date.now(),
-    tasks = {},
-    categories = {}
-  }) {
-    super();
-    this.name = name;
-    this.owner = owner;
-    this.id = id;
-    this.collaborators = collaborators;
-    this.dateOfCreation = dateOfCreation;
-    this.dateOfLastEdit = dateOfLastEdit;
-    this.tasks = tasks;
-    this.categories = categories;
-  }
+	/** @type {Categories} */
+	categories;
 
-  async addTask(taskData) {
-    if (typeof taskData !== "object") return;
-    const task = new Task(taskData);
-    task.color = this.categories[taskData.category];
-    task.boardId = this.id;
-    this.tasks[task.id] = task;
+	constructor({
+		name,
+		owner = currentUserId(),
+		id = Date.now().toString(),
+		collaborators = [],
+		dateOfCreation = Date.now(),
+		dateOfLastEdit = Date.now(),
+		tasks = {},
+		categories = {}
+	}) {
+		super();
+		this.name = name;
+		this.owner = owner;
+		this.id = id;
+		this.collaborators = collaborators;
+		this.dateOfCreation = dateOfCreation;
+		this.dateOfLastEdit = dateOfLastEdit;
+		this.tasks = tasks;
+		this.categories = categories;
+	}
 
-    const user = STORAGE.currentUser;
-    await this.update();
-    const notification = new Notify({
-      userName: STORAGE.currentUser.name,
-      recipients: task.assignedTo.filter((id) => id !== user.id),
-      type: "assignTo",
-      taskName: task.title,
-      boardName: this.name
-    });
-    notification.send();
-    return task;
-  }
+	async addTask(taskData) {
+		if (typeof taskData !== "object") return;
+		const task = new Task(taskData);
+		task.color = this.categories[taskData.category];
+		task.boardId = this.id;
+		this.tasks[task.id] = task;
 
-  getTasks() {
-    return this.tasks.map((task) => new Task(task));
-  }
+		const user = STORAGE.currentUser;
+		await this.update();
+		const notification = new Notify({
+			userName: STORAGE.currentUser.name,
+			recipients: task.assignedTo.filter((id) => id !== user.id),
+			type: "assignTo",
+			taskName: task.title,
+			boardName: this.name
+		});
+		notification.send();
+		return task;
+	}
 
-  async addCollaborator(collaboratorId) {
-    if (!STORAGE.currentUser.contacts.includes(collaboratorId))
-      return error("collaboratorId not in contacts!");
-    this.collaborators.push(collaboratorId);
-    return this.update();
-  }
+	getTasks() {
+		return this.tasks.map((task) => new Task(task));
+	}
 
-  async addCategory(name, color) {
-    this.categories[name] = color;
-    return this.update();
-  }
+	async addCollaborator(collaboratorId) {
+		if (!STORAGE.currentUser.contacts.includes(collaboratorId))
+			return error("collaboratorId not in contacts!");
+		this.collaborators.push(collaboratorId);
+		return this.update();
+	}
 
-  async getCollaborators() {
-    return STORAGE.getUsersById(this.collaborators);
-  }
+	async addCategory(name, color) {
+		this.categories[name] = color;
+		return this.update();
+	}
 
-  update() {
-    STORAGE.data.boards[this.id] = JSON.parse(JSON.stringify(this));
-    return super.update(`boards/${this.id}`);
-  }
+	async getCollaborators() {
+		return STORAGE.getUsersById(this.collaborators);
+	}
 
-  async delete() {
-    if (STORAGE.currentUserId() !== this.owner)
-      return error(`not the owner of "${this.name}"!`);
-    await Promise.all(
-      this.collaborators.map((collaboratorId) => {
-        const collaborator = STORAGE.allUsers[collaboratorId];
-        collaborator.boards.remove(this.id);
-        return collaborator.update();
-      })
-    );
-    return STORAGE.delete(`boards/${this.id}`);
-  }
+	update() {
+		STORAGE.data.boards[this.id] = JSON.parse(JSON.stringify(this));
+		return super.update(`boards/${this.id}`);
+	}
+
+	async delete() {
+		if (STORAGE.currentUserId() !== this.owner)
+			return error(`not the owner of "${this.name}"!`);
+		await Promise.all(
+			this.collaborators.map((collaboratorId) => {
+				const collaborator = STORAGE.allUsers[collaboratorId];
+				collaborator.boards.remove(this.id);
+				return collaborator.update();
+			})
+		);
+		return STORAGE.delete(`boards/${this.id}`);
+	}
 }

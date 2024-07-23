@@ -4,19 +4,8 @@ import { renderSubtaskTemplate } from "./add_task_templates.js";
 import { getInitialsOfName } from "../../../js/utilities.js";
 import { LANG } from "../../../js/language.js";
 
-export const editTaskTemplate = ({
-  title,
-  description,
-  priority,
-  dueDate,
-  assignedTo,
-  subTasks
-}) => {
-
-  // assignedTo.for((id) => selectedCollaborators.push(id));
-  // selectedCollaborators.length = 0;
-
-  return /*html*/ `
+export const editTaskTemplate = ({ title, description, priority, dueDate, assignedTo, subTasks }) => {
+	return /*html*/ `
     <div class="fullscreen-content column gap-25">
         <div class="column gap-8">
             <span data-lang="title">Title</span>
@@ -52,14 +41,14 @@ export const editTaskTemplate = ({
             <span data-lang="priority">Prio</span>
             <div class="btn-priority" type="menu">
                 <button class="btn btn-secondary prio-btn txt-normal ${
-                  priority == "urgent" ? "active" : ""
-                }" type="option"><span data-lang="urgent" class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_urgent.svg)">Urgent</span></button>
+					priority == "urgent" ? "active" : ""
+				}" type="option"><span data-lang="urgent" class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_urgent.svg)">Urgent</span></button>
                 <button class="btn btn-secondary prio-btn txt-normal ${
-                  priority == "medium" ? "active" : ""
-                }" type="option"><span data-lang="medium" class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_medium.svg)">Medium</span></button>
+					priority == "medium" ? "active" : ""
+				}" type="option"><span data-lang="medium" class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_medium.svg)">Medium</span></button>
                 <button class="btn btn-secondary prio-btn txt-normal ${
-                  priority == "low" ? "active" : ""
-                }" type="option"><span data-lang="low" class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_low.svg)">Low</span></button>
+					priority == "low" ? "active" : ""
+				}" type="option"><span data-lang="low" class="priority" style="--prio_icon: url(/Join/assets/img/icons/prio_low.svg)">Low</span></button>
             </div>
             <div class="error-inactive error-enter-input" id="select-a-priority">
                 <span data-lang="select-a-priority">Select a priority!</span>
@@ -102,8 +91,8 @@ export const editTaskTemplate = ({
                 </div>
             </div>
             <div id="subtask-container" class="column">${allSubtasksTemplate(
-              subTasks.map(({ name }) => name)
-            )}</div>
+				subTasks.map(({ name }) => name)
+			)}</div>
         </div>
 
     </div>
@@ -119,17 +108,19 @@ export const editTaskTemplate = ({
 };
 
 export function editTaskAssignedTo(assignedTo) {
-  return STATE.selectedBoard.collaborators.reduce(
-    (template, id) => `${template}${collaboratorTemplate(id, assignedTo)}`,
-    ``
-  );
+	return STATE.selectedBoard.collaborators.reduce(
+		(template, id) => `${template}${collaboratorTemplate(id, assignedTo)}`,
+		``
+	);
 }
 
 export const collaboratorTemplate = (id, assignedTo) => {
-  const { name, img, color } = STORAGE.allUsers[id];
-  const collaboratorIsAssigned = assignedTo.includes(id);
-  return /*html*/ `
-    <div data-id="${id}" class="drp-option ${ collaboratorIsAssigned ? "active" : "" }" onclick="selectCollaborator()">
+	const { name, img, color } = STORAGE.allUsers[id];
+	const collaboratorIsAssigned = assignedTo.includes(id);
+	return /*html*/ `
+    <div data-id="${id}" class="drp-option ${
+		collaboratorIsAssigned ? "active" : ""
+	}" onclick="selectCollaborator()">
         <div class="user-img-container grid-center" style="--user-clr: ${color}">
             <span>${getInitialsOfName(name)}</span>
             <img src="${img}">
@@ -139,85 +130,85 @@ export const collaboratorTemplate = (id, assignedTo) => {
 };
 
 export const allSubtasksTemplate = (subTasks) =>
-  subTasks.reduce((template, name, index) => {
-    template += renderSubtaskTemplate(name, index);
-    return template;
-  }, "");
+	subTasks.reduce((template, name, index) => {
+		template += renderSubtaskTemplate(name, index);
+		return template;
+	}, "");
 
 export function addEditSubtask() {
-  log(STATE.selectedTask);
-  const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
-  const subtask = $("#edit-task #subtask-input");
+	log(STATE.selectedTask);
+	const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
+	const subtask = $("#edit-task #subtask-input");
 
-  if (!letterRegex.test(subtask.value)) {
-    subtaskInvalidEdit();
-  } else if (subtask.value.length > 30) {
-    subtaskTooLongEdit();
-  } else {
-    subtaskValidEdit();
-    STATE.selectedTask.addSubtask(subtask.value);
-    subtask.value = "";
-  }
-  renderEditSubtasks();
+	if (!letterRegex.test(subtask.value)) {
+		subtaskInvalidEdit();
+	} else if (subtask.value.length > 30) {
+		subtaskTooLongEdit();
+	} else {
+		subtaskValidEdit();
+		STATE.selectedTask.addSubtask(subtask.value);
+		subtask.value = "";
+	}
+	renderEditSubtasks();
 }
 
 export function subtaskInvalidEdit() {
-  $("#edit-task #error-container").classList.remove("d-none");
-  $("#edit-task #subtask-letters-only").classList.remove("error-inactive");
-  $("#edit-task #add-subtask").classList.add("input-warning");
+	$("#edit-task #error-container").classList.remove("d-none");
+	$("#edit-task #subtask-letters-only").classList.remove("error-inactive");
+	$("#edit-task #add-subtask").classList.add("input-warning");
 }
 
 export function subtaskTooLongEdit() {
-  $("#edit-task #error-container").classList.remove("d-none");
-  $("#edit-task #add-subtask").classList.add("input-warning");
-  $("#edit-task #subtask-letters-only").classList.add("error-inactive");
-  $("#edit-task #subtask-too-long").classList.remove("error-inactive");
+	$("#edit-task #error-container").classList.remove("d-none");
+	$("#edit-task #add-subtask").classList.add("input-warning");
+	$("#edit-task #subtask-letters-only").classList.add("error-inactive");
+	$("#edit-task #subtask-too-long").classList.remove("error-inactive");
 }
 
 export function subtaskValidEdit() {
-  $("#edit-task #subtask-letters-only").classList.add("error-inactive");
-  $("#edit-task #subtask-too-long").classList.add("error-inactive");
-  $("#edit-task #add-subtask").classList.remove("input-warning");
-  $("#edit-task #error-container").classList.add("d-none");
+	$("#edit-task #subtask-letters-only").classList.add("error-inactive");
+	$("#edit-task #subtask-too-long").classList.add("error-inactive");
+	$("#edit-task #add-subtask").classList.remove("input-warning");
+	$("#edit-task #error-container").classList.add("d-none");
 }
 
 export function renderEditSubtasks() {
-  console.log(STATE.selectedTask)
-  $("#edit-task #subtask-container").innerHTML = allSubtasksTemplate(
-    STATE.selectedTask.subTasks.map(({ name }) => name)
-  );
+	console.log(STATE.selectedTask);
+	$("#edit-task #subtask-container").innerHTML = allSubtasksTemplate(
+		STATE.selectedTask.subTasks.map(({ name }) => name)
+	);
 }
 
 export function editSubtaskEdit(i) {
-  const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
-  const range = document.createRange();
-  const selection = window.getSelection();
-  subtaskInput.focus();
-  subtaskInput.setAttribute("contenteditable", "true");
+	const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
+	const range = document.createRange();
+	const selection = window.getSelection();
+	subtaskInput.focus();
+	subtaskInput.setAttribute("contenteditable", "true");
 
-  $("#edit-task #single-subtask" + i).classList.toggle("edit-btn-active");
-  $("#edit-task .subtask-edit-btn" + i).classList.toggle("d-none");
-  $("#edit-task .save-edited-subtask-btn" + i).classList.toggle("d-none");
+	$("#edit-task #single-subtask" + i).classList.toggle("edit-btn-active");
+	$("#edit-task .subtask-edit-btn" + i).classList.toggle("d-none");
+	$("#edit-task .save-edited-subtask-btn" + i).classList.toggle("d-none");
 
-  range.selectNodeContents(subtaskInput);
-  range.collapse(false);
+	range.selectNodeContents(subtaskInput);
+	range.collapse(false);
 
-  selection.removeAllRanges();
-  selection.addRange(range);
+	selection.removeAllRanges();
+	selection.addRange(range);
 }
 
 export function saveEditedSubtaskEdit(i) {
-  const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
-  subTasks[i] = subtaskInput.innerText;
-  subtaskInput.setAttribute("contenteditable", "false");
+	const subtaskInput = event.currentTarget.parentElement.previousElementSibling;
+	subTasks[i] = subtaskInput.innerText;
+	subtaskInput.setAttribute("contenteditable", "false");
 
-  const allSaveButtons = $$("#edit-task .save-edited-subtask-btn");
+	const allSaveButtons = $$("#edit-task .save-edited-subtask-btn");
 
-  allSaveButtons.for((button) => {
-    button.classList.toggle("d-none");
-  });
+	allSaveButtons.for((button) => {
+		button.classList.toggle("d-none");
+	});
 
-  $("#edit-task #single-subtask" + i).classList.toggle("edit-btn-active");
-  $("#edit-task .subtask-edit-btn" + i).classList.toggle("d-none");
-  $("#edit-task .save-edited-subtask-btn" + i).classList.toggle("d-none");
+	$("#edit-task #single-subtask" + i).classList.toggle("edit-btn-active");
+	$("#edit-task .subtask-edit-btn" + i).classList.toggle("d-none");
+	$("#edit-task .save-edited-subtask-btn" + i).classList.toggle("d-none");
 }

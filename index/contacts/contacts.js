@@ -197,8 +197,6 @@ export function contactPhoneTemplate(phone) {
     `;
 }
 
-// RENDER USER SERACH RESULTS
-
 export function renderSearchResults(sortedUsers) {
 	const searchResultsContainer = $("#user-search-result");
 	searchResultsContainer.innerHTML = "";

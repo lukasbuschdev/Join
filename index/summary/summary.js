@@ -83,12 +83,10 @@ export function renderBoard(boardId) {
 	const { id, name, tasks: tasksObj, owner } = STATE.selectedBoard;
 
 	const taskStats = getTaskStats(tasksObj);
-	// SESSION_setData('activeBoard', Number(id));
+	SESSION_setData('activeBoard', Number(id));
 	$("#summary-content").innerHTML = summaryTemplate(taskStats);
 	if (owner == STORAGE.currentUser.id) $("#summary-data").innerHTML += boardEditButtonTemplate(id);
 	else $("#board-title .circle")?.remove();
-
-	// setBoardButtons(taskStats);
 
 	const summaryHeader = $(".summary-header h2");
 	delete summaryHeader.dataset.lang;
@@ -279,7 +277,6 @@ export async function saveEditedBoard() {
 	await Promise.all([notifyPromise, categoryPromise]);
 	await notification(`board-updated, {boardName: '${STATE.selectedBoard.name}'}`);
 	$("#edit-board").closeModal();
-	// location.reload();
 }
 
 export function updateBoardCategories(categories) {

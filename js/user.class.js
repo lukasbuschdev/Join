@@ -77,7 +77,6 @@ export class User extends Account {
 	async logIn() {
 		LOCAL_setData("loggedIn", true);
 		this.loggedIn = "true";
-		// await this.update();
 		goTo("index/summary/summary", { search: `?uid=${this.id}` });
 	}
 
@@ -121,10 +120,7 @@ export class User extends Account {
 			userId: this.id,
 			type: "friendshipRequest"
 		});
-
 		await notificationPrototype.send();
-
-		// TO DO update data!
 		return this.update();
 	}
 

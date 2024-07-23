@@ -1,5 +1,5 @@
 import { io } from "https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.esm.min.js";
-import { error, notification } from "./utilities.js";
+import { notification } from "./utilities.js";
 import { checkNotifications } from "../index/index/index.js";
 import { STORAGE } from "./storage.js";
 
