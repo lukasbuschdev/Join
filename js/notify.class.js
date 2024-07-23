@@ -1,4 +1,5 @@
 import { STORAGE } from "./storage.js";
+import { cloneDeep } from "./utilities.js";
 
 export class Notify {
 	constructor(notification) {
@@ -8,13 +9,11 @@ export class Notify {
 
 	async send() {
 		if (STORAGE.webSocket.socket.disconnected) return error("network-error");
-		console.log('recipients: ', this.recipients)
 		await Promise.all(
 			this.recipients.map((id) =>
-				STORAGE.set(`users/${id}/notifications/${this.id}`, this)
+				STORAGE.set(`users/${id}/notifications/${this.id}`, cloneDeep(this))
 			)
 		);
-		console.log('recipients: ', this._recipients)
-		STORAGE.webSocket.socket.emit("notification", { to: this._recipients });
+		STORAGE.webSocket.socket.emit("notification", { to: this.recipients });
 	}
 }
