@@ -62,7 +62,8 @@
     "description-placeholder": "Inserisci una descrizione",
     "category": "Categoria",
     "select-task-category": "Seleziona categoria dell'attività",
-    "assigned-to": "Assegnato a",
+    "select-collaborators": "Seleziona collaboratore",
+	"assigned-to": "Assegnato a",
     "assigned-you-parentheses": "(Tu)",
 
     "assigned-you": "Tu",
