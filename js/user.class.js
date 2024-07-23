@@ -146,6 +146,7 @@ export class User extends Account {
 			].map(([path, data]) => STORAGE.set(path, data)),
 			STORAGE.delete(`users/${this.id}`)
 		);
+		if(this.img) STORAGE.webSocket.socket.emit("deleteImg");
 		await notification('account-deleted');
 		goTo(`init/login/login`, { search: '' })
 	}

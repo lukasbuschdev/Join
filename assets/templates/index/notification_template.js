@@ -1,4 +1,5 @@
 import { checkNotifications } from "../../../index/index/index.js";
+import { Board } from "../../../js/board.class.js";
 import { bindInlineFunctions, getContext } from "../../../js/setup.js";
 import { STORAGE } from "../../../js/storage.js";
 import { $, notification } from "../../../js/utilities.js";
@@ -58,12 +59,11 @@ export function notificationTemplate(notification) {
 
 export async function acceptBoardInvite(boardId, boardName, notificationId) {
   const USER = STORAGE.currentUser;
-  const BOARD = STORAGE.currentUserBoards[boardId];
+  const BOARD = new Board(STORAGE.data.boards[boardId]);
   await removeNotification(notificationId);
   if (!(boardId in STORAGE.data.boards)) return notification(`board-nonexistent, {boardName: '${boardName}'}`);
   USER.boards.push(boardId);
   BOARD.collaborators.push(USER.id);
-  // const setBoard = STORAGE.set(`boards/${boardId}/_collaborators`, USER.id);
   await Promise.all([USER.update(), BOARD.update()]);
   await notification(`board-joined, {boardName: '${boardName}'}`);
   location.reload();

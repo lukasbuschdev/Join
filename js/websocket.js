@@ -1,6 +1,7 @@
 import { io } from "https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.esm.min.js";
-import { currentUserId, error, notification } from "./utilities.js";
+import { error, notification } from "./utilities.js";
 import { checkNotifications } from "../index/index/index.js";
+import { STORAGE } from "./storage.js";
 
 export class WebSocket {
 	url = "wss://join-websocket.onrender.com";
@@ -28,7 +29,7 @@ export class WebSocket {
 		this.#socket.on("notification", async () => {
 			console.log("notification recieved!");
 			this.notifySound.play();
-			await this.storage.init();
+			await STORAGE.init();
 			checkNotifications();
 		});
 	}
