@@ -18,8 +18,8 @@
 </head>
 <body class="bg-light" oncustomload="initCreateAccount()" data-title="title-create-account">
     <div id="logo">
-        <img src="/Join/assets/img/icons/logo.svg" alt="" width="100">
-        <img src="/Join/assets/img/icons/logo_white.svg" alt="" width="100">
+        <img src="/Join/assets/img/icons/logo.svg"  width="100">
+        <img src="/Join/assets/img/icons/logo_white.svg"  width="100">
     </div>
     <div id="content">
         <div>
@@ -28,10 +28,10 @@
                     <h2 class="txt-center" data-lang="create-account">Edit Profile</h2>
                 </div>
                 
-                <div class="column gap-35">
+                <div class="column">
                     <div class="account user-img-container" data-img="false" onclick="removeUpload()">
                         <h1>TU</h1>
-                        <img class="user-img" src="" alt="">
+                        <img class="user-img" src="" >
                         <button id="user-color" onclick="toggleColorPicker()"></button>
                         <button id="accept-user-color"></button>
                         <div id="color-wheel" class="d-none" onclick="pickColor()">
@@ -47,13 +47,13 @@
                     <span id="user-name" class="txt-600"></span>
                 </div>
     
-                <p class="txt-normal txt-center" data-lang="choose-image-info"></p>
+                <span class="txt-normal txt-center" data-lang="choose-image-info"></span>
     
                 <div class="inp-wrapper" id="phone">
                     <div class="inp-container row radius-10" style="padding: 0 21px 0;">
                         <input type="tel" required name="" class="txt-normal" placeholder="Phone number (optional)" data-lang-placeholder="phone-number">
                         <div class="grid-center">
-                            <img src="/Join/assets/img/icons/phone.svg" alt="">
+                            <img src="/Join/assets/img/icons/phone.svg" >
                         </div>
                     </div>
                     <div class="error" id="invalid-phone-number">

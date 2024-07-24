@@ -187,62 +187,6 @@ export function selectedContactTemplate({ id, img, name, email, phone, color }) 
     `;
 }
 
-/**
- * Renders the search results.
- * @param {Array<User>} sortedUsers - The sorted array of users.
- * @returns {void}
- */
-export function contactImgNameTemplate(color, name, img, id) {
-	return /*html*/ `
-        <div class="img-name row">
-            <div class="user-img-container" style="--user-clr: ${color}">
-                <h1>${getInitialsOfName(name)}</h1>
-                <img src="${img}">
-            </div>
-
-            <div class="column contact-name">
-                <span>${name}</span>
-                <div class="row gap-30">
-                    <button class="delete-contact-btn row gap-10" onclick="confirmation('delete-contact', () => deleteContact(${id}))">
-                        <span data-lang="delete">Delete</span>
-                        <img src="/Join/assets/img/icons/trash_red.svg" width="20">
-                    </button>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-export function contactInfoTemplate() {
-	return /*html*/ `
-        <div class="contact-info-container row">
-            <span data-lang="contact-info">Contact Information</span>
-        </div>
-    `;
-}
-
-export function contactMailTemplate(email) {
-	return /*html*/ `
-        <div class="mail-container column">
-            <span class="txt-700">E-Mail</span>
-            <a class="email" href="mailto:${email}">${email}</a>                 
-        </div>
-    `;
-}
-
-export function contactPhoneTemplate(phone) {
-	return /*html*/ `
-        <div class="phone-container column">
-            <span data-lang="phone" class="txt-700">Phone</span>
-            <a id="phone-number" href="${
-				phone == "N/A" ? "return false;" : "tel:${phone}"
-			}">${phone}</a>
-        </div>
-    `;
-}
-
-// RENDER USER SERACH RESULTS
-
 export function renderSearchResults(sortedUsers) {
     const searchResultsContainer = $("#user-search-result");
     searchResultsContainer.innerHTML = "";

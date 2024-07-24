@@ -1,4 +1,4 @@
-import { $, $$, currentDirectory, includeTemplates, parse } from "./utilities.js";
+import { $, $$, currentDirectory, includeTemplates, initInactivity, parse } from "./utilities.js";
 import "./prototype_extensions.js";
 import { LANG } from "./language.js";
 

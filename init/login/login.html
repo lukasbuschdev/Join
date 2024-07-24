@@ -60,12 +60,14 @@
                         <input type="checkbox" id="remember-me">
                         <label for="remember-me" class="txt-small" data-lang="remember-me">Remember Me</label>
                     </div>
+                </div>
+                <div class="row gap-25">
                     <a href="/Join/init/forgot_password/forgot_password.html" class="txt-blue txt-small" data-lang="forgot-password"></a>
+                    <div class="login-legal-notice txt-blue txt-small" data-lang="legal-notice" onclick="window.open('/Join/assets/templates/init/legal_notice.html', '_blank')">
+                        <span>Legal notice</span>
+                    </div>
                 </div>
 
-                <div class="login-legal-notice txt-blue" data-lang="legal-notice" onclick="window.open('/Join/assets/templates/init/legal_notice.html', '_blank')">
-                    <span>Legal notice</span>
-                </div>
         
                 <div class="btn-container">
                     <button type="submit" class="btn btn-primary txt-700" id="login" onclick="logIn()" data-lang="log-in">Log In</button>

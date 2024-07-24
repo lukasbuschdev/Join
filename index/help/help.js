@@ -6,6 +6,10 @@ bindInlineFunctions(getContext(), [
 	"/Join/js/utilities.js"
 ]);
 
+/**
+ * Initializes the help section by loading the appropriate language-specific help template.
+ * @returns {void}
+ */
 export function initHelp() {
 	$("nav button.active")?.classList.remove("active");
 	($("#content") ?? $("body")).includeTemplate({

@@ -6,7 +6,11 @@ bindInlineFunctions(getContext(), [
 	"/Join/js/utilities.js"
 ]);
 
-export const initPrivacy = () => {
+/**
+ * Initializes the privacy section by loading the appropriate language-specific privacy template.
+ * @returns {void}
+ */
+export function initPrivacy() {
 	($("#content") ?? $("body")).includeTemplate({
 		url: `/Join/assets/languages/privacy-${LANG.currentLang}.html`,
 		replace: false

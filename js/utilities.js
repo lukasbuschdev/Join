@@ -569,6 +569,7 @@ export function getInitialsOfName(name) {
  * @returns {string} - HEX color code
  */
 export function HSLToHex(hslString) {
+	if(!/^rgb\(/.test(hslString)) return '#091931';
 	let [h, s, l] = hslString.match(/\d+/g).map((digit) => Number(digit));
     s /= 100;
     l /= 100;
