@@ -62,17 +62,18 @@ export class Board extends BaseClass {
 		task.color = this.categories[taskData.category];
 		task.boardId = this.id;
 		this.tasks[task.id] = task;
+		console.log(task.assignedTo)
 
 		const user = STORAGE.currentUser;
 		await this.update();
-		const notification = new Notify({
-			userName: STORAGE.currentUser.name,
-			recipients: task.assignedTo.filter((id) => id !== user.id),
-			type: "assignTo",
-			taskName: task.title,
-			boardName: this.name
-		});
-		notification.send();
+		// const notification = new Notify({
+		// 	userName: STORAGE.currentUser.name,
+		// 	recipients: task.assignedTo.filter((id) => id !== user.id),
+		// 	type: "assignTo",
+		// 	taskName: task.title,
+		// 	boardName: this.name
+		// });
+		// notification.send();
 		return task;
 	}
 

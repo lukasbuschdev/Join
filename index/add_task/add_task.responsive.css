@@ -21,6 +21,7 @@
 
     .add-task-card .flex-right {
         margin: 20px 0;
+        padding-right: 1.5rem;
         justify-content: center;
     }
 }
@@ -82,11 +83,15 @@
 
 @media(max-width: 600px) {
     .add-task-heading {
-        padding: 0;
+        padding: 0 1.5rem 0 0;
     }
 
     .add-task-heading h2 {
         font-size: 2.5rem;
+    }
+
+    .add-task-card {
+        justify-content: space-between;
     }
 }
 
@@ -98,7 +103,7 @@
     }
 
     .add-task-card {
-        padding: 2vh 1.5rem ;
+        padding: 2vh 0 2vh 1.5rem;
     }
 
     .add-task-single-row {

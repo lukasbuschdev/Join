@@ -91,7 +91,7 @@ textarea {
 }
 
 dialog .add-task-rows {
-    max-height: 450px;
+    max-height: 60vh;
 }
 
 dialog .add-task-card {
@@ -228,7 +228,7 @@ dialog .add-task-card {
 }
 
 #add-task-modal .add-task-card {
-    height: 720px;
+    height: 90vh;
 }
 
 #add-task-modal .add-task-heading {

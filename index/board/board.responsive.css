@@ -72,7 +72,7 @@
 
 @media(max-width: 500px) {
     #fullscreen-task-modal :is(#fullscreen-task, #edit-task) {
-        min-width: none;
+        min-width: 0;
     }
 
     #fullscreen-task-modal .btn-container {
