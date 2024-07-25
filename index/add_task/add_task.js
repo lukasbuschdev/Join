@@ -13,7 +13,7 @@ import { $, currentDirectory, dateFormat, notification } from "../../js/utilitie
 import { STATE } from "../../js/state.js";
 import { categoryTemplate, renderCollaboratorInput, renderCollaboratorsToAssign, renderSelfToAssign, renderSubtaskTemplate } from "../../assets/templates/index/add_task_templates.js";
 
-const subtasks = [];
+export const subtasks = [];
 export const selectedCollaborators = [];
 const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
 
@@ -332,7 +332,7 @@ export async function addTask() {
 		selectedCollaborators,
 		dueDate: getDueDate(),
 		priority: checkPriority(),
-		subtasks: getSubtasks()
+		subTasks: getSubtasks()
 	};
 
 	if (checkAddTaskInputs(Object.values(taskData))) return;

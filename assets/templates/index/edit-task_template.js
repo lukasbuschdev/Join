@@ -3,6 +3,7 @@ import { STATE } from "../../../js/state.js";
 import { renderSubtaskTemplate } from "./add_task_templates.js";
 import { getInitialsOfName } from "../../../js/utilities.js";
 import { LANG } from "../../../js/language.js";
+import { subtasks } from "../../../index/add_task/add_task.js";
 
 export const editTaskTemplate = ({ title, description, priority, dueDate, assignedTo, subTasks }) => {
 	return /*html*/ `
@@ -146,7 +147,7 @@ export function addEditSubtask() {
 		subtaskTooLongEdit();
 	} else {
 		subtaskValidEdit();
-		STATE.selectedTask.addSubtask(subtask.value);
+		subtasks.push(subtask)
 		subtask.value = "";
 	}
 	renderEditSubtasks();
@@ -174,9 +175,7 @@ export function subtaskValidEdit() {
 
 export function renderEditSubtasks() {
 	console.log(STATE.selectedTask);
-	$("#edit-task #subtask-container").innerHTML = allSubtasksTemplate(
-		STATE.selectedTask.subTasks.map(({ name }) => name)
-	);
+	$("#edit-task #subtask-container").innerHTML = allSubtasksTemplate(subtasks);
 }
 
 export function editSubtaskEdit(i) {
