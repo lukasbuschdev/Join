@@ -61,9 +61,27 @@ async function renderTasks(filter) {
 		: Object.values(tasks);
 	filteredTasks
 		.toReversed()
-		.forEach((task) => ($(`#${task.type}`).innerHTML += taskTemplate(task, filter)));
+		.forEach((task) => ($(`#${task.type}`).innerHTML += getTaskTemplate(task, filter)));
 	await tasksContainer.LANG_load();
 }
+
+/**
+ * sets up task parameters and returns a template to be rendered.
+ * @param {Task} task 
+ * @param {string} filter 
+ * @returns {string} the task template
+ */
+export function getTaskTemplate(task, filter) {
+	const assignedAccounts = task.assignedTo.reduce((total, assignedToId) => {
+        const { name, color } = assignedToId === STORAGE.currentUser.id
+            ? STORAGE.currentUser
+            : STORAGE.allUsers[assignedToId]
+        return [ ...total, { name, color } ]
+	}, []);
+	const categoryString = Object.keys(STORAGE.currentUserBoards[task.boardId].categories).find((cat) => cat === task.category);
+    return taskTemplate(task, assignedAccounts, categoryString, filter)
+};
+
 
 /**
  * Searches tasks based on the input value and renders the filtered tasks.

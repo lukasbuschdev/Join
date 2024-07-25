@@ -3,8 +3,13 @@ import "./prototype_extensions.js";
 import { LANG } from "./language.js";
 
 export function getContext() {
-	const { stack } = new Error();
-	return getCallerModulePath(stack);
+	try {
+		throw new Error();
+	} catch(e) {
+		const { stack } = e;
+		console.log(stack)
+		return getCallerModulePath(stack);
+	}
 }
 
 /**
@@ -58,7 +63,9 @@ function customOnloadFunction() {
 }
 
 export function getCallerModulePath(stack) {
-	const lastLine = stack.split("\n").at(-1);
+	const lastLine = stack.split("\n")
+		.filter(line => !!line)
+		.at(-1);
 	const matches = lastLine.match(/\/Join[^:]*/g);
 	if (matches) return matches[0];
 }

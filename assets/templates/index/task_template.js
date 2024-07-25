@@ -1,35 +1,24 @@
 import { STORAGE } from "../../../js/storage.js";
 import { getInitialsOfName } from "../../../js/utilities.js";
 
-export const taskTemplate = (
-	{ boardId, id, title, description, assignedTo, category, priority, subTasks },
-	filter
-) => {
-	const board = STORAGE.currentUserBoards[boardId];
-	const assignedAccounts = assignedTo.reduce((total, assignedToId) => {
-        const { name, color } = assignedToId === STORAGE.currentUser.id
-            ? STORAGE.currentUser
-            : STORAGE.allUsers[assignedToId]
-        return [ ...total, { name, color } ]
-	}, []);
-
-	const categoryString = Object.keys(board.categories).find((cat) => cat === category);
-	return /*html*/ `
-    <div class="task txt-small" onpointerdown="addDragAndDrop()" data-id="${boardId}/${id}">
-        <div class="task-category" style="--clr: ${board.categories[category] ?? "#d1d1d1"};"${
-		!categoryString ? 'data-lang="default"' : ""
-	}>${categoryString ? categoryString : ""}</div>
-        <div class="task-title txt-700">${highlight(title, filter)}</div>
-        <div class="task-description">${highlight(description, filter)}</div>
-        ${progressTemplate(subTasks)}
-        <div class="task-footer">
-            <div class="task-assigned-to">
-                ${assignedToTemplate(assignedAccounts)}
+export function taskTemplate({ id, boardId, category, title, description, subTasks, priority }, assignedAccounts, categoryString, filter) {
+    return /*html*/ `
+        <div class="task txt-small" onpointerdown="addDragAndDrop()" data-id="${boardId}/${id}">
+            <div class="task-category" style="--clr: ${STORAGE.currentUserBoards[boardId].categories[category] ?? "#d1d1d1"};"${
+            !categoryString ? 'data-lang="default"' : ""
+        }>${categoryString ? categoryString : ""}</div>
+            <div class="task-title txt-700">${highlight(title, filter)}</div>
+            <div class="task-description">${highlight(description, filter)}</div>
+            ${progressTemplate(subTasks)}
+            <div class="task-footer">
+                <div class="task-assigned-to">
+                    ${assignedToTemplate(assignedAccounts)}
+                </div>
+                <div class="task-priority" data-priority="${priority}" style="--priority: url(/Join/assets/img/icons/prio_${priority}.svg)"></div>
             </div>
-            <div class="task-priority" data-priority="${priority}" style="--priority: url(/Join/assets/img/icons/prio_${priority}.svg)"></div>
         </div>
-    </div>`;
-};
+    `;
+}
 
 export const highlight = (string, filter) => {
 	return string.replaceAll(

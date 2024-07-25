@@ -2,10 +2,18 @@ import { BaseClass } from "./base.class.js";
 import { STORAGE } from "./storage.js";
 import { cloneDeep } from "./utilities.js";
 
+/**
+ * @typedef {"to-do"|"in-progress"|"awaiting-feedback"|"done"} TaskType
+ */
+
+/**
+ * @typedef {"urgent"|"medium"|"low"} TaskPriority
+ */
+
 export class Task extends BaseClass {
 	/** @type {string} */
 	id;
-	/** @type {"to-do"|"awaiting-feedback"|"in-progress"|"done"} */
+	/** @type {TaskType} */
 	type;
 	/** @type {string} */
 	title;
@@ -17,7 +25,7 @@ export class Task extends BaseClass {
 	assignedTo;
 	/** @type {string} */
 	dueDate;
-	/** @type {"urgent"|"medium"|"low"} */
+	/** @type {TaskPriority} */
 	priority;
 	/** @type {Array<{name: string, done: boolean}>} */
 	subTasks;

@@ -1,3 +1,4 @@
+import { Board } from "./board.class.js";
 import { STATE } from "./state.js";
 import { STORAGE } from "./storage.js";
 import { throttle } from "./utilities.js";
@@ -8,9 +9,11 @@ let scrollInterval;
 
 const SCROLL_FREQUENCY = 20;
 const THROTTLE_DELAY = 10;
+const SCROLL_FACTOR = 4;
 
-// SETUP
-
+/**
+ * Initializes the drag and drop functionality.
+ */
 export function addDragAndDrop() {
 	TASK_ELEMENT = event.currentTarget;
 	const taskBBox = TASK_ELEMENT.getBoundingClientRect();
@@ -23,45 +26,48 @@ export function addDragAndDrop() {
 	TASK_ELEMENT.addEventListener("pointermove", dragFunctionality, { once: true });
 }
 
-// FULLSCREEN FUNC
-
+/**
+ * Handles the functionality for displaying the task in fullscreen.
+ */
 export function fullscreenFunctionality() {
 	TASK_ELEMENT.removeEventListener("pointermove", dragFunctionality);
 	fullscreenHandler();
 }
 
+/**
+ * Handles the logic for displaying the task in fullscreen.
+ */
 export function fullscreenHandler() {
 	const [boardId, taskId] = TASK_ELEMENT.dataset.id.split("/");
 	STATE.selectedTask = STATE.selectedBoard.getTask(taskId);
 	renderFullscreenTask();
 }
 
-// DRAG FUNC
-
+/**
+ * Handles the functionality for dragging the task element.
+ */
 export function dragFunctionality() {
-	// remove fullscreenListener
 	TASK_ELEMENT.removeEventListener("pointerup", fullscreenFunctionality, { once: true });
 
-	// add moveListener
 	window.addEventListener("pointermove", dragHandler);
 	startScroll();
 
 	const placeholderElement = '<div class="element-placeholder"></div>';
 	TASK_ELEMENT.insertAdjacentHTML("beforebegin", placeholderElement);
 
-	window.addEventListener(
-		"pointerup",
-		() => {
-			// remove moveListener
+	window.addEventListener("pointerup", () => {
 			stopScroll();
 			window.removeEventListener("pointermove", dragHandler);
 			dropHandler();
-		},
-		{ once: true }
+		}, { once: true }
 	);
 	TASK_ELEMENT.classList.add("active");
 }
 
+/**
+ * Handles the drag event throttled by a delay.
+ * @param {Event} event - The pointermove event.
+ */
 export const dragHandler = throttle(() => {
 	checkDropContainers();
 	const { pageX, pageY } = event;
@@ -70,32 +76,47 @@ export const dragHandler = throttle(() => {
 	moveTask(x, y);
 }, THROTTLE_DELAY);
 
+/**
+ * Moves the task element to the specified coordinates.
+ * @param {number} x - The x-coordinate to move the task to.
+ * @param {number} y - The y-coordinate to move the task to.
+ */
 export function moveTask(x, y) {
 	TASK_ELEMENT.style.top = `${y}px`;
 	TASK_ELEMENT.style.left = `${x}px`;
 }
 
-// SCROLL FUNC
-
+/**
+ * Handles the scroll functionality during drag.
+ */
 export function scrollFunctionality() {
 	const taskContainer = $("#tasks");
 	if (checkScrollSoft(taskContainer) === false) return;
-	const scrollDireciton = checkScrollHard(taskContainer);
-	if (scrollDireciton) customScroll(scrollDireciton);
+	const scrollDirection = checkScrollHard(taskContainer);
+	if (scrollDirection) customScroll(scrollDirection);
 }
 
+/**
+ * Checks if the task container can scroll.
+ * @param {HTMLElement} taskContainer - The task container element.
+ * @returns {boolean} True if the task container can scroll, otherwise false.
+ */
 export function checkScrollSoft(taskContainer) {
 	const canScroll = taskContainer.scrollHeight > taskContainer.clientHeight;
 	return canScroll;
 }
 
+/**
+ * Determines the scroll direction based on the task's position.
+ * @param {HTMLElement} taskContainer - The task container element.
+ * @returns {number} The scroll direction: 1 for down, -1 for up, 0 for no scroll.
+ */
 export function checkScrollHard(taskContainer) {
 	const taskBBox = TASK_ELEMENT.getBoundingClientRect();
 	const taskContainerBBox = taskContainer.getBoundingClientRect();
 	const yOffset = 50;
 
-	const canScrollDown =
-		taskContainer.scrollTop < taskContainer.scrollHeight - taskContainer.clientHeight - 1;
+	const canScrollDown = taskContainer.scrollTop < taskContainer.scrollHeight - taskContainer.clientHeight - 1;
 	const canScrollUp = taskContainer.scrollTop > 0;
 	const shouldScrollDown = taskBBox.bottom > taskContainerBBox.bottom + yOffset;
 	const shouldScrollUp = taskBBox.y < taskContainerBBox.y - yOffset;
@@ -105,21 +126,32 @@ export function checkScrollHard(taskContainer) {
 	return 0;
 }
 
+/**
+ * Scrolls the task container in the specified direction.
+ * @param {number} direction - The direction to scroll: 1 for down, -1 for up.
+ */
 export function customScroll(direction) {
 	const taskContainer = $("#tasks");
-	taskContainer.scrollBy(0, 3 * direction);
+	taskContainer.scrollBy(0, SCROLL_FACTOR * direction);
 }
 
+/**
+ * Starts the scrolling functionality during drag.
+ */
 export function startScroll() {
 	scrollInterval = setInterval(scrollFunctionality, SCROLL_FREQUENCY);
 }
 
+/**
+ * Stops the scrolling functionality during drag.
+ */
 export function stopScroll() {
 	clearInterval(scrollInterval);
 }
 
-// DROP FUNC
-
+/**
+ * Handles the drop event for the task element.
+ */
 export async function dropHandler() {
 	TASK_ELEMENT.classList.remove("active");
 	TASK_ELEMENT.style.maxWidth = "";
@@ -146,27 +178,28 @@ export async function dropHandler() {
 	targetContainer.children[1].classList.remove("placeholder");
 }
 
+/**
+ * Animates the task element during the drop event.
+ */
 export function taskDropAnimation() {
 	const { pageX, pageY } = event;
 	const taskBBox = TASK_ELEMENT.getBoundingClientRect();
 
-	// snap to drop start position
 	const x = Math.round(pageX - taskBBox.x - offset.x);
 	const y = Math.round(pageY - taskBBox.y - offset.y);
 	TASK_ELEMENT.style.translate = `${x}px ${y}px`;
 
-	// move to final position
 	setTimeout(() => {
 		TASK_ELEMENT.classList.add("drop-transition");
-		TASK_ELEMENT.addEventListener(
-			"transitionend",
-			() => TASK_ELEMENT.classList.remove("drop-transition"),
-			{ once: true }
-		);
+		TASK_ELEMENT.addEventListener("transitionend", () => TASK_ELEMENT.classList.remove("drop-transition"), { once: true });
 		TASK_ELEMENT.style.translate = "0 0";
 	}, 0);
 }
 
+/**
+ * Checks the drop containers to determine the drop target.
+ * @returns {HTMLElement|null} The target container element or null if no valid target.
+ */
 export function checkDropContainers() {
 	const { pageX, pageY } = event;
 	const taskContainer = $("#tasks");
@@ -179,9 +212,18 @@ export function checkDropContainers() {
 		if (!mouseInside) continue;
 		return container;
 	}
+	return null;
 }
 
+/**
+ * Changes the task type and updates the board.
+ * @param {Board} board - The board object.
+ * @param {Task} task - The task object.
+ * @param {import("./task.class.js").TaskType} newType - The new type of the task.
+ * @returns {Promise<void>} A promise that resolves when the task type is changed and the board is updated.
+ */
 export async function changeTaskType(board, task, newType) {
 	task.type = newType;
 	return board.update();
 }
+
