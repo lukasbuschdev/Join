@@ -42,14 +42,12 @@ export const fullscreenTaskTemplate = ({ id, category, title, description, prior
 };
 
 export const fullscreenTaskAssignedTo = (assignedTo) => {
-	const assignedUsers = Object.values(STORAGE.allUsers).filter(({ id }) =>
-		assignedTo.includes(id)
-	);
+    
+	const assignedUsers = assignedTo.map((id) => STORAGE.allUsers[id])
 	if (!assignedTo.length) return "";
-	return (
-		/*html*/ `
-    <span class="fullscreen-task-label">Assigned To: </span><div>
-  ` +
+	return (/*html*/ `
+        <span class="fullscreen-task-label">Assigned To: </span><div>
+    ` +
 		assignedUsers.reduce(
 			(template, { name, color }) =>
 				(template += /*html*/ `

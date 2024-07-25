@@ -6,7 +6,6 @@ export const taskTemplate = (
 	filter
 ) => {
 	const board = STORAGE.currentUserBoards[boardId];
-    console.log(assignedTo)
 	const assignedAccounts = assignedTo.reduce((total, assignedToId) => {
         const { name, color } = assignedToId === STORAGE.currentUser.id
             ? STORAGE.currentUser
