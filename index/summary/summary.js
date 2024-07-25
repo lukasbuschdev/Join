@@ -28,18 +28,8 @@ export async function initSummary() {
 	$("#summary-content").classList.remove("d-none");
 }
 
-export function getTaskStats(tasksObj) {
-	const tasks = Object.values(tasksObj);
-	const now = new Date();
-
-	const allStats = {
-		tasksInBoard: tasks.length,
-		tasksInProgress: 0,
-		tasksAwaitingFeedback: 0,
-		tasksToDo: 0,
-		tasksDone: 0,
-		tasksUrgent: 0,
-		upcomingDeadline: tasks.length
+function getUpcomingDeadline(tasks) {
+	return tasks.length
 			? tasks
 					.reduce((all, { dueDate }) => {
 						const formattedDate = dateFormat(dueDate);
@@ -53,6 +43,20 @@ export function getTaskStats(tasksObj) {
 						day: "numeric"
 					}) || undefined
 			: 0
+}
+
+export function getTaskStats(tasksObj) {
+	const tasks = Object.values(tasksObj);
+	const now = new Date();
+
+	const allStats = {
+		tasksInBoard: tasks.length,
+		tasksInProgress: 0,
+		tasksAwaitingFeedback: 0,
+		tasksToDo: 0,
+		tasksDone: 0,
+		tasksUrgent: 0,
+		upcomingDeadline: getUpcomingDeadline(tasks)
 	};
 
 	if (!tasks.length) return allStats;

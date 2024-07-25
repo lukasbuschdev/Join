@@ -79,8 +79,8 @@ export class Board extends BaseClass {
 		return task;
 	}
 
-	getTasks() {
-		return this.tasks.map((task) => new Task(task));
+	getTask(id) {
+		return new Task(this.tasks[id])
 	}
 
 	async addCollaborator(collaboratorId) {

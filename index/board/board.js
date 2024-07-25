@@ -108,6 +108,7 @@ export function saveEditedTask() {
 		})
 	};
 	Object.assign(STATE.selectedTask, editedTaskData);
+	Object.assign(STORAGE.data.boards[STATE.selectedBoard.id].tasks[STATE.selectedTask.id], editedTaskData)
 	modal.closeModal();
 	toggleFullscreenState();
 	modal.$("#fullscreen-task").innerHTML = fullscreenTaskTemplate(STATE.selectedTask);
