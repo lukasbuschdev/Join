@@ -479,8 +479,7 @@ export function saveEditedSubtask(i) {
  */
 export function deleteSubtask(i) {
 	const isInEditTask = event.currentTarget.closest("#edit-task");
-
-	(isInEditTask ? STATE.selectedTask.subTasks : subtasks).splice(i, 1);
+	subtasks.splice(i, 1);
 	isInEditTask ? renderEditSubtasks() : renderSubtasks();
 }
 

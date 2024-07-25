@@ -6,6 +6,8 @@ import { LANG } from "../../../js/language.js";
 import { subtasks } from "../../../index/add_task/add_task.js";
 
 export const editTaskTemplate = ({ title, description, priority, dueDate, assignedTo, subTasks }) => {
+    subtasks.length = 0;
+    subtasks.push(...subTasks.map(({ name }) => name));
 	return /*html*/ `
     <div class="fullscreen-content column gap-25">
         <div class="column gap-8">
@@ -91,9 +93,7 @@ export const editTaskTemplate = ({ title, description, priority, dueDate, assign
                     <span class="error-inactive error-enter-input" data-lang="subtask-too-long" id="subtask-too-long">Subtask too long!</span>
                 </div>
             </div>
-            <div id="subtask-container" class="column">${allSubtasksTemplate(
-				subTasks.map(({ name }) => name)
-			)}</div>
+            <div id="subtask-container" class="column">${allSubtasksTemplate(subtasks)}</div>
         </div>
 
     </div>
@@ -130,25 +130,27 @@ export const collaboratorTemplate = (id, assignedTo) => {
     </div>`;
 };
 
-export const allSubtasksTemplate = (subTasks) =>
-	subTasks.reduce((template, name, index) => {
+export const allSubtasksTemplate = (subTasks) => {
+	return subTasks.reduce((template, name, index) => {
 		template += renderSubtaskTemplate(name, index);
 		return template;
 	}, "");
+}
 
 export function addEditSubtask() {
-	log(STATE.selectedTask);
 	const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
-	const subtask = $("#edit-task #subtask-input");
+	const subtaskInput = $("#edit-task #subtask-input");
 
-	if (!letterRegex.test(subtask.value)) {
+	if (!letterRegex.test(subtaskInput.value)) {
 		subtaskInvalidEdit();
-	} else if (subtask.value.length > 30) {
+	} else if (subtaskInput.value.length > 30) {
 		subtaskTooLongEdit();
 	} else {
 		subtaskValidEdit();
-		subtasks.push(subtask)
-		subtask.value = "";
+        console.log(subtasks)
+		subtasks.push(subtaskInput.value)
+        console.log(subtasks)
+		subtaskInput.value = "";
 	}
 	renderEditSubtasks();
 }
@@ -174,7 +176,6 @@ export function subtaskValidEdit() {
 }
 
 export function renderEditSubtasks() {
-	console.log(STATE.selectedTask);
 	$("#edit-task #subtask-container").innerHTML = allSubtasksTemplate(subtasks);
 }
 
