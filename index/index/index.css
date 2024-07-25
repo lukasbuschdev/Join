@@ -316,6 +316,10 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     width: 20px;
 }
 
+#board-title-selection:not(:has( .option)) > .row img {
+    display: none;
+}
+
 #board-title-selection.active > .row {
     background-color: white;
     border-radius: 10px 10px 0 0;
