@@ -311,6 +311,7 @@
 
     #board-title-selection h2 {
         font-size: 2rem;
+        padding: 5px 0;
     }
 
     #board-title-selection:has( .option) > .row img {

@@ -299,7 +299,7 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 }
 
 #board-title-selection > .row {
-    padding: 0 18px;
+    padding: 0 13px 0 5px;
     width: fit-content;
     box-sizing: border-box;
     position: relative;
