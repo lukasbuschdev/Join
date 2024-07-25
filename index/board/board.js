@@ -19,6 +19,7 @@ import { editTaskTemplate } from "../../assets/templates/index/edit-task_templat
 import { renderBoardIds, renderDate, selectedCollaborators } from "../add_task/add_task.js";
 import { STATE } from "../../js/state.js";
 import { renderCollaboratorInput } from "../../assets/templates/index/add_task_templates.js";
+import { Task } from "../../js/task.class.js";
 
 /**
  * Initializes the board by rendering the board title selection and tasks if there are boards available.
@@ -144,8 +145,8 @@ export function saveEditedTask() {
 
 /**
  * Saves the changes made to a task if there are any differences from the initial state.
- * @param {Object} initialTask - The initial state of the task.
- * @returns {Promise<void>} Resolves when the task changes are saved.
+ * @param {Task} initialTask - The initial state of the task.
+ * @returns {Promise<void>|void} Resolves when the task changes are saved.
  */
 function saveTaskChanges(initialTask) {
 	const updatedTask = STATE.selectedTask;
@@ -216,7 +217,7 @@ export async function changeSubtaskDoneState(subTaskName) {
 /**
  * Updates the task UI based on the provided differences.
  * @param {Object} differences - An object containing the differences.
- * @param {Object} initialTask - The initial state of the task.
+ * @param {Task} initialTask - The initial state of the task.
  */
 function updateTaskUi({ title = null, description = null, priority = null, assignedTo = null, subTasks = null }, initialTask) {
 	const taskContainer = $(`[data-id="${STATE.selectedTask.boardId}/${STATE.selectedTask.id}"]`);
@@ -254,7 +255,7 @@ export function editTaskInitializer() {
 
 /**
  * Renders the assigned contacts for a task.
- * @param {Object} task - The task object.
+ * @param {Task} task - The task object.
  */
 function renderAssignedContacts(task) {
 	$(`.drp-contacts [data-id="${currentUserId()}"]`)?.LANG_load();
