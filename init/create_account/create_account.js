@@ -17,10 +17,7 @@ export async function finishSetup() {
 
 	const phoneInput = $("#phone input").value;
 	const phoneValidity = phoneInput.length ? validPhone(phoneInput) : true;
-	throwErrors({
-		identifier: "invalid-phone-number",
-		bool: !phoneValidity
-	});
+	throwErrors({ identifier: "invalid-phone-number", bool: !phoneValidity });
 
 	if (phoneValidity == false) return;
 
