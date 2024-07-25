@@ -1,7 +1,7 @@
 import { checkNotifications } from "../../../index/index/index.js";
 import { Board } from "../../../js/board.class.js";
 import { bindInlineFunctions, getContext } from "../../../js/setup.js";
-import { STORAGE } from "../../../js/storage.js";
+import { LOCAL_setData, STORAGE } from "../../../js/storage.js";
 import { $, notification } from "../../../js/utilities.js";
 
 bindInlineFunctions(getContext());
