@@ -331,3 +331,29 @@
         padding: 1.5rem 1rem;
     }
 }
+
+
+
+/* HEIGHT */
+
+@media(max-height: 800px) {
+    .logo {
+        width: 90px;
+    }
+}
+
+
+
+@media(max-height: 700px) {
+    .logo {
+        width: 80px;
+    }
+}
+
+
+
+@media(max-height: 600px) {
+    :is(.add-board-content, .edit-board-content) > div {
+        padding: 1.5rem !important;
+    }
+}

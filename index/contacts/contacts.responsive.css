@@ -160,12 +160,12 @@
 
 @media(max-width: 900px) {
     .header-contact {
-        gap: 10px;
+        gap: 15px;
         padding: 20px 40px 130px;
     }
 
     .contacts-header-container h2 {
-        font-size: 3rem;
+        font-size: min(13vmin, 3rem);
     }
 
     .contacts-header-container div span {
@@ -177,11 +177,11 @@
     }
 
     .header-contact .user-img-container {
-        height: 80px;
+        height: 100px;
     }
 
     .img-name {
-        gap: 10px;
+        gap: 25px;
     }
 
     .contact-name > span {
@@ -280,7 +280,7 @@
 
 
 
-@media(max-width: 500px) {
+@media(max-width: 500px) and (max-height: 700px) {
     .add-contact-field {
         height: 70%;
     }
@@ -309,6 +309,18 @@
     .contacts-wrapper .close-btn {
         right: 5%;
     }
+
+    .contact-letter {
+        padding: 15px 20px;
+    }
+
+    #contacts-container {
+        padding: 1rem 2rem;
+    }
+
+    .contact-container {
+        gap: 15px;
+    }
 }
 
 
@@ -316,6 +328,7 @@
 @media(max-width: 400px) { 
     .img-name {
         gap: 20px;
+        height: fit-content;
     }
 
     .contact .contact-name {
@@ -325,4 +338,11 @@
     .contact-name > span {
         font-size: 1.625rem;
     }
+}
+
+
+
+/* HEIGHT */
+
+@media(max-height: 700px) {
 }

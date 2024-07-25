@@ -16,7 +16,7 @@
 
 
 
-@media(max-width: 1200px) {
+@media(max-width: 1440px) and (max-height: 700px){
     #summary-wrapper {
         padding: 2vh 1rem 5vh 0;
     }
@@ -28,6 +28,7 @@
     .summary-header > button span {
         font-size: 0;
         gap: 0;
+        line-height: 1;
     }
 
     #summary-body {
@@ -191,5 +192,27 @@
 
     .summary-header > button {
         inset: 0px 0 auto auto;
+    }
+}
+
+
+
+/* HEIGHT */
+
+@media(max-height: 800px) {
+    #summary-data {
+        gap: 5px;
+    }
+
+    #summary-data div {
+        gap: 5px;
+    }
+
+    .summary-header h3 {
+        font-size: min(4vmin, 1.625rem);
+    }
+
+    #board-title-selection h2 {
+        font-size: 2.5rem;
     }
 }
