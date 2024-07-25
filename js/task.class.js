@@ -10,27 +10,39 @@ import { cloneDeep } from "./utilities.js";
  * @typedef {"urgent"|"medium"|"low"} TaskPriority
  */
 
+/**
+ * @typedef {Object} TaskOptions
+ * 	 * @property {string} [id=Date.now().toString()] - The ID of the task.
+	 * @property {TaskType} [type="to-do"] - The type of the task.
+	 * @property {string} title - The title of the task.
+	 * @property {string} description - The description of the task.
+	 * @property {string} [category="default"] - The category of the task.
+	 * @property {Array<string>} [assignedTo=[]] - The users assigned to the task.
+	 * @property {string} dueDate - The due date of the task.
+	 * @property {TaskPriority} priority - The priority of the task.
+	 * @property {Array<{name: string, done: boolean}>} [subTasks=[]] - The subtasks of the task.
+	 * @property {string} boardId - The ID of the board the task belongs to.
+ */
+
+/**
+ * @implements {TaskOptions}
+ */
 export class Task extends BaseClass {
-	/** @type {string} */
 	id;
-	/** @type {TaskType} */
 	type;
-	/** @type {string} */
 	title;
-	/** @type {string} */
 	description;
-	/** @type {string} */
 	category;
-	/** @type {Array<string>} */
 	assignedTo;
-	/** @type {string} */
 	dueDate;
-	/** @type {TaskPriority} */
 	priority;
-	/** @type {Array<{name: string, done: boolean}>} */
 	subTasks;
-	/** @type {string} */
 	boardId;
+
+	/**
+	 * Creates an instance of Task.
+	 * @param {TaskOptions} params - The parameters for the task.
+	 */
 	constructor({
 		id = Date.now().toString(),
 		type = "to-do",
@@ -56,6 +68,11 @@ export class Task extends BaseClass {
 		this.boardId = boardId;
 	}
 
+	/**
+	 * Changes the priority of the task.
+	 * @param {TaskPriority} priority - The new priority of the task.
+	 * @returns {Promise<any>} The result of the update operation.
+	 */
 	changePriority(priority) {
 		if (!(priority == "urgent" || priority == "medium" || priority == "low")) {
 			console.error(`priority '${priority}' does not exist!`);
@@ -64,6 +81,11 @@ export class Task extends BaseClass {
 		return this.update();
 	}
 
+	/**
+	 * Adds subtasks to the task.
+	 * @param {string | Array<string>} names - The names of the subtasks to add.
+	 * @returns {Promise<any>} The result of the update operation.
+	 */
 	addSubtask(names) {
 		if (typeof names === "string") names = [names];
 		for (const name of names) {
@@ -75,8 +97,11 @@ export class Task extends BaseClass {
 		return this.update();
 	}
 
-	finishSubtask(name) {}
-
+	/**
+	 * Assigns the task to one or more users.
+	 * @param {string | Array<string>} userIds - The IDs of the users to assign the task to.
+	 * @returns {Promise<any>} The result of the update operation.
+	 */
 	async assignTo(userIds) {
 		const collaborators = BOARDS[this.boardId].collaborators;
 		if (typeof userIds === "string") userIds = [userIds];
@@ -89,6 +114,10 @@ export class Task extends BaseClass {
 		return this.update();
 	}
 
+	/**
+	 * Updates the task in the storage.
+	 * @returns {Promise<void>} The result of the update operation.
+	 */
 	async update() {
 		const url = `boards/${this.boardId}/tasks/${this.id}`;
 		const newTask = await STORAGE.set(url, cloneDeep(this));

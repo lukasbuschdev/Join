@@ -6,20 +6,47 @@ import { WebSocket } from "./websocket.js";
 
 class Storage {
 	STORAGE_URL = "https://join-storage-83306-default-rtdb.europe-west1.firebasedatabase.app";
+
+	/** 
+	 * @type {Object | undefined} 
+	 * @private
+	 */
 	#data;
+	
+	/** 
+	 * @type {boolean}
+	 * @private 
+	 */
 	#isLoaded = false;
+
+	/** 
+	 * @type {WebSocket | undefined}
+	 */
 	webSocket;
 
+	/**
+	 * Gets the data from storage.
+	 * @returns {Object} The data from storage.
+	 * @throws Will throw an error if the storage is not yet initialized.
+	 */
 	get data() {
 		if (!this.#isLoaded)
 			throw Error(`storage not yet initialized! await 'STORAGE.init()' to fix`);
 		return this.#data;
 	}
 
+	/**
+	 * Updates all data in the storage.
+	 * @returns {Promise<any>}
+	 */
 	updateAllData() {
 		return this.set("", this.data);
 	}
 
+	/**
+	 * Gets all users.
+	 * @returns {Object<string, User>} An object containing all users.
+	 */
 	get allUsers() {
 		return Object.entries(this.data.users).reduce(
 			(all, [id, user]) => ({ ...all, [id]: new User(user) }),
@@ -27,6 +54,10 @@ class Storage {
 		);
 	}
 
+	/**
+	 * Gets the current user.
+	 * @returns {User | undefined} The current user.
+	 */
 	get currentUser() {
 		const userId = this.currentUserId();
 		if (!userId) return;
@@ -34,7 +65,8 @@ class Storage {
 	}
 
 	/**
-	 * @returns {Object<string, User}
+	 * Gets all contacts of current User.
+	 * @returns {Object<string, User>}
 	 */
 	get currentUserContacts() {
 		return this.currentUser.contacts.reduce(
@@ -47,8 +79,8 @@ class Storage {
 	}
 
 	/**
-	 * gets all boards the current user is collaborating on
-	 * @returns {Object<string, Board>}
+	 * Gets all boards the current user is collaborating on.
+	 * @returns {Object<string, Board>} An object containing all boards.
 	 */
 	get currentUserBoards() {
 		const user = this.currentUser;
@@ -63,37 +95,30 @@ class Storage {
 	}
 
 	/**
-	 * gets the active board or the newest board or undefined if the user is not collaborating on any board
-	 * @returns {Board|undefined}
-	 */
-	get activeBoard() {
-		return SESSION_getData("activeBoardId") || this.currentUser.boards.at(-1);
-	}
-
-	/**
-	 * gets all data and returns a storage conainer
-	 * @returns {Promise<any>}
+	 * Gets all data and returns a storage container.
+	 * @returns {Promise<Storage>}
 	 */
 	async init() {
 		this.#data = await this.#download();
 		this.#isLoaded = true;
 		this.webSocket = new WebSocket(this);
-		if (this.currentUserId()) {
-			this.webSocket.init(this.currentUserId());
-		}
-		this.delete("boards/1695832128586/collaborators/0");
+		if (this.currentUserId()) this.webSocket.init(this.currentUserId());
 		return this;
 	}
 
+	/**
+	 * Gets the current user ID.
+	 * @returns {string | undefined} The current user ID.
+	 */
 	currentUserId() {
 		const uid = searchParams().get("uid");
 		return uid == null ? undefined : `${uid}`;
 	}
 
 	/**
-	 * gets data of the specified path. format: 'directory/subdirectory'
-	 * @param {string} path
-	 * @returns {User|Board|Notify|undefined}
+	 * Gets data of the specified path. Format: 'directory/subdirectory'
+	 * @param {string} path - The path to get data from.
+	 * @returns {User | Board | Notify | undefined} The data at the specified path.
 	 */
 	get(path) {
 		const formattedPath = path.split("/").join('"]["');
@@ -105,15 +130,22 @@ class Storage {
 	}
 
 	/**
-	 * sets the provided value to the specified path. format: 'directory/subdirectory'
-	 * @param {string} path
-	 * @param {any} upload
-	 * @returns {Promise<any>}
+	 * Sets the provided value to the specified path. Format: 'directory/subdirectory'
+	 * @template T
+	 * @param {string} path - The path to set data to.
+	 * @param {T} value - The value to set.
+	 * @returns {Promise<T>}
 	 */
 	set(path, value) {
 		return this.#upload(path, value);
 	}
 
+	/**
+	 * Downloads data from the specified path.
+	 * @param {string} [path=""] - The path to download data from.
+	 * @returns {Promise<any>}
+	 * @private
+	 */
 	async #download(path = "") {
 		try {
 			const data = await (await fetch(`${this.STORAGE_URL}/${path}.json`)).json();
@@ -122,6 +154,14 @@ class Storage {
 		} catch (error) {}
 	}
 
+	/**
+	 * Uploads data to the specified path.
+	 * @template T
+	 * @param {string} path - The path to upload data to.
+	 * @param {T} upload - The data to upload.
+	 * @returns {Promise<T | undefined>}
+	 * @private
+	 */
 	async #upload(path, upload) {
 		try {
 			const data = await (
@@ -142,8 +182,8 @@ class Storage {
 	}
 
 	/**
-	 * deletes the specified path
-	 * @param {string} path
+	 * Deletes the specified path.
+	 * @param {string} path - The path to delete.
 	 * @returns {Promise<null | undefined>}
 	 */
 	async delete(path) {
@@ -155,10 +195,11 @@ class Storage {
 	}
 
 	/**
-	 * Parses the specified upload data in preparation for upload to firebase. Replaces Arrays with JSON and empty JSON and empty Arrays with placeholder elements.
-	 *  @template T
-	 *  @param {T} upload
+	 * Parses the specified upload data in preparation for upload to Firebase. Replaces Arrays with JSON and empty JSON and empty Arrays with placeholder elements.
+	 * @template T
+	 * @param {T} upload - The data to pack.
 	 * @returns {T}
+	 * @private
 	 */
 	#packData(upload) {
 		if (upload === null || !(typeof upload === "object")) return;
@@ -181,9 +222,10 @@ class Storage {
 	}
 
 	/**
-	 * Parses the specified firebase download
-	 * @param {any} data download data
+	 * Parses the specified Firebase download data.
+	 * @param {any} data - The download data.
 	 * @returns {any | null}
+	 * @private
 	 */
 	#unpackData(data) {
 		if (!data || !(typeof data === "object")) return;
@@ -203,6 +245,11 @@ class Storage {
 		return data;
 	}
 
+	/**
+	 * Gets a user by name or email.
+	 * @param {string} nameOrEmail - The name or email of the user.
+	 * @returns {User | undefined} The user data.
+	 */
 	getUserByInput(nameOrEmail) {
 		const userData = Object.values(this.data.users).find(
 			({ name, email }) => name === nameOrEmail || email === nameOrEmail
@@ -211,6 +258,11 @@ class Storage {
 		return new User(userData);
 	}
 
+	/**
+	 * Gets users by their IDs.
+	 * @param {Array<string>} ids - An array of user IDs.
+	 * @returns {Array<User>} An array of users.
+	 */
 	getUsersById(ids) {
 		const users = Object.values(this.data.users)
 			.filter(({ id }) => ids.includes(id))
@@ -218,10 +270,20 @@ class Storage {
 		return users;
 	}
 
+	/**
+	 * Converts an array to JSON format.
+	 * @param {Array} array - The array to convert.
+	 * @returns {Object<string, any>} The JSON representation of the array.
+	 * @private
+	 */
 	#arrayToJSON(array) {
 		return array.reduce((json, item, index) => ({ ...json, [index]: item }), {});
 	}
 
+	/**
+	 * Syncs the boards for all users.
+	 * @returns {Promise<void>}
+	 */
 	async syncBoards() {
 		Object.values(this.allUsers).forEach((user) => {
 			user.boards.forEach((boardId) => {
@@ -237,18 +299,18 @@ class Storage {
 export const STORAGE = new Storage();
 
 /**
- * sets an item in local storage
- * @param {string} key
- * @param {any} value
+ * Sets an item in local storage.
+ * @param {string} key - The key to set in local storage.
+ * @param {any} value - The value to set.
  */
 export function LOCAL_setData(key, value) {
 	localStorage.setItem(key, typeof value === "object" ? JSON.stringify(value) : value);
 }
 
 /**
- * gets an item from local storage by key
- * @param {string} key
- * @returns {any}
+ * Gets an item from local storage by key.
+ * @param {string} key - The key to get from local storage.
+ * @returns {any} The retrieved value.
  */
 export function LOCAL_getData(key) {
 	let data = localStorage.getItem(key);
@@ -260,37 +322,33 @@ export function LOCAL_getData(key) {
 }
 
 /**
- * removes an item from local storage by key
- * @param {string} key
+ * Removes an item from local storage by key.
+ * @param {string} key - The key to remove from local storage.
  */
 export function LOCAL_removeData(key) {
 	localStorage.removeItem(key);
 }
 
 /**
- * sets an item in session storage
- * @param {string} key
- * @param {any} value
+ * Sets an item in session storage.
+ * @param {string} key - The key to set in session storage.
+ * @param {any} value - The value to set.
  */
 export function SESSION_setData(key, value) {
-	// i hate this.
-	if(key === "activeBoard" && !Number.isNaN(Number(value))) value = Number(value);
+	// I hate this!
+	if (key === "activeBoard" && !Number.isNaN(Number(value))) value = Number(value);
 	sessionStorage.setItem(key, JSON.stringify(value));
 }
 
 /**
- * gets an item from session storage by key
- * @param {string} key
- * @returns {string | undefined}
+ * Gets an item from session storage by key.
+ * @param {string} key - The key to get from session storage.
+ * @returns {string | undefined} The retrieved value.
  */
 export function SESSION_getData(key) {
 	const value = sessionStorage.getItem(key);
-	// if(key === "activeBoard") console.log( value, STORAGE.currentUserBoards, STORAGE.currentUserBoards[value])
 	switch (value) {
-		case "null":
-		case "undefined":
-		case "NaN":
-		case "false":
+		case "null": case "undefined": case "NaN": case "false":
 			return undefined;
 		default:
 			return value;
@@ -298,8 +356,8 @@ export function SESSION_getData(key) {
 }
 
 /**
- * removes an item from session storage by key
- * @param {string} key
+ * Removes an item from session storage by key.
+ * @param {string} key - The key to remove from session storage.
  */
 export function SESSION_removeData(key) {
 	sessionStorage.removeItem(key);

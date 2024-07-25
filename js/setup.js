@@ -2,23 +2,27 @@ import { $, $$, currentDirectory, includeTemplates, initInactivity, parse } from
 import "./prototype_extensions.js";
 import { LANG } from "./language.js";
 
+/**
+ * Retrieves the caller module path from the error stack.
+ * @returns {string} The caller module path.
+ */
 export function getContext() {
 	try {
 		throw new Error();
-	} catch(e) {
+	} catch (e) {
 		const { stack } = e;
-		console.log(stack)
+		console.log(stack);
 		return getCallerModulePath(stack);
 	}
 }
 
 /**
- * makes inline HTML events available in es modules
+ * Makes inline HTML events available in ES modules.
  *
- * IMPORTANT: callerModulePath must be passed in via the 'getContext()' function
- * @param {string} callerModulePath !! must be passed in via the 'getContext()' function !!
- * @param {string[]} importPaths an Array of paths to js files
- * @returns
+ * IMPORTANT: callerModulePath must be passed in via the 'getContext()' function.
+ * @param {string} callerModulePath - The path of the caller module. Must be passed in via the 'getContext()' function.
+ * @param {string[]} [importPaths=[]] - An array of paths to JavaScript files.
+ * @returns {Promise<void>}
  */
 export async function bindInlineFunctions(callerModulePath, importPaths = []) {
 	if (!callerModulePath || currentDirectory(callerModulePath) !== currentDirectory()) return;
@@ -44,6 +48,10 @@ export async function bindInlineFunctions(callerModulePath, importPaths = []) {
 	window.dispatchEvent(new CustomEvent("EventsBound"));
 }
 
+/**
+ * Retrieves all function names used in inline event handlers.
+ * @returns {Set<string>} A set of function names.
+ */
 function getAllFunctionNames() {
 	const functionNameRegExp = /(?<!\.)\b\w+\b(?=\()/g;
 	return [...$$("*")].reduce((total, { attributes }) => {
@@ -57,11 +65,20 @@ function getAllFunctionNames() {
 	}, new Set());
 }
 
+/**
+ * Retrieves the custom onload function defined in the body element.
+ * @returns {Function} The custom onload function.
+ */
 function customOnloadFunction() {
 	const customOnloadEvalString = $("body").attributes.getNamedItem("oncustomload")?.value;
 	return !!customOnloadEvalString ? parse(`() => {${customOnloadEvalString}}`) : () => {};
 }
 
+/**
+ * Retrieves the caller module path from the stack trace.
+ * @param {string} stack - The error stack trace.
+ * @returns {string|undefined} The caller module path, or undefined if not found.
+ */
 export function getCallerModulePath(stack) {
 	const lastLine = stack.split("\n")
 		.filter(line => !!line)
@@ -70,33 +87,34 @@ export function getCallerModulePath(stack) {
 	if (matches) return matches[0];
 }
 
+/**
+ * Binds functions from imported modules to the window object.
+ * @param {Array<Object>} modules - The imported modules.
+ * @param {Set<string>} allFunctionNames - A set of all function names to bind.
+ * @throws Will throw an error if any functions are missing or invalid imports are detected.
+ */
 function bindFunctionsToWindow(modules, allFunctionNames) {
 	const missingFunctions = new Set();
 	modules.forEach((mod) => {
 		for (const func in mod) window[func] = mod[func];
 	});
 
-	if (missingFunctions.size > 0)
-		throw Error(
+	if (missingFunctions.size > 0) {
+		throw new Error(
 			`Missing module / invalid import(s):\n${Array.from(missingFunctions).join("\n")}`
 		);
+	}
 }
 
-window.addEventListener(
-	"DOMContentLoaded",
-	() => {
+window.addEventListener("DOMContentLoaded", () => {
 		initInactivity();
 		includeTemplates();
-	},
-	{ once: true }
+	}, { once: true }
 );
 
-window.addEventListener(
-	"EventsBound",
-	async () => {
+window.addEventListener("EventsBound", async () => {
 		await LANG.init();
 		LANG.render();
 		$("body").initMenus();
-	},
-	{ once: true }
+	}, { once: true }
 );
