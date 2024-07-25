@@ -147,9 +147,7 @@ export function addEditSubtask() {
 		subtaskTooLongEdit();
 	} else {
 		subtaskValidEdit();
-        console.log(subtasks)
 		subtasks.push(subtaskInput.value)
-        console.log(subtasks)
 		subtaskInput.value = "";
 	}
 	renderEditSubtasks();

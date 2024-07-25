@@ -11,7 +11,6 @@ export function getContext() {
 		throw new Error();
 	} catch (e) {
 		const { stack } = e;
-		console.log(stack);
 		return getCallerModulePath(stack);
 	}
 }

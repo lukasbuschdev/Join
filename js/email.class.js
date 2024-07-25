@@ -60,10 +60,7 @@ export class Email {
 			subject: this.subject,
 			html: this.message
 		};
-
 		socket.emit("mail", mailOptions);
-		console.log(this);
-
 		return new Promise((resolve, reject) => {
 			socket.on("mailSent", resolve);
 			socket.on("mailFailed", reject);

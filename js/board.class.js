@@ -82,13 +82,10 @@ export class Board extends BaseClass {
 		const task = new Task(taskData);
 		task.color = this.categories[taskData.category];
 		task.boardId = this.id;
-
 		this.tasks[task.id] = cloneDeep(task);
-		console.log(task.assignedTo);
-
 		const user = STORAGE.currentUser;
 		await this.update();
-		console.log(task.assignedTo);
+		
 		const notification = new Notify({
 			userName: STORAGE.currentUser.name,
 			recipients: task.assignedTo.filter((id) => id !== user.id),
