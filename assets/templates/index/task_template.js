@@ -6,12 +6,14 @@ export const taskTemplate = (
 	filter
 ) => {
 	const board = STORAGE.currentUserBoards[boardId];
+    console.log(assignedTo)
 	const assignedAccounts = assignedTo.reduce((total, assignedToId) => {
-		const { name, color: userColor } =
-			STORAGE.currentUserContacts[assignedToId] ?? STORAGE.currentUser;
-		total.push({ name, color: userColor });
-		return total;
+        const { name, color } = assignedToId === STORAGE.currentUser.id
+            ? STORAGE.currentUser
+            : STORAGE.allUsers[assignedToId]
+        return [ ...total, { name, color } ]
 	}, []);
+
 	const categoryString = Object.keys(board.categories).find((cat) => cat === category);
 	return /*html*/ `
     <div class="task txt-small" onpointerdown="addDragAndDrop()" data-id="${boardId}/${id}">
@@ -57,25 +59,15 @@ export const progressTemplate = (subTasks) => {
 };
 
 export const assignedToTemplate = (assignedAccounts) => {
-	let template = "";
-	for (let i = 0; i < assignedAccounts.length; i++) {
-		const { color, name } = assignedAccounts[i];
-		template += /*html*/ `
+    return assignedAccounts.reduce((_template, { color, name }, index) => {
+        return /*html*/ `${_template}
             <div class="task-assigned-to">
-                <div style="--user-clr: ${color !== "" ? color : "#D1D1D1"};">${getInitialsOfName(
-			name
-		)}</div>
-            </div>
-        `;
-		if (assignedAccounts.length > 3 && i == 1) {
-			template += /*html*/ `
-                <div class="task-assigned-to">
-                    <div style="--user-clr: var(--clr-dark);">+${assignedAccounts.length - 2}</div>
-                </div>`;
-			break;
-		}
-	}
-	return template;
+                ${ (index < 3)
+                    ? `<div style="--user-clr: ${color !== "" ? color : "#D1D1D1"};">${ getInitialsOfName(name) }</div>`
+                    : `<div style="--user-clr: var(--clr-dark);">+${ assignedAccounts.length - 2 }</div>`
+                }
+            </div>`
+    }, ``);
 };
 
 export function addBoardCategoryTemplate([title, color]) {
