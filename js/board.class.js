@@ -2,7 +2,7 @@ import { BaseClass } from "./base.class.js";
 import { Notify } from "./notify.class.js";
 import { STORAGE } from "./storage.js";
 import { Task } from "./task.class.js";
-import { currentUserId, error } from "./utilities.js";
+import { cloneDeep, currentUserId, error } from "./utilities.js";
 
 /**
  * @typedef {Object<string, string} Categories
@@ -61,19 +61,21 @@ export class Board extends BaseClass {
 		const task = new Task(taskData);
 		task.color = this.categories[taskData.category];
 		task.boardId = this.id;
-		this.tasks[task.id] = task;
+		
+		this.tasks[task.id] = cloneDeep(task);
 		console.log(task.assignedTo)
 
 		const user = STORAGE.currentUser;
 		await this.update();
-		// const notification = new Notify({
-		// 	userName: STORAGE.currentUser.name,
-		// 	recipients: task.assignedTo.filter((id) => id !== user.id),
-		// 	type: "assignTo",
-		// 	taskName: task.title,
-		// 	boardName: this.name
-		// });
-		// notification.send();
+		console.log(task.assignedTo)
+		const notification = new Notify({
+			userName: STORAGE.currentUser.name,
+			recipients: task.assignedTo.filter((id) => id !== user.id),
+			type: "assignTo",
+			taskName: task.title,
+			boardName: this.name
+		});
+		notification.send();
 		return task;
 	}
 
@@ -98,7 +100,7 @@ export class Board extends BaseClass {
 	}
 
 	update() {
-		STORAGE.data.boards[this.id] = JSON.parse(JSON.stringify(this));
+		STORAGE.data.boards[this.id] = cloneDeep(this);
 		return super.update(`boards/${this.id}`);
 	}
 

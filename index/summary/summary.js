@@ -95,13 +95,9 @@ export function renderBoard(boardId) {
 
 export function renderBoardTitleSelection() {
 	const activeBoardId = SESSION_getData("activeBoard");
-	$("#board-title-selection .options").innerHTML = Object.values(
-		STORAGE.currentUserBoards
-	).reduce(
-		(template, board) =>
-			`${template}${activeBoardId != board.id ? boardTitleSelectionTemplate(board) : ""}`,
-		``
-	);
+	$("#board-title-selection .options").innerHTML = Object.values(STORAGE.currentUserBoards)
+	 	.filter(({ id }) => !(id == activeBoardId))
+		.reduce((template, board) => template += boardTitleSelectionTemplate(board), ``);
 }
 
 export async function createBoardModal() {

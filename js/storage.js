@@ -273,6 +273,8 @@ export function LOCAL_removeData(key) {
  * @param {any} value
  */
 export function SESSION_setData(key, value) {
+	// i hate this.
+	if(key === "activeBoard" && !Number.isNaN(Number(value))) value = Number(value);
 	sessionStorage.setItem(key, JSON.stringify(value));
 }
 
@@ -282,15 +284,16 @@ export function SESSION_setData(key, value) {
  * @returns {string | undefined}
  */
 export function SESSION_getData(key) {
-	const data = sessionStorage.getItem(key);
-	switch (data) {
+	const value = sessionStorage.getItem(key);
+	// if(key === "activeBoard") console.log( value, STORAGE.currentUserBoards, STORAGE.currentUserBoards[value])
+	switch (value) {
 		case "null":
 		case "undefined":
 		case "NaN":
 		case "false":
 			return undefined;
 		default:
-			return data;
+			return value;
 	}
 }
 
