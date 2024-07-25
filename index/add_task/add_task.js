@@ -86,7 +86,7 @@ export function renderAssignToContacts() {
 	drpContainer.append(assignToUser.children[0]);
 
 	STATE.selectedBoard.collaborators.forEach((collaboratorId) => {
-		const collaborator = STORAGE.currentUserContacts[collaboratorId];
+		const collaborator = STORAGE.allUsers[collaboratorId];
 		if (!collaborator || collaborator === STORAGE.currentUser.id) return;
 		const collaboratorOption = document.createElement("div");
 		collaboratorOption.innerHTML = renderCollaboratorsToAssign(collaborator);

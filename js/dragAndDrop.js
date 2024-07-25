@@ -1,6 +1,5 @@
 import { STATE } from "./state.js";
 import { STORAGE } from "./storage.js";
-import { Task } from "./task.class.js";
 import { throttle } from "./utilities.js";
 
 let TASK_ELEMENT;

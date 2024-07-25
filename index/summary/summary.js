@@ -1,12 +1,14 @@
 import { SESSION_getData, SESSION_setData, STORAGE } from "../../js/storage.js";
-import { $, $$, dateFormat, debounce, getInitialsOfName, isEqual, notification, throwErrors } from "../../js/utilities.js";
+import { $, $$, dateFormat, debounce, isEqual, notification, throwErrors } from "../../js/utilities.js";
 import { Notify } from "../../js/notify.class.js";
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 import { boardTitleSelectionTemplate } from "../index/index.js";
-import { summaryTemplate } from "../../assets/templates/index/summary_template.js";
+import { contactDropdownTemplate, newBoardCollaboratorTemplate, summaryTemplate } from "../../assets/templates/index/summary_template.js";
 import { STATE } from "../../js/state.js";
 import { addBoardCategoryTemplate } from "../../assets/templates/index/task_template.js";
 import { boardEditButtonTemplate } from "../../assets/templates/index/summary_template.js";
+import { Task } from "../../js/task.class.js";
+import { Board } from "../../js/board.class.js";
 bindInlineFunctions(getContext(), [
 	"/Join/index/index/index.js",
 	"/Join/js/utilities.js",
@@ -15,6 +17,11 @@ bindInlineFunctions(getContext(), [
 
 let NEW_BOARD_COLLABORATORS = [];
 
+/**
+ * Initializes summary by rendering the (active) board and its title selection if there are boards available.
+ * @async
+ * @returns {Promise<void>} Resolves when the initialization is complete.
+ */
 export async function initSummary() {
 	if (!STORAGE.currentUser.boards.length) return;
 
@@ -28,27 +35,35 @@ export async function initSummary() {
 	$("#summary-content").classList.remove("d-none");
 }
 
+/**
+ * Gets the upcoming deadline from a list of tasks.
+ * @param {Task[]} tasks - The list of tasks.
+ * @returns {string|undefined} The upcoming deadline formatted as a locale date string, or `undefined` if there are no upcoming deadlines.
+ */
 function getUpcomingDeadline(tasks) {
 	return tasks.length
-			? tasks
-					.reduce((all, { dueDate }) => {
-						const formattedDate = dateFormat(dueDate);
-						return formattedDate ? [...all, formattedDate] : all;
-					}, [])
-					.sort()
-					.at(0)
-					?.toLocaleDateString(LANG.currentLang, {
-						year: "numeric",
-						month: "long",
-						day: "numeric"
-					}) || undefined
-			: 0
+		? tasks
+				.reduce((all, { dueDate }) => {
+					const formattedDate = dateFormat(dueDate);
+					return formattedDate ? [...all, formattedDate] : all;
+				}, [])
+				.sort()
+				.at(0)
+				?.toLocaleDateString(LANG.currentLang, {
+					year: "numeric",
+					month: "long",
+					day: "numeric"
+				}) || undefined
+		: 0;
 }
 
+/**
+ * Gets the statistics of tasks from a tasks object.
+ * @param {Task} tasksObj - The object containing tasks.
+ * @returns {Object} An object containing various task statistics.
+ */
 export function getTaskStats(tasksObj) {
 	const tasks = Object.values(tasksObj);
-	const now = new Date();
-
 	const allStats = {
 		tasksInBoard: tasks.length,
 		tasksInProgress: 0,
@@ -82,7 +97,11 @@ export function getTaskStats(tasksObj) {
 	return allStats;
 }
 
-export function renderBoard(boardId) {
+/**
+ * Renders the board with the given ID and sets it as the active board.
+ * @param {string} boardId - The ID of the board to render.
+ */
+function renderBoard(boardId) {
 	STATE.selectedBoard = STORAGE.currentUserBoards[boardId];
 	const { id, name, tasks: tasksObj, owner } = STATE.selectedBoard;
 
@@ -97,6 +116,9 @@ export function renderBoard(boardId) {
 	summaryHeader.innerText = name;
 }
 
+/**
+ * Renders the board title selection options.
+ */
 export function renderBoardTitleSelection() {
 	const activeBoardId = SESSION_getData("activeBoard");
 	$("#board-title-selection .options").innerHTML = Object.values(STORAGE.currentUserBoards)
@@ -104,6 +126,11 @@ export function renderBoardTitleSelection() {
 		.reduce((template, board) => template += boardTitleSelectionTemplate(board), ``);
 }
 
+/**
+ * Creates and displays the board creation modal.
+ * @async
+ * @returns {Promise<void>} Resolves when the modal is created and displayed.
+ */
 export async function createBoardModal() {
 	await $("#add-board .add-board-data").includeTemplate({
 		url: "/Join/assets/templates/index/add-board.html",
@@ -112,6 +139,9 @@ export async function createBoardModal() {
 	$("#add-board").openModal();
 }
 
+/**
+ * Adds a new category to the board creation modal or throws the appropriate error.
+ */
 export function addBoardCategory() {
 	const title = $("#add-board-categories input").value;
 	const color = $(".category-color.active").style.getPropertyValue("--clr");
@@ -122,10 +152,16 @@ export function addBoardCategory() {
 	$("#add-board-categories input").value = "";
 }
 
+/**
+ * Removes a board category from the board creation modal.
+ */
 export function removeBoardCategory() {
 	event.currentTarget.parentElement.remove();
 }
 
+/**
+ * Clears the category input field in the board creation modal.
+ */
 export function clearCategoryInput() {
 	event.currentTarget.parentElement.previousElementSibling.value = "";
 	const title = $("#add-board-categories input").value;
@@ -133,10 +169,19 @@ export function clearCategoryInput() {
 	throwErrors({ identifier: "name-too-long", bool: titleValidity });
 }
 
-export function isValidTitle(titleInput) {
+/**
+ * Validates the board title input.
+ * @param {string} titleInput - The board title to validate.
+ * @returns {boolean} True if the title is valid, false otherwise.
+ */
+function isValidTitle(titleInput) {
 	return /^[a-zA-Z0-9_-]+$/.test(titleInput);
 }
 
+/**
+ * Retrieves a list of collaborator IDs.
+ * @returns {Array<string>} An array of collaborator IDs.
+ */
 export function getCollaborators() {
 	return [...$$(".collaborator")].reduce((total, collaborator) => {
 		total.push(collaborator.dataset.id);
@@ -144,14 +189,24 @@ export function getCollaborators() {
 	}, []);
 }
 
-export const getTaskCategories = () =>
-	[...$$(".task-category")].reduce((total, category) => {
+/**
+ * Retrieves the task categories.
+ * @returns {Object} An object containing the task categories and their colors.
+ */
+function getTaskCategories() {
+	return [...$$(".task-category")].reduce((total, category) => {
 		const color = category.style.getPropertyValue("--clr");
 		const name = category.$("span").innerText;
 		total[name] = color;
 		return total;
 	}, {});
+}
 
+/**
+ * Creates a new board based on the input from the board creation modal.
+ * @async
+ * @returns {Promise<void>} Resolves when the new board is created.
+ */
 export async function createNewBoard() {
 	const boardName = $("#add-board-title input").value.replaceAll(" ", "-");
 	const titleIsValid = isValidTitle(boardName);
@@ -171,7 +226,13 @@ export async function createNewBoard() {
 	location.reload();
 }
 
-export function createBoardNotification({ name, id }, collaborators) {
+/**
+ * Creates and sends a board notification to the specified collaborators.
+ * @param {Board} board - The board object.
+ * @param {Array<string>} collaborators - An array of collaborator IDs.
+ * @returns {Promise<void>} Resolves when the notification is sent.
+ */
+function createBoardNotification({ name, id }, collaborators) {
 	if (!collaborators.length) return;
 	const notification = new Notify({
 		recipients: collaborators,
@@ -183,6 +244,9 @@ export function createBoardNotification({ name, id }, collaborators) {
 	return notification.send();
 }
 
+/**
+ * Toggles the dropdown for adding board collaborators.
+ */
 export function toggleDrp() {
 	event.currentTarget.toggleDropDown();
 	const drp = $(":is(.add-board-data, .edit-board-data) #drp-collaborators");
@@ -196,6 +260,9 @@ export function toggleDrp() {
 	drp.renderItems(sortedContacts, contactDropdownTemplate);
 }
 
+/**
+ * Filters the dropdown list for collaborators.
+ */
 export const filterDrp = debounce(() => {
 	const drp = $(".add-board-data .drp");
 	const filter = $("#add-board-collaborators input").value;
@@ -209,20 +276,10 @@ export const filterDrp = debounce(() => {
 	drp.renderItems(filteredContacts, contactDropdownTemplate);
 });
 
-export function contactDropdownTemplate({ name, color, id, img }) {
-	return /*html*/ `
-        <div class="contact row gap-15 drp-option ${
-			NEW_BOARD_COLLABORATORS.includes(id) ? "active" : ""
-		}" onclick="addCollaborator(${id})">
-            <div class="user-img-container" style="--user-clr: ${color};">
-                <span>${getInitialsOfName(name)}</span>
-                <img src="${img}">
-            </div>
-            <div>${name}</div>
-        </div>
-    `;
-}
-
+/**
+ * Adds or removes a collaborator to/from the new board.
+ * @param {string} id - The ID of the collaborator.
+ */
 export function addCollaborator(id) {
 	event.currentTarget.classList.toggle("active");
 	if (NEW_BOARD_COLLABORATORS.includes(`${id}`)) NEW_BOARD_COLLABORATORS.remove(`${id}`);
@@ -235,36 +292,26 @@ export function addCollaborator(id) {
 	});
 }
 
-export function newBoardCollaboratorTemplate({ img, name, color, id }) {
-	return /*html*/ `
-    <button class="collaborator ${
-		!STATE.selectedBoard?.collaborators.includes(id) ? "invitation" : ""
-	}" data-id="${id}">
-        <div class="user-img-container" style="--user-clr: ${color}">
-            <span>${getInitialsOfName(name)}</span>
-            <img src="${img}" alt="">
-        </div>
-    </button>
-`;
-}
-
-export function renderEditBoard() {
+/**
+ * Renders the edit board modal with the current board's data.
+ */
+function renderEditBoard() {
 	const { name, collaborators, categories } = STATE.selectedBoard;
 	const editBoardContainer = $(".edit-board-data");
 	editBoardContainer.$(":scope > h3").innerText = name;
-	editBoardContainer
-		.$(".categories-container")
-		.renderItems(Object.entries(categories), addBoardCategoryTemplate);
-
+	editBoardContainer.$(".categories-container").renderItems(Object.entries(categories), addBoardCategoryTemplate);
 	NEW_BOARD_COLLABORATORS = [...collaborators];
 	editBoardContainer.$(".collaborators-container").renderItems(
-		Object.values(STORAGE.currentUserContacts).filter((contact) =>
-			collaborators.includes(contact.id)
-		),
+		Object.values(STORAGE.currentUserContacts).filter((contact) => collaborators.includes(contact.id)),
 		newBoardCollaboratorTemplate
 	);
 }
 
+/**
+ * Saves the edited board data.
+ * @async
+ * @returns {Promise<void>} Resolves when the board data is saved.
+ */
 export async function saveEditedBoard() {
 	const collaborators = getCollaborators();
 	const categories = getTaskCategories();
@@ -279,7 +326,12 @@ export async function saveEditedBoard() {
 	$("#edit-board").closeModal();
 }
 
-export function updateBoardCategories(categories) {
+/**
+ * Updates the board categories.
+ * @param {Object} categories - The categories to update.
+ * @returns {Promise<void>|void} Resolves when the categories are updated, or void if they are unchanged.
+ */
+function updateBoardCategories(categories) {
 	if (isEqual(categories, STATE.selectedBoard.categories)) return;
 	STATE.selectedBoard.categories = {};
 	Object.entries(categories).for(
@@ -288,6 +340,11 @@ export function updateBoardCategories(categories) {
 	return STATE.selectedBoard.update();
 }
 
+/**
+ * Initializes the edit board modal.
+ * @async
+ * @returns {Promise<void>} Resolves when the edit board modal is initialized.
+ */
 export async function initEditBoard() {
 	event.stopPropagation();
 	NEW_BOARD_COLLABORATORS = [];
@@ -300,16 +357,16 @@ export async function initEditBoard() {
 	editBoardModal.openModal();
 }
 
-export const deleteBoard = () =>
-	confirmation(`delete-board, {boardName: '${STATE.selectedBoard.name}'}`, async () => {
+/**
+ * Deletes the current board after confirmation.
+ * @returns {Promise<void>} Resolves when the board is deleted.
+ */
+export function deleteBoard() {
+	return confirmation(`delete-board, {boardName: '${STATE.selectedBoard.name}'}`, async () => {
 		await STATE.selectedBoard.delete();
 		STATE.selectedBoard = Object.values(STORAGE.currentUserBoards)[0] || undefined;
 		await notification("board-deleted");
 		$("#edit-board").closeModal();
 		location.reload();
 	});
-
-export function toggleBoardSelection() {
-	console.log(this);
-	$("#summary-selection").classList.toggle("active");
 }

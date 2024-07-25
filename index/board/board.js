@@ -19,16 +19,26 @@ import { editTaskTemplate } from "../../assets/templates/index/edit-task_templat
 import { renderBoardIds, renderDate, selectedCollaborators } from "../add_task/add_task.js";
 import { STATE } from "../../js/state.js";
 import { renderCollaboratorInput } from "../../assets/templates/index/add_task_templates.js";
-import { Task } from "../../js/task.class.js";
 
+/**
+ * Initializes the board by rendering the board title selection and tasks if there are boards available.
+ * @async
+ * @returns {Promise<void>} Resolves when the initialization is complete.
+ */
 export async function initBoard() {
 	if (!STORAGE.currentUser.boards.length) return;
 	renderBoardTitleSelection();
 	renderTasks();
 	$("#tasks").classList.remove("d-none");
-};
+}
 
-export async function renderTasks(filter) {
+/**
+ * Renders tasks on the board with an optional filter.
+ * @async
+ * @param {string} [filter] - Optional filter string to filter tasks by title or description.
+ * @returns {Promise<void>} Resolves when the tasks are rendered.
+ */
+async function renderTasks(filter) {
 	const { tasks, name } = STATE.selectedBoard;
 
 	const boardHeader = $("#board-header h2");
@@ -40,7 +50,7 @@ export async function renderTasks(filter) {
 
 	tasksContainer
 		.$$(":scope > div > div:last-child")
-		.for((container) => (container.innerHTML = ""));
+		.forEach((container) => (container.innerHTML = ""));
 	const filteredTasks = filter
 		? Object.values(tasks).filter(
 				(task) =>
@@ -50,32 +60,49 @@ export async function renderTasks(filter) {
 		: Object.values(tasks);
 	filteredTasks
 		.toReversed()
-		.for((task) => ($(`#${task.type}`).innerHTML += taskTemplate(task, filter)));
+		.forEach((task) => ($(`#${task.type}`).innerHTML += taskTemplate(task, filter)));
 	await tasksContainer.LANG_load();
-};
+}
 
+/**
+ * Searches tasks based on the input value and renders the filtered tasks.
+ */
 export const searchTasks = debounce(() => {
 	const searchInput = $("#search-task input").value;
 	renderTasks(searchInput);
 }, 200);
 
+/**
+ * Focuses the search input field.
+ */
 export function focusInput() {
 	$("#search-task input").focus();
-};
+}
 
+/**
+ * Clears the search input and renders all tasks.
+ */
 export function clearTaskSearch() {
 	$("#search-task input").value = "";
 	renderTasks();
-};
+}
 
+/**
+ * Opens the modal for adding a new task and renders necessary data.
+ * @async
+ * @returns {Promise<void>} Resolves when the modal is opened.
+ */
 export async function addTaskModal() {
 	renderBoardIds();
 	renderDate();
 	const modal = $("#add-task-modal");
 	modal.$(".add-task-card").classList.remove("d-none");
 	modal.openModal();
-};
+}
 
+/**
+ * Renders the fullscreen task modal with the selected task's data.
+ */
 export function renderFullscreenTask() {
 	const task = STATE.selectedTask;
 	if (event && event.which !== 1) return;
@@ -84,11 +111,12 @@ export function renderFullscreenTask() {
 	modal.$("#fullscreen-task").innerHTML = fullscreenTaskTemplate(task);
 	modal.LANG_load();
 	modal.openModal();
-	modal.addEventListener("close", () => saveTaskChanges(initialTask), {
-		once: true
-	});
-};
+	modal.addEventListener("close", () => saveTaskChanges(initialTask), { once: true });
+}
 
+/**
+ * Saves the edited task data from the fullscreen task modal.
+ */
 export function saveEditedTask() {
 	const modal = $("#fullscreen-task-modal");
 	const editedTaskData = {
@@ -112,9 +140,14 @@ export function saveEditedTask() {
 	modal.closeModal();
 	toggleFullscreenState();
 	modal.$("#fullscreen-task").innerHTML = fullscreenTaskTemplate(STATE.selectedTask);
-};
+}
 
-export function saveTaskChanges(initialTask) {
+/**
+ * Saves the changes made to a task if there are any differences from the initial state.
+ * @param {Object} initialTask - The initial state of the task.
+ * @returns {Promise<void>} Resolves when the task changes are saved.
+ */
+function saveTaskChanges(initialTask) {
 	const updatedTask = STATE.selectedTask;
 
 	const differences = getJsonChanges(updatedTask, initialTask);
@@ -122,8 +155,12 @@ export function saveTaskChanges(initialTask) {
 		updateTaskUi(differences, initialTask);
 		return STATE.selectedTask.update();
 	}
-};
+}
 
+/**
+ * Deletes the selected task after confirmation.
+ * @returns {Promise<void>} Resolves when the task is deleted.
+ */
 export function deleteTask() {
 	confirmation(`delete-task, {taskName: '${STATE.selectedTask.title}'}`, async () => {
 		const { boardId, id, name } = STATE.selectedTask;
@@ -140,7 +177,13 @@ export function deleteTask() {
 	});
 }
 
-export function getJsonChanges(newJson, oldJson) {
+/**
+ * Compares two JSON objects and returns the differences.
+ * @param {Object} newJson - The updated JSON object.
+ * @param {Object} oldJson - The original JSON object.
+ * @returns {Object} An object containing the differences between the two JSON objects.
+ */
+function getJsonChanges(newJson, oldJson) {
 	let differences = {};
 	for (const key in newJson) {
 		if (typeof newJson[key] == "function") continue;
@@ -149,8 +192,13 @@ export function getJsonChanges(newJson, oldJson) {
 		} else if (newJson[key] !== oldJson[key]) differences[key] = newJson[key];
 	}
 	return differences;
-};
+}
 
+/**
+ * Changes the done state of a subtask.
+ * @async
+ * @param {string} subTaskName - The name of the subtask.
+ */
 export async function changeSubtaskDoneState(subTaskName) {
 	const subTaskCheckBox = event.currentTarget;
 	const isChecked = subTaskCheckBox.checked;
@@ -163,9 +211,14 @@ export async function changeSubtaskDoneState(subTaskName) {
 		}
 	}
 	STATE.selectedTask.subTasks[subTaskIndex].done = isChecked;
-};
+}
 
-export function updateTaskUi({ title = null, description = null, priority = null, assignedTo = null, subTasks = null }, initialTask) {
+/**
+ * Updates the task UI based on the provided differences.
+ * @param {Object} differences - An object containing the differences.
+ * @param {Object} initialTask - The initial state of the task.
+ */
+function updateTaskUi({ title = null, description = null, priority = null, assignedTo = null, subTasks = null }, initialTask) {
 	const taskContainer = $(`[data-id="${STATE.selectedTask.boardId}/${STATE.selectedTask.id}"]`);
 
 	if (title) taskContainer.$(".task-title").textAnimation(title);
@@ -182,6 +235,10 @@ export function updateTaskUi({ title = null, description = null, priority = null
 	taskContainer.$(".task-progress-counter span").innerText = `${currentSubtaskCount} / ${totalSubtaskCount}`;
 	taskContainer.$(".task-progress-bar").style.setProperty("--progress", `${currentSubtaskCount / totalSubtaskCount}`);
 }
+
+/**
+ * Initializes the edit task modal with the selected task's data.
+ */
 export function editTaskInitializer() {
 	const task = STATE.selectedTask;
 	const editTaskContainer = $("#edit-task");
@@ -193,19 +250,26 @@ export function editTaskInitializer() {
 	editTaskContainer.initMenus();
 
 	toggleFullscreenState();
-};
+}
 
-export function renderAssignedContacts(task) {
+/**
+ * Renders the assigned contacts for a task.
+ * @param {Object} task - The task object.
+ */
+function renderAssignedContacts(task) {
 	$(`.drp-contacts [data-id="${currentUserId()}"]`)?.LANG_load();
 	$$(".drp-contacts .drp-option").forEach((contact) =>
 		contact.classList.toggle("active", task.assignedTo.includes(contact.dataset.id))
 	);
 	renderCollaboratorInput();
-};
+}
 
+/**
+ * Toggles the fullscreen state of the task modal.
+ */
 export function toggleFullscreenState() {
 	const fullscreenModal = $("#fullscreen-task-modal");
-	fullscreenModal.$$("#fullscreen-task, #edit-task").for((section) => {
+	fullscreenModal.$$("#fullscreen-task, #edit-task").forEach((section) => {
 		section.initMenus();
 		section.classList.toggle("d-none");
 		if (section.id == "edit-task" && section.classList.contains("d-none"))
@@ -215,4 +279,5 @@ export function toggleFullscreenState() {
 		"static",
 		fullscreenModal.getAttribute("static") == "true" ? "false" : "true"
 	);
-};
+}
+

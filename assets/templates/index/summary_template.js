@@ -74,3 +74,29 @@ export function boardEditButtonTemplate(boardId) {
         </button>
     `;
 }
+
+export function contactDropdownTemplate({ name, color, id, img }) {
+	return /*html*/ `
+        <div class="contact row gap-15 drp-option ${
+			NEW_BOARD_COLLABORATORS.includes(id) ? "active" : ""
+		}" onclick="addCollaborator(${id})">
+            <div class="user-img-container" style="--user-clr: ${color};">
+                <span>${getInitialsOfName(name)}</span>
+                <img src="${img}">
+            </div>
+            <div>${name}</div>
+        </div>
+    `;
+}
+export function newBoardCollaboratorTemplate({ img, name, color, id }) {
+	return /*html*/ `
+    <button class="collaborator ${
+		!STATE.selectedBoard?.collaborators.includes(id) ? "invitation" : ""
+	}" data-id="${id}">
+        <div class="user-img-container" style="--user-clr: ${color}">
+            <span>${getInitialsOfName(name)}</span>
+            <img src="${img}" alt="">
+        </div>
+    </button>
+`;
+}
