@@ -5,9 +5,16 @@ import { getInitialsOfName } from "../../../js/utilities.js";
 import { LANG } from "../../../js/language.js";
 import { subtasks } from "../../../index/add_task/add_task.js";
 
-export const editTaskTemplate = ({ title, description, priority, dueDate, assignedTo, subTasks }) => {
-    subtasks.length = 0;
-    subtasks.push(...subTasks.map(({ name }) => name));
+export const editTaskTemplate = ({
+	title,
+	description,
+	priority,
+	dueDate,
+	assignedTo,
+	subTasks
+}) => {
+	subtasks.length = 0;
+	subtasks.push(...subTasks.map(({ name }) => name));
 	return /*html*/ `
     <div class="fullscreen-content column gap-25">
         <div class="column gap-8">
@@ -118,6 +125,7 @@ export function editTaskAssignedTo(assignedTo) {
 export const collaboratorTemplate = (id, assignedTo) => {
 	const { name, img, color } = STORAGE.allUsers[id];
 	const collaboratorIsAssigned = assignedTo.includes(id);
+	console.log(collaboratorIsAssigned);
 	return /*html*/ `
     <div data-id="${id}" class="drp-option ${
 		collaboratorIsAssigned ? "active" : ""
@@ -135,7 +143,7 @@ export const allSubtasksTemplate = (subTasks) => {
 		template += renderSubtaskTemplate(name, index);
 		return template;
 	}, "");
-}
+};
 
 export function addEditSubtask() {
 	const letterRegex = /^[A-Za-zäöüßÄÖÜ\-\/_' "0-9]+$/;
@@ -147,7 +155,7 @@ export function addEditSubtask() {
 		subtaskTooLongEdit();
 	} else {
 		subtaskValidEdit();
-		subtasks.push(subtaskInput.value)
+		subtasks.push(subtaskInput.value);
 		subtaskInput.value = "";
 	}
 	renderEditSubtasks();

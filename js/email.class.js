@@ -6,7 +6,7 @@ import { resetPasswordEmailTemplate, verificationEmailTemplate } from "/Join/ass
  */
 
 /**
- * @typedef {Object} EmailOptions
+ * @typedef {Object} EmailParams
  * @property {string} recipient
  * @property {EmailType} type
  * @property {import("./language.js").LangData} langData
@@ -14,29 +14,27 @@ import { resetPasswordEmailTemplate, verificationEmailTemplate } from "/Join/ass
 
 /**
  * Class representing an email.
+ * @implements {EmailParams}
  */
 export class Email {
+
+	recipient;
+	type;
+	
+	/** @type {string} */
+	subject;
+
+	/** @type {string} */
+	message;
+
 	/**
 	 * Create an email.
-	 * @param {EmailOptions} options - The email options.
+	 * @param {EmailParams} options - The email options.
 	 */
-	constructor({ recipient, type = "", langData }) {
-		/**
-		 * The recipient of the email.
-		 * @type {Object}
-		 */
+	constructor({ recipient, type, langData }) {
 		this.recipient = recipient;
-
-		/**
-		 * The subject of the email.
-		 * @type {string}
-		 */
 		this.subject = langData["subject"];
-
-		/**
-		 * The message content of the email.
-		 * @type {string}
-		 */
+		this.type = type;
 		if (type === "verification") {
 			this.message = verificationEmailTemplate(recipient, langData);
 		}

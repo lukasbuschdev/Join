@@ -33,26 +33,9 @@ export function currentDirectory(path = window.location.pathname) {
 }
 
 /**
- * shows an element specified by its selector
- * @param {string} selectors
- * @returns {void}
- */
-export function show(selectors) {
-	$(selectors)?.classList.remove("d-none");
-}
-
-/**
- * hides an element specified by its selector
- * @param {string} selectors
- * @returns {void}
- */
-export function hide(selectors) {
-	$(selectors)?.classList.add("d-none");
-}
-
-/**
- * callback to toggle the 'active' class on a set of buttons. Only use as EventListerner!!!
+ * callback to toggle the 'active' class on a set of buttons. Only use as EventListener!!!
  * @param {NodeListOf<HTMLButtonElement> | HTMLButtonElement[]} buttons
+ * @returns {Promise<void>}
  */
 export async function toggleActiveBtn(buttons) {
 	buttons.forEach((button) => button.classList.toggle("active", button === event.currentTarget));
@@ -60,16 +43,16 @@ export async function toggleActiveBtn(buttons) {
 
 /**
  * adds the toggleActiveBtn() callback to all nav buttons
+ * @returns {void}
  */
 export function addNavToggleBtns() {
-	$$("nav button").forEach((btn, i, buttons) =>
-		btn.addEventListener("click", toggleActiveBtn.bind(btn, buttons))
-	);
+	$$("nav button").forEach((btn, i, buttons) => btn.addEventListener("click", toggleActiveBtn.bind(btn, buttons)));
 }
 
 /**
  * toggles the 'active' class on the provided error containers
- * @param {...{string, boolean}} errors
+ * @param {...{identifier: string, bool: boolean}} errors
+ * @returns {void}
  */
 export function throwErrors(...errors) {
 	errors.for(({ identifier, bool }) => {
@@ -84,6 +67,7 @@ export function throwErrors(...errors) {
 /**
  * adds a notification popup to the screen which fades out
  * @param {string} languageKey
+ * @returns {Promise<void>}
  */
 export const notification = (languageKey) => {
 	return new Promise((resolve) => {
@@ -103,7 +87,7 @@ export const notification = (languageKey) => {
 
 /**
  * template for popup
- * @param {string} languageKey keyof LANG
+ * @param {string} languageKey - Key of LANG
  * @returns {string}
  */
 export function popUpNotificationTemplate(languageKey) {
@@ -116,8 +100,8 @@ export function popUpNotificationTemplate(languageKey) {
 /**
  * returns a debounced function from an input callback function
  * @template T
- * @param {(...params: any[]) => T} cb callback function
- * @param {number} [delay] idle time in miliseconds before execition (1000 default)
+ * @param {(...params: any[]) => T} cb - Callback function
+ * @param {number} [delay=1000] - Idle time in milliseconds before execution (1000 default)
  * @returns {(...params: any[]) => T}
  */
 export function debounce(cb, delay = 1000) {
@@ -133,8 +117,8 @@ export function debounce(cb, delay = 1000) {
 /**
  * returns a throttled function from an input callback function
  * @template T
- * @param {(...params: any[]) => T} cb callback function
- * @param {number} [delay] cooldown time in miliseconds (1000 default)
+ * @param {(...params: any[]) => T} cb - Callback function
+ * @param {number} [delay=1000] - Cooldown time in milliseconds (1000 default)
  * @returns {(...params: any[]) => T}
  */
 export function throttle(cb, delay = 1000) {
@@ -165,7 +149,7 @@ export function includeTemplates() {
 
 /**
  * returns the content of a template as text
- * @param {string} url path of the template
+ * @param {string} url - Path of the template
  * @returns {Promise<string>}
  */
 export async function getTemplate(url) {
@@ -175,6 +159,7 @@ export async function getTemplate(url) {
 /**
  * custom eval() implementation
  * @param {string} evalString
+ * @returns {any}
  */
 export function parse(evalString) {
 	return Function(`'use strict'; return (${evalString}) ?? false`)();
@@ -189,8 +174,7 @@ export function searchParams() {
 }
 
 /**
- * TO DO
- * @returns
+ * @returns {Promise<void>}
  */
 export const submitUpload = async () => {
 	const img = $('[type="file"]').files[0];
@@ -210,7 +194,7 @@ export const submitUpload = async () => {
 };
 
 /**
- * checks if file size is biggaer than 1MB and throws errors accordingly
+ * checks if file size is bigger than 1MB and throws errors accordingly
  * @param {File} file
  * @returns {boolean}
  */
@@ -239,6 +223,7 @@ export function getImgUrl() {
 /**
  * TO DO
  * @param {string} imgURL
+ * @returns {void}
  */
 export function renderUploadedImg(imgURL) {
 	const imgContainers = $$(".user-img");
@@ -250,6 +235,10 @@ export function renderUploadedImg(imgURL) {
 	};
 }
 
+/**
+ * Removes the uploaded image
+ * @returns {Promise<void>}
+ */
 export const removeUpload = async () => {
 	if (event.target.tagName == "LABEL" || event.target.tagName == "INPUT") return;
 	const container = event.currentTarget;
@@ -269,6 +258,10 @@ export const removeUpload = async () => {
 	}
 };
 
+/**
+ * Renders the color wheel for color picking
+ * @returns {void}
+ */
 export function renderColorWheel() {
 	let clrBg = [];
 	const factor = 12;
@@ -282,6 +275,10 @@ export function renderColorWheel() {
 	)})`;
 }
 
+/**
+ * Toggles the visibility of the color picker
+ * @returns {void}
+ */
 export function toggleColorPicker() {
 	event.stopPropagation();
 	$("#color-wheel").classList.toggle("d-none");
@@ -296,12 +293,17 @@ export function toggleColorPicker() {
 	$("#user-color").classList.toggle("active");
 }
 
+/**
+ * Handles color picking from the```javascript
+ * Handles color picking from the color wheel
+ * @returns {void}
+ */
 export function pickColor() {
 	const width = event.currentTarget.offsetWidth;
-	const heigth = event.currentTarget.offsetHeight;
+	const height = event.currentTarget.offsetHeight;
 	const { offsetX, offsetY } = event;
 	const x = offsetX - width / 2;
-	const y = offsetY - heigth / 2;
+	const y = offsetY - height / 2;
 
 	const hue = Math.round(Math.atan2(y, x) * (180 / Math.PI) + 450) % 360;
 	const lightness =
@@ -312,10 +314,24 @@ export function pickColor() {
 	addAcceptColor(userColor);
 }
 
+/**
+ * Calculates the fraction of the numerator over the denominator within a range.
+ * @param {number} numerator - The numerator.
+ * @param {number} denominator - The denominator.
+ * @param {number} [range=1] - The range.
+ * @returns {number} The calculated fraction.
+ */
 export function getFraction(numerator, denominator, range = 1) {
 	return numerator / (denominator / range);
 }
 
+/**
+ * Moves the color cursor to the specified position and sets its background color.
+ * @param {number} offsetX - The X offset.
+ * @param {number} offsetY - The Y offset.
+ * @param {string} userColor - The selected color.
+ * @returns {void}
+ */
 export function moveColorCursor(offsetX, offsetY, userColor) {
 	const colorCursor = $("#color-cursor");
 	colorCursor.classList.remove("d-none");
@@ -324,6 +340,11 @@ export function moveColorCursor(offsetX, offsetY, userColor) {
 	colorCursor.style.backgroundColor = userColor;
 }
 
+/**
+ * Adds the selected color to the accept button.
+ * @param {string} userColor - The selected color.
+ * @returns {void}
+ */
 export function addAcceptColor(userColor) {
 	$("#accept-user-color").classList.add("active");
 	$("label").classList.remove("border");
@@ -331,6 +352,12 @@ export function addAcceptColor(userColor) {
 	$("#accept-user-color").onclick = (event) => colorPicker(event, userColor);
 }
 
+/**
+ * Sets the selected color to the user image container and updates the user data.
+ * @param {Event} event - The event object.
+ * @param {string} userColor - The selected color.
+ * @returns {void}
+ */
 function colorPicker(event, userColor) {
 	event.stopPropagation();
 	$$(".user-img-container.account").for((button) =>
@@ -343,6 +370,11 @@ function colorPicker(event, userColor) {
 	toggleColorPicker();
 }
 
+/**
+ * Converts a color string to RGB format.
+ * @param {string} colorString - The color string.
+ * @returns {string} The RGB color.
+ */
 export function getRGBfromString(colorString) {
 	if (!(typeof colorString == "string")) return colorString;
 	const a = document.createElement("div");
@@ -353,6 +385,11 @@ export function getRGBfromString(colorString) {
 	return rgb;
 }
 
+/**
+ * Extracts RGBA values from a color string.
+ * @param {string} color - The color string.
+ * @returns {{r: number, g: number, b: number, a: number}} The RGBA values.
+ */
 export function getRGBA(color) {
 	if (!color.includes("rgb")) {
 		const rgb = getRGBfromString(color);
@@ -367,6 +404,13 @@ export function getRGBA(color) {
 	return { r, g, b, a };
 }
 
+/**
+ * Calculates a range between two values based on a factor.
+ * @param {number} min - The minimum value.
+ * @param {number} max - The maximum value.
+ * @param {number} factor - The factor.
+ * @returns {number} The calculated range.
+ */
 export function getRange(min, max, factor) {
 	return min + (factor * max - factor * min);
 }
@@ -382,7 +426,9 @@ export function isLetterOrNumber(input) {
 
 /**
  * @param {string} type
- * @param {() => any}
+ * @param {() => any} cb - Callback function
+ * @param {HTMLButtonElement} confirmBtn - The button to confirm the action
+ * @returns {Promise<void>}
  */
 export async function confirmation(type, cb, confirmBtn) {
 	const dataLang = type.includes(",") ? type.slice(0, type.indexOf(",")) : type;
@@ -451,6 +497,10 @@ export async function hashInputValue(inputValue) {
 	return hashHex;
 }
 
+/**
+ * Renders user data into elements with the 'data-user-data' attribute
+ * @returns {void}
+ */
 export function renderUserData() {
 	const { name, img, color } = STORAGE.currentUser;
 	(this ?? document.documentElement).$$("[data-user-data]").forEach((userField) => {
@@ -470,6 +520,10 @@ export function renderUserData() {
 	});
 }
 
+/**
+ * Gets the current user ID from the URL search params
+ * @returns {string | undefined} The current user ID
+ */
 export function currentUserId() {
 	return searchParams().get("uid") == null ? undefined : `${searchParams().get("uid")}`;
 }
@@ -483,6 +537,10 @@ export const mutationObserverOptions = {
 	subTree: true
 };
 
+/**
+ * Resets the menus
+ * @returns {void}
+ */
 export const resetMenus = function () {
 	menuOptionInitator.disconnect();
 	this.$$('[type = "menu"]').for((menu) =>
@@ -491,6 +549,12 @@ export const resetMenus = function () {
 };
 
 let inactivityTimer;
+
+/**
+ * Adds an inactivity timer that logs the user out after a specified time
+ * @param {number} [minutes=5] - The inactivity time in minutes
+ * @returns {void}
+ */
 export function addInactivityTimer(minutes = 5) {
 	return (inactivityTimer = setTimeout(
 		() => goTo("init/login/login", { search: "?expired" }),
@@ -498,6 +562,10 @@ export function addInactivityTimer(minutes = 5) {
 	));
 }
 
+/**
+ * Initializes the inactivity detection
+ * @returns {void}
+ */
 export const initInactivity = () => {
 	window.addEventListener("visibilitychange", () => {
 		if (document.visibilityState == "hidden") return addInactivityTimer();
@@ -505,30 +573,60 @@ export const initInactivity = () => {
 	});
 };
 
+/**
+ * Renders the user's name into the specified field
+ * @param {HTMLElement} userField - The HTML element to render the name into
+ * @param {string} name - The user's name
+ * @returns {void}
+ */
 export const renderName = (userField, name) => {
 	userField.innerText = name;
 };
 
+/**
+ * Renders the user's image into the specified field
+ * @param {HTMLElement} userField - The HTML element to render the image into
+ * @param {string} img - The URL of the user's image
+ * @returns {void}
+ */
 export const renderImage = (userField, img) => {
 	userField.src = img;
 };
 
+/**
+ * Renders the user's initials into the specified field
+ * @param {HTMLElement} userField - The HTML element to render the initials into
+ * @param {string} name - The user's name
+ * @returns {void}
+ */
 export const renderInitials = (userField, name) => {
 	userField.innerText = getInitialsOfName(name);
 };
 
+/**
+ * Renders the user's color into the specified field
+ * @param {HTMLElement} userField - The HTML element to render the color into
+ * @param {string} color - The user's color
+ * @returns {void}
+ */
 export const renderColor = (userField, color) => {
 	userField.style.setProperty("--user-clr", color);
 };
 
+/**
+ * Deep clones the input object
+ * @param {any} input - The input object to clone
+ * @returns {any} The cloned object
+ */
 export function cloneDeep(input) {
 	return JSON.parse(JSON.stringify(input));
 }
 
 /**
- * parses the specified directory and reloads the current page to it
- * @param {string} directory
- * @param {any} options
+ * Parses the specified directory and reloads the current page to it
+ * @param {string} directory - The directory to navigate to
+ * @param {Object} [options] - Options for navigation
+ * @returns {void}
  */
 export const goTo = (directory, options) => {
 	const url = `${window.location.origin}/Join/${directory}.html${
@@ -537,6 +635,13 @@ export const goTo = (directory, options) => {
 	window.location.href = url;
 };
 
+/**
+ * Compares two objects for equality up to a specified depth
+ * @param {Object} obj1 - The first object
+ * @param {Object} obj2 - The second object
+ * @param {number} [depth=Infinity] - The depth of comparison
+ * @returns {boolean} True if the objects are equal, false otherwise
+ */
 export function isEqual(obj1, obj2, depth = Infinity) {
 	if (obj1 === obj2) return true;
 	if (typeof obj1 !== "object" || obj1 === null || typeof obj2 !== "object" || obj2 === null)
@@ -553,36 +658,34 @@ export function isEqual(obj1, obj2, depth = Infinity) {
 }
 
 /**
- * returns the initials of a name capitalized
- * @param {string} name
- * @returns {string} Initials
+ * Returns the initials of a name capitalized
+ * @param {string} name - The name to get initials from
+ * @returns {string} The initials of the name
  */
 export function getInitialsOfName(name) {
 	return name.slice(0, 2).toUpperCase();
 }
 
 /**
- * Converts HSL color to HEX color.
- * @param {number} h - Hue (0-360)
- * @param {number} s - Saturation (0-100)
- * @param {number} l - Lightness (0-100)
- * @returns {string | undefined} - HEX color code
+ * Converts HSL color to HEX color
+ * @param {string} hslString - The HSL color string
+ * @returns {string | undefined} The HEX color code
  */
 export function HSLToHex(hslString) {
-	if(!/^hsl\(/.test(hslString)) return;
+	if (!/^hsl\(/.test(hslString)) return;
 	let [h, s, l] = hslString.match(/\d+/g).map((digit) => Number(digit));
-    s /= 100;
-    l /= 100;
+	s /= 100;
+	l /= 100;
 
-    const k = n => (n + h / 30) % 12;
-    const a = s * Math.min(l, 1 - l);
-    const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+	const k = (n) => (n + h / 30) % 12;
+	const a = s * Math.min(l, 1 - l);
+	const f = (n) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
 
-    const r = Math.round(f(0) * 255);
-    const g = Math.round(f(8) * 255);
-    const b = Math.round(f(4) * 255);
+	const r = Math.round(f(0) * 255);
+	const g = Math.round(f(8) * 255);
+	const b = Math.round(f(4) * 255);
 
-    return'#' + [r, g, b].map(x => {
+	return '#' + [r, g, b].map((x) => {
 		const hex = x.toString(16);
 		return hex.length === 1 ? '0' + hex : hex;
 	}).join('');

@@ -423,9 +423,11 @@ h4 {
     width: 30px;
 }
 
-* {
-    scrollbar-width: thin;
-    scrollbar-color: var(--clr-placeholder) var(--clr-white);
+@supports(-moz-animation: none) {
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--clr-placeholder) var(--clr-white);
+    }
 }
 
 ::-webkit-scrollbar-thumb {

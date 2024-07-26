@@ -5,51 +5,35 @@ import { Task } from "./task.class.js";
 import { cloneDeep, currentUserId, error } from "./utilities.js";
 
 /**
- * @typedef {Object<string, string>} Categories
- * @property {string} name
- * @property {string} color
+ * @typedef {Object} BoardParams
+	 * @property {string} name - The name of the board.
+	 * @property {string} [owner=currentUserId()] - The owner of the board.
+	 * @property {string} [id=Date.now().toString()] - The ID of the board.
+	 * @property {Array<string>} [collaborators=[]] - The collaborators of the board.
+	 * @property {number} [dateOfCreation=Date.now()] - The date of creation.
+	 * @property {number} [dateOfLastEdit=Date.now()] - The date of last edit.
+	 * @property {...Object<string, Task>} [tasks={}] - The tasks associated with the board.
+	 * @property {...Object<string, string>} [categories={}] - The categories of the board.
  */
 
 /**
  * Class representing a Board.
  * @extends BaseClass
+ * @implements {BoardParams}
  */
 export class Board extends BaseClass {
-	/** @type {string} */
 	name;
-
-	/** @type {string} */
 	owner;
-
-	/** @type {string} */
 	id;
-
-	/** @type {Array<string>} */
 	collaborators;
-
-	/** @type {number} */
 	dateOfCreation;
-
-	/** @type {number} */
 	dateOfLastEdit;
-
-	/** @type {Object<string, Task>} */
 	tasks;
-
-	/** @type {Categories} */
 	categories;
 
 	/**
 	 * Creates an instance of Board.
-	 * @param {Object} params - The parameters for the Board.
-	 * @param {string} params.name - The name of the board.
-	 * @param {string} [params.owner=currentUserId()] - The owner of the board.
-	 * @param {string} [params.id=Date.now().toString()] - The ID of the board.
-	 * @param {Array<string>} [params.collaborators=[]] - The collaborators of the board.
-	 * @param {number} [params.dateOfCreation=Date.now()] - The date of creation.
-	 * @param {number} [params.dateOfLastEdit=Date.now()] - The date of last edit.
-	 * @param {Object<string, Task>} [params.tasks={}] - The tasks associated with the board.
-	 * @param {Categories} [params.categories={}] - The categories of the board.
+	 * @param {BoardParams} boardParams - The parameters for the Board.
 	 */
 	constructor({
 		name,
@@ -74,7 +58,7 @@ export class Board extends BaseClass {
 
 	/**
 	 * Adds a new task to the board and updates it.
-	 * @param {Object} taskData - The data of the task to be added.
+	 * @param {import("./task.class.js").TaskParams} taskData - The data of the task to be added.
 	 * @returns {Promise<Task>} The newly added task.
 	 */
 	async addTask(taskData) {

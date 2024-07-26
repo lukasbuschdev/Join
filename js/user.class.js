@@ -6,14 +6,21 @@ import { LOCAL_setData, STORAGE } from "./storage.js";
 import { Notify } from "./notify.class.js";
 import { Account } from "./account.class.js";
 
+/**
+ * @typedef {Object} UserParams
+ * @property {string} password
+ */
+
+/**
+ * @implements {UserParams}
+ */
 export class User extends Account {
 	socket;
-	/** @type {string} */
 	password;
 
 	/**
 	 * Creates an instance of User.
-	 * @param {Object} userData - The data for the user.
+	 * @param {import("./account.class.js").AccountParams & UserParams} userData - The data for the user.
 	 */
 	constructor(userData) {
 		super(userData);

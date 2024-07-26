@@ -40,7 +40,8 @@ export function fullscreenFunctionality() {
 export function fullscreenHandler() {
 	const [boardId, taskId] = TASK_ELEMENT.dataset.id.split("/");
 	STATE.selectedTask = STATE.selectedBoard.getTask(taskId);
-	renderFullscreenTask();
+	console.log(STATE.selectedTask.assignedTo);
+	renderFullscreenTask(STATE.selectedTask);
 }
 
 /**
@@ -55,11 +56,14 @@ export function dragFunctionality() {
 	const placeholderElement = '<div class="element-placeholder"></div>';
 	TASK_ELEMENT.insertAdjacentHTML("beforebegin", placeholderElement);
 
-	window.addEventListener("pointerup", () => {
+	window.addEventListener(
+		"pointerup",
+		() => {
 			stopScroll();
 			window.removeEventListener("pointermove", dragHandler);
 			dropHandler();
-		}, { once: true }
+		},
+		{ once: true }
 	);
 	TASK_ELEMENT.classList.add("active");
 }
@@ -116,7 +120,8 @@ export function checkScrollHard(taskContainer) {
 	const taskContainerBBox = taskContainer.getBoundingClientRect();
 	const yOffset = 50;
 
-	const canScrollDown = taskContainer.scrollTop < taskContainer.scrollHeight - taskContainer.clientHeight - 1;
+	const canScrollDown =
+		taskContainer.scrollTop < taskContainer.scrollHeight - taskContainer.clientHeight - 1;
 	const canScrollUp = taskContainer.scrollTop > 0;
 	const shouldScrollDown = taskBBox.bottom > taskContainerBBox.bottom + yOffset;
 	const shouldScrollUp = taskBBox.y < taskContainerBBox.y - yOffset;
@@ -191,7 +196,11 @@ export function taskDropAnimation() {
 
 	setTimeout(() => {
 		TASK_ELEMENT.classList.add("drop-transition");
-		TASK_ELEMENT.addEventListener("transitionend", () => TASK_ELEMENT.classList.remove("drop-transition"), { once: true });
+		TASK_ELEMENT.addEventListener(
+			"transitionend",
+			() => TASK_ELEMENT.classList.remove("drop-transition"),
+			{ once: true }
+		);
 		TASK_ELEMENT.style.translate = "0 0";
 	}, 0);
 }
@@ -226,4 +235,3 @@ export async function changeTaskType(board, task, newType) {
 	task.type = newType;
 	return board.update();
 }
-

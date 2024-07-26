@@ -1,16 +1,6 @@
 import { BaseClass } from "./base.class.js";
 
 /**
- * @typedef {Object} Notification
- * @property {Array<string>} recipients
- * @property {string} boardName
- * @property {string} boardId
- * @property {string} id
- * @property {string} ownerName
- * @property {"boardInvite"|"assignTo"} type
- */
-
-/**
  * @typedef {Object} AccountParams
     * @property {string} [id=Date.now().toString()]
     * @property {string} name
@@ -22,10 +12,11 @@ import { BaseClass } from "./base.class.js";
     * @property {Array<string>} [contacts=[]]  
     * @property {Array<string>} [pendingFriendshipRequests=[]]  
     * @property {string} [phone="N/A"]  
-    * @property {Object<string, Notification>} [notifications={}]  
+    * @property {...Object<string, import("./notify.class.js").Notification>} [notifications={}]  
  */
 
 /**
+ * @extends {BaseClass}
  * @implements {AccountParams}
  */
 export class Account extends BaseClass {
@@ -39,6 +30,7 @@ export class Account extends BaseClass {
     contacts = [];
     phone = 'N/A';
     notifications = {};
+    pendingFriendshipRequests = [];
     
 /**
  * 

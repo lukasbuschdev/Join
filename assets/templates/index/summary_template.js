@@ -1,3 +1,12 @@
+import { STATE } from "../../../js/state.js";
+import { User } from "../../../js/user.class.js";
+import { getInitialsOfName } from "../../../js/utilities.js";
+
+/**
+ * 
+ * @param {Object<string, number>} param0 
+ * @returns {string}
+ */
 export function summaryTemplate({
   tasksInBoard,
   tasksInProgress,
@@ -44,7 +53,7 @@ export function summaryTemplate({
                 </button>
             </div>
             <div class="row gap-30">
-                <button class="summary-btn flex-center gap-20" onclick="document.querySelector('nav #board').click()">
+                <button class="summary-btn flex-center gap-20" onclick="$('nav #board').click()">
                     <div class="circle grid-center" style="--diameter: 70px;background-color:var(--clr-dark);">
                         <img src="/Join/assets/img/icons/edit_dark.svg" alt="">
                     </div>
@@ -53,7 +62,7 @@ export function summaryTemplate({
                         <span data-lang="to-do">To-do</span>
                     </div>
                 </button>
-                <button class="summary-btn flex-center gap-20" onclick="document.querySelector('nav #board').click()">
+                <button class="summary-btn flex-center gap-20" onclick="$('nav #board').click()">
                     <div class="circle grid-center" style="--diameter: 70px;background-color:var(--clr-dark);">
                         <img src="/Join/assets/img/icons/check_dark.svg" alt="">
                     </div>
@@ -67,6 +76,10 @@ export function summaryTemplate({
 `;
 }
 
+/**
+ * @param {string} boardId 
+ * @returns {string}
+ */
 export function boardEditButtonTemplate(boardId) {
 	return /*html*/ `
         <button class="circle grid-center edit-btn" onclick="initEditBoard(${boardId})">
@@ -75,6 +88,10 @@ export function boardEditButtonTemplate(boardId) {
     `;
 }
 
+/**
+ * @param {User} contact 
+ * @returns 
+ */
 export function contactDropdownTemplate({ name, color, id, img }) {
 	return /*html*/ `
         <div class="contact row gap-15 drp-option ${
@@ -88,6 +105,11 @@ export function contactDropdownTemplate({ name, color, id, img }) {
         </div>
     `;
 }
+
+/**
+ * @param {User} collaborator 
+ * @returns {string}
+ */
 export function newBoardCollaboratorTemplate({ img, name, color, id }) {
 	return /*html*/ `
     <button class="collaborator ${

@@ -11,9 +11,22 @@ bindInlineFunctions(getContext(), [
 	"/Join/index/summary/summary.js"
 ]);
 import { STORAGE } from "../../js/storage.js";
-import { $, confirmation, debounce, notification, currentUserId, isEqual, cloneDeep, $$ } from "../../js/utilities.js";
+import {
+	$,
+	confirmation,
+	debounce,
+	notification,
+	currentUserId,
+	isEqual,
+	cloneDeep,
+	$$
+} from "../../js/utilities.js";
 import { renderBoardTitleSelection } from "../summary/summary.js";
-import { assignedToTemplate, progressTemplate, taskTemplate } from "../../assets/templates/index/task_template.js";
+import {
+	assignedToTemplate,
+	progressTemplate,
+	taskTemplate
+} from "../../assets/templates/index/task_template.js";
 import { fullscreenTaskTemplate } from "../../assets/templates/index/fullscreen-task_template.js";
 import { editTaskTemplate } from "../../assets/templates/index/edit-task_template.js";
 import { renderBoardIds, renderDate, selectedCollaborators } from "../add_task/add_task.js";
@@ -67,21 +80,23 @@ async function renderTasks(filter) {
 
 /**
  * sets up task parameters and returns a template to be rendered.
- * @param {Task} task 
- * @param {string} filter 
+ * @param {Task} task
+ * @param {string} filter
  * @returns {string} the task template
  */
 export function getTaskTemplate(task, filter) {
 	const assignedAccounts = task.assignedTo.reduce((total, assignedToId) => {
-        const { name, color } = assignedToId === STORAGE.currentUser.id
-            ? STORAGE.currentUser
-            : STORAGE.allUsers[assignedToId]
-        return [ ...total, { name, color } ]
+		const { name, color } =
+			assignedToId === STORAGE.currentUser.id
+				? STORAGE.currentUser
+				: STORAGE.allUsers[assignedToId];
+		return [...total, { name, color }];
 	}, []);
-	const categoryString = Object.keys(STORAGE.currentUserBoards[task.boardId].categories).find((cat) => cat === task.category);
-    return taskTemplate(task, assignedAccounts, categoryString, filter)
-};
-
+	const categoryString = Object.keys(STORAGE.currentUserBoards[task.boardId].categories).find(
+		(cat) => cat === task.category
+	);
+	return taskTemplate(task, assignedAccounts, categoryString, filter);
+}
 
 /**
  * Searches tasks based on the input value and renders the filtered tasks.
@@ -122,8 +137,7 @@ export async function addTaskModal() {
 /**
  * Renders the fullscreen task modal with the selected task's data.
  */
-export function renderFullscreenTask() {
-	const task = STATE.selectedTask;
+export function renderFullscreenTask(task) {
 	if (event && event.which !== 1) return;
 	const modal = $("#fullscreen-task-modal");
 	const initialTask = cloneDeep(task);
@@ -155,10 +169,13 @@ export function saveEditedTask() {
 		})
 	};
 	Object.assign(STATE.selectedTask, editedTaskData);
-	Object.assign(STORAGE.data.boards[STATE.selectedBoard.id].tasks[STATE.selectedTask.id], editedTaskData)
+	Object.assign(
+		STORAGE.data.boards[STATE.selectedBoard.id].tasks[STATE.selectedTask.id],
+		editedTaskData
+	);
 	modal.closeModal();
 	toggleFullscreenState();
-	modal.$("#fullscreen-task").innerHTML = fullscreenTaskTemplate(STATE.selectedTask);
+	// modal.$("#fullscreen-task").innerHTML = fullscreenTaskTemplate(STATE.selectedTask);
 }
 
 /**
@@ -237,22 +254,41 @@ export async function changeSubtaskDoneState(subTaskName) {
  * @param {Object} differences - An object containing the differences.
  * @param {Task} initialTask - The initial state of the task.
  */
-function updateTaskUi({ title = null, description = null, priority = null, assignedTo = null, subTasks = null }, initialTask) {
+function updateTaskUi(
+	{ title = null, description = null, priority = null, assignedTo = null, subTasks = null },
+	initialTask
+) {
 	const taskContainer = $(`[data-id="${STATE.selectedTask.boardId}/${STATE.selectedTask.id}"]`);
 
 	if (title) taskContainer.$(".task-title").textAnimation(title);
 	if (description) taskContainer.$(".task-description").textAnimation(description);
-	if (priority) taskContainer.$(".task-priority").style.setProperty("--priority", `url(/Join/assets/img/icons/prio_${priority}.svg)`);
-	if (assignedTo) taskContainer.$(".task-assigned-to").innerHTML = assignedToTemplate(assignedTo.map((id) => STORAGE.allUsers[id]));
+	if (priority)
+		taskContainer
+			.$(".task-priority")
+			.style.setProperty("--priority", `url(/Join/assets/img/icons/prio_${priority}.svg)`);
+	if (assignedTo)
+		taskContainer.$(".task-assigned-to").innerHTML = assignedToTemplate(
+			assignedTo.map((id) => STORAGE.allUsers[id])
+		);
 	if (!subTasks) return;
 
-	if (!STATE.selectedTask.subTasks.length) return taskContainer.$(".task-description").nextElementSibling.remove();
-	if (!initialTask.subTasks.length) taskContainer.$(".task-description").insertAdjacentHTML("afterend", progressTemplate(STATE.selectedTask.subTasks));
+	if (!STATE.selectedTask.subTasks.length)
+		return taskContainer.$(".task-description").nextElementSibling.remove();
+	if (!initialTask.subTasks.length)
+		taskContainer
+			.$(".task-description")
+			.insertAdjacentHTML("afterend", progressTemplate(STATE.selectedTask.subTasks));
 
-	const currentSubtaskCount = STATE.selectedTask.subTasks.filter(({ done }) => done == true).length;
+	const currentSubtaskCount = STATE.selectedTask.subTasks.filter(
+		({ done }) => done == true
+	).length;
 	const totalSubtaskCount = STATE.selectedTask.subTasks.length;
-	taskContainer.$(".task-progress-counter span").innerText = `${currentSubtaskCount} / ${totalSubtaskCount}`;
-	taskContainer.$(".task-progress-bar").style.setProperty("--progress", `${currentSubtaskCount / totalSubtaskCount}`);
+	taskContainer.$(
+		".task-progress-counter span"
+	).innerText = `${currentSubtaskCount} / ${totalSubtaskCount}`;
+	taskContainer
+		.$(".task-progress-bar")
+		.style.setProperty("--progress", `${currentSubtaskCount / totalSubtaskCount}`);
 }
 
 /**
@@ -299,4 +335,3 @@ export function toggleFullscreenState() {
 		fullscreenModal.getAttribute("static") == "true" ? "false" : "true"
 	);
 }
-

@@ -11,21 +11,21 @@ import { cloneDeep } from "./utilities.js";
  */
 
 /**
- * @typedef {Object} TaskOptions
+ * @typedef {Object} TaskParams
  * 	 * @property {string} [id=Date.now().toString()] - The ID of the task.
-	 * @property {TaskType} [type="to-do"] - The type of the task.
-	 * @property {string} title - The title of the task.
-	 * @property {string} description - The description of the task.
-	 * @property {string} [category="default"] - The category of the task.
-	 * @property {Array<string>} [assignedTo=[]] - The users assigned to the task.
-	 * @property {string} dueDate - The due date of the task.
-	 * @property {TaskPriority} priority - The priority of the task.
-	 * @property {Array<{name: string, done: boolean}>} [subTasks=[]] - The subtasks of the task.
-	 * @property {string} boardId - The ID of the board the task belongs to.
+ * @property {TaskType} [type="to-do"] - The type of the task.
+ * @property {string} title - The title of the task.
+ * @property {string} description - The description of the task.
+ * @property {string} [category="default"] - The category of the task.
+ * @property {Array<string>} [assignedTo=[]] - The users assigned to the task.
+ * @property {string} dueDate - The due date of the task.
+ * @property {TaskPriority} priority - The priority of the task.
+ * @property {Array<{name: string, done: boolean}>} [subTasks=[]] - The subtasks of the task.
+ * @property {string} boardId - The ID of the board the task belongs to.
  */
 
 /**
- * @implements {TaskOptions}
+ * @implements {TaskParams}
  */
 export class Task extends BaseClass {
 	id;
@@ -41,7 +41,7 @@ export class Task extends BaseClass {
 
 	/**
 	 * Creates an instance of Task.
-	 * @param {TaskOptions} params - The parameters for the task.
+	 * @param {TaskParams} params - The parameters for the task.
 	 */
 	constructor({
 		id = Date.now().toString(),
@@ -121,6 +121,7 @@ export class Task extends BaseClass {
 	async update() {
 		const url = `boards/${this.boardId}/tasks/${this.id}`;
 		const newTask = await STORAGE.set(url, cloneDeep(this));
+		Object.assign(STORAGE.data.boards[this.boardId].tasks[this.id], newTask);
 		Object.assign(this, newTask);
 	}
 }
