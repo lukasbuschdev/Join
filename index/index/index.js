@@ -150,3 +150,13 @@ export function initLogout() {
 export function changeLanguage(targetLanguage) {
 	LANG.change(targetLanguage);
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    function setBodyHeight() {
+        document.body.style.height = `${window.innerHeight}px`;
+    }
+
+    setBodyHeight();
+
+    window.addEventListener('resize', setBodyHeight);
+});
