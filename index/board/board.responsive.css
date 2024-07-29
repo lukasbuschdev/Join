@@ -1,82 +1,71 @@
-@media(max-width: 1200px) {
-    #tasks {
-        --rows: 3;
-    }
+@media (max-width: 1200px) {
+	#tasks {
+		--rows: 2;
+	}
 
-    #board-header button span {
-        font-size: 0;
-        height: 18px;
-        gap: 0;
-    }
+	#board-header button span {
+		font-size: 0;
+		height: 18px;
+		gap: 0;
+	}
 }
 
-
-
-@media(max-width: 1000px) {
-    #board-wrapper {
-        padding: 2vh 1rem 0;
-    }
-    #tasks {
-        --rows: 2;
-    }
-    #board-header {
-        position: relative;
-        flex-wrap: wrap;
-    }
-    #board-title-selection {
-        flex-shrink: 0;
-    }
-    #search-task {
-        max-width: 100%;
-    }
-    #board-header > button {
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-    #board-header input {
-        width: 100%;
-    }
+@media (max-width: 1000px) {
+	#board-wrapper {
+		padding: 2vh 1rem 0;
+	}
+	#board-header {
+		position: relative;
+		flex-wrap: wrap;
+	}
+	#board-title-selection {
+		flex-shrink: 0;
+	}
+	#search-task {
+		max-width: 100%;
+	}
+	#board-header > button {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+	#board-header input {
+		width: 100%;
+	}
 }
 
-
-
-@media(max-width: 800px) {
-    #board-wrapper {
-        height: calc(100dvh - 165px);
-    }
-    #board-header {
-        padding: unset;
-    }
-    #search-task {
-        flex-grow: 1;
-    }
+@media (max-width: 800px) {
+	#board-wrapper {
+		height: calc(100dvh - 165px);
+	}
+	#board-header {
+		padding: unset;
+	}
+	#search-task {
+		flex-grow: 1;
+	}
 }
 
-
-
-@media(max-width: 600px) {
-    #tasks {
-        --rows: 1;
-    }
-    #board-header {
-        gap: 30px;
-    }
-    #board-wrapper {
-        gap: 10px;
-        padding: 2vh 1rem 0;
-    }
+@media (max-width: 600px) {
+	#tasks {
+		--rows: 1;
+	}
+	#board-header {
+		gap: 30px;
+	}
+	#board-wrapper {
+		gap: 10px;
+		padding: 2vh 1rem 0;
+	}
 }
 
+@media (max-width: 500px) {
+	#fullscreen-task-modal :is(#fullscreen-task, #edit-task) {
+		min-width: 0;
+	}
 
-
-@media(max-width: 500px) {
-    #fullscreen-task-modal :is(#fullscreen-task, #edit-task) {
-        min-width: 0;
-    }
-
-    #fullscreen-task-modal .btn-container {
-        margin-left: auto;
-        width: 100%;
-    }
+	#fullscreen-task-modal .btn-container {
+		margin-left: auto;
+		width: 100%;
+	}
 }
