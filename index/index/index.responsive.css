@@ -42,10 +42,6 @@
         font-size: 1rem;
     }
 
-    #account-panel-content {
-        min-width: none;
-    }
-
     #board-title-selection {
         margin-right: 100%;
     }
@@ -149,7 +145,7 @@
 
     #account-panel-content {
         width: 100%;
-        min-width: 100%;
+        min-width: 90vw;
     }
 
     #account-panel-options {
