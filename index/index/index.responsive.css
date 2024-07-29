@@ -108,6 +108,7 @@
     .summary-header {
         flex-direction: column;
         align-items: unset;
+        padding-left: 25px;
     }
 
     #notifications-container h1 {
