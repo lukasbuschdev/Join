@@ -40,7 +40,6 @@ export function fullscreenFunctionality() {
 export function fullscreenHandler() {
 	const [boardId, taskId] = TASK_ELEMENT.dataset.id.split("/");
 	STATE.selectedTask = STATE.selectedBoard.getTask(taskId);
-	console.log(STATE.selectedTask.assignedTo);
 	renderFullscreenTask(STATE.selectedTask);
 }
 

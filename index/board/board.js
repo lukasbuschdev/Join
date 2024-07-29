@@ -153,11 +153,13 @@ export function renderFullscreenTask(task) {
 export function saveEditedTask() {
 	const modal = $("#fullscreen-task-modal");
 	const editedTaskData = {
-		title: $("#fullscreen-task-modal #title").value,
-		description: $("#fullscreen-task-modal #description").value,
-		dueDate: $("#fullscreen-task-modal #date").value,
-		priority: $("#fullscreen-task-modal .prio-btn.active span").dataset.lang,
-		assignedTo: selectedCollaborators,
+		title: modal.$("#title").value,
+		description: modal.$("#description").value,
+		dueDate: modal.$("#date").value,
+		priority: modal.$(".prio-btn.active span").dataset.lang,
+		assignedTo: [...modal.$$("#drp-wrapper-collaborator .drp-option.active")].map(
+			({ dataset }) => dataset.id
+		),
 		subTasks: [...$$("#edit-task #subtask-container li")].map(({ innerText: name }) => {
 			return {
 				name,
@@ -175,7 +177,6 @@ export function saveEditedTask() {
 	);
 	modal.closeModal();
 	toggleFullscreenState();
-	// modal.$("#fullscreen-task").innerHTML = fullscreenTaskTemplate(STATE.selectedTask);
 }
 
 /**
@@ -296,11 +297,11 @@ function updateTaskUi(
  */
 export function editTaskInitializer() {
 	const task = STATE.selectedTask;
+	selectedCollaborators.length = 0;
+	selectedCollaborators.push(...task.assignedTo);
 	const editTaskContainer = $("#edit-task");
 	editTaskContainer.innerHTML = editTaskTemplate(task);
 	editTaskContainer.LANG_load();
-	selectedCollaborators.length = 0;
-	selectedCollaborators.push(...task.assignedTo);
 	renderAssignedContacts(task);
 	editTaskContainer.initMenus();
 

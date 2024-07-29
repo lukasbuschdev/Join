@@ -3,16 +3,9 @@ import { STATE } from "../../../js/state.js";
 import { renderSubtaskTemplate } from "./add_task_templates.js";
 import { getInitialsOfName } from "../../../js/utilities.js";
 import { LANG } from "../../../js/language.js";
-import { subtasks } from "../../../index/add_task/add_task.js";
+import { selectedCollaborators, subtasks } from "../../../index/add_task/add_task.js";
 
-export const editTaskTemplate = ({
-	title,
-	description,
-	priority,
-	dueDate,
-	assignedTo,
-	subTasks
-}) => {
+export const editTaskTemplate = ({ title, description, priority, dueDate, subTasks }) => {
 	subtasks.length = 0;
 	subtasks.push(...subTasks.map(({ name }) => name));
 	return /*html*/ `
@@ -71,7 +64,7 @@ export const editTaskTemplate = ({
                 <div id="selected-collaborator-input" data-lang="select-collaborators" class="drp-title" onclick="this.toggleDropDown()"></div>
                 <div class="drp-option-wrapper" id="drp-collaborators">
                     <div class="drp-contacts" id="drp-collab-container">
-                        ${editTaskAssignedTo(assignedTo)}
+                        ${editTaskAssignedTo()}
                     </div>
                 </div>
             </div>
@@ -115,16 +108,16 @@ export const editTaskTemplate = ({
     `;
 };
 
-export function editTaskAssignedTo(assignedTo) {
+export function editTaskAssignedTo() {
 	return STATE.selectedBoard.collaborators.reduce(
-		(template, id) => `${template}${collaboratorTemplate(id, assignedTo)}`,
+		(template, id) => `${template}${collaboratorTemplate(id)}`,
 		``
 	);
 }
 
-export const collaboratorTemplate = (id, assignedTo) => {
+export const collaboratorTemplate = (id) => {
 	const { name, img, color } = STORAGE.allUsers[id];
-	const collaboratorIsAssigned = assignedTo.includes(id);
+	const collaboratorIsAssigned = selectedCollaborators.includes(id);
 	console.log(collaboratorIsAssigned);
 	return /*html*/ `
     <div data-id="${id}" class="drp-option ${

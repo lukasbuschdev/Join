@@ -4,26 +4,10 @@ import { STORAGE } from "../../../js/storage.js";
 import { $, getInitialsOfName } from "../../../js/utilities.js";
 
 export function categoryTemplate([name, color]) {
-    return /*html*/ `
+	return /*html*/ `
         <div class="drp-option row" id="category" data-color="${color}" onclick="this.toggleActive(), renderSelectedCategory('${name}')">
             <span>${name}</span>
             <div class="category-color" style="--clr: ${color}"></div>
-        </div>
-    `;
-}
-
-/**
- * Renders the current user as an option to assign themselves to a task.
- * @returns {string} - The HTML string representing the current user option.
- */
-export function renderSelfToAssign() {
-    return /*html*/ `
-        <div class="drp-option" data-id="${STORAGE.currentUser.id}" onclick="selectCollaborator()">
-            <div class="user-img-container grid-center" style="--user-clr: ${STORAGE.currentUser.color}">
-                <span>${STORAGE.currentUser.name.slice(0, 2).toUpperCase()}</span>
-                <img src="${STORAGE.currentUser.img}">
-            </div>
-            <span data-lang="assigned-you"></span>
         </div>
     `;
 }
@@ -34,13 +18,17 @@ export function renderSelfToAssign() {
  * @returns {string} - The HTML string representing the collaborator option.
  */
 export function renderCollaboratorsToAssign(collaborator) {
-    return /*html*/ `
+	const isCurrentUser = collaborator.id === STORAGE.currentUserId();
+	console.log(collaborator);
+	return /*html*/ `
         <div class="drp-option" data-id="${collaborator.id}" onclick="selectCollaborator()">
             <div class="user-img-container grid-center" style="--user-clr: ${collaborator.color}">
                 <span>${getInitialsOfName(collaborator.name)}</span>
                 <img src="${collaborator.img}">
             </div>
-            <span>${collaborator.name}</span>
+            <span ${isCurrentUser ? 'data-lang="assigned-you"' : ""}>${
+		isCurrentUser ? "" : collaborator.name
+	}</span>
         </div>
     `;
 }
@@ -50,18 +38,23 @@ export function renderCollaboratorsToAssign(collaborator) {
  * @param {Array<string>} collaboratorIds
  */
 export function renderCollaboratorInput() {
-    const inputContainerCollaborator = $("#fullscreen-task-modal[open] #selected-collaborator-input") ?? $("#selected-collaborator-input");
-    inputContainerCollaborator.innerHTML = "";
-    if(!selectedCollaborators.length) inputContainerCollaborator.innerHTML = LANG.currentLangData["select-collaborators"];
-    selectedCollaborators.forEach((collaboratorId) => {
-        const users = STORAGE.data.users[collaboratorId];
-        inputContainerCollaborator.innerHTML += /*html*/ `
-          <div class="input-collaborator user-img-container grid-center" style="--user-clr: ${users.color}">
+	const inputContainerCollaborator =
+		$("#fullscreen-task-modal[open] #selected-collaborator-input") ??
+		$("#selected-collaborator-input");
+	inputContainerCollaborator.innerHTML = "";
+	if (!selectedCollaborators.length)
+		inputContainerCollaborator.innerHTML = LANG.currentLangData["select-collaborators"];
+	selectedCollaborators.forEach((collaboratorId) => {
+		const users = STORAGE.data.users[collaboratorId];
+		inputContainerCollaborator.innerHTML += /*html*/ `
+          <div class="input-collaborator user-img-container grid-center" style="--user-clr: ${
+				users.color
+			}">
             <span>${getInitialsOfName(users.name)}</span>
             <img src="${users.img}">
           </div>
         `;
-    });
+	});
 }
 
 /**
@@ -71,7 +64,7 @@ export function renderCollaboratorInput() {
  * @returns {string} - The HTML string representing the subtask template.
  */
 export function renderSubtaskTemplate(subtask, i) {
-    return /*html*/ `
+	return /*html*/ `
         <div class="row single-subtask" id="single-subtask${i}">
             <li>${subtask}</li>
             <div class="row gap-10 subtask-edit-delete-btns" id="subtask-edit-delete-btns${i}">

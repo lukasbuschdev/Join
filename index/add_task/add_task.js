@@ -11,7 +11,12 @@ bindInlineFunctions(getContext(), [
 import { STORAGE } from "../../js/storage.js";
 import { $, currentDirectory, dateFormat, notification } from "../../js/utilities.js";
 import { STATE } from "../../js/state.js";
-import { categoryTemplate, renderCollaboratorInput, renderCollaboratorsToAssign, renderSelfToAssign, renderSubtaskTemplate } from "../../assets/templates/index/add_task_templates.js";
+import {
+	categoryTemplate,
+	renderCollaboratorInput,
+	renderCollaboratorsToAssign,
+	renderSubtaskTemplate
+} from "../../assets/templates/index/add_task_templates.js";
 
 export const subtasks = [];
 export const selectedCollaborators = [];
@@ -79,15 +84,14 @@ export function checkSelectedBoard() {
 export function renderAssignToContacts() {
 	const drpContainer = $("#drp-collab-container");
 	const assignToUser = document.createElement("div");
-	assignToUser.innerHTML = renderSelfToAssign();
 
 	drpContainer.innerHTML = "";
 	assignToUser.LANG_load();
-	drpContainer.append(assignToUser.children[0]);
 
 	STATE.selectedBoard.collaborators.forEach((collaboratorId) => {
+		console.log(collaboratorId);
 		const collaborator = STORAGE.allUsers[collaboratorId];
-		if (!collaborator || collaborator.id === STORAGE.currentUser.id) return;
+		if (!collaborator) return;
 		const collaboratorOption = document.createElement("div");
 		collaboratorOption.innerHTML = renderCollaboratorsToAssign(collaborator);
 		drpContainer.append(collaboratorOption.children[0]);
@@ -103,7 +107,9 @@ export function selectCollaborator() {
 	const collaboratorId = event.currentTarget.dataset.id;
 	const index = selectedCollaborators.indexOf(collaboratorId.toString());
 
-	index === -1 ? selectedCollaborators.push(collaboratorId.toString()) : selectedCollaborators.splice(index, 1);
+	index === -1
+		? selectedCollaborators.push(collaboratorId.toString())
+		: selectedCollaborators.splice(index, 1);
 
 	renderCollaboratorInput();
 }
@@ -216,7 +222,9 @@ export function renderCategories(selectedBoard) {
 	const drpContainer = $("#drp-categories");
 	drpContainer.innerHTML = "";
 
-	Object.entries(selectedBoard.categories).forEach((category) => (drpContainer.innerHTML += categoryTemplate(category)));
+	Object.entries(selectedBoard.categories).forEach(
+		(category) => (drpContainer.innerHTML += categoryTemplate(category))
+	);
 }
 
 /**
@@ -358,8 +366,25 @@ export function checkAddTaskInputs(addTaskData) {
  * Creates a new task and adds it to the selected board.
  * @param {Object} taskData - The task data to add.
  */
-export async function createNewTask({ selectedBoard, title, description, category, selectedCollaborators, dueDate, priority, subTasks }) {
-	const newTask = { title, description, category, assignedTo: selectedCollaborators, dueDate, priority, subTasks };
+export async function createNewTask({
+	selectedBoard,
+	title,
+	description,
+	category,
+	selectedCollaborators,
+	dueDate,
+	priority,
+	subTasks
+}) {
+	const newTask = {
+		title,
+		description,
+		category,
+		assignedTo: selectedCollaborators,
+		dueDate,
+		priority,
+		subTasks
+	};
 	return selectedBoard.addTask(newTask);
 }
 
@@ -469,7 +494,9 @@ export function saveEditedSubtask(i) {
 	subtasks[i] = subtaskInput.innerText;
 	subtaskInput.setAttribute("contenteditable", "false");
 
-	$$(`.save-edited-subtask-btn, .save-edited-subtask-btn${i}, .subtask-edit-btn${i}`).forEach((button) => button.classList.toggle("d-none"));
+	$$(`.save-edited-subtask-btn, .save-edited-subtask-btn${i}, .subtask-edit-btn${i}`).forEach(
+		(button) => button.classList.toggle("d-none")
+	);
 	$("#single-subtask" + i).classList.toggle("edit-btn-active");
 }
 
