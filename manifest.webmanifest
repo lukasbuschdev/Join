@@ -1,0 +1,17 @@
+{
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "fullscreen",
+    "scope": "/Join/",
+    "start_url": "/Join/init/login/login.html?fullscreen=true",
+    "name": "Join",
+    "short_name": "Join",
+    "description": "Kanban Board",
+    "icons": [
+        {
+            "src": "/Join/assets/img/icons/logo.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+}

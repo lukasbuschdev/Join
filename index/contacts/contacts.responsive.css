@@ -276,6 +276,11 @@
         right: 40px;
         transition: all var(--transition-fast);
     }
+
+    .btn-open-add-contact span {
+        font-size: 0;
+        gap: 0 !important;
+    }
 }
 
 

@@ -4,11 +4,10 @@
 
 #summary-wrapper {
     padding: 2vh 4rem;
-    gap: 5%;
+    gap: 20px;
 }
 
 .summary-header {
-    gap: 30px;
     position: relative;
 }
 
@@ -32,7 +31,14 @@
 }
 
 .summary-header h3 {
-    margin: 0 auto;
+    /* margin: 0 auto; */
+    font-size: min(3vmin, 1.5rem);
+}
+
+.summary-header .add-board {
+    position: absolute;
+    right: 0;
+    top: 10%;
 }
 
 #summary-body {

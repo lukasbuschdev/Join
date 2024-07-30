@@ -121,9 +121,14 @@
         --diameter: 30px !important;
     }
 
-    .summary-header > button {
-        right: 0 !important;
-    } 
+    #summary-wrapper {
+        padding: 2vh 5%;
+    }
+
+    .summary-header .add-board span {
+        font-size: 0;
+        gap: 0;
+    }
 }
 
 
@@ -199,7 +204,7 @@
 
 /* HEIGHT */
 
-@media(max-height: 800px) {
+@media(max-height: 850px) {
     #summary-data {
         gap: 5px;
     }
