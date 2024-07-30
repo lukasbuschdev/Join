@@ -46,7 +46,9 @@ export async function toggleActiveBtn(buttons) {
  * @returns {void}
  */
 export function addNavToggleBtns() {
-	$$("nav button").forEach((btn, i, buttons) => btn.addEventListener("click", toggleActiveBtn.bind(btn, buttons)));
+	$$("nav button").forEach((btn, i, buttons) =>
+		btn.addEventListener("click", toggleActiveBtn.bind(btn, buttons))
+	);
 }
 
 /**
@@ -348,7 +350,7 @@ export function moveColorCursor(offsetX, offsetY, userColor) {
 export function addAcceptColor(userColor) {
 	$("#accept-user-color").classList.add("active");
 	$("label").classList.remove("border");
-	
+
 	$("#accept-user-color").onclick = (event) => colorPicker(event, userColor);
 }
 
@@ -673,7 +675,13 @@ export function getInitialsOfName(name) {
  */
 export function HSLToHex(hslString) {
 	if (!/^hsl\(/.test(hslString)) return;
-	let [h, s, l] = hslString.match(/\d+/g).map((digit) => Number(digit));
+	const hslRegExp = /\((?<h>\d+), (?<s>\d+)%, (?<l>\d+)%\)/;
+	const match = hslString.match(hslRegExp);
+	let { h, s, l } = Object.entries(hslString.match(hslRegExp).groups).reduce(
+		(acc, [key, value]) => ({ ...acc, [key]: value }),
+		{}
+	);
+	// console.log(h, s, l);
 	s /= 100;
 	l /= 100;
 
@@ -685,8 +693,13 @@ export function HSLToHex(hslString) {
 	const g = Math.round(f(8) * 255);
 	const b = Math.round(f(4) * 255);
 
-	return '#' + [r, g, b].map((x) => {
-		const hex = x.toString(16);
-		return hex.length === 1 ? '0' + hex : hex;
-	}).join('');
+	return (
+		"#" +
+		[r, g, b]
+			.map((x) => {
+				const hex = x.toString(16);
+				return hex.length === 1 ? "0" + hex : hex;
+			})
+			.join("")
+	);
 }
