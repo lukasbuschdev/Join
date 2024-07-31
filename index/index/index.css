@@ -150,11 +150,15 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
     padding: 10px;
     width: 100%;
     color: black;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     width: calc(100% - 20px);
     transition: var(--transition-fast);
     position: relative;
+}
+
+#account-panel-options button img {
+    margin-left: 20px;
 }
 
 #account-panel-options button.active {
