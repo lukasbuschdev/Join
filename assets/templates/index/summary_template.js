@@ -1,3 +1,4 @@
+import { NEW_BOARD_COLLABORATORS } from "../../../index/summary/summary.js";
 import { STATE } from "../../../js/state.js";
 import { User } from "../../../js/user.class.js";
 import { getInitialsOfName } from "../../../js/utilities.js";
