@@ -676,7 +676,6 @@ export function getInitialsOfName(name) {
 export function HSLToHex(hslString) {
 	if (!/^hsl\(/.test(hslString)) return;
 	const hslRegExp = /\((?<h>\d+), (?<s>\d+)%, (?<l>\d+)%\)/;
-	const match = hslString.match(hslRegExp);
 	let { h, s, l } = Object.entries(hslString.match(hslRegExp).groups).reduce(
 		(acc, [key, value]) => ({ ...acc, [key]: value }),
 		{}
