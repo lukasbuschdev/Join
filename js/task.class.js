@@ -1,6 +1,6 @@
 import { BaseClass } from "./base.class.js";
 import { STORAGE } from "./storage.js";
-import { cloneDeep } from "./utilities.js";
+import { cloneDeep, error } from "./utilities.js";
 
 /**
  * @typedef {"to-do"|"in-progress"|"awaiting-feedback"|"done"} TaskType
@@ -75,7 +75,7 @@ export class Task extends BaseClass {
 	 */
 	changePriority(priority) {
 		if (!(priority == "urgent" || priority == "medium" || priority == "low")) {
-			console.error(`priority '${priority}' does not exist!`);
+			error(`priority '${priority}' does not exist!`);
 		}
 		this.priority = priority;
 		return this.update();

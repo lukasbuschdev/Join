@@ -1,5 +1,5 @@
 import { STORAGE } from "./storage.js";
-import { cloneDeep } from "./utilities.js";
+import { cloneDeep, error } from "./utilities.js";
 
 /**
  * @typedef {Object} Notification
