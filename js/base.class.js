@@ -1,5 +1,4 @@
 import { STORAGE } from "./storage.js";
-import { error } from "./utilities.js";
 
 /**
  * Base class providing basic functionality for setting and getting properties, and updating storage.

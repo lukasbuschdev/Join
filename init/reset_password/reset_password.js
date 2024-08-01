@@ -1,6 +1,13 @@
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 import { STORAGE } from "../../js/storage.js";
-import { $, goTo, hashInputValue, notification, throwErrors } from "../../js/utilities.js";
+import {
+	$,
+	currentUserId,
+	goTo,
+	hashInputValue,
+	notification,
+	throwErrors
+} from "../../js/utilities.js";
 import { invalidPassword } from "../init/init.js";
 
 bindInlineFunctions(getContext(), [
@@ -9,13 +16,9 @@ bindInlineFunctions(getContext(), [
 	"/Join/js/utilities.js"
 ]);
 
-/**
- * Initializes the page by setting up the language.
- * @function initPage
- */
-export function initPage() {
+export const initPage = () => {
 	LANG.init();
-}
+};
 
 /**
  * Handles the password reset process by validating and matching passwords, and initiating the password change.
@@ -27,11 +30,11 @@ export async function resetPassword() {
 	const newPasswordInput = $("#new-password input").value;
 	const confirmPasswordInput = $("#confirm-password input").value;
 
-	const passwordValidity = invalidPassword(newPasswordInput);
+	const paswordValidity = invalidPassword(newPasswordInput);
 	const passwordsMatching = newPasswordInput == confirmPasswordInput;
 
-	throwErrors({ identifier: "invalid-password", bool: passwordValidity });
-	if (passwordValidity) return;
+	throwErrors({ identifier: "invalid-password", bool: paswordValidity });
+	if (paswordValidity) return;
 
 	throwErrors({ identifier: "different-passwords", bool: !passwordsMatching });
 	if (!passwordsMatching) return;

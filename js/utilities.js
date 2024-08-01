@@ -2,7 +2,8 @@ import { confirmationTemplate } from "../assets/templates/index/confirmation_tem
 import { LANG } from "./language.js";
 import { STORAGE } from "./storage.js";
 
-export const error = console.error();
+export const log = console.log;
+export const error = console.error;
 
 /**
  * shortcut of document.querySelector
@@ -680,7 +681,7 @@ export function HSLToHex(hslString) {
 		(acc, [key, value]) => ({ ...acc, [key]: value }),
 		{}
 	);
-	
+	// console.log(h, s, l);
 	s /= 100;
 	l /= 100;
 
