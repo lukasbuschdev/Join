@@ -51,6 +51,7 @@ export async function initTimer() {
  * @returns {Promise<void>}
  */
 export async function processVerification() {
+	event.preventDefault();
 	const uid = STORAGE.currentUserId();
 	const {
 		verifyCode: { code, expires },
@@ -77,6 +78,7 @@ export async function processVerification() {
  * @function sendNewCode
  */
 export function sendNewCode() {
+	event.preventDefault();
 	const { userData } = STORAGE.get(`verification/${STORAGE.currentUserId()}`);
 	const user = new User(userData);
 	user.initVerification();

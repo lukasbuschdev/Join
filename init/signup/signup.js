@@ -67,6 +67,7 @@ export async function validateInputs({ name, email, password, confirmPassword })
  * @returns {Promise<void>}
  */
 export async function signupInit() {
+	event.preventDefault();
 	const dataInput = {
 		name: $("#name input").value,
 		email: $("#email input").value,

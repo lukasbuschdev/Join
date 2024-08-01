@@ -1,5 +1,14 @@
 import { LOCAL_getData, LOCAL_setData, SESSION_setData, STORAGE } from "../../js/storage.js";
-import { $, $$, currentDirectory, renderUserData, searchParams, goTo, confirmation } from "../../js/utilities.js";
+import {
+	$,
+	$$,
+	currentDirectory,
+	renderUserData,
+	searchParams,
+	goTo,
+	confirmation,
+	currentUserId
+} from "../../js/utilities.js";
 import "/Join/js/prototype_extensions.js";
 import { initSummary } from "../summary/summary.js";
 import { initBoard } from "../board/board.js";
@@ -151,12 +160,21 @@ export function changeLanguage(targetLanguage) {
 	LANG.change(targetLanguage);
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    function setBodyHeight() {
-        document.body.style.height = `${window.innerHeight}px`;
-    }
+export function resetPassword() {
+	confirmation("reset-password", () =>
+		goTo("init/reset_password/reset_password", {
+			reroute: true,
+			search: "?uid=" + currentUserId()
+		})
+	);
+}
 
-    setBodyHeight();
+document.addEventListener("DOMContentLoaded", function () {
+	function setBodyHeight() {
+		document.body.style.height = `${window.innerHeight}px`;
+	}
 
-    window.addEventListener('resize', setBodyHeight);
+	setBodyHeight();
+
+	window.addEventListener("resize", setBodyHeight);
 });

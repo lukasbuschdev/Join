@@ -36,6 +36,7 @@ export function initAutomaticLogin() {
  * @returns {Promise<void>}
  */
 export async function logIn() {
+	event.preventDefault();
 	const emailOrUsername = $("#email input").value;
 	const password = $("#password input").value;
 	const hash = await hashInputValue(password);
@@ -59,6 +60,7 @@ export async function logIn() {
  * @returns {Promise<void>}
  */
 export async function guestLogin() {
+	event.preventDefault();
 	const guestUser = STORAGE.getUserByInput("Guest");
 	guestUser.logIn();
 }

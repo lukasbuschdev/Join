@@ -1,13 +1,6 @@
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 import { STORAGE } from "../../js/storage.js";
-import {
-	$,
-	currentUserId,
-	goTo,
-	hashInputValue,
-	notification,
-	throwErrors
-} from "../../js/utilities.js";
+import { $, goTo, hashInputValue, notification, throwErrors } from "../../js/utilities.js";
 import { invalidPassword } from "../init/init.js";
 
 bindInlineFunctions(getContext(), [
@@ -16,9 +9,10 @@ bindInlineFunctions(getContext(), [
 	"/Join/js/utilities.js"
 ]);
 
-export const initPage = () => {
+export async function initPage() {
+	await STORAGE.init();
 	LANG.init();
-};
+}
 
 /**
  * Handles the password reset process by validating and matching passwords, and initiating the password change.
@@ -27,6 +21,7 @@ export const initPage = () => {
  * @returns {Promise<void>}
  */
 export async function resetPassword() {
+	event.preventDefault();
 	const newPasswordInput = $("#new-password input").value;
 	const confirmPasswordInput = $("#confirm-password input").value;
 

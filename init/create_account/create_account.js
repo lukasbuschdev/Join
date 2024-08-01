@@ -26,6 +26,7 @@ export async function initCreateAccount() {
  * @returns {Promise<void>}
  */
 export async function finishSetup() {
+	event.preventDefault();
 	const phoneInput = $("#phone input").value;
 	const phoneValidity = phoneInput.length ? validPhone(phoneInput) : true;
 	throwErrors({ identifier: "invalid-phone-number", bool: !phoneValidity });
