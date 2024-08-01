@@ -320,7 +320,7 @@ export function checkPriority() {
  * @returns {Array} - An array of new subtasks.
  */
 export function getSubtasks() {
-	return subtasks.map((subtaskName) => ({ name: subtaskName, done: false }));
+	return $$("#subtask-container li").map(({ innerHTML }) => ({ name: innerHTML, done: false }));
 }
 
 /**
