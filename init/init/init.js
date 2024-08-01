@@ -3,14 +3,24 @@ import { STORAGE } from "../../js/storage.js";
 import { notification, $ } from "../../js/utilities.js";
 import "/Join/js/prototype_extensions.js";
 
-export const init = async () => {
+/**
+ * Initializes the application by setting up storage and checking session state.
+ * @async
+ * @function init
+ * @returns {Promise<void>}
+ */
+export async function init() {
 	await STORAGE.init();
 	if (!STORAGE.data) return;
 
 	isSessionExpired();
 	$(".language-login").initMenus();
-};
+}
 
+/**
+ * Checks if the session is expired and sets up a notification listener.
+ * @function isSessionExpired
+ */
 export function isSessionExpired() {
 	const a = new URLSearchParams(document.location.search);
 	if (a.has("expired")) {
@@ -25,22 +35,54 @@ export function isSessionExpired() {
 	}
 }
 
-export const invalidName = (nameInput) =>
-	!/^(?=.{4,20}$)(?![_])(?!.*  )(?!.*[_]{2})[a-zA-Z0-9_ ]+(?<![_])$/.test(nameInput);
+/**
+ * Validates the username input.
+ * @function invalidName
+ * @param {string} nameInput - The name input to validate.
+ * @returns {boolean} - Returns true if the name is invalid, otherwise false.
+ */
+export function invalidName(nameInput) {
+	return !/^(?=.{4,20}$)(?![_])(?!.*  )(?!.*[_]{2})[a-zA-Z0-9_ ]+(?<![_])$/.test(nameInput);
+}
 
-export const invalidEmail = (emailInput) =>
-	!/^(?=[a-zA-Z0-9])(?!.*[^a-zA-Z0-9]{2})[a-zA-Z0-9_!#$%&'*+\/=?`{|}~^.-]{0,63}[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9.-]*\.\w{2,3}$/.test(
+/**
+ * Validates the email input.
+ * @function invalidEmail
+ * @param {string} emailInput - The email input to validate.
+ * @returns {boolean} - Returns true if the email is invalid, otherwise false.
+ */
+export function invalidEmail(emailInput) {
+	return !/^(?=[a-zA-Z0-9])(?!.*[^a-zA-Z0-9]{2})[a-zA-Z0-9_!#$%&'*+\/=?`{|}~^.-]{0,63}[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9.-]*\.\w{2,3}$/.test(
 		emailInput
 	);
+}
 
-export const invalidPassword = (passwordInput) => {
+/**
+ * Validates the password input.
+ * @function invalidPassword
+ * @param {string} passwordInput - The password input to validate.
+ * @returns {boolean} - Returns true if the password is invalid, otherwise false.
+ */
+export function invalidPassword(passwordInput) {
 	const passwordRegex = new RegExp(/^(?=.{8,}$)(?=.*?[0-9])(?=.*?[a-z])(?=.*?[A-Z]).+/, "g"); // at least one lowercase and one uppercase letter and one digit
 	return !passwordRegex.test(passwordInput);
-};
+}
 
-export const validPhone = (phoneInput) => /^(?!00)[\+0]?\d{3}\s?(?!.*[\s])\d+/.test(phoneInput);
+/**
+ * Validates the phone number input.
+ * @function validPhone
+ * @param {string} phoneInput - The phone input to validate.
+ * @returns {boolean} - Returns true if the phone number is valid, otherwise false.
+ */
+export function validPhone(phoneInput) {
+	return /^(?!00)[\+0]?\d{3}\s?(?!.*[\s])\d+/.test(phoneInput);
+}
 
-export const togglePasswordVisibility = () => {
+/**
+ * Toggles the visibility of the password input field.
+ * @function togglePasswordVisibility
+ */
+export function togglePasswordVisibility() {
 	event.preventDefault();
 	const passwordInput = event.currentTarget.previousElementSibling;
 	const eye = event.currentTarget.children[0];
@@ -50,8 +92,12 @@ export const togglePasswordVisibility = () => {
 	eye.src = eye.src.includes("show.png")
 		? "/Join/assets/img/icons/hide.png"
 		: "/Join/assets/img/icons/show.png";
-};
+}
 
+/**
+ * Changes the background image of the language selection box based on the selected language.
+ * @function changeLanguageImage
+ */
 export function changeLanguageImage() {
 	const selectElement = $("#language-selection");
 	const selectedValue = selectElement.value;
@@ -69,10 +115,18 @@ export function changeLanguageImage() {
 	selectBox.style.backgroundImage = `url(/Join/assets/img/icons/${languageImages[selectedValue]}.png)`;
 }
 
+/**
+ * Toggles the visibility of the language selection menu.
+ * @function toggleLangSelection
+ */
 export function toggleLangSelection() {
 	$(".language-login").classList.toggle("active");
 }
 
+/**
+ * Checks for the "Enter" key press and submits the form if all inputs are filled.
+ * @function checkKeys
+ */
 export function checkKeys() {
 	if (!(event.key === "Enter")) return;
 	event.preventDefault();
@@ -81,6 +135,11 @@ export function checkKeys() {
 	if (!$("form input:placeholder-shown")) submitBtn.click();
 }
 
+/**
+ * Changes the application language to the target language.
+ * @function changeLanguage
+ * @param {string} targetLanguage - The target language code.
+ */
 export function changeLanguage(targetLanguage) {
 	LANG.change(targetLanguage);
 }

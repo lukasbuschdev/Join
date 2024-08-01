@@ -5,6 +5,12 @@ import { User } from "../../js/user.class.js";
 import { $, $$, goTo, isLetterOrNumber } from "../../js/utilities.js";
 bindInlineFunctions(getContext());
 
+/**
+ * Initializes the account verification process by setting up language, storage, timer, and checking email verification.
+ * @async
+ * @function initVerifyAccount
+ * @returns {Promise<void>}
+ */
 export async function initVerifyAccount() {
 	LANG.init();
 	await STORAGE.init();
@@ -12,17 +18,29 @@ export async function initVerifyAccount() {
 	checkEmailVerification();
 }
 
+/**
+ * Checks the email verification code from the URL and matches it with the stored verification code.
+ * @async
+ * @function checkEmailVerification
+ * @returns {Promise<void>}
+ */
 export async function checkEmailVerification() {
 	const uid = STORAGE.currentUserId();
-	const verificaiton = STORAGE.get(`verification/${uid}`);
-	if (verificaiton === undefined) return;
+	const verification = STORAGE.get(`verification/${uid}`);
+	if (verification === undefined) return;
 	const {
 		verifyCode: { code }
-	} = verificaiton;
+	} = verification;
 	if (new URLSearchParams(location.search).get("token") !== code) return;
 	fillCodeInputs(code);
 }
 
+/**
+ * Initializes a countdown timer for the verification code expiration.
+ * @async
+ * @function initTimer
+ * @returns {Promise<void>}
+ */
 export async function initTimer() {
 	const uid = STORAGE.currentUserId();
 	const {
@@ -44,7 +62,14 @@ export async function initTimer() {
 	}, 1000);
 }
 
-export async function processVerification() {
+/**
+ * Processes the verification code entered by the user and verifies the account if valid.
+ * @async
+ * @function processVerification
+ * @param {Event} event - The event object from the form submission.
+ * @returns {Promise<void>}
+ */
+export async function processVerification(event) {
 	event.preventDefault();
 
 	const uid = STORAGE.currentUserId();
@@ -68,14 +93,24 @@ export async function processVerification() {
 	goTo("init/create_account/create_account", { search: `?uid=${userData.id}` });
 }
 
-export function sendNewCode() {
+/**
+ * Sends a new verification code to the user.
+ * @function sendNewCode
+ * @param {Event} event - The event object from the form submission.
+ */
+export function sendNewCode(event) {
 	event.preventDefault();
 	const { userData } = STORAGE.get(`verification/${STORAGE.currentUserId()}`);
 	const user = new User(userData);
 	user.initVerification();
 }
 
-export function incrementCodeInputField() {
+/**
+ * Moves the focus between input fields for the verification code and handles input.
+ * @function incrementCodeInputField
+ * @param {Event} event - The keyboard event from the input field.
+ */
+export function incrementCodeInputField(event) {
 	const input = event.currentTarget;
 	if (input.value.length !== 1) return;
 	if (event.key == "Backspace") {
@@ -90,11 +125,21 @@ export function incrementCodeInputField() {
 	event.preventDefault();
 }
 
+/**
+ * Fills the input fields with the verification code.
+ * @function fillCodeInputs
+ * @param {string} code - The verification code to fill in the input fields.
+ */
 export function fillCodeInputs(code) {
 	$$("input").forEach((input, i) => setTimeout(() => (input.value = code[i]), 200 * i));
 }
 
-export function pasteCode() {
+/**
+ * Handles pasting of the verification code into the input fields.
+ * @function pasteCode
+ * @param {Event} event - The clipboard event.
+ */
+export function pasteCode(event) {
 	event.preventDefault();
 	const code = event.clipboardData.getData("text");
 	fillCodeInputs(code);

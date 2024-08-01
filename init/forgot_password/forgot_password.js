@@ -8,7 +8,14 @@ bindInlineFunctions(getContext(), [
 import { $, notification, throwErrors, goTo } from "../../js/utilities.js";
 import { invalidEmail } from "../init/init.js";
 
-export const forgotPassword = async () => {
+/**
+ * Handles the forgot password functionality by validating the email input, initiating password reset, and notifying the user.
+ * @async
+ * @function forgotPassword
+ * @param {Event} event - The event object from the form submission.
+ * @returns {Promise<void>}
+ */
+export async function forgotPassword(event) {
 	event.preventDefault();
 
 	const email = $("input").value;
@@ -26,4 +33,4 @@ export const forgotPassword = async () => {
 	await user.initPasswordReset();
 	await notification("email-sent");
 	goTo("init/login/login");
-};
+}

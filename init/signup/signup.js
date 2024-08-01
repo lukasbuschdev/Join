@@ -9,11 +9,21 @@ import { User } from "../../js/user.class.js";
 import { $, hashInputValue, throwErrors } from "../../js/utilities.js";
 import { invalidEmail, invalidName, invalidPassword } from "../init/init.js";
 
+/**
+ * Initializes the signup process by setting up the storage and privacy link.
+ * @async
+ * @function initSignup
+ * @returns {Promise<void>}
+ */
 export async function initSignup() {
 	window.addEventListener("langLoaded", initPrivacyLink, { once: true });
 	STORAGE.init();
 }
 
+/**
+ * Initializes the privacy link in the signup form.
+ * @function initPrivacyLink
+ */
 export function initPrivacyLink() {
 	const privacyContainer = $('[data-lang="register-privacy"]');
 	if (!privacyContainer) return;
@@ -25,6 +35,17 @@ export function initPrivacyLink() {
 	});
 }
 
+/**
+ * Validates the signup inputs for name, email, password, and confirms the acceptance of privacy and legal notices.
+ * @async
+ * @function validateInputs
+ * @param {Object} inputs - The input fields to validate.
+ * @param {string} inputs.name - The name input to validate.
+ * @param {string} inputs.email - The email input to validate.
+ * @param {string} inputs.password - The password input to validate.
+ * @param {string} inputs.confirmPassword - The confirmation password input to validate.
+ * @returns {Promise<boolean>} - Returns true if all inputs are valid, otherwise false.
+ */
 export async function validateInputs({ name, email, password, confirmPassword }) {
 	const nameValidity = invalidName(name);
 	const nameInUse = !!STORAGE.getUserByInput(name);
@@ -60,7 +81,14 @@ export async function validateInputs({ name, email, password, confirmPassword })
 	return false;
 }
 
-export async function signupInit() {
+/**
+ * Handles the signup process by validating inputs, hashing the password, and initializing user verification.
+ * @async
+ * @function signupInit
+ * @param {Event} event - The event object from the form submission.
+ * @returns {Promise<void>}
+ */
+export async function signupInit(event) {
 	event.preventDefault();
 
 	const dataInput = {
