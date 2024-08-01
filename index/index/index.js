@@ -22,7 +22,6 @@ import { notificationTemplate } from "../../assets/templates/index/notification_
 export async function init(directory) {
 	await STORAGE.init();
 	await LANG.init();
-	STORAGE.syncBoards();
 
 	await initFunctions[directory]();
 	$("#content").classList.remove("content-loading");

@@ -7,19 +7,19 @@ import { WebSocket } from "./websocket.js";
 class Storage {
 	STORAGE_URL = "https://join-storage-83306-default-rtdb.europe-west1.firebasedatabase.app";
 
-	/** 
-	 * @type {Object | undefined} 
+	/**
+	 * @type {Object | undefined}
 	 * @private
 	 */
 	#data;
-	
-	/** 
+
+	/**
 	 * @type {boolean}
-	 * @private 
+	 * @private
 	 */
 	#isLoaded = false;
 
-	/** 
+	/**
 	 * @type {WebSocket | undefined}
 	 */
 	webSocket;
@@ -279,21 +279,6 @@ class Storage {
 	#arrayToJSON(array) {
 		return array.reduce((json, item, index) => ({ ...json, [index]: item }), {});
 	}
-
-	/**
-	 * Syncs the boards for all users.
-	 * @returns {Promise<void>}
-	 */
-	async syncBoards() {
-		Object.values(this.allUsers).forEach((user) => {
-			user.boards.forEach((boardId) => {
-				if (!(boardId in this.data.boards)) {
-					user.boards.remove(boardId);
-					user.update();
-				}
-			});
-		});
-	}
 }
 
 export const STORAGE = new Storage();
@@ -348,7 +333,10 @@ export function SESSION_setData(key, value) {
 export function SESSION_getData(key) {
 	const value = sessionStorage.getItem(key);
 	switch (value) {
-		case "null": case "undefined": case "NaN": case "false":
+		case "null":
+		case "undefined":
+		case "NaN":
+		case "false":
 			return undefined;
 		default:
 			return value;
