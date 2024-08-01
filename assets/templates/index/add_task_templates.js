@@ -19,7 +19,6 @@ export function categoryTemplate([name, color]) {
  */
 export function renderCollaboratorsToAssign(collaborator) {
 	const isCurrentUser = collaborator.id === STORAGE.currentUserId();
-	console.log(collaborator);
 	return /*html*/ `
         <div class="drp-option" data-id="${collaborator.id}" onclick="selectCollaborator()">
             <div class="user-img-container grid-center" style="--user-clr: ${collaborator.color}">
