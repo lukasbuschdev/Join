@@ -141,6 +141,11 @@
 
     #account-panel-options button {
         height: 55px;
+        justify-content: center;
+    }
+
+    #account-panel-options button img {
+        margin: 0;
     }
 
     #account-panel-content {

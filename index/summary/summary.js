@@ -15,7 +15,7 @@ bindInlineFunctions(getContext(), [
 	"/Join/js/language.js"
 ]);
 
-let NEW_BOARD_COLLABORATORS = [];
+export let NEW_BOARD_COLLABORATORS = [];
 
 /**
  * Initializes summary by rendering the (active) board and its title selection if there are boards available.
