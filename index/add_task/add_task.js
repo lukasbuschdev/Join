@@ -353,7 +353,7 @@ export async function addTask() {
 }
 
 function getSelectedCollaborators() {
-	return [$("add-task-modal").$$("#drp-collaborators .drp-option.active")].map(
+	return [...$("add-task-modal").$$("#drp-collaborators .drp-option.active")].map(
 		({ dataset }) => dataset.id
 	);
 }
