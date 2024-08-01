@@ -66,12 +66,9 @@ export async function initTimer() {
  * Processes the verification code entered by the user and verifies the account if valid.
  * @async
  * @function processVerification
- * @param {Event} event - The event object from the form submission.
  * @returns {Promise<void>}
  */
-export async function processVerification(event) {
-	event.preventDefault();
-
+export async function processVerification() {
 	const uid = STORAGE.currentUserId();
 	const {
 		verifyCode: { code, expires },
@@ -96,10 +93,8 @@ export async function processVerification(event) {
 /**
  * Sends a new verification code to the user.
  * @function sendNewCode
- * @param {Event} event - The event object from the form submission.
  */
-export function sendNewCode(event) {
-	event.preventDefault();
+export function sendNewCode() {
 	const { userData } = STORAGE.get(`verification/${STORAGE.currentUserId()}`);
 	const user = new User(userData);
 	user.initVerification();

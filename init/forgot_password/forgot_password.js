@@ -15,9 +15,7 @@ import { invalidEmail } from "../init/init.js";
  * @param {Event} event - The event object from the form submission.
  * @returns {Promise<void>}
  */
-export async function forgotPassword(event) {
-	event.preventDefault();
-
+export async function forgotPassword() {
 	const email = $("input").value;
 
 	const user = STORAGE.getUserByInput(email);

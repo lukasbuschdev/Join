@@ -21,12 +21,9 @@ export function initPage() {
  * Handles the password reset process by validating and matching passwords, and initiating the password change.
  * @async
  * @function resetPassword
- * @param {Event} event - The event object from the form submission.
  * @returns {Promise<void>}
  */
-export async function resetPassword(event) {
-	event.preventDefault();
-
+export async function resetPassword() {
 	const newPasswordInput = $("#new-password input").value;
 	const confirmPasswordInput = $("#confirm-password input").value;
 

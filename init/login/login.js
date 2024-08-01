@@ -45,8 +45,7 @@ export function initAutomaticLogin() {
  * @param {Event} event - The event object from the form submission.
  * @returns {Promise<void>}
  */
-export async function logIn(event) {
-	event.preventDefault();
+export async function logIn() {
 	const emailOrUsername = $("#email input").value;
 	const password = $("#password input").value;
 	const hash = await hashInputValue(password);
@@ -67,12 +66,9 @@ export async function logIn(event) {
  * Handles guest login by logging in as a guest user.
  * @async
  * @function guestLogin
- * @param {Event} event - The event object from the form submission.
  * @returns {Promise<void>}
  */
-export async function guestLogin(event) {
-	event.preventDefault();
-
+export async function guestLogin() {
 	const guestUser = STORAGE.getUserByInput("Guest");
 	guestUser.logIn();
 }

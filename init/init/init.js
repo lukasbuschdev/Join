@@ -15,6 +15,7 @@ export async function init() {
 
 	isSessionExpired();
 	$(".language-login").initMenus();
+	$("form").addEventListener("submit", (event) => event.preventDefault());
 }
 
 /**

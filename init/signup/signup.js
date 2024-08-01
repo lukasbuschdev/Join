@@ -85,12 +85,9 @@ export async function validateInputs({ name, email, password, confirmPassword })
  * Handles the signup process by validating inputs, hashing the password, and initializing user verification.
  * @async
  * @function signupInit
- * @param {Event} event - The event object from the form submission.
  * @returns {Promise<void>}
  */
-export async function signupInit(event) {
-	event.preventDefault();
-
+export async function signupInit() {
 	const dataInput = {
 		name: $("#name input").value,
 		email: $("#email input").value,
