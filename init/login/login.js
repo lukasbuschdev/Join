@@ -9,22 +9,12 @@ import { LOCAL_getData, LOCAL_removeData, LOCAL_setData, STORAGE } from "../../j
 import { User } from "../../js/user.class.js";
 import { $, hashInputValue, throwErrors } from "../../js/utilities.js";
 
-/**
- * Initializes the login process by setting up storage and remembering login details.
- * @async
- * @function initLogin
- * @returns {Promise<void>}
- */
 export async function initLogin() {
 	await STORAGE.init();
 	rememberLoginDetails();
 	initAutomaticLogin();
 }
 
-/**
- * Sets up automatic login by listening for focus events on input fields.
- * @function initAutomaticLogin
- */
 export function initAutomaticLogin() {
 	$("form").addEventListener(
 		"focusin",
@@ -38,14 +28,7 @@ export function initAutomaticLogin() {
 	);
 }
 
-/**
- * Handles user login by validating credentials and remembering the user if required.
- * @async
- * @function logIn
- * @param {Event} event - The event object from the form submission.
- * @returns {Promise<void>}
- */
-export async function logIn(event) {
+export async function logIn() {
 	event.preventDefault();
 	const emailOrUsername = $("#email input").value;
 	const password = $("#password input").value;
@@ -63,26 +46,13 @@ export async function logIn(event) {
 	user.logIn();
 }
 
-/**
- * Handles guest login by logging in as a guest user.
- * @async
- * @function guestLogin
- * @param {Event} event - The event object from the form submission.
- * @returns {Promise<void>}
- */
-export async function guestLogin(event) {
+export async function guestLogin() {
 	event.preventDefault();
 
 	const guestUser = STORAGE.getUserByInput("Guest");
 	guestUser.logIn();
 }
 
-/**
- * Remembers the user's login details if the "remember me" option is selected.
- * @function rememberMe
- * @param {User} user - The user object.
- * @param {string} password - The user's password.
- */
 export function rememberMe(user, password) {
 	const shouldRemember = $("#remember-me").checked;
 	if (!shouldRemember) return LOCAL_removeData("rememberMe");
@@ -93,12 +63,6 @@ export function rememberMe(user, password) {
 	if ("PasswordCredential" in window) user.setCredentials(tempUser.password);
 }
 
-/**
- * Recalls login details from local storage and populates the login form.
- * @async
- * @function rememberLoginDetails
- * @returns {Promise<void>}
- */
 export async function rememberLoginDetails() {
 	const rememberedData = LOCAL_getData("rememberMe");
 	if (!rememberedData) return;
@@ -111,12 +75,6 @@ export async function rememberLoginDetails() {
 	$("#remember-me").setAttribute("checked", "true");
 }
 
-/**
- * Automatically logs in the user if credentials are stored in the browser.
- * @async
- * @function automaticLogin
- * @returns {Promise<void>}
- */
 export async function automaticLogin() {
 	if (!("PasswordCredential" in window)) return;
 	navigator.credentials.preventSilentAccess();

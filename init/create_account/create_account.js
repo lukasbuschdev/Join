@@ -4,12 +4,6 @@ import { getInitialsOfName, HSLToHex } from "../../js/utilities.js";
 import { validPhone } from "../init/init.js";
 bindInlineFunctions(getContext(), ["/Join/js/utilities.js"]);
 
-/**
- * Initializes the account creation process by rendering the color wheel and setting up the user information.
- * @async
- * @function initCreateAccount
- * @returns {Promise<void>}
- */
 export async function initCreateAccount() {
 	renderColorWheel();
 	await STORAGE.init();
@@ -18,21 +12,14 @@ export async function initCreateAccount() {
 	$("#user-name").innerText = name;
 }
 
-/**
- * Completes the setup process by validating phone input, updating user details, and logging the user in.
- * @async
- * @function finishSetup
- * @param {Event} event - The event object from the form submission.
- * @returns {Promise<void>}
- */
-export async function finishSetup(event) {
+export async function finishSetup() {
 	event.preventDefault();
 
 	const phoneInput = $("#phone input").value;
 	const phoneValidity = phoneInput.length ? validPhone(phoneInput) : true;
 	throwErrors({ identifier: "invalid-phone-number", bool: !phoneValidity });
 
-	if (!phoneValidity) return;
+	if (phoneValidity == false) return;
 
 	const user = STORAGE.currentUser;
 	const userColor = HSLToHex($(".user-img-container").style.getPropertyValue("--user-clr"));

@@ -423,13 +423,6 @@ h4 {
     width: 30px;
 }
 
-@supports(-moz-animation: none) {
-    * {
-        scrollbar-width: thin;
-        scrollbar-color: var(--clr-placeholder) var(--clr-white);
-    }
-}
-
 ::-webkit-scrollbar-thumb {
     background-color: var(--clr-placeholder);
     border: 11px solid transparent;

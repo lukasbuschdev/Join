@@ -89,6 +89,7 @@ export function renderAssignToContacts() {
 	assignToUser.LANG_load();
 
 	STATE.selectedBoard.collaborators.forEach((collaboratorId) => {
+		console.log(collaboratorId);
 		const collaborator = STORAGE.allUsers[collaboratorId];
 		if (!collaborator) return;
 		const collaboratorOption = document.createElement("div");
