@@ -681,7 +681,6 @@ export function HSLToHex(hslString) {
 		(acc, [key, value]) => ({ ...acc, [key]: value }),
 		{}
 	);
-	// console.log(h, s, l);
 	s /= 100;
 	l /= 100;
 

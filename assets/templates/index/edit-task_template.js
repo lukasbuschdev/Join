@@ -118,7 +118,6 @@ export function editTaskAssignedTo() {
 export const collaboratorTemplate = (id) => {
 	const { name, img, color } = STORAGE.allUsers[id];
 	const collaboratorIsAssigned = selectedCollaborators.includes(id);
-	console.log(collaboratorIsAssigned);
 	return /*html*/ `
     <div data-id="${id}" class="drp-option ${
 		collaboratorIsAssigned ? "active" : ""
