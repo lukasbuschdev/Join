@@ -2,6 +2,8 @@ import { confirmationTemplate } from "../assets/templates/index/confirmation_tem
 import { LANG } from "./language.js";
 import { STORAGE } from "./storage.js";
 
+export const error = console.error();
+
 /**
  * shortcut of document.querySelector
  * @param {string} selectors
