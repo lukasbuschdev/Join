@@ -336,7 +336,7 @@ export async function addTask() {
 		title: getTitle(),
 		description: getDescription(),
 		category: getSelectedCategory(),
-		selectedCollaborators,
+		selectedCollaborators: getSelectedCollaborators(),
 		dueDate: getDueDate(),
 		priority: checkPriority(),
 		subTasks: getSubtasks()
@@ -350,6 +350,12 @@ export async function addTask() {
 	resetArrays();
 
 	dir === "board" ? location.reload() : $("#board").click();
+}
+
+function getSelectedCollaborators() {
+	return [$("add-task-modal").$$("#drp-collaborators .drp-option.active")].map(
+		({ dataset }) => dataset.id
+	);
 }
 
 /**
