@@ -121,7 +121,7 @@ export function checkScrollHard(taskContainer) {
 	const yOffset = 50;
 
 	const canScrollDown =
-		taskContainer.scrollTop < taskContainer.scrollHeight - taskContainer.clientHeight - 1;
+		taskContainer.scrollTop <= taskContainer.scrollHeight - taskContainer.clientHeight;
 	const canScrollUp = taskContainer.scrollTop > 0;
 	const shouldScrollDown = taskBBox.bottom > taskContainerBBox.bottom + yOffset;
 	const shouldScrollUp = taskBBox.y < taskContainerBBox.y - yOffset;
