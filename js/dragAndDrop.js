@@ -1,6 +1,7 @@
 import { Board } from "./board.class.js";
 import { STATE } from "./state.js";
 import { STORAGE } from "./storage.js";
+import { Task } from "./task.class.js";
 import { throttle } from "./utilities.js";
 
 let TASK_ELEMENT;
@@ -39,7 +40,7 @@ export function fullscreenFunctionality() {
  */
 export function fullscreenHandler() {
 	const [boardId, taskId] = TASK_ELEMENT.dataset.id.split("/");
-	STATE.selectedTask = STATE.selectedBoard.getTask(taskId);
+	STATE.selectedTask = new Task(STORAGE.currentUserBoards[boardId].tasks[taskId]);
 	renderFullscreenTask(STATE.selectedTask);
 }
 
