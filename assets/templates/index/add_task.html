@@ -73,7 +73,7 @@
 					</div>
 				</div>
 				<div id="calender" class="column">
-					<span data-lang="due-date" class="required">Due date</span>
+					<span data-lang="due-date">Due date</span>
 					<textarea name="date" id="date" class="padding-textarea" placeholder="dd/mm/yyyy" data-lang-placeholder="due-date-placeholder"></textarea>
 					<div class="error-inactive error-enter-input" id="enter-a-dueDate">
 						<span data-lang="enter-a-dueDate">Enter a due date!</span>
@@ -126,14 +126,19 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="btn-container flex-right" style="margin-top: auto !important">
-		<button class="btn btn-secondary btn-cancel" onclick="resetAddTaskInputs()">
-			<span data-lang="btn-clear"></span>
-		</button>
-		<button onclick="addTask()" type="button" class="btn btn-primary btn-check txt-normal txt-700" style="pointer-events: all">
-			<span data-lang="btn-create-task">Create Task</span>
-		</button>
+	<div class="add-task-footer">
+		<div class="row">
+			<span class="required"></span>
+			<span data-lang="field-required"></span>
+		</div>
+		<div class="btn-container flex-right">
+			<button class="btn btn-secondary btn-cancel" onclick="resetAddTaskInputs()">
+				<span data-lang="btn-clear"></span>
+			</button>
+			<button onclick="addTask()" type="button" class="btn btn-primary btn-check txt-normal txt-700" style="pointer-events: all">
+				<span data-lang="btn-create-task">Create Task</span>
+			</button>
+		</div>
 	</div>
 </div>
 
