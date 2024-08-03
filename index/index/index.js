@@ -224,14 +224,3 @@ export function resetPassword() {
 		})
 	);
 }
-
-/**
- * Sets the body height to the window's inner height on DOM content loaded and resize events.
- */
-// document.addEventListener("DOMContentLoaded", function () {
-// function setBodyHeight() {
-// 	document.body.style.height = `${window.innerHeight}px`;
-// }
-// setBodyHeight();
-// window.addEventListener("resize", throttle(setBodyHeight, 10));
-// });
