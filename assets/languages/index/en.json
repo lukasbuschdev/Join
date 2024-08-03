@@ -141,6 +141,7 @@
 	"confirmation-delete-account3": "Really?",
 	"confirm-delete-account3": "REALLY!",  
 	"confirmation-delete-account4": "This account cannot be deleted!",
+	"confirm-delete-account4": "Ok",
 
 	"reset-password": "Reset your password",
 	"delete-account": "Delete Account",

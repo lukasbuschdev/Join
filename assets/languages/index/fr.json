@@ -141,6 +141,7 @@
     "confirmation-delete-account3": "Vraiment?",
     "confirm-delete-account3": "VRAIMENT!",
     "confirmation-delete-account4": "Ce compte ne peut pas être supprimé!",
+	"confirm-delete-account4": "Ok",
     
     "reset-password": "Réinitialise ton mot de passe",
     "delete-account": "Supprimer le compte",    
