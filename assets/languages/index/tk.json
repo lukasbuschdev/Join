@@ -119,6 +119,7 @@
 	"friend-added": "%name% adlı kişi eklenmiştir!",
 	"confirmation-delete-contact": "Bu Kişiyi silmek istiyor musun?",
 	"select-valid-user": "Geçerli bir kullanıcı seçin!",
+	"field-required": "Bu alan gereklidir!",
 
 	"confirm-delete-contact": "Sil",
 	"confirmation-delete-category": "Kategoriyi Silinsin mi?",

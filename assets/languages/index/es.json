@@ -119,6 +119,7 @@
 	"friend-added": "¡Contacto %name% ha sido agregado!",
 	"confirmation-delete-contact": "¿Deseas eliminar este contacto?",
 	"select-valid-user": "¡Seleccione un usuario válido!",
+	"field-required": "¡Este campo es obligatorio!",
 
 	"confirm-delete-contact": "Eliminar",
 	"confirmation-delete-category": "¿Eliminar Categoría?",
