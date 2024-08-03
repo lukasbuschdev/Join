@@ -69,25 +69,27 @@ export function getTaskStats(tasksObj) {
 	};
 
 	if (!tasks.length) return allStats;
-	tasks.forEach((task) => {
-		switch (task.type) {
-			case "in-progress":
-				allStats.tasksInProgress++;
-				break;
-			case "awaiting-feedback":
-				allStats.tasksAwaitingFeedback++;
-				break;
-			case "to-do":
-				allStats.tasksToDo++;
-				break;
-			case "done":
-				allStats.tasksDone++;
-				break;
-		}
-		if (task.priority === "urgent") allStats.tasksUrgent++;
-	});
+	tasks.forEach((task) => addToStats(task, allStats));
 
 	return allStats;
+}
+
+function addToStats(task, allStats) {
+	switch (task.type) {
+		case "in-progress":
+			allStats.tasksInProgress++;
+			break;
+		case "awaiting-feedback":
+			allStats.tasksAwaitingFeedback++;
+			break;
+		case "to-do":
+			allStats.tasksToDo++;
+			break;
+		case "done":
+			allStats.tasksDone++;
+			break;
+	}
+	if (task.priority === "urgent") allStats.tasksUrgent++;
 }
 
 /**
