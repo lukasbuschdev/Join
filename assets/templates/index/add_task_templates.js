@@ -25,9 +25,7 @@ export function renderCollaboratorsToAssign(collaborator) {
                 <span>${getInitialsOfName(collaborator.name)}</span>
                 <img src="${collaborator.img}">
             </div>
-            <span ${isCurrentUser ? 'data-lang="assigned-you"' : ""}>${
-		isCurrentUser ? "" : collaborator.name
-	}</span>
+            <span ${isCurrentUser ? 'data-lang="assigned-you"' : ""}>${isCurrentUser ? "" : collaborator.name}</span>
         </div>
     `;
 }
@@ -37,18 +35,13 @@ export function renderCollaboratorsToAssign(collaborator) {
  * @param {Array<string>} collaboratorIds
  */
 export function renderCollaboratorInput() {
-	const inputContainerCollaborator =
-		$("#fullscreen-task-modal[open] #selected-collaborator-input") ??
-		$("#selected-collaborator-input");
+	const inputContainerCollaborator = $("#fullscreen-task-modal[open] #selected-collaborator-input") ?? $("#selected-collaborator-input");
 	inputContainerCollaborator.innerHTML = "";
-	if (!selectedCollaborators.length)
-		inputContainerCollaborator.innerHTML = LANG.currentLangData["select-collaborators"];
+	if (!selectedCollaborators.length) inputContainerCollaborator.innerHTML = LANG.currentLangData["select-collaborators"];
 	selectedCollaborators.forEach((collaboratorId) => {
 		const users = STORAGE.data.users[collaboratorId];
 		inputContainerCollaborator.innerHTML += /*html*/ `
-          <div class="input-collaborator user-img-container grid-center" style="--user-clr: ${
-				users.color
-			}">
+          <div class="input-collaborator user-img-container grid-center" style="--user-clr: ${users.color}">
             <span>${getInitialsOfName(users.name)}</span>
             <img src="${users.img}">
           </div>

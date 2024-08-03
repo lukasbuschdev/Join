@@ -1,10 +1,6 @@
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 
-bindInlineFunctions(getContext(), [
-	"/Join/init/init/init.js",
-	"/Join/js/utilities.js",
-	"/Join/index/legal_notice/legal_notice.js"
-]);
+bindInlineFunctions(getContext(), ["/Join/init/init/init.js", "/Join/js/utilities.js", "/Join/index/legal_notice/legal_notice.js"]);
 import { LOCAL_getData, LOCAL_removeData, LOCAL_setData, STORAGE } from "../../js/storage.js";
 import { User } from "../../js/user.class.js";
 import { $, hashInputValue, throwErrors } from "../../js/utilities.js";
@@ -20,8 +16,7 @@ export function initAutomaticLogin() {
 		"focusin",
 		() => {
 			const target = event.target;
-			if (target.tagName !== "INPUT" || target.type === "checkbox")
-				return initAutomaticLogin();
+			if (target.tagName !== "INPUT" || target.type === "checkbox") return initAutomaticLogin();
 			automaticLogin();
 		},
 		{ once: true }
@@ -43,10 +38,7 @@ export async function logIn() {
 
 	const user = STORAGE.getUserByInput(emailOrUsername);
 	const passwordValidity = user?.password == hash || undefined;
-	throwErrors(
-		{ identifier: "invalid-email-or-username", bool: user == undefined },
-		{ identifier: "wrong-password", bool: !passwordValidity || false }
-	);
+	throwErrors({ identifier: "invalid-email-or-username", bool: user == undefined }, { identifier: "wrong-password", bool: !passwordValidity || false });
 	if (!user || !passwordValidity) return;
 
 	rememberMe(user, password);

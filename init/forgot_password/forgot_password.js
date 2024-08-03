@@ -1,10 +1,6 @@
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 import { STORAGE } from "../../js/storage.js";
-bindInlineFunctions(getContext(), [
-	"/Join/init/init/init.js",
-	"/Join/js/utilities.js",
-	"/Join/js/language.js"
-]);
+bindInlineFunctions(getContext(), ["/Join/init/init/init.js", "/Join/js/utilities.js", "/Join/js/language.js"]);
 import { $, notification, throwErrors, goTo } from "../../js/utilities.js";
 import { invalidEmail } from "../init/init.js";
 

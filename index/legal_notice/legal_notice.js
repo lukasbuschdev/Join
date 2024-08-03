@@ -1,9 +1,5 @@
 import { bindInlineFunctions, getContext } from "/Join/js/setup.js";
-bindInlineFunctions(getContext(), [
-	"/Join/index/index/index.js",
-	"/Join/js/language.js",
-	"/Join/js/utilities.js"
-]);
+bindInlineFunctions(getContext(), ["/Join/index/index/index.js", "/Join/js/language.js", "/Join/js/utilities.js"]);
 
 import { $ } from "../../js/utilities.js";
 
@@ -16,5 +12,5 @@ export async function initLegalNotice() {
 		url: `/Join/assets/templates/init/legal-notice-content.html`,
 		replace: false
 	});
-	$('#content')?.LANG_load();
+	$("#content")?.LANG_load();
 }

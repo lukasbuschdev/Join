@@ -1,10 +1,6 @@
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 import { STORAGE } from "../../js/storage.js";
-bindInlineFunctions(getContext(), [
-	"/Join/init/init/init.js",
-	"/Join/js/language.js",
-	"/Join/index/privacy/privacy.js"
-]);
+bindInlineFunctions(getContext(), ["/Join/init/init/init.js", "/Join/js/language.js", "/Join/index/privacy/privacy.js"]);
 import { User } from "../../js/user.class.js";
 import { $, hashInputValue, throwErrors } from "../../js/utilities.js";
 import { invalidEmail, invalidName, invalidPassword } from "../init/init.js";

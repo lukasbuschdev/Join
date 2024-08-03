@@ -16,7 +16,6 @@ import { cloneDeep } from "./utilities.js";
  * @implements {Notification}
  */
 export class Notify {
-
 	/** @type {string} */
 	id;
 
@@ -25,7 +24,7 @@ export class Notify {
 	 * @param {Notification} notification - The notification data.
 	 */
 	constructor(notification) {
-		Object.assign(this, notification)
+		Object.assign(this, notification);
 		this.id = Date.now().toString();
 	}
 

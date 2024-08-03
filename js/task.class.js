@@ -43,18 +43,7 @@ export class Task extends BaseClass {
 	 * Creates an instance of Task.
 	 * @param {TaskParams} params - The parameters for the task.
 	 */
-	constructor({
-		id = Date.now().toString(),
-		type = "to-do",
-		title,
-		description,
-		category = "default",
-		assignedTo = [],
-		dueDate,
-		priority,
-		subTasks = [],
-		boardId
-	}) {
+	constructor({ id = Date.now().toString(), type = "to-do", title, description, category = "default", assignedTo = [], dueDate, priority, subTasks = [], boardId }) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -106,8 +95,7 @@ export class Task extends BaseClass {
 		const collaborators = BOARDS[this.boardId].collaborators;
 		if (typeof userIds === "string") userIds = [userIds];
 		for (const userId of userIds) {
-			if (!collaborators.includes(userId) && userId !== USER.id)
-				return error("user not in collaborators!");
+			if (!collaborators.includes(userId) && userId !== USER.id) return error("user not in collaborators!");
 			if (this.assignedTo.includes(userId)) return error("user already assigned!");
 			this.assignedTo.push(userId);
 		}

@@ -1,5 +1,5 @@
-export const verificationEmailTemplate = ({ id, name, verifyCode: { code }}, langData) => {
-    return /*html*/`
+export const verificationEmailTemplate = ({ id, name, verifyCode: { code } }, langData) => {
+	return /*html*/ `
         <div style="height: 500px; background-color: #F6F7F8; padding: 30px;">
             <img src="${location.origin}/Join/assets/img/icons/logo.svg" alt="" style="width: 75px; margin-bottom: 30px;">
             <h1>${langData["message-1"]}${name}!</h1>
@@ -20,11 +20,11 @@ export const verificationEmailTemplate = ({ id, name, verifyCode: { code }}, lan
                 text-align: center
             ">${langData["message-4"]}</a>
         </div>
-        `
-}
+        `;
+};
 
 export const resetPasswordEmailTemplate = ({ id, name }, langData) => {
-    return /*html*/`
+	return /*html*/ `
         <div style="height: 500px; background-color: #F6F7F8; padding: 30px;">
             <img src="${location.origin}/Join/assets/img/icons/logo.svg" alt="" style="width: 75px; margin-bottom: 30px;">
             <h1>${langData["message-1"]}${name}!</h1>
@@ -46,5 +46,5 @@ export const resetPasswordEmailTemplate = ({ id, name }, langData) => {
             ">${langData["message-3"]}</a>
             <p style="font-size: 12px;">${langData["message-4"]}<a href="" mailto="noreply.info.join@gmail.com">noreply.info.join@gmail.com</a></p>
         </div>
-    `
-}
+    `;
+};

@@ -120,8 +120,7 @@ export function checkScrollHard(taskContainer) {
 	const taskContainerBBox = taskContainer.getBoundingClientRect();
 	const yOffset = 50;
 
-	const canScrollDown =
-		taskContainer.scrollTop <= taskContainer.scrollHeight - taskContainer.clientHeight;
+	const canScrollDown = taskContainer.scrollTop <= taskContainer.scrollHeight - taskContainer.clientHeight;
 	const canScrollUp = taskContainer.scrollTop > 0;
 	const shouldScrollDown = taskBBox.bottom > taskContainerBBox.bottom + yOffset;
 	const shouldScrollUp = taskBBox.y < taskContainerBBox.y - yOffset;
@@ -196,11 +195,7 @@ export function taskDropAnimation() {
 
 	setTimeout(() => {
 		TASK_ELEMENT.classList.add("drop-transition");
-		TASK_ELEMENT.addEventListener(
-			"transitionend",
-			() => TASK_ELEMENT.classList.remove("drop-transition"),
-			{ once: true }
-		);
+		TASK_ELEMENT.addEventListener("transitionend", () => TASK_ELEMENT.classList.remove("drop-transition"), { once: true });
 		TASK_ELEMENT.style.translate = "0 0";
 	}, 0);
 }

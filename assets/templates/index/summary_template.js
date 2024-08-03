@@ -4,20 +4,12 @@ import { User } from "../../../js/user.class.js";
 import { getInitialsOfName } from "../../../js/utilities.js";
 
 /**
- * 
- * @param {Object<string, number>} param0 
+ *
+ * @param {Object<string, number>} param0
  * @returns {string}
  */
-export function summaryTemplate({
-  tasksInBoard,
-  tasksInProgress,
-  tasksAwaitingFeedback,
-  tasksUrgent,
-  upcomingDeadline,
-  tasksToDo,
-  tasksDone
-}) {
-  return /*html*/ `
+export function summaryTemplate({ tasksInBoard, tasksInProgress, tasksAwaitingFeedback, tasksUrgent, upcomingDeadline, tasksToDo, tasksDone }) {
+	return /*html*/ `
         <div id="summary-data" class="column gap-30">
             <div class="row gap-30">
                 <button class="summary-btn" onclick="document.querySelector('nav #board').click()">
@@ -45,9 +37,7 @@ export function summaryTemplate({
                         </div>
                     </div>
                     <div class="line"></div>
-                    <div class="upcoming-deadline column flex-center gap-15${
-                      upcomingDeadline ? "" : " d-none"
-                    }">
+                    <div class="upcoming-deadline column flex-center gap-15${upcomingDeadline ? "" : " d-none"}">
                         <span class="txt-normal txt-700">${upcomingDeadline}</span>
                         <span class="txt-small" data-lang="tasks-deadline">Upcoming Deadline</span>
                     </div>
@@ -78,7 +68,7 @@ export function summaryTemplate({
 }
 
 /**
- * @param {string} boardId 
+ * @param {string} boardId
  * @returns {string}
  */
 export function boardEditButtonTemplate(boardId) {
@@ -90,14 +80,12 @@ export function boardEditButtonTemplate(boardId) {
 }
 
 /**
- * @param {User} contact 
- * @returns 
+ * @param {User} contact
+ * @returns
  */
 export function contactDropdownTemplate({ name, color, id, img }) {
 	return /*html*/ `
-        <div class="contact row gap-15 drp-option ${
-			NEW_BOARD_COLLABORATORS.includes(id) ? "active" : ""
-		}" onclick="addCollaborator(${id})">
+        <div class="contact row gap-15 drp-option ${NEW_BOARD_COLLABORATORS.includes(id) ? "active" : ""}" onclick="addCollaborator(${id})">
             <div class="user-img-container" style="--user-clr: ${color};">
                 <span>${getInitialsOfName(name)}</span>
                 <img src="${img}">
@@ -108,14 +96,12 @@ export function contactDropdownTemplate({ name, color, id, img }) {
 }
 
 /**
- * @param {User} collaborator 
+ * @param {User} collaborator
  * @returns {string}
  */
 export function newBoardCollaboratorTemplate({ img, name, color, id }) {
 	return /*html*/ `
-    <button class="collaborator ${
-		!STATE.selectedBoard?.collaborators.includes(id) ? "invitation" : ""
-	}" data-id="${id}">
+    <button class="collaborator ${!STATE.selectedBoard?.collaborators.includes(id) ? "invitation" : ""}" data-id="${id}">
         <div class="user-img-container" style="--user-clr: ${color}">
             <span>${getInitialsOfName(name)}</span>
             <img src="${img}" alt="">

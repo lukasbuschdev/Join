@@ -3,11 +3,7 @@ import { STORAGE } from "../../js/storage.js";
 import { $, goTo, hashInputValue, notification, throwErrors } from "../../js/utilities.js";
 import { invalidPassword } from "../init/init.js";
 
-bindInlineFunctions(getContext(), [
-	"/Join/init/init/init.js",
-	"/Join/js/language.js",
-	"/Join/js/utilities.js"
-]);
+bindInlineFunctions(getContext(), ["/Join/init/init/init.js", "/Join/js/language.js", "/Join/js/utilities.js"]);
 
 export async function initPage() {
 	await STORAGE.init();

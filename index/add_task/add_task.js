@@ -1,22 +1,12 @@
 import { renderEditSubtasks } from "../../assets/templates/index/edit-task_template.js";
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
 import { LANG } from "../../js/language.js";
-bindInlineFunctions(getContext(), [
-	"/Join/index/index/index.js",
-	"/Join/js/utilities.js",
-	"/Join/js/language.js",
-	"/Join/index/summary/summary.js"
-]);
+bindInlineFunctions(getContext(), ["/Join/index/index/index.js", "/Join/js/utilities.js", "/Join/js/language.js", "/Join/index/summary/summary.js"]);
 
 import { STORAGE } from "../../js/storage.js";
 import { $, currentDirectory, dateFormat, notification } from "../../js/utilities.js";
 import { STATE } from "../../js/state.js";
-import {
-	categoryTemplate,
-	renderCollaboratorInput,
-	renderCollaboratorsToAssign,
-	renderSubtaskTemplate
-} from "../../assets/templates/index/add_task_templates.js";
+import { categoryTemplate, renderCollaboratorInput, renderCollaboratorsToAssign, renderSubtaskTemplate } from "../../assets/templates/index/add_task_templates.js";
 
 export const subtasks = [];
 export const selectedCollaborators = [];
@@ -72,8 +62,7 @@ export function renderSelectedBoard(selectedBoard) {
  * Checks if a board is selected and updates UI elements accordingly.
  */
 export function checkSelectedBoard() {
-	const isDefaultSelection =
-		$("#selected-board").innerText === LANG.currentLangData["select-board"];
+	const isDefaultSelection = $("#selected-board").innerText === LANG.currentLangData["select-board"];
 	$("#select-a-board").classList.toggle("error-inactive", !isDefaultSelection);
 	$("#drp-wrapper-board").classList.toggle("input-warning", isDefaultSelection);
 }
@@ -106,9 +95,7 @@ export function selectCollaborator() {
 	const collaboratorId = event.currentTarget.dataset.id;
 	const index = selectedCollaborators.indexOf(collaboratorId.toString());
 
-	index === -1
-		? selectedCollaborators.push(collaboratorId.toString())
-		: selectedCollaborators.splice(index, 1);
+	index === -1 ? selectedCollaborators.push(collaboratorId.toString()) : selectedCollaborators.splice(index, 1);
 
 	renderCollaboratorInput();
 }
@@ -218,12 +205,11 @@ export function descriptionValid() {
  * @param {Board} selectedBoard - The selected board object containing categories.
  */
 export function renderCategories(selectedBoard) {
+	if (!selectedBoard) return;
 	const drpContainer = $("#drp-categories");
 	drpContainer.innerHTML = "";
 
-	Object.entries(selectedBoard.categories).forEach(
-		(category) => (drpContainer.innerHTML += categoryTemplate(category))
-	);
+	Object.entries(selectedBoard.categories).forEach((category) => (drpContainer.innerHTML += categoryTemplate(category)));
 }
 
 /**
@@ -372,16 +358,7 @@ export function checkAddTaskInputs(addTaskData) {
  * Creates a new task and adds it to the selected board.
  * @param {Object} taskData - The task data to add.
  */
-export async function createNewTask({
-	selectedBoard,
-	title,
-	description,
-	category,
-	selectedCollaborators,
-	dueDate,
-	priority,
-	subTasks
-}) {
+export async function createNewTask({ selectedBoard, title, description, category, selectedCollaborators, dueDate, priority, subTasks }) {
 	const newTask = {
 		title,
 		description,
@@ -500,9 +477,7 @@ export function saveEditedSubtask(i) {
 	subtasks[i] = subtaskInput.innerText;
 	subtaskInput.setAttribute("contenteditable", "false");
 
-	$$(`.save-edited-subtask-btn, .save-edited-subtask-btn${i}, .subtask-edit-btn${i}`).forEach(
-		(button) => button.classList.toggle("d-none")
-	);
+	$$(`.save-edited-subtask-btn, .save-edited-subtask-btn${i}, .subtask-edit-btn${i}`).forEach((button) => button.classList.toggle("d-none"));
 	$("#single-subtask" + i).classList.toggle("edit-btn-active");
 }
 
@@ -529,4 +504,30 @@ export function resetArrays() {
  */
 export function resetPriorityButton() {
 	$$(".btn-priority button").forEach((button) => button.classList.remove("active"));
+}
+
+/**
+ * Resets all input and textarea elements in the add-task card, and resets various states and elements within the task form.
+ */
+export function resetAddTaskInputs() {
+	$$(".add-task-card :is(input, textarea)").forEach((input) => (input.value = ""));
+	renderDate();
+	resetPriorityButton();
+	resetArrays();
+	renderSubtasks();
+	resetDropDowns();
+	renderCategories();
+	[...$$(".add-task-card .drp-wrapper")].forEach((el) => el.classList.remove("active"));
+}
+
+/**
+ * Resets the dropdown elements within the add-task card, clearing contents and reloading language settings.
+ */
+function resetDropDowns() {
+	const wrappers = $$(".add-task-card .drp-wrapper");
+	wrappers.forEach((wrapper) => {
+		wrapper.LANG_load();
+		if (wrapper.id === "drp-wrapper-board") return;
+		wrapper.$(".drp-contacts").innerHTML = "";
+	});
 }

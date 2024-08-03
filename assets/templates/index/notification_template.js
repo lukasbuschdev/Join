@@ -27,10 +27,7 @@ export function notificationTemplate(notification) {
 			return /*html*/ `
                 <div class="notification radius-15 row" data-id="${id}">
                     <div>
-                        <span data-lang="user-invited-you-to-board, {ownerName: '${ownerName}', boardName: '${boardName.replaceAll(
-				"-",
-				" "
-			)}'}"></span>
+                        <span data-lang="user-invited-you-to-board, {ownerName: '${ownerName}', boardName: '${boardName.replaceAll("-", " ")}'}"></span>
                     </div>
                     <div class="btn-container gap-10">
                         <button data-lang="decline" class="btn btn-secondary txt-small txt-600" onclick="removeNotification('${id}')">Decline</button>
@@ -61,14 +58,13 @@ export async function acceptBoardInvite(boardId, boardName, notificationId) {
 	const USER = STORAGE.currentUser;
 	const BOARD = new Board(STORAGE.data.boards[boardId]);
 	await removeNotification(notificationId);
-	if (!(boardId in STORAGE.data.boards))
-		return notification(`board-nonexistent, {boardName: '${boardName}'}`);
+	if (!(boardId in STORAGE.data.boards)) return notification(`board-nonexistent, {boardName: '${boardName}'}`);
 	USER.boards.push(boardId);
 	BOARD.collaborators.push(USER.id);
 	await Promise.all([USER.update(), BOARD.update()]);
 	await notification(`board-joined, {boardName: '${boardName}'}`);
 	LOCAL_setData("activeBoard", boardId);
-	goTo('index/board/board');
+	goTo("index/board/board");
 }
 
 export async function removeNotification(notificationId) {
@@ -93,5 +89,5 @@ export async function acceptFriendshipRequest(id, userId, name) {
 	await Promise.all([user.update(), contact.update()]);
 	await removeFriendshipRequest(id, userId);
 	await notification(`friend-added, {name: '${name}'}`);
-	goTo('index/contacts/contacts');
+	goTo("index/contacts/contacts");
 }

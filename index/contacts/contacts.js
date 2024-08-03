@@ -1,11 +1,16 @@
-import { contactImgNameTemplate, contactInfoTemplate, contactListLetterTemplate, contactListTemplate, contactMailTemplate, contactPhoneTemplate, searchResultTemplates, userImgGrayTemplate, userImgTemplate } from "../../assets/templates/index/contacts_template.js";
+import {
+	contactImgNameTemplate,
+	contactInfoTemplate,
+	contactListLetterTemplate,
+	contactListTemplate,
+	contactMailTemplate,
+	contactPhoneTemplate,
+	searchResultTemplates,
+	userImgGrayTemplate,
+	userImgTemplate
+} from "../../assets/templates/index/contacts_template.js";
 import { bindInlineFunctions, getContext } from "../../js/setup.js";
-bindInlineFunctions(getContext(), [
-	"/Join/index/index/index.js",
-	"/Join/js/utilities.js",
-	"/Join/index/add_task/add_task.js",
-	"/Join/js/language.js"
-]);
+bindInlineFunctions(getContext(), ["/Join/index/index/index.js", "/Join/js/utilities.js", "/Join/index/add_task/add_task.js", "/Join/js/language.js"]);
 
 import { STORAGE } from "../../js/storage.js";
 import { User } from "../../js/user.class.js";
@@ -16,7 +21,7 @@ import { $, debounce, getInitialsOfName, notification, throwErrors } from "../..
  * @returns {void}
  */
 export function initContacts() {
-    return renderContacts();
+	return renderContacts();
 }
 
 /**
@@ -24,18 +29,18 @@ export function initContacts() {
  * @returns {void}
  */
 export function renderContacts() {
-    const contactsData = Object.values(STORAGE.currentUserContacts);
-    $("#selected-contact-container").classList.toggle("d-none", !contactsData.length);
+	const contactsData = Object.values(STORAGE.currentUserContacts);
+	$("#selected-contact-container").classList.toggle("d-none", !contactsData.length);
 
-    const initialLetters = new Set(contactsData.map((singleContact) => singleContact.name[0]));
-    const contactsContainer = $("#contacts-container");
-    contactsContainer.innerHTML = "";
+	const initialLetters = new Set(contactsData.map((singleContact) => singleContact.name[0]));
+	const contactsContainer = $("#contacts-container");
+	contactsContainer.innerHTML = "";
 
-    initialLetters.forEach((letter) => {
-        contactsContainer.innerHTML += contactListLetterTemplate(letter);
-        const filteredContacts = contactsData.filter(({ name }) => name[0] == letter);
-        contactsContainer.renderItems(filteredContacts, contactListTemplate);
-    });
+	initialLetters.forEach((letter) => {
+		contactsContainer.innerHTML += contactListLetterTemplate(letter);
+		const filteredContacts = contactsData.filter(({ name }) => name[0] == letter);
+		contactsContainer.renderItems(filteredContacts, contactListTemplate);
+	});
 }
 
 /**
@@ -43,13 +48,13 @@ export function renderContacts() {
  * @returns {void}
  */
 export function addContactModal() {
-    const modal = $("#add-contact-modal");
-    clearInput();
-    clearImage();
-    clearResult();
-    modal.openModal();
+	const modal = $("#add-contact-modal");
+	clearInput();
+	clearImage();
+	clearResult();
+	modal.openModal();
 
-    modal.addEventListener("close", clearCloseAddContact, { once: true });
+	modal.addEventListener("close", clearCloseAddContact, { once: true });
 }
 
 /**
@@ -57,7 +62,7 @@ export function addContactModal() {
  * @returns {void}
  */
 export function closeAddContact() {
-    $("#add-contact-modal").closeModal();
+	$("#add-contact-modal").closeModal();
 }
 
 /**
@@ -65,7 +70,7 @@ export function closeAddContact() {
  * @returns {void}
  */
 export function clearInput() {
-    $("#input-name").value = "";
+	$("#input-name").value = "";
 }
 
 /**
@@ -73,7 +78,7 @@ export function clearInput() {
  * @returns {void}
  */
 export function clearImage() {
-    $(".add-contact-field .user-img-container").innerHTML = userImgGrayTemplate();
+	$(".add-contact-field .user-img-container").innerHTML = userImgGrayTemplate();
 }
 
 /**
@@ -81,8 +86,8 @@ export function clearImage() {
  * @returns {void}
  */
 export function clearResult() {
-    $("#user-search-result").innerHTML = "";
-    unsetSearchResultStyle();
+	$("#user-search-result").innerHTML = "";
+	unsetSearchResultStyle();
 }
 
 /**
@@ -90,13 +95,13 @@ export function clearResult() {
  * @returns {void}
  */
 export function clearCloseAddContact() {
-    let userImgContainer = $(".add-contact-field .user-img-container");
+	let userImgContainer = $(".add-contact-field .user-img-container");
 
-    clearInput();
-    clearResult();
+	clearInput();
+	clearResult();
 
-    userImgContainer.innerHTML = userImgTemplate();
-    userImgContainer.style.setProperty("--user-clr", "unset");
+	userImgContainer.innerHTML = userImgTemplate();
+	userImgContainer.style.setProperty("--user-clr", "unset");
 }
 
 /**
@@ -105,21 +110,21 @@ export function clearCloseAddContact() {
  * @returns {Promise<void>}
  */
 export const getInput = debounce(async function () {
-    const inputValue = $("#input-name").value;
+	const inputValue = $("#input-name").value;
 
-    if (!inputValue.length) return unsetSearchResultStyle();
+	if (!inputValue.length) return unsetSearchResultStyle();
 
-    const filteredUsers = Object.values(STORAGE.data.users).filter(
-        (user) =>
-            user.name.toLowerCase().includes(inputValue.toLowerCase()) &&
-            !(STORAGE.currentUser.id == user.id) &&
-            !STORAGE.currentUser.contacts.includes(user.id) &&
-            !STORAGE.currentUser.pendingFriendshipRequests.includes(user.id)
-    );
+	const filteredUsers = Object.values(STORAGE.data.users).filter(
+		(user) =>
+			user.name.toLowerCase().includes(inputValue.toLowerCase()) &&
+			!(STORAGE.currentUser.id == user.id) &&
+			!STORAGE.currentUser.contacts.includes(user.id) &&
+			!STORAGE.currentUser.pendingFriendshipRequests.includes(user.id)
+	);
 
-    const sortedUsers = filteredUsers.sort((a, b) => a.name > b.name);
-    renderSearchResults(sortedUsers);
-    setSearchResultStyle();
+	const sortedUsers = filteredUsers.sort((a, b) => a.name > b.name);
+	renderSearchResults(sortedUsers);
+	setSearchResultStyle();
 }, 200);
 
 /**
@@ -127,10 +132,10 @@ export const getInput = debounce(async function () {
  * @returns {void}
  */
 export function setSearchResultStyle() {
-    $("#input-name").style.borderRadius = "10px 10px 0 0";
-    $("#input-name").style.borderBottomStyle = "none";
-    $("#user-search-result").style.border = "1px solid #d1d1d1";
-    $("#user-search-result").style.borderTopStyle = "none";
+	$("#input-name").style.borderRadius = "10px 10px 0 0";
+	$("#input-name").style.borderBottomStyle = "none";
+	$("#user-search-result").style.border = "1px solid #d1d1d1";
+	$("#user-search-result").style.borderTopStyle = "none";
 }
 
 /**
@@ -138,10 +143,10 @@ export function setSearchResultStyle() {
  * @returns {void}
  */
 export function unsetSearchResultStyle() {
-    $("#user-search-result").innerHTML = "";
-    $("#user-search-result").style.border = "none";
-    $("#input-name").style.borderRadius = "10px 10px 10px 10px";
-    $("#input-name").style.border = "1px solid #d1d1d1";
+	$("#user-search-result").innerHTML = "";
+	$("#user-search-result").style.border = "none";
+	$("#input-name").style.borderRadius = "10px 10px 10px 10px";
+	$("#input-name").style.border = "1px solid #d1d1d1";
 }
 
 /**
@@ -150,8 +155,8 @@ export function unsetSearchResultStyle() {
  * @returns {void}
  */
 export function selectContact(id) {
-    renderSelectedContact(STORAGE.currentUserContacts[id]);
-    $("#contacts-container").classList.toggle("d-none", window.innerWidth <= 800);
+	renderSelectedContact(STORAGE.currentUserContacts[id]);
+	$("#contacts-container").classList.toggle("d-none", window.innerWidth <= 800);
 }
 
 /**
@@ -159,7 +164,7 @@ export function selectContact(id) {
  * @returns {void}
  */
 export function closeSelectedContact() {
-    $("#contacts-container").classList.remove("d-none");
+	$("#contacts-container").classList.remove("d-none");
 }
 
 /**
@@ -168,7 +173,7 @@ export function closeSelectedContact() {
  * @returns {void}
  */
 export function renderSelectedContact(selectedContact) {
-    $("#selected-contact-container").innerHTML = selectedContactTemplate(selectedContact);
+	$("#selected-contact-container").innerHTML = selectedContactTemplate(selectedContact);
 }
 
 /**
@@ -177,7 +182,7 @@ export function renderSelectedContact(selectedContact) {
  * @returns {string} - The HTML string for the selected contact.
  */
 export function selectedContactTemplate({ id, img, name, email, phone, color }) {
-    return /*html*/ `
+	return /*html*/ `
         <div class="contact-container column">
             ${contactImgNameTemplate(color, name, img, id)}
             ${contactInfoTemplate()}
@@ -188,13 +193,13 @@ export function selectedContactTemplate({ id, img, name, email, phone, color }) 
 }
 
 export function renderSearchResults(sortedUsers) {
-    const searchResultsContainer = $("#user-search-result");
-    searchResultsContainer.innerHTML = "";
+	const searchResultsContainer = $("#user-search-result");
+	searchResultsContainer.innerHTML = "";
 
-    for (let i = 0; i < sortedUsers.length; i++) {
-        const user = sortedUsers[i];
-        searchResultsContainer.innerHTML += searchResultTemplates(user);
-    }
+	for (let i = 0; i < sortedUsers.length; i++) {
+		const user = sortedUsers[i];
+		searchResultsContainer.innerHTML += searchResultTemplates(user);
+	}
 }
 
 /**
@@ -206,19 +211,19 @@ export function renderSearchResults(sortedUsers) {
  * @returns {void}
  */
 export function selectNewContact(id, img, name, color) {
-    clearImage();
-    clearInput();
+	clearImage();
+	clearInput();
 
-    const input = $("#input-name");
-    const userImgContainer = $(".add-contact-field .user-img-container");
-    const initials = getInitialsOfName(name);
+	const input = $("#input-name");
+	const userImgContainer = $(".add-contact-field .user-img-container");
+	const initials = getInitialsOfName(name);
 
-    userImgContainer.innerHTML = img ? `<img src="${img}" alt="${name}">` : initials;
-    userImgContainer.style.setProperty("--user-clr", color);
-    input.value = name;
-    input.dataset.id = id;
+	userImgContainer.innerHTML = img ? `<img src="${img}" alt="${name}">` : initials;
+	userImgContainer.style.setProperty("--user-clr", color);
+	input.value = name;
+	input.dataset.id = id;
 
-    clearResult();
+	clearResult();
 }
 
 /**
@@ -226,16 +231,16 @@ export function selectNewContact(id, img, name, color) {
  * @returns {Promise<void>}
  */
 export async function addContact() {
-    const selectedUser = $("#input-name");
-    const userExists = STORAGE.getUserByInput(selectedUser.value);
-    throwErrors({ identifier: "select-valid-user", bool: !userExists });
-    if (!userExists) return unsetSearchResultStyle();
-    const selectedUserId = selectedUser.dataset.id;
+	const selectedUser = $("#input-name");
+	const userExists = STORAGE.getUserByInput(selectedUser.value);
+	throwErrors({ identifier: "select-valid-user", bool: !userExists });
+	if (!userExists) return unsetSearchResultStyle();
+	const selectedUserId = selectedUser.dataset.id;
 
-    await STORAGE.currentUser.addContact(selectedUserId);
+	await STORAGE.currentUser.addContact(selectedUserId);
 
-    $("#add-contact-modal").closeModal();
-    return notification(`friendship-request, {name: '${STORAGE.data.users[selectedUserId].name}'}`);
+	$("#add-contact-modal").closeModal();
+	return notification(`friendship-request, {name: '${STORAGE.data.users[selectedUserId].name}'}`);
 }
 
 /**
@@ -244,13 +249,10 @@ export async function addContact() {
  * @returns {Promise<void>}
  */
 export async function deleteContact(id) {
-    const selectedContact = STORAGE.currentUserContacts[id];
-    await Promise.all([
-        selectedContact.deleteContact(STORAGE.currentUser.id),
-        STORAGE.currentUser.deleteContact(`${id}`)
-    ]);
+	const selectedContact = STORAGE.currentUserContacts[id];
+	await Promise.all([selectedContact.deleteContact(STORAGE.currentUser.id), STORAGE.currentUser.deleteContact(`${id}`)]);
 
-    $(".contact-container").classList.add("d-none");
-    renderContacts();
-    location.reload();
+	$(".contact-container").classList.add("d-none");
+	renderContacts();
+	location.reload();
 }

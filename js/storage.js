@@ -30,8 +30,7 @@ class Storage {
 	 * @throws Will throw an error if the storage is not yet initialized.
 	 */
 	get data() {
-		if (!this.#isLoaded)
-			throw Error(`storage not yet initialized! await 'STORAGE.init()' to fix`);
+		if (!this.#isLoaded) throw Error(`storage not yet initialized! await 'STORAGE.init()' to fix`);
 		return this.#data;
 	}
 
@@ -48,10 +47,7 @@ class Storage {
 	 * @returns {Object<string, User>} An object containing all users.
 	 */
 	get allUsers() {
-		return Object.entries(this.data.users).reduce(
-			(all, [id, user]) => ({ ...all, [id]: new User(user) }),
-			{}
-		);
+		return Object.entries(this.data.users).reduce((all, [id, user]) => ({ ...all, [id]: new User(user) }), {});
 	}
 
 	/**
@@ -233,9 +229,7 @@ class Storage {
 			// handle arrays
 			if (key.startsWith("_")) {
 				delete data[key];
-				data[key.slice(1)] = value.hasOwnProperty("_placeholder")
-					? []
-					: Object.values(value);
+				data[key.slice(1)] = value.hasOwnProperty("_placeholder") ? [] : Object.values(value);
 			}
 
 			// handle empty object
@@ -251,9 +245,7 @@ class Storage {
 	 * @returns {User | undefined} The user data.
 	 */
 	getUserByInput(nameOrEmail) {
-		const userData = Object.values(this.data.users).find(
-			({ name, email }) => name === nameOrEmail || email === nameOrEmail
-		);
+		const userData = Object.values(this.data.users).find(({ name, email }) => name === nameOrEmail || email === nameOrEmail);
 		if (!userData) return undefined;
 		return new User(userData);
 	}

@@ -95,11 +95,7 @@ Array.prototype.remove = function (...items) {
  * @returns {Object.<string, *>} The filtered object.
  */
 Object.prototype.filter = function (cb) {
-	return Object.entries(this).reduce(
-		(newObj, [key, value], index) =>
-			cb([key, value], index) ? { ...newObj, [key]: value } : newObj,
-		{}
-	);
+	return Object.entries(this).reduce((newObj, [key, value], index) => (cb([key, value], index) ? { ...newObj, [key]: value } : newObj), {});
 };
 
 /**
@@ -116,10 +112,7 @@ Object.prototype.for = function (cb) {
  * @returns {Object.<string, *>} The mapped object.
  */
 Object.prototype.map = function (cb) {
-	return Object.entries(this).reduce(
-		(newObj, [key, value]) => ({ ...newObj, [key]: cb(value) }),
-		{}
-	);
+	return Object.entries(this).reduce((newObj, [key, value]) => ({ ...newObj, [key]: cb(value) }), {});
 };
 
 /**
@@ -138,10 +131,7 @@ String.prototype.convert = function () {
  * @param {boolean} [options.replace=true] - Whether to replace the element or not.
  * @returns {Promise<void>}
  */
-HTMLElement.prototype.includeTemplate = async function ({
-	url = this.getAttribute("include-template") || "",
-	replace = true
-} = {}) {
+HTMLElement.prototype.includeTemplate = async function ({ url = this.getAttribute("include-template") || "", replace = true } = {}) {
 	let template = await (await fetch(url)).text();
 	if (replace && this.parentElement) this.outerHTML = template;
 	else this.innerHTML = template;
@@ -154,11 +144,7 @@ HTMLElement.prototype.initMenus = function () {
 	this.$$('[type = "menu"]').for((menu) => {
 		const allButtons = menu.$$('[type = "option"]');
 		allButtons.for((button) => {
-			button.addEventListener("click", () =>
-				allButtons.for((button) =>
-					button.classList.toggle("active", button == event.currentTarget)
-				)
-			);
+			button.addEventListener("click", () => allButtons.for((button) => button.classList.toggle("active", button == event.currentTarget)));
 		});
 	});
 };
@@ -204,12 +190,7 @@ HTMLDialogElement.prototype.openModal = function () {
 			if (!shouldBeAbleToBeClosed) return;
 			if (event.which == 3) return;
 			if (this.getAttribute("static") == "true") return;
-			if (
-				![...this.$$(":scope > div")].every(
-					(container) => !container.contains(event.target)
-				)
-			)
-				return;
+			if (![...this.$$(":scope > div")].every((container) => !container.contains(event.target))) return;
 
 			this.$(".notification")?.classList.remove("anim-notification");
 			this.closeModal(handlerId);
@@ -280,20 +261,23 @@ HTMLElement.prototype.renderUserData = function () {
 /**
  * Toggles the dropdown menu state.
  */
-HTMLElement.prototype.toggleDropDown = function () {
-	if (!this.closest(".drp-wrapper")) return;
-	this.closest(".drp-wrapper").toggleActive();
-	const functionName = Date.now();
-	document.addEventListener(
-		"click",
-		(window[functionName] = () => {
-			if (this.closest(".drp-wrapper").contains(event.target)) return;
-			this.closest(".drp-wrapper").toggleActive();
-			document.removeEventListener("click", window[functionName]);
-			delete window[functionName];
-		})
-	);
+HTMLElement.prototype.toggleDropDown = async function () {
+	const wrapper = this.closest(".drp-wrapper");
+	if (!wrapper) return;
+	wrapper.classList.toggle("active");
+	if (!event) return;
+	const id = Date.now();
+
+	let handler;
+	window.addEventListener("click", (handler = () => checkForDropDownClosure(wrapper, id)));
+	window[id] = handler;
 };
+
+function checkForDropDownClosure(wrapper, id) {
+	if (wrapper.contains(event.target)) return;
+	window.removeEventListener("click", window[id]);
+	wrapper.classList.remove("active");
+}
 
 /**
  * Toggles the active state of the element.
@@ -319,8 +303,7 @@ HTMLElement.prototype.updatePosition = function (x = 0, y = 0) {
  * @param {string} [y=""] - The Y transition speed.
  */
 HTMLElement.prototype.setTransitionSpeed = function (x = "", y = "") {
-	const transitionSpeed =
-		x && y ? `${parseInt(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)) / 2)}ms` : "";
+	const transitionSpeed = x && y ? `${parseInt(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)) / 2)}ms` : "";
 	this.style.transitionDuration = transitionSpeed;
 };
 

@@ -39,8 +39,7 @@ class State {
 		if (this.#selectedBoard) return this.#selectedBoard;
 
 		let boardId = SESSION_getData("activeBoard");
-		if (!boardId || !(boardId in STORAGE.currentUserBoards))
-			boardId = STORAGE.currentUser.boards.at(-1);
+		if (!boardId || !(boardId in STORAGE.currentUserBoards)) boardId = STORAGE.currentUser.boards.at(-1);
 		this.selectedBoard = STORAGE.currentUserBoards[boardId];
 		return this.#selectedBoard;
 	}

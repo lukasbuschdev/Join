@@ -1,5 +1,5 @@
 import { LOCAL_getData, LOCAL_setData } from "./storage.js";
-import { $$, currentDirectory, parse } from "./utilities.js";
+import { currentDirectory, parse } from "./utilities.js";
 import "./prototype_extensions.js";
 
 /**
@@ -82,9 +82,7 @@ class Language {
 	 * @param {HTMLElement} [element=document] - The element to render language-specific content in.
 	 */
 	render(element = document) {
-		element
-			.querySelectorAll("[data-lang], [data-lang-placeholder], [data-lang-empty]")
-			.forEach(this.#renderSingleElement);
+		element.querySelectorAll("[data-lang], [data-lang-placeholder], [data-lang-empty]").forEach(this.#renderSingleElement);
 		if (element !== document) return;
 		this.#renderDocumentTitle();
 		window.dispatchEvent(new CustomEvent("langLoaded"));
@@ -123,10 +121,7 @@ class Language {
 	#renderWithOptions(element, lang) {
 		const langString = lang.split(", {")[0];
 		const langOptions = parse(lang.slice(lang.indexOf(", ") + 2));
-		element.innerHTML = `<span>${this.currentLangData[langString].replaceAll(
-			/%\w*%/g,
-			(variable) => `<b>${langOptions[variable.split("%")[1]]}</b>`
-		)}</span>`;
+		element.innerHTML = `<span>${this.currentLangData[langString].replaceAll(/%\w*%/g, (variable) => `<b>${langOptions[variable.split("%")[1]]}</b>`)}</span>`;
 	}
 
 	/**

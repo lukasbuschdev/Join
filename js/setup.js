@@ -25,10 +25,7 @@ export function getContext() {
  */
 export async function bindInlineFunctions(callerModulePath, importPaths = []) {
 	if (!callerModulePath || currentDirectory(callerModulePath) !== currentDirectory()) return;
-	const allImportPaths = new Set([
-		...importPaths,
-		"/Join/assets/templates/index/notification_template.js"
-	]);
+	const allImportPaths = new Set([...importPaths, "/Join/assets/templates/index/notification_template.js"]);
 	if (!/setup/.test(callerModulePath)) allImportPaths.add(callerModulePath);
 
 	await new Promise((resolve) => {
@@ -37,8 +34,7 @@ export async function bindInlineFunctions(callerModulePath, importPaths = []) {
 
 	const modules = await Promise.all([...allImportPaths].map((path) => import(path)));
 
-	if (document.readyState === "loading")
-		await new Promise((resolve) => window.addEventListener("DOMContentLoaded", resolve));
+	if (document.readyState === "loading") await new Promise((resolve) => window.addEventListener("DOMContentLoaded", resolve));
 
 	const allFunctionNames = getAllFunctionNames();
 	bindFunctionsToWindow(modules, allFunctionNames);
@@ -79,8 +75,9 @@ function customOnloadFunction() {
  * @returns {string|undefined} The caller module path, or undefined if not found.
  */
 export function getCallerModulePath(stack) {
-	const lastLine = stack.split("\n")
-		.filter(line => !!line)
+	const lastLine = stack
+		.split("\n")
+		.filter((line) => !!line)
 		.at(-1);
 	const matches = lastLine.match(/\/Join[^:]*/g);
 	if (matches) return matches[0];
@@ -99,21 +96,25 @@ function bindFunctionsToWindow(modules, allFunctionNames) {
 	});
 
 	if (missingFunctions.size > 0) {
-		throw new Error(
-			`Missing module / invalid import(s):\n${Array.from(missingFunctions).join("\n")}`
-		);
+		throw new Error(`Missing module / invalid import(s):\n${Array.from(missingFunctions).join("\n")}`);
 	}
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener(
+	"DOMContentLoaded",
+	() => {
 		initInactivity();
 		includeTemplates();
-	}, { once: true }
+	},
+	{ once: true }
 );
 
-window.addEventListener("EventsBound", async () => {
+window.addEventListener(
+	"EventsBound",
+	async () => {
 		await LANG.init();
 		LANG.render();
 		$("body").initMenus();
-	}, { once: true }
+	},
+	{ once: true }
 );

@@ -227,18 +227,14 @@ export class User extends Account {
 	 * @returns {Promise<void>} The result of the account deletion.
 	 */
 	async deleteAccount() {
-		await Promise.all([
-			...allBoardCollaboratorPaths(this.id),
-			...allTaskAssignedToPaths(this.id),
-			...allContactPaths(this.id)
-		].map(([path, data]) => STORAGE.set(path, data)),
+		await Promise.all(
+			[...allBoardCollaboratorPaths(this.id), ...allTaskAssignedToPaths(this.id), ...allContactPaths(this.id)].map(([path, data]) => STORAGE.set(path, data)),
 			STORAGE.delete(`users/${this.id}`)
 		);
 		if (this.img) STORAGE.webSocket.socket.emit("deleteImg");
-		await notification('account-deleted');
-		goTo(`init/login/login`, { search: '' })
+		await notification("account-deleted");
+		goTo(`init/login/login`, { search: "" });
 	}
-
 }
 
 /**
@@ -247,7 +243,7 @@ export class User extends Account {
  * @returns {Array<[string, any]>} An array of paths and data for board collaborators.
  */
 function allBoardCollaboratorPaths(userId) {
-	return Object.values(STORAGE.currentUserBoards).map((board) => [`boards/${board.id}/_collaborators`, board.collaborators.remove(userId)])
+	return Object.values(STORAGE.currentUserBoards).map((board) => [`boards/${board.id}/_collaborators`, board.collaborators.remove(userId)]);
 }
 
 /**
@@ -256,16 +252,14 @@ function allBoardCollaboratorPaths(userId) {
  * @returns {Array<[string, any]>} An array of paths and data for tasks assigned to the user.
  */
 function allTaskAssignedToPaths(userId) {
-	return Object.values(STORAGE.currentUserBoards).reduce(
-		(allAssignedTasks, { tasks }) => {
-			const assignedTasks = Object.values(tasks).reduce((taskMap, task) => {
-				if (task.assignedTo.includes(userId)) taskMap.set(`${task.id}_${userId}`, task)
-				return taskMap;
-			}, new Map())
+	return Object.values(STORAGE.currentUserBoards).reduce((allAssignedTasks, { tasks }) => {
+		const assignedTasks = Object.values(tasks).reduce((taskMap, task) => {
+			if (task.assignedTo.includes(userId)) taskMap.set(`${task.id}_${userId}`, task);
+			return taskMap;
+		}, new Map());
 
-			return [ ...allAssignedTasks, ...[...assignedTasks].map(singleTaskAssignedToPath) ];
-		}, []
-	)
+		return [...allAssignedTasks, ...[...assignedTasks].map(singleTaskAssignedToPath)];
+	}, []);
 }
 
 /**
@@ -275,9 +269,7 @@ function allTaskAssignedToPaths(userId) {
  */
 function singleTaskAssignedToPath([identifier, task]) {
 	const userId = identifier.match(/(?<=_).*$/g)[0];
-	return [`boards/${task.boardId}/tasks/${task.id}/_assignedTo`,
-		STORAGE.data.boards[task.boardId].tasks[task.id].assignedTo.remove(userId)
-	];
+	return [`boards/${task.boardId}/tasks/${task.id}/_assignedTo`, STORAGE.data.boards[task.boardId].tasks[task.id].assignedTo.remove(userId)];
 }
 
 /**
@@ -286,7 +278,5 @@ function singleTaskAssignedToPath([identifier, task]) {
  * @returns {Array<[string, any]>} An array of paths and data for contacts of the user.
  */
 function allContactPaths(userId) {
-	return Object.values(STORAGE.currentUserContacts).reduce(
-		(allContacts, contact) => [...allContacts, [`users/${contact.id}/_contacts`, STORAGE.data.users[contact.id].contacts.remove(userId)]], []
-	)
+	return Object.values(STORAGE.currentUserContacts).reduce((allContacts, contact) => [...allContacts, [`users/${contact.id}/_contacts`, STORAGE.data.users[contact.id].contacts.remove(userId)]], []);
 }

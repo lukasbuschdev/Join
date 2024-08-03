@@ -9,11 +9,7 @@ import { addBoardCategoryTemplate } from "../../assets/templates/index/task_temp
 import { boardEditButtonTemplate } from "../../assets/templates/index/summary_template.js";
 import { Task } from "../../js/task.class.js";
 import { Board } from "../../js/board.class.js";
-bindInlineFunctions(getContext(), [
-	"/Join/index/index/index.js",
-	"/Join/js/utilities.js",
-	"/Join/js/language.js"
-]);
+bindInlineFunctions(getContext(), ["/Join/index/index/index.js", "/Join/js/utilities.js", "/Join/js/language.js"]);
 
 export let NEW_BOARD_COLLABORATORS = [];
 
@@ -26,9 +22,7 @@ export async function initSummary() {
 	if (!STORAGE.currentUser.boards.length) return;
 
 	const activeSessionBoardId = SESSION_getData("activeBoard");
-	const boardId = STORAGE.currentUser.boards.includes(activeSessionBoardId)
-		? activeSessionBoardId
-		: undefined || STORAGE.currentUser.boards[0];
+	const boardId = STORAGE.currentUser.boards.includes(activeSessionBoardId) ? activeSessionBoardId : undefined || STORAGE.currentUser.boards[0];
 	if (!boardId) return;
 	renderBoard(boardId);
 	renderBoardTitleSelection();
@@ -76,7 +70,6 @@ export function getTaskStats(tasksObj) {
 
 	if (!tasks.length) return allStats;
 	tasks.forEach((task) => {
-		if (task.type === "in-progress") allStats.tasksInProgress++;
 		switch (task.type) {
 			case "in-progress":
 				allStats.tasksInProgress++;
@@ -103,10 +96,10 @@ export function getTaskStats(tasksObj) {
  */
 function renderBoard(boardId) {
 	STATE.selectedBoard = STORAGE.currentUserBoards[boardId];
-	const { id, name, tasks: tasksObj, owner } = STATE.selectedBoard;
+	const { id, name, tasks, owner } = STATE.selectedBoard;
 
-	const taskStats = getTaskStats(tasksObj);
-	SESSION_setData('activeBoard', Number(id));
+	const taskStats = getTaskStats(tasks);
+	SESSION_setData("activeBoard", Number(id));
 	$("#summary-content").innerHTML = summaryTemplate(taskStats);
 	if (owner == STORAGE.currentUser.id) $("#summary-data").innerHTML += boardEditButtonTemplate(id);
 	else $("#board-title .circle")?.remove();
@@ -122,8 +115,8 @@ function renderBoard(boardId) {
 export function renderBoardTitleSelection() {
 	const activeBoardId = SESSION_getData("activeBoard");
 	$("#board-title-selection .options").innerHTML = Object.values(STORAGE.currentUserBoards)
-	 	.filter(({ id }) => !(id == activeBoardId))
-		.reduce((template, board) => template += boardTitleSelectionTemplate(board), ``);
+		.filter(({ id }) => !(id == activeBoardId))
+		.reduce((template, board) => (template += boardTitleSelectionTemplate(board)), ``);
 }
 
 /**
@@ -219,10 +212,7 @@ export async function createNewBoard() {
 	const newBoard = await user.addBoard(boardData);
 	$("#add-board").closeModal();
 	SESSION_setData("activeBoard", Number(newBoard.id));
-	await Promise.all([
-		createBoardNotification(newBoard, collaborators),
-		notification("board-added")
-	]);
+	await Promise.all([createBoardNotification(newBoard, collaborators), notification("board-added")]);
 	location.reload();
 }
 
@@ -251,9 +241,7 @@ export function toggleDrp() {
 	event.currentTarget.toggleDropDown();
 	const drp = $(":is(.add-board-data, .edit-board-data) #drp-collaborators");
 	const filteredContacts = !!event.currentTarget.closest(".edit-board-data")
-		? Object.values(STORAGE.currentUserContacts).filter(
-				({ id }) => !STATE.selectedBoard.collaborators.includes(id)
-		  )
+		? Object.values(STORAGE.currentUserContacts).filter(({ id }) => !STATE.selectedBoard.collaborators.includes(id))
 		: Object.values(STORAGE.currentUserContacts);
 	const sortedContacts = filteredContacts.sort((a, b) => (a.name > b.name ? 1 : -1));
 	drp.innerHTML = "";
@@ -266,12 +254,8 @@ export function toggleDrp() {
 export const filterDrp = debounce(() => {
 	const drp = $(".add-board-data .drp");
 	const filter = $("#add-board-collaborators input").value;
-	const sortedContacts = Object.values(STORAGE.currentUserContacts).sort((a, b) =>
-		a.name > b.name ? 1 : -1
-	);
-	const filteredContacts = sortedContacts.filter(({ name }) =>
-		name.toLowerCase().includes(filter.toLowerCase())
-	);
+	const sortedContacts = Object.values(STORAGE.currentUserContacts).sort((a, b) => (a.name > b.name ? 1 : -1));
+	const filteredContacts = sortedContacts.filter(({ name }) => name.toLowerCase().includes(filter.toLowerCase()));
 	drp.innerHTML = "";
 	drp.renderItems(filteredContacts, contactDropdownTemplate);
 });
@@ -334,9 +318,7 @@ export async function saveEditedBoard() {
 function updateBoardCategories(categories) {
 	if (isEqual(categories, STATE.selectedBoard.categories)) return;
 	STATE.selectedBoard.categories = {};
-	Object.entries(categories).for(
-		([name, color]) => (STATE.selectedBoard.categories[name] = color)
-	);
+	Object.entries(categories).for(([name, color]) => (STATE.selectedBoard.categories[name] = color));
 	return STATE.selectedBoard.update();
 }
 

@@ -6,14 +6,14 @@ import { cloneDeep, currentUserId, error } from "./utilities.js";
 
 /**
  * @typedef {Object} BoardParams
-	 * @property {string} name - The name of the board.
-	 * @property {string} [owner=currentUserId()] - The owner of the board.
-	 * @property {string} [id=Date.now().toString()] - The ID of the board.
-	 * @property {Array<string>} [collaborators=[]] - The collaborators of the board.
-	 * @property {number} [dateOfCreation=Date.now()] - The date of creation.
-	 * @property {number} [dateOfLastEdit=Date.now()] - The date of last edit.
-	 * @property {...Object<string, Task>} [tasks={}] - The tasks associated with the board.
-	 * @property {...Object<string, string>} [categories={}] - The categories of the board.
+ * @property {string} name - The name of the board.
+ * @property {string} [owner=currentUserId()] - The owner of the board.
+ * @property {string} [id=Date.now().toString()] - The ID of the board.
+ * @property {Array<string>} [collaborators=[]] - The collaborators of the board.
+ * @property {number} [dateOfCreation=Date.now()] - The date of creation.
+ * @property {number} [dateOfLastEdit=Date.now()] - The date of last edit.
+ * @property {...Object<string, Task>} [tasks={}] - The tasks associated with the board.
+ * @property {...Object<string, string>} [categories={}] - The categories of the board.
  */
 
 /**
@@ -35,16 +35,7 @@ export class Board extends BaseClass {
 	 * Creates an instance of Board.
 	 * @param {BoardParams} boardParams - The parameters for the Board.
 	 */
-	constructor({
-		name,
-		owner = currentUserId(),
-		id = Date.now().toString(),
-		collaborators = [],
-		dateOfCreation = Date.now(),
-		dateOfLastEdit = Date.now(),
-		tasks = {},
-		categories = {}
-	}) {
+	constructor({ name, owner = currentUserId(), id = Date.now().toString(), collaborators = [], dateOfCreation = Date.now(), dateOfLastEdit = Date.now(), tasks = {}, categories = {} }) {
 		super();
 		this.name = name;
 		this.owner = owner;
@@ -69,7 +60,7 @@ export class Board extends BaseClass {
 		this.tasks[task.id] = cloneDeep(task);
 		const user = STORAGE.currentUser;
 		await this.update();
-		
+
 		const notification = new Notify({
 			userName: STORAGE.currentUser.name,
 			recipients: task.assignedTo.filter((id) => id !== user.id),
@@ -96,8 +87,7 @@ export class Board extends BaseClass {
 	 * @returns {Promise<void>} The promise that resolves when the collaborator is added.
 	 */
 	async addCollaborator(collaboratorId) {
-		if (!STORAGE.currentUser.contacts.includes(collaboratorId))
-			return error("collaboratorId not in contacts!");
+		if (!STORAGE.currentUser.contacts.includes(collaboratorId)) return error("collaboratorId not in contacts!");
 		this.collaborators.push(collaboratorId);
 		return this.update();
 	}
@@ -135,8 +125,7 @@ export class Board extends BaseClass {
 	 * @returns {Promise<void>} The promise that resolves when the board is deleted.
 	 */
 	async delete() {
-		if (STORAGE.currentUserId() !== this.owner)
-			return error(`not the owner of "${this.name}"!`);
+		if (STORAGE.currentUserId() !== this.owner) return error(`not the owner of "${this.name}"!`);
 		await Promise.all(
 			this.collaborators.map((collaboratorId) => {
 				const collaborator = STORAGE.allUsers[collaboratorId];
@@ -147,4 +136,3 @@ export class Board extends BaseClass {
 		return STORAGE.delete(`boards/${this.id}`);
 	}
 }
-

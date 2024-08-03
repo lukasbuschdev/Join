@@ -17,10 +17,9 @@ import { resetPasswordEmailTemplate, verificationEmailTemplate } from "/Join/ass
  * @implements {EmailParams}
  */
 export class Email {
-
 	recipient;
 	type;
-	
+
 	/** @type {string} */
 	subject;
 

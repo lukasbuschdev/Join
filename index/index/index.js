@@ -1,14 +1,5 @@
 import { LOCAL_getData, LOCAL_setData, SESSION_setData, STORAGE } from "../../js/storage.js";
-import {
-	$,
-	$$,
-	currentDirectory,
-	renderUserData,
-	searchParams,
-	goTo,
-	confirmation,
-	currentUserId
-} from "../../js/utilities.js";
+import { $, $$, currentDirectory, renderUserData, searchParams, goTo, confirmation, currentUserId } from "../../js/utilities.js";
 import "/Join/js/prototype_extensions.js";
 import { initSummary } from "../summary/summary.js";
 import { initBoard } from "../board/board.js";
@@ -101,9 +92,7 @@ export function loadNotifications() {
 	if (notifications.length === 0) return noNotificationsYet();
 	const container = $("#notifications-content");
 	container.innerHTML = "";
-	notifications.forEach(
-		(notification) => (container.innerHTML += notificationTemplate(notification))
-	);
+	notifications.forEach((notification) => (container.innerHTML += notificationTemplate(notification)));
 }
 
 export function noNotificationsYet() {

@@ -4,7 +4,7 @@ export function contactListLetterTemplate(letter) {
             <span class="txt-normal">${letter}</span>
         </div>
     `;
-};
+}
 
 export function contactListTemplate({ img, name, email, id, color }) {
 	return /*html*/ `
@@ -19,16 +19,16 @@ export function contactListTemplate({ img, name, email, id, color }) {
             </div>
         </div>
     `;
-};
+}
 
 export function userImgGrayTemplate() {
-    return /*html*/ `
+	return /*html*/ `
         <img class="user-img-gray" src="/Join/assets/img/icons/user_img_gray.svg">
     `;
 }
 
 export function userImgTemplate() {
-    return /*html*/ `
+	return /*html*/ `
         <img class="user-img-gray" src="/Join/assets/img/icons/user_img_gray.svg">
     `;
 }
@@ -75,9 +75,7 @@ export function contactPhoneTemplate(phone) {
 	return /*html*/ `
         <div class="phone-container column">
             <span data-lang="phone" class="txt-700">Phone</span>
-            <a id="phone-number" href="${
-				phone == "N/A" ? "return false;" : "tel:${phone}"
-			}">${phone}</a>
+            <a id="phone-number" href="${phone == "N/A" ? "return false;" : "tel:${phone}"}">${phone}</a>
         </div>
     `;
 }

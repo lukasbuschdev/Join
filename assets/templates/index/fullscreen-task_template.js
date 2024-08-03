@@ -2,10 +2,7 @@ import { STORAGE } from "../../../js/storage.js";
 import { getInitialsOfName } from "../../../js/utilities.js";
 
 export const fullscreenTaskTemplate = ({ id, category, title, description, priority, dueDate, assignedTo, subTasks, boardId }) => {
-	const [categoryName = "Default", categoryColor = "#d1d1d1"] =
-		Object.entries(STORAGE.currentUserBoards[boardId].categories)?.find(
-			([key]) => key == category
-		) ?? [];
+	const [categoryName = "Default", categoryColor = "#d1d1d1"] = Object.entries(STORAGE.currentUserBoards[boardId].categories)?.find(([key]) => key == category) ?? [];
 	return /*html*/ `
     <div class="fullscreen-content">
         <button onclick="this.closest('dialog').closeModal()" class="close-btn grid-center">
@@ -21,7 +18,7 @@ export const fullscreenTaskTemplate = ({ id, category, title, description, prior
             </div>
             <div class="row gap-25">
                 <span class="fullscreen-task-label">Priority: </span>
-                <span class="priority row gap-10" style="--prio_icon: url(/Join/assets/img/icons/prio_${priority}.svg)">${priority.replace( /^\w/, (letter) => letter.toUpperCase())}</span>
+                <span class="priority row gap-10" style="--prio_icon: url(/Join/assets/img/icons/prio_${priority}.svg)">${priority.replace(/^\w/, (letter) => letter.toUpperCase())}</span>
             </div>
             <div class="fullscreen-task-assignedTo column gap-8">
               ${fullscreenTaskAssignedTo(assignedTo)}
@@ -42,10 +39,10 @@ export const fullscreenTaskTemplate = ({ id, category, title, description, prior
 };
 
 export const fullscreenTaskAssignedTo = (assignedTo) => {
-    
-	const assignedUsers = assignedTo.map((id) => STORAGE.allUsers[id])
+	const assignedUsers = assignedTo.map((id) => STORAGE.allUsers[id]);
 	if (!assignedTo.length) return "";
-	return (/*html*/ `
+	return (
+		/*html*/ `
         <span class="fullscreen-task-label">Assigned To: </span><div>
     ` +
 		assignedUsers.reduce(
@@ -56,11 +53,7 @@ export const fullscreenTaskAssignedTo = (assignedTo) => {
                     <span>${getInitialsOfName(name)}</span>
                 </div>
                 <div class="row gap-8">
-                    <span>${name}</span>${
-					name === STORAGE.currentUser.name
-						? '<span data-lang="assigned-you-parentheses"></span>'
-						: ""
-				}
+                    <span>${name}</span>${name === STORAGE.currentUser.name ? '<span data-lang="assigned-you-parentheses"></span>' : ""}
                 </div>
             </div>
         `),
@@ -76,9 +69,7 @@ export const fullscreenTaskSubTasks = (subTasks) => {
 		(template, { name, done }) =>
 			(template += /*html*/ `
             <div class="fullscreen-subtask row gap-15">
-                <input type="checkbox" data-done="'${done}'"${
-				done == true ? "checked" : ""
-			} onchange="changeSubtaskDoneState('${name}')">
+                <input type="checkbox" data-done="'${done}'"${done == true ? "checked" : ""} onchange="changeSubtaskDoneState('${name}')">
                 <span class="txt-small">${name}</span>
             </div>
         `),

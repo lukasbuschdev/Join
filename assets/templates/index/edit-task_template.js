@@ -109,19 +109,14 @@ export const editTaskTemplate = ({ title, description, priority, dueDate, subTas
 };
 
 export function editTaskAssignedTo() {
-	return STATE.selectedBoard.collaborators.reduce(
-		(template, id) => `${template}${collaboratorTemplate(id)}`,
-		``
-	);
+	return STATE.selectedBoard.collaborators.reduce((template, id) => `${template}${collaboratorTemplate(id)}`, ``);
 }
 
 export const collaboratorTemplate = (id) => {
 	const { name, img, color } = STORAGE.allUsers[id];
 	const collaboratorIsAssigned = selectedCollaborators.includes(id);
 	return /*html*/ `
-    <div data-id="${id}" class="drp-option ${
-		collaboratorIsAssigned ? "active" : ""
-	}" onclick="selectCollaborator()">
+    <div data-id="${id}" class="drp-option ${collaboratorIsAssigned ? "active" : ""}" onclick="selectCollaborator()">
         <div class="user-img-container grid-center" style="--user-clr: ${color}">
             <span>${getInitialsOfName(name)}</span>
             <img src="${img}">
