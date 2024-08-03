@@ -228,13 +228,12 @@ export function resetPassword() {
 /**
  * Workaround for Webapp. Fixes Window height.
  */
-if (isMobile() || isStandalone()) {
-	window.addEventListener("DOMContentLoaded", () => {
-		window.addEventListener(
-			"resize",
-			throttle(() => {
-				document.documentElement.style.height = window.innerHeight + "px";
-			}, 10)
-		);
+if (isStandalone()) {
+	document.addEventListener("DOMContentLoaded", () => {
+		const setBodyHeight = throttle(function () {
+			document.body.style.height = window.innerHeight + "px";
+		});
+		setBodyHeight();
+		window.addEventListener("resize", setBodyHeight);
 	});
 }
