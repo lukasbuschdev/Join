@@ -344,11 +344,3 @@ export function HSLToHex(hslString) {
 			.join("")
 	);
 }
-
-export function isMobile() {
-	return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
-export function isStandalone() {
-	return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone;
-}

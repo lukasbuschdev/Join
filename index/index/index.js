@@ -1,5 +1,5 @@
 import { LOCAL_getData, LOCAL_setData, SESSION_setData, STORAGE } from "../../js/storage.js";
-import { $, $$, currentDirectory, renderUserData, searchParams, goTo, confirmation, currentUserId, throttle, isMobile, isStandalone } from "../../js/utilities.js";
+import { $, $$, currentDirectory, renderUserData, searchParams, goTo, confirmation, currentUserId, throttle } from "../../js/utilities.js";
 import "/Join/js/prototype_extensions.js";
 import { initSummary } from "../summary/summary.js";
 import { initBoard } from "../board/board.js";
