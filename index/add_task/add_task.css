@@ -280,6 +280,7 @@ dialog .add-task-card {
 	display: flex;
 	margin-top: auto;
 	gap: 25px;
+	white-space: nowrap;
 }
 
 .add-task-footer .btn-container {
