@@ -36,6 +36,8 @@ body {
 	font-family: "Inter";
 	background-color: var(--clr-light);
 	overflow: hidden !important;
+	height: 100vh;
+	height: 100dvh;
 }
 
 *,
