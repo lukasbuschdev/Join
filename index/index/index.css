@@ -2,7 +2,8 @@ body {
 	display: grid;
 	grid-template-columns: 232px 1fr;
 	grid-template-rows: var(--header-height) 1fr;
-	height: 100%;
+	height: 100vh;
+	height: 100dvh;
 	width: 100%;
 	transition: grid-template-columns var(--transition-fast);
 }
@@ -372,15 +373,11 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 	max-height: 300px;
 }
 
-:is(#summary-wrapper, #board-wrapper, .contacts-wrapper):has(
-		:is(#summary-content, #tasks, #selected-contact-container).d-none
-	)
-	:is(.summary-header, #board-header, .contacts-header-container) {
+:is(#summary-wrapper, #board-wrapper, .contacts-wrapper):has(:is(#summary-content, #tasks, #selected-contact-container).d-none) :is(.summary-header, #board-header, .contacts-header-container) {
 	display: none;
 }
 
-:is(#summary-content, #tasks, .add-task-card, #selected-contact-container).d-none
-	+ :is(.summary-placeholder) {
+:is(#summary-content, #tasks, .add-task-card, #selected-contact-container).d-none + :is(.summary-placeholder) {
 	display: grid;
 }
 
@@ -467,10 +464,7 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 	filter: unset;
 }
 
-:is(.add-board-data, .edit-board-data):has(
-		:is(#add-board-title, #edit-board-title) input:placeholder-shown
-	)
-	.btn-primary {
+:is(.add-board-data, .edit-board-data):has(:is(#add-board-title, #edit-board-title) input:placeholder-shown) .btn-primary {
 	pointer-events: none;
 	font-weight: 500;
 	filter: invert(1);
@@ -480,14 +474,11 @@ header .user-img-container img[src="/Join/assets/img/icons/user_img_gray.svg"] {
 	gap: 8px;
 }
 
-:is(#add-board-categories, #edit-board-categories):has(input:not(:placeholder-shown))
-	.category-colors {
+:is(#add-board-categories, #edit-board-categories):has(input:not(:placeholder-shown)) .category-colors {
 	grid-template-rows: 1fr;
 }
 
-:is(#add-board-categories, #edit-board-categories):has(input:not(:placeholder-shown))
-	.category-colors
-	> div {
+:is(#add-board-categories, #edit-board-categories):has(input:not(:placeholder-shown)) .category-colors > div {
 	padding: 5px 0;
 }
 
