@@ -103,6 +103,7 @@ function renderBoard(boardId) {
 	const taskStats = getTaskStats(tasks);
 	SESSION_setData("activeBoard", Number(id));
 	$("#summary-content").innerHTML = summaryTemplate(taskStats);
+	$("#summary-content").LANG_load();
 	if (owner == STORAGE.currentUser.id) $("#summary-data").innerHTML += boardEditButtonTemplate(id);
 	else $("#board-title .circle")?.remove();
 
