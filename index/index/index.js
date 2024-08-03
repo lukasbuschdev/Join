@@ -121,9 +121,10 @@ export function deleteAccount() {
 			confirmation("delete-account3", () => {
 				if (STORAGE.currentUser.name !== "Guest") STORAGE.currentUser.deleteAccount();
 				else
-					confirmation("delete-account4", () =>
-						$("dialog:has( .confirmation-dialog)")?.close()
-					);
+					confirmation("delete-account4", () => {
+						const modal = $("dialog:has( .confirmation-dialog)");
+						if (modal) modal.close();
+					});
 			});
 		});
 	});
