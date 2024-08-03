@@ -1,84 +1,90 @@
 <div class="column help-container gap-30">
     <div class="column gap-10">
         <h2>Help</h2>
-        <p>Welcome to the Help page for Join, your guide to using our Kanban project management tool. Here, we provide an overview of what Join is, how it can benefit you, and how to use it.</p>
+        <p>Welcome to the help page for Join, your guide to using our Kanban project management tool. Here we provide an overview of what Join is, how it can benefit you, and how to use it.</p>
     </div>
     <div class="column gap-10">
         <h3>What is Join?</h3>
         <p>Join is a Kanban-based project management tool designed and developed by a group of dedicated students as part of their web development bootcamp at the Developer Academy.</p>
-        <p>Kanban, a Japanese term meaning "billboard," is an extremely effective method for visualizing work, limiting work in progress, and maximizing efficiency (or flow). Join utilizes the principles of Kanban to assist users in managing their tasks and projects in an intuitive, visual interface.</p>
-        <p>It's important to note that Join is designed for educational purposes and is not intended for extensive business applications. While we strive to provide the best user experience possible, we cannot guarantee consistent availability, reliability, accuracy, or other quality aspects of Join.</p>
+        <p>Kanban, a Japanese term meaning "billboard," is an extremely effective method for visualizing work, limiting work in progress, and maximizing efficiency (or flow). Join uses the principles of Kanban to help users manage their tasks and projects in an intuitive, visual interface.</p>
+        <p>It's important to note that Join is designed as an educational exercise and is not intended for extensive business applications. While we strive to ensure the best possible user experience, we cannot guarantee consistent availability, reliability, accuracy, or other quality aspects related to Join.</p>
     </div>
     <div class="column gap-10">
         <h3>How to Use It</h3>
-        <p>Here is a step-by-step guide on how to use Join:</p>
+        <p>Here is a step-by-step guide to using Join:</p>
         <ul class="column gap-20">
             <li>
-                <h3>Explore the Board</h3>
-                <p>When you log in to Join, you have the option to create a new board. This board represents your project and includes four default lists:</p>
-                <ul>
-                    <li>"To Do"</li>
-                    <li>"In Progress"</li>
-                    <li>"Waiting for Feedback"</li>
-                    <li>"Done"</li>
-                </ul>
-                <p>You can add new cards to the board by clicking the "New Task" button. It's also possible to search for specific content within the cards of the currently selected board.</p>
+                <h4>Registration & Verification</h4>
+                <p>When registering a new account with Join, after entering a username, email address, and password, and confirming the privacy policy, a <b>verification email</b> is sent. To confirm the account, you can click on the <b>link in the email</b> or enter and submit the verification code manually or via copy & paste on the verification page.</p>
             </li>
             <li>
-                <h3>Add Contacts</h3>
-                <p>In Join, you can add contacts to collaborate on your projects. Go to the "Contacts" section, click the "New Contact" button, and enter the username. Once you've selected the contact and clicked the "Add Contact" button, a request will be sent, which the recipient must confirm. Afterward, you can assign tasks to this contact and others if they have been added to the respective board previously.</p>
+                <h4>Create an Account</h4>
+                <p>It is possible to upload (and delete) a profile picture and choose a profile color.</p>
             </li>
             <li>
-                <h3>Add Cards</h3>
-                <p>You can add cards on the "New Task" page. Cards represent individual tasks. Click the "Add Task" button to create a new card. First, select a board, and then fill out the task details in the card, such as:</p>
-                <ul>
-                    <li>Title</li>
-                    <li>Description</li>
-                    <li>Category</li>
-                    <li>Members</li>
-                    <li>Due Date</li>
-                    <li>Priority</li>
-                </ul>
-                <p>(Subtasks are optional.)</p>
+                <h4>Login</h4>
+                <p>Login with optional saving of login data.</p>
             </li>
             <li>
-                <h3>Move Cards</h3>
-                <p>When a task transitions from one phase to another, you can display it on the board by dragging and dropping the card from one list to another.</p>
+                <h4>Reset Password</h4>
+                <p>Resetting the password works like verification via <b>email</b>.</p>
             </li>
             <li>
-                <h3>Edit Cards</h3>
-                <p>Clicking on a card opens it, and you can edit all the task details using the "Edit" button.</p>
+                <h4>Automatic Logout</h4>
+                <p>Automatic logout after 5 minutes of inactivity.</p>
             </li>
             <li>
-                <h3>Delete Cards</h3>
-                <p>When a task is completed, you can either move it to the "Done" list or delete it. Deleting a card permanently removes it from the board. Please be cautious when deleting cards, as this action cannot be undone.</p>
+                <h4>Notifications & Websocket Server</h4>
+                <p>When sending a contact request, collaborator invitation, or assigning a task to a collaborator, the recipient receives a live notification if they are online. A <b>Websocket server</b> has been implemented for this.</p>
             </li>
             <li>
-                <h3>User Card</h3>
-                <p>When you click on the button located in the upper right corner with your profile picture, a card with the following options opens:</p>
-                <ul class="column gap-20">
-                    <li>
-                        <h4>Notifications</h4>
-                        <p class="margin-5">Here, you can see notifications related to boards you've been added to, as well as contact requests.</p>
-                    </li>
-                    <li>
-                        <h4>Edit Account</h4>
-                        <p class="margin-5">Here, you can edit your profile picture, username, email, password, and profile color.</p>
-                    </li>
-                    <li>
-                        <h4>Language</h4>
-                        <p class="margin-5">Here, you can set your user language using the buttons.</p>
-                    </li>
-                    <li>
-                        <h4>Log Out</h4>
-                        <p class="margin-5">Use this button to log out.</p>
-                    </li>
-                </ul>
+                <h4>Account Settings</h4>
+                <p>Clicking on your profile at the top right opens the account settings. Here you can <b>view notifications</b>, accept or decline <b>contact requests</b> and <b>board invitations</b>, <b>reset your password</b>, or <b>delete your account</b>. You can also <b>log out</b> here.</p>
+            </li>
+            <li>
+                <h4>Languages</h4>
+                <p>The language is loaded according to the default language set in the browser. Language settings are also available during login and in the account settings.</p>
+            </li>
+            <li>
+                <h4>Create a Board</h4>
+                <p>There is not only no default board, but you must also first <b>create</b> one or be <b>invited</b> to another (for newly created accounts). You can set a name, define categories, and invite collaborators.</p>
+            </li>
+            <li>
+                <h4>Edit a Board</h4>
+                <p>After creation, the board can be edited (only by the creator), collaborators can be added via invitation (but not removed), and categories can be added or deleted.</p>
+            </li>
+            <li>
+                <h4>Delete a Board</h4>
+                <p>Entire boards can also be deleted (with confirmation).</p>
+            </li>
+            <li>
+                <h4>Select a Board</h4>
+                <p>To select the <b>active board</b>, you must first click on "Overview"/"Summary" and then, if necessary, click on "Select Board". Then select the desired board from the list.</p>
+            </li>
+            <li>
+                <h4>Create Tasks</h4>
+                <p>Individual tasks (including <b>subtasks</b>) can be created and assigned to collaborators of the corresponding board.</p>
+            </li>
+            <li>
+                <h4>Edit/Delete Tasks</h4>
+                <p>Tasks can be edited and deleted.</p>
+            </li>
+            <li>
+                <h4>Move Tasks</h4>
+                <p>Tasks can be moved between the four types <b>to do</b>, <b>in progress</b>, <b>awaiting feedback</b>, and <b>done</b> via <b>drag & drop</b> in the board view.</p>
+            </li>
+            <li>
+                <h4>Contact & Collaborator Request</h4>
+                <p>When adding a contact or a collaborator, a <b>request is sent</b> that must be confirmed by the recipient before being saved in the contacts/board.</p>
+            </li>
+            <li>
+                <h4>Add Contacts</h4>
+                <p>To add a new contact, <b>at least part</b> of a name must be entered in the search field before search results are displayed. When adding the contact, a <b>contact request</b> is sent to them, which must be <b>confirmed</b> or <b>declined</b>.</p>
             </li>
         </ul>
-        <p>Remember that effective use of Join requires regular updates from you and your team to ensure that the board reflects the current status of your project. Do you have more questions about Join? Feel free to contact us at 
+        <p>Remember, effective use of Join requires regular updates from you and your team to ensure the board reflects the current state of your project. Do you have more questions about Join? Feel free to contact us at 
             <a href="mailto:musician.tarik@gmx.de" >musician.tarik@gmx.de</a> or 
             <a href="mailto:lukas.busch1996@gmx.at" >lukas.busch1996@gmx.at</a>. 
-        We are here to assist you!</p>
+        We are here to help you!</p>
     </div>
 </div>
