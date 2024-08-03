@@ -229,7 +229,7 @@ export function resetPassword() {
  * Workaround for Webapp. Fixes Window height.
  */
 try {
-	const e = new TouchEvent();
+	document.createEvent("TouchEvent");
 	document.addEventListener("DOMContentLoaded", () => {
 		const setBodyHeight = throttle(function () {
 			document.body.style.height = window.innerHeight + "px";
