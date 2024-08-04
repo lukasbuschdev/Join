@@ -256,7 +256,7 @@
 /* CONTACT INPUT/SEARCH (RIGHT SIDE) */
 
 .add-contact-field {
-    width: 570px;
+    width: fit-content;
     height: 100%;
     position: relative;
     padding: 66px 46px;
