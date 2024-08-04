@@ -56,10 +56,15 @@
 	#board-wrapper {
 		gap: 10px;
 		padding: 2vh 1rem 0;
+		overflow: hidden;
 	}
 }
 
 @media (max-width: 500px) {
+	#content {
+		overflow: hidden;
+	}
+
 	#fullscreen-task-modal :is(#fullscreen-task, #edit-task) {
 		min-width: 0;
 	}
