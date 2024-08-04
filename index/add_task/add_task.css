@@ -227,6 +227,7 @@ dialog .add-task-card {
 
 #add-task-modal .add-task-card {
 	height: 90vh;
+	margin: auto;
 }
 
 #add-task-modal .add-task-heading {
