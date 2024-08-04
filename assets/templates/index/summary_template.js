@@ -44,7 +44,7 @@ export function summaryTemplate({ tasksInBoard, tasksInProgress, tasksAwaitingFe
                 </button>
             </div>
             <div class="row gap-30">
-                <button class="summary-btn flex-center gap-20" onclick="$('nav #board').click()">
+                <button class="summary-btn flex-center gap-20" onclick="document.querySelector('nav #board').click()">
                     <div class="circle grid-center" style="--diameter: 70px;background-color:var(--clr-dark);">
                         <img src="/Join/assets/img/icons/edit_dark.svg" alt="">
                     </div>
@@ -53,7 +53,7 @@ export function summaryTemplate({ tasksInBoard, tasksInProgress, tasksAwaitingFe
                         <span data-lang="to-do">To-do</span>
                     </div>
                 </button>
-                <button class="summary-btn flex-center gap-20" onclick="$('nav #board').click()">
+                <button class="summary-btn flex-center gap-20" onclick="document.querySelector('nav #board').click()">
                     <div class="circle grid-center" style="--diameter: 70px;background-color:var(--clr-dark);">
                         <img src="/Join/assets/img/icons/check_dark.svg" alt="">
                     </div>
