@@ -1,193 +1,194 @@
 :root {
-    --grid-width: 580px;
+	--grid-width: 580px;
 }
 
 #summary-wrapper {
-    padding: 2vh 4rem;
-    gap: 20px;
+	padding: 2vh 4rem;
+	gap: 20px;
 }
 
 .summary-header {
-    position: relative;
+	position: relative;
 }
 
 .edit-btn.circle {
-    --diameter: 35px;
-    background-color: var(--clr-dark);
+	--diameter: 35px;
+	background-color: var(--clr-dark);
 }
 
 .edit-btn {
-    position: absolute;
-    inset: auto 0 0 auto;
-    translate: 50% 50%;
+	position: absolute;
+	inset: auto 0 0 auto;
+	translate: 50% 50%;
 }
 
 .edit-btn:not(:hover) {
-    background-color: var(--clr-blue);
+	background-color: var(--clr-blue);
 }
 
 .summary-header > div {
-    position: relative;
+	position: relative;
 }
 
 .summary-header h3 {
-    /* margin: 0 auto; */
-    font-size: min(3vmin, 1.5rem);
+	/* margin: 0 auto; */
+	font-size: min(3vmin, 1.5rem);
 }
 
 .summary-header .add-board {
-    position: absolute;
-    right: 0;
-    top: 10%;
+	position: absolute;
+	right: 0;
+	top: 10%;
 }
 
 #summary-body {
-    gap: 35px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-areas: "a";
+	gap: 35px;
+	margin: 0 auto;
+	display: grid;
+	grid-template-areas: "a";
 }
 
 #summary-content {
-    align-items: flex-start;
-    grid-area: a;
-    gap: 50px;
+	align-items: flex-start;
+	grid-area: a;
+	gap: 50px;
 }
 
 #summary-data {
-    aspect-ratio: 1;
-    position: relative;
+	flex-direction: column-reverse;
+	aspect-ratio: 1;
+	position: relative;
 }
 
 #summary-data .row {
-    flex-grow: 1;
-    height: calc(calc(100% / 3) - 20px);
-    width: 100%;
+	flex-grow: 1;
+	height: calc(calc(100% / 3) - 20px);
+	width: 100%;
 }
 
 #summary-data .row:nth-of-type(2) button {
-    display: flex;
-    justify-content: center;
-    /* gap: 60px; */
+	display: flex;
+	justify-content: center;
+	/* gap: 60px; */
 }
 
 #summary-data .row:nth-of-type(2) button > div:not(.line) {
-    width: 100%;
+	width: 100%;
 }
 
 #summary-data .row:nth-of-type(3) button {
-    display: flex;
+	display: flex;
 }
 
 #summary-data .row:nth-of-type(3) button:hover:not(:active) .circle {
-    transition: inherit;
-    background-color: white !important;
+	transition: inherit;
+	background-color: white !important;
 }
 
 #summary-data .row:nth-of-type(3) button:is(:not(:hover), :active) img {
-    filter: brightness(0) invert(1);
+	filter: brightness(0) invert(1);
 }
 
 #summary-data .row:nth-of-type(3) button img {
-    width: 50%;
+	width: 50%;
 }
 
 #summary-data .row > button {
-    display: grid;
-    place-items: center;
-    align-content: center;
-    width: calc(100% + var(--scale, 0px));
-    height: calc(100% + var(--scale, 0px));
-    padding: 0 25px;
-    text-align: center;
-    border-radius: 30px;
-    box-shadow: 0px 0px 4px 0px #0000001A;
-    background-color: white;
+	display: grid;
+	place-items: center;
+	align-content: center;
+	width: calc(100% + var(--scale, 0px));
+	height: calc(100% + var(--scale, 0px));
+	padding: 0 25px;
+	text-align: center;
+	border-radius: 30px;
+	box-shadow: 0px 0px 4px 0px #0000001a;
+	background-color: white;
 }
 
 #summary-data .line {
-    height: 50%;
-    width: 2px;
-    border-radius: 9999px;
-    flex-shrink: 0;
+	height: 50%;
+	width: 2px;
+	border-radius: 9999px;
+	flex-shrink: 0;
 }
 
 .urgent-tasks .circle {
-    --diameter: 60px;
-    background-color: var(--clr-orange);
+	--diameter: 60px;
+	background-color: var(--clr-orange);
 }
 .urgent-tasks .circle img {
-    width: 50%;
-    filter: brightness(0) invert(1);
+	width: 50%;
+	filter: brightness(0) invert(1);
 }
 
 #summary-selection {
-    padding: 2px 10px;
-    width: 200px;
-    height: 100%;
-    flex-shrink: 0;
-    overflow: hidden;
-    scrollbar-gutter: stable;
-    transition: var(--transition-fast);
+	padding: 2px 10px;
+	width: 200px;
+	height: 100%;
+	flex-shrink: 0;
+	overflow: hidden;
+	scrollbar-gutter: stable;
+	transition: var(--transition-fast);
 }
 
 #summary-contextmenu {
-    overflow: hidden;
-    width: 0px;
-    transition: width var(--transition-fast), background-color var(--transition-fast);
-    writing-mode: vertical-lr;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: inset 4px 0 4px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    min-height: 200px;
+	overflow: hidden;
+	width: 0px;
+	transition: width var(--transition-fast), background-color var(--transition-fast);
+	writing-mode: vertical-lr;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: inset 4px 0 4px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	min-height: 200px;
 }
 
 #summary-selection > button {
-    padding: 8px 20px;
-    border-radius: 15px;
-    background-color: white;    
-    box-shadow: 0px 0px 4px 0px #0000001A;
-    font-weight: 600;
-    font-size: 1.5rem;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: space-between;
+	padding: 8px 20px;
+	border-radius: 15px;
+	background-color: white;
+	box-shadow: 0px 0px 4px 0px #0000001a;
+	font-weight: 600;
+	font-size: 1.5rem;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: space-between;
 }
 
 #summary-selection > button > .circle img {
-    height: 100%;
+	height: 100%;
 }
 
 #summary-selection > button:not(.active) span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 #summary-selection > button:not(.active) .circle {
-    display: none;
+	display: none;
 }
 
 #summary-wrapper button {
-    transition: var(--transition-fast);
+	transition: var(--transition-fast);
 }
 
 #summary-selection > button:not(.active) {
-    margin-right: 10px;
+	margin-right: 10px;
 }
 
 #summary-body button:hover:not(:active) {
-    background-color: var(--clr-active);
-    color: white;
+	background-color: var(--clr-active);
+	color: white;
 }
 
 #summary-selection > button.active {
-    background-color: var(--clr-active);
-    color: white;
+	background-color: var(--clr-active);
+	color: white;
 }
 
 #summary-content > .row:first-child {
-    align-items: unset;
+	align-items: unset;
 }
