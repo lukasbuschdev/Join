@@ -27,7 +27,7 @@
 	"in-progress": "In Progress",
 	"done": "Done",
 	"no-tasks": "No task",
-	"task-deleted": "Aufgabe gelöscht!",
+	"task-deleted": "Task deleted!",
 
 	"header-kanban": "Kanban Project Management Tool",
 
@@ -52,7 +52,7 @@
 	"board-added": "Board added!",
 	"board-deleted": "Board deleted!",
 	"no-boards": "No boards yet",
-	"board-selection": "Tafel auswählen",
+	"board-selection": "Select board",
 
 	"heading-add-task": "Add Task",
 	"select-board": "Select board",
