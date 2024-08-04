@@ -1,4 +1,6 @@
-import { STORAGE } from "/Join/js/storage.js";
+import { confirmationTemplate } from "../assets/templates/index/confirmation_template.js";
+import { LANG } from "../js/language.js";
+import { STORAGE } from "../js/storage.js";
 
 /**
  * shortcut of document.querySelector
@@ -16,15 +18,6 @@ export function $(selectors) {
  */
 export function $$(selector) {
 	return [...document.querySelectorAll(selector)];
-}
-
-/**
- * returns the current directory name
- * @param {string} path
- * @returns {'login' | 'signup' | 'forgot_password' | 'reset_password' | 'create_account' | 'verification' | 'summary' | 'board' | 'add_task' | 'contacts' | 'help' | 'privacy' | 'legal_notice' | 'privacy'}
- */
-export function currentDirectory(path = window.location.pathname) {
-	return path.split("/").at(-1).split(".")[0].replace("-", "_");
 }
 
 /**
@@ -93,40 +86,6 @@ export function popUpNotificationTemplate(languageKey) {
 }
 
 /**
- * returns a debounced function from an input callback function
- * @template T
- * @param {(...params: any[]) => T} cb - Callback function
- * @param {number} [delay=1000] - Idle time in milliseconds before execution (1000 default)
- * @returns {(...params: any[]) => T}
- */
-export function debounce(cb, delay = 1000) {
-	let timeout;
-	return (...args) => {
-		clearTimeout(timeout);
-		timeout = setTimeout(() => {
-			cb(...args);
-		}, delay);
-	};
-}
-
-/**
- * returns a throttled function from an input callback function
- * @template T
- * @param {(...params: any[]) => T} cb - Callback function
- * @param {number} [delay=1000] - Cooldown time in milliseconds (1000 default)
- * @returns {(...params: any[]) => T}
- */
-export function throttle(cb, delay = 1000) {
-	let shouldWait = false;
-	return (...args) => {
-		if (shouldWait) return;
-		cb(...args);
-		shouldWait = true;
-		setTimeout(() => (shouldWait = false), delay);
-	};
-}
-
-/**
  * renders into elements with the 'include-template' attribute
  * @returns {Promise<void[]>}
  */
@@ -145,23 +104,6 @@ export function includeTemplates() {
  */
 export async function getTemplate(url) {
 	return (await fetch(url)).text();
-}
-
-/**
- * custom eval() implementation
- * @param {string} evalString
- * @returns {any}
- */
-export function parse(evalString) {
-	return Function(`'use strict'; return (${evalString}) ?? false`)();
-}
-
-/**
- * returns the current url search params
- * @returns {URLSearchParams}
- */
-export function searchParams() {
-	return new URLSearchParams(document.location.search);
 }
 
 /**
@@ -298,17 +240,6 @@ export function pickColor() {
 }
 
 /**
- * Calculates the fraction of the numerator over the denominator within a range.
- * @param {number} numerator - The numerator.
- * @param {number} denominator - The denominator.
- * @param {number} [range=1] - The range.
- * @returns {number} The calculated fraction.
- */
-export function getFraction(numerator, denominator, range = 1) {
-	return numerator / (denominator / range);
-}
-
-/**
  * Moves the color cursor to the specified position and sets its background color.
  * @param {number} offsetX - The X offset.
  * @param {number} offsetY - The Y offset.
@@ -322,3 +253,130 @@ export function moveColorCursor(offsetX, offsetY, userColor) {
 	colorCursor.style.setProperty("--y", offsetY);
 	colorCursor.style.backgroundColor = userColor;
 }
+
+/**
+ * Adds the selected color to the accept button.
+ * @param {string} userColor - The selected color.
+ * @returns {void}
+ */
+export function addAcceptColor(userColor) {
+	$("#accept-user-color").classList.add("active");
+	$("label").classList.remove("border");
+
+	$("#accept-user-color").onclick = (event) => colorPicker(event, userColor);
+}
+
+/**
+ * Sets the selected color to the user image container and updates the user data.
+ * @param {Event} event - The event object.
+ * @param {string} userColor - The selected color.
+ * @returns {void}
+ */
+export function colorPicker(event, userColor) {
+	event.stopPropagation();
+	$$(".user-img-container.account").for((button) => button.style.setProperty("--user-clr", userColor));
+	if (STORAGE.currentUser) {
+		STORAGE.currentUser.setColor(userColor);
+		renderUserData();
+	}
+	toggleColorPicker();
+}
+
+/**
+ * @param {string} type
+ * @param {() => any} cb - Callback function
+ * @param {HTMLButtonElement} confirmBtn - The button to confirm the action
+ * @returns {Promise<void>}
+ */
+export async function confirmation(type, cb, confirmBtn) {
+	const dataLang = type.includes(",") ? type.slice(0, type.indexOf(",")) : type;
+	if (!LANG.currentLangData[`confirmation-${dataLang}`]) return error("message unknown!");
+	const confirmationContainer = document.createElement("dialog");
+	confirmationContainer.type = "modal";
+	confirmationContainer.innerHTML = confirmationTemplate(type);
+	confirmationContainer.LANG_load();
+	confirmationContainer.$(".btn-primary").addEventListener(
+		"click",
+		() => {
+			cb();
+			confirmationContainer.closeModal();
+			confirmationContainer.remove();
+		},
+		{ once: true }
+	);
+
+	$("body").append(confirmationContainer);
+	confirmationContainer.openModal();
+}
+
+/**
+ * Renders user data into elements with the 'data-user-data' attribute
+ * @returns {void}
+ */
+export function renderUserData() {
+	const { name, img, color } = STORAGE.currentUser;
+	(this ?? document.documentElement).$$("[data-user-data]").forEach((userField) => {
+		const dataType = userField.dataset.userData;
+		switch (dataType) {
+			case "img":
+				return renderImage(userField, img);
+			case "name":
+				return renderName(userField, name);
+			case "initials":
+				return renderInitials(userField, name);
+			case "color":
+				return renderColor(userField, color);
+			default:
+				return;
+		}
+	});
+}
+
+/**
+ * Resets the menus
+ * @returns {void}
+ */
+export const resetMenus = function () {
+	menuOptionInitator.disconnect();
+	this.$$('[type = "menu"]').for((menu) => menuOptionInitator.observe(menu, mutationObserverOptions));
+};
+
+/**
+ * Renders the user's name into the specified field
+ * @param {HTMLElement} userField - The HTML element to render the name into
+ * @param {string} name - The user's name
+ * @returns {void}
+ */
+export const renderName = (userField, name) => {
+	userField.innerText = name;
+};
+
+/**
+ * Renders the user's image into the specified field
+ * @param {HTMLElement} userField - The HTML element to render the image into
+ * @param {string} img - The URL of the user's image
+ * @returns {void}
+ */
+export const renderImage = (userField, img) => {
+	userField.src = img;
+};
+
+/**
+ * Renders the user's initials into the specified field
+ * @param {HTMLElement} userField - The HTML element to render the initials into
+ * @param {string} name - The user's name
+ * @returns {void}
+ */
+export const renderInitials = (userField, name) => {
+	userField.innerText = getInitialsOfName(name);
+};
+
+/**
+ * Renders the user's color into the specified field
+ * @param {HTMLElement} userField - The HTML element to render the color into
+ * @param {string} color - The user's color
+ * @returns {void}
+ */
+export const renderColor = (userField, color) => {
+	userField.style.setProperty("--user-clr", color);
+};
