@@ -1,90 +1,147 @@
 <div class="column help-container gap-30">
-    <div class="column gap-10">
-        <h2>Ayuda</h2>
-        <p>Bienvenido a la página de ayuda de Join, su guía para usar nuestra herramienta de gestión de proyectos Kanban. Aquí ofrecemos una visión general de lo que es Join, cómo puede beneficiarle y cómo usarlo.</p>
-    </div>
-    <div class="column gap-10">
-        <h3>¿Qué es Join?</h3>
-        <p>Join es una herramienta de gestión de proyectos basada en Kanban, diseñada y desarrollada por un grupo de estudiantes dedicados como parte de su bootcamp de desarrollo web en la Developer Academy.</p>
-        <p>Kanban, un término japonés que significa "cartelera", es un método extremadamente efectivo para visualizar el trabajo, limitar el trabajo en curso y maximizar la eficiencia (o flujo). Join utiliza los principios de Kanban para ayudar a los usuarios a gestionar sus tareas y proyectos en una interfaz intuitiva y visual.</p>
-        <p>Es importante tener en cuenta que Join está diseñado como un ejercicio educativo y no está destinado para aplicaciones comerciales extensas. Aunque nos esforzamos por asegurar la mejor experiencia de usuario posible, no podemos garantizar una disponibilidad, fiabilidad, precisión u otros aspectos de calidad consistentes en relación con Join.</p>
-    </div>
-    <div class="column gap-10">
-        <h3>Cómo usarlo</h3>
-        <p>Aquí hay una guía paso a paso para usar Join:</p>
-        <ul class="column gap-20">
-            <li>
-                <h4>Registro y Verificación</h4>
-                <p>Al registrar una nueva cuenta en Join, después de ingresar un nombre de usuario, dirección de correo electrónico y contraseña, y confirmar la política de privacidad, se envía un <b>correo electrónico de verificación</b>. Para confirmar la cuenta, puede hacer clic en el <b>enlace en el correo electrónico</b> o ingresar y enviar el código de verificación manualmente o mediante copiar y pegar en la página de verificación.</p>
-            </li>
-            <li>
-                <h4>Crear una Cuenta</h4>
-                <p>Es posible subir (y eliminar) una foto de perfil y elegir un color de perfil.</p>
-            </li>
-            <li>
-                <h4>Iniciar Sesión</h4>
-                <p>Iniciar sesión con la opción de guardar los datos de inicio de sesión.</p>
-            </li>
-            <li>
-                <h4>Restablecer Contraseña</h4>
-                <p>Restablecer la contraseña funciona como la verificación mediante <b>correo electrónico</b>.</p>
-            </li>
-            <li>
-                <h4>Cierre de Sesión Automático</h4>
-                <p>Cierre de sesión automático después de 5 minutos de inactividad.</p>
-            </li>
-            <li>
-                <h4>Notificaciones y Servidor Websocket</h4>
-                <p>Al enviar una solicitud de contacto, una invitación de colaborador o asignar una tarea a un colaborador, el destinatario recibe una notificación en vivo si está en línea. Se ha implementado un <b>servidor Websocket</b> para esto.</p>
-            </li>
-            <li>
-                <h4>Ajustes de la Cuenta</h4>
-                <p>Al hacer clic en su perfil en la parte superior derecha, se abren los ajustes de la cuenta. Aquí puede <b>ver notificaciones</b>, aceptar o rechazar <b>solicitudes de contacto</b> y <b>invitaciones de tablero</b>, <b>restablecer su contraseña</b> o <b>eliminar su cuenta</b>. Además, puede <b>cerrar sesión</b> aquí.</p>
-            </li>
-            <li>
-                <h4>Idiomas</h4>
-                <p>El idioma se carga según el idioma predeterminado configurado en el navegador. Los ajustes de idioma también están disponibles durante el inicio de sesión y en los ajustes de la cuenta.</p>
-            </li>
-            <li>
-                <h4>Crear un Tablero</h4>
-                <p>No solo no hay un tablero predeterminado, sino que primero debe <b>crear</b> uno o ser <b>invitado</b> a otro (para cuentas recién creadas). Puede establecer un nombre, definir categorías e invitar a colaboradores.</p>
-            </li>
-            <li>
-                <h4>Editar un Tablero</h4>
-                <p>Después de la creación, el tablero puede ser editado (solo por el creador), se pueden agregar colaboradores mediante invitación (pero no eliminar), y se pueden agregar o eliminar categorías.</p>
-            </li>
-            <li>
-                <h4>Eliminar un Tablero</h4>
-                <p>Los tableros completos también se pueden eliminar (con confirmación).</p>
-            </li>
-            <li>
-                <h4>Seleccionar un Tablero</h4>
-                <p>Para seleccionar el <b>tablero activo</b>, primero debe hacer clic en "Resumen"/"Summary" y luego, si es necesario, en "Seleccionar Tablero"/"Select Board". Luego seleccione el tablero deseado de la lista.</p>
-            </li>
-            <li>
-                <h4>Crear Tareas</h4>
-                <p>Se pueden crear tareas individuales (incluyendo <b>subtareas</b>) y asignarlas a colaboradores del tablero correspondiente.</p>
-            </li>
-            <li>
-                <h4>Editar/Eliminar Tareas</h4>
-                <p>Las tareas se pueden editar y eliminar.</p>
-            </li>
-            <li>
-                <h4>Mover Tareas</h4>
-                <p>Las tareas se pueden mover entre los cuatro tipos <b>por hacer</b>, <b>en progreso</b>, <b>esperando retroalimentación</b> y <b>hecho</b> mediante <b>arrastrar y soltar</b> en la vista del tablero.</p>
-            </li>
-            <li>
-                <h4>Solicitud de Contacto y Colaborador</h4>
-                <p>Al agregar un contacto o un colaborador, se envía una <b>solicitud</b> que debe ser confirmada por el destinatario antes de guardarse en los contactos/tablero.</p>
-            </li>
-            <li>
-                <h4>Agregar Contactos</h4>
-                <p>Para agregar un nuevo contacto, se debe ingresar <b>al menos una parte</b> de un nombre en el campo de búsqueda antes de que se muestren los resultados de la búsqueda. Al agregar el contacto, se le envía una <b>solicitud de contacto</b>, que debe ser <b>confirmada</b> o <b>rechazada</b>.</p>
-            </li>
-        </ul>
-        <p>Recuerde que el uso efectivo de Join requiere actualizaciones regulares de usted y su equipo para asegurarse de que el tablero refleje el estado actual de su proyecto. ¿Tiene más preguntas sobre Join? No dude en contactarnos en 
-            <a href="mailto:musician.tarik@gmx.de" >musician.tarik@gmx.de</a> o 
-            <a href="mailto:lukas.busch1996@gmx.at" >lukas.busch1996@gmx.at</a>. 
-        ¡Estamos aquí para ayudarle!</p>
-    </div>
+  <div class="column gap-10">
+    <h2>Ayuda</h2>
+    <p>Bienvenido a la página de ayuda de Join. Aquí podrás conocer más sobre el sistema, su propósito, sus principales funciones y cómo utilizar las diferentes herramientas disponibles dentro de la plataforma.</p>
+  </div>
+
+  <div class="column gap-10">
+    <h3>¿Qué es Join?</h3>
+
+    <p>
+      Join es un sistema de gestión de proyectos basado en Kanban, desarrollado por
+      <b>Servicios Web Mérida</b> como ejemplo de una herramienta interna de productividad y un sistema web empresarial personalizado.
+    </p>
+
+    <p>
+      El proyecto demuestra cómo una aplicación web desarrollada a la medida puede ayudar a los equipos a organizar su trabajo, administrar proyectos, colaborar con otros usuarios, asignar responsabilidades y dar seguimiento a las tareas a través de
+      diferentes etapas de trabajo.
+    </p>
+
+    <p>
+      Join se basa en los principios de Kanban, un método visual de gestión de proyectos utilizado para organizar flujos de trabajo y facilitar la comprensión del estado actual de las tareas. Las tareas pueden moverse entre las etapas
+      <b>Por hacer</b>, <b>En progreso</b>, <b>Esperando retroalimentación</b> y <b>Completado</b>, proporcionando a los equipos una visión clara del avance de su trabajo.
+    </p>
+
+    <p>
+      Además de la gestión de tareas y tableros, Join incluye funciones como cuentas de usuario, verificación por correo electrónico, gestión de contactos y colaboradores, notificaciones en tiempo real, invitaciones a tableros, subtareas,
+      interacciones mediante drag & drop y soporte para varios idiomas.
+    </p>
+
+    <p>
+      Join funciona principalmente como un proyecto de demostración y como ejemplo de portafolio para el desarrollo de sistemas web personalizados. No se opera como un servicio comercial de gestión de proyectos, por lo que no se garantiza
+      disponibilidad continua ni niveles de servicio propios de un sistema en producción.
+    </p>
+  </div>
+
+  <div class="column gap-10">
+    <h3>Cómo utilizar Join</h3>
+    <p>A continuación encontrarás una guía paso a paso para utilizar Join:</p>
+
+    <ul class="column gap-20">
+      <li>
+        <h4>Registro y verificación</h4>
+        <p>
+          Al registrar una nueva cuenta en Join, después de ingresar un nombre de usuario, correo electrónico y contraseña, y de aceptar la política de privacidad, se envía un <b>correo de verificación</b>. Para confirmar la cuenta, puedes hacer clic
+          en el <b>enlace incluido en el correo</b> o ingresar y enviar manualmente el código de verificación, ya sea escribiéndolo o utilizando copiar y pegar en la página de verificación.
+        </p>
+      </li>
+
+      <li>
+        <h4>Personalización del perfil</h4>
+        <p>Es posible subir o eliminar una imagen de perfil y seleccionar un color para el perfil.</p>
+      </li>
+
+      <li>
+        <h4>Inicio de sesión</h4>
+        <p>Los usuarios pueden iniciar sesión en su cuenta con la opción de guardar sus datos de acceso.</p>
+      </li>
+
+      <li>
+        <h4>Restablecer contraseña</h4>
+        <p>El restablecimiento de contraseña se realiza mediante una <b>verificación por correo electrónico</b>, de manera similar al proceso de verificación de una cuenta nueva.</p>
+      </li>
+
+      <li>
+        <h4>Cierre de sesión automático</h4>
+        <p>Los usuarios cierran sesión automáticamente después de 5 minutos de inactividad.</p>
+      </li>
+
+      <li>
+        <h4>Notificaciones y servidor WebSocket</h4>
+        <p>
+          Al enviar una solicitud de contacto, una invitación como colaborador o al asignar una tarea a un colaborador, el destinatario recibe una notificación en tiempo real si se encuentra conectado. Para esta funcionalidad se implementó un
+          <b>servidor WebSocket</b>.
+        </p>
+      </li>
+
+      <li>
+        <h4>Configuración de la cuenta</h4>
+        <p>
+          Al hacer clic en tu perfil en la parte superior derecha se abre la configuración de la cuenta. Desde ahí puedes <b>consultar notificaciones</b>, aceptar o rechazar <b>solicitudes de contacto</b> e <b>invitaciones a tableros</b>,
+          <b>restablecer tu contraseña</b> o <b>eliminar tu cuenta</b>. También puedes <b>cerrar sesión</b> desde esta sección.
+        </p>
+      </li>
+
+      <li>
+        <h4>Idiomas</h4>
+        <p>Inicialmente, el idioma se carga de acuerdo con el idioma predeterminado configurado en el navegador. También es posible cambiar el idioma durante el inicio de sesión y desde la configuración de la cuenta.</p>
+      </li>
+
+      <li>
+        <h4>Crear un tablero</h4>
+        <p>Las cuentas nuevas no cuentan con un tablero predeterminado. Primero debes <b>crear</b> un tablero o ser <b>invitado</b> a uno existente. Al crear un tablero puedes establecer un nombre, definir categorías e invitar colaboradores.</p>
+      </li>
+
+      <li>
+        <h4>Editar un tablero</h4>
+        <p>
+          Después de su creación, el tablero puede ser editado por su creador. Es posible agregar colaboradores mediante invitaciones y también agregar o eliminar categorías. Actualmente, los colaboradores que ya fueron agregados no pueden eliminarse
+          posteriormente.
+        </p>
+      </li>
+
+      <li>
+        <h4>Eliminar un tablero</h4>
+        <p>También es posible eliminar tableros completos después de confirmar la eliminación.</p>
+      </li>
+
+      <li>
+        <h4>Seleccionar un tablero</h4>
+        <p>Para seleccionar el <b>tablero activo</b>, primero debes hacer clic en "Resumen"/"Vista general" y posteriormente, si es necesario, en "Seleccionar tablero". Después podrás elegir el tablero deseado de la lista.</p>
+      </li>
+
+      <li>
+        <h4>Crear tareas</h4>
+        <p>Se pueden crear tareas individuales, incluyendo <b>subtareas</b>, y asignarlas a los colaboradores del tablero correspondiente.</p>
+      </li>
+
+      <li>
+        <h4>Editar/eliminar tareas</h4>
+        <p>Las tareas existentes pueden editarse o eliminarse.</p>
+      </li>
+
+      <li>
+        <h4>Mover tareas</h4>
+        <p>Las tareas pueden moverse mediante <b>drag & drop</b> dentro de la vista del tablero entre las cuatro etapas del flujo de trabajo: <b>Por hacer</b>, <b>En progreso</b>, <b>Esperando retroalimentación</b> y <b>Completado</b>.</p>
+      </li>
+
+      <li>
+        <h4>Solicitudes de contacto y colaboración</h4>
+        <p>Al agregar un contacto o invitar a un colaborador, se envía una <b>solicitud</b> al usuario correspondiente. La solicitud debe ser aceptada por el destinatario antes de que el usuario sea agregado a la lista de contactos o al tablero.</p>
+      </li>
+
+      <li>
+        <h4>Agregar contactos</h4>
+        <p>
+          Para agregar un nuevo contacto, debes ingresar <b>al menos una parte</b> del nombre del usuario en el campo de búsqueda antes de que se muestren los resultados. Al agregar un contacto, se envía una <b>solicitud de contacto</b> al usuario,
+          la cual debe ser <b>aceptada</b> o <b>rechazada</b>.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      Para utilizar Join de manera efectiva, tú y tu equipo deben actualizar regularmente las tareas para que el tablero refleje en todo momento el estado actual del proyecto. Si tienes alguna otra pregunta sobre Join, puedes contactarnos en
+      <a href="mailto:contacto@servicioswebmerida.com">contacto@servicioswebmerida.com</a>. Con gusto te ayudaremos.
+    </p>
+  </div>
 </div>

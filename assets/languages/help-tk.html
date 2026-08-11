@@ -1,90 +1,140 @@
 <div class="column help-container gap-30">
-    <div class="column gap-10">
-        <h2>Yardım</h2>
-        <p>Join yardım sayfasına hoş geldiniz, Kanban proje yönetim aracımızı kullanma rehberiniz. Burada Join'in ne olduğunu, size nasıl fayda sağlayabileceğini ve nasıl kullanılacağını anlatıyoruz.</p>
-    </div>
-    <div class="column gap-10">
-        <h3>Join Nedir?</h3>
-        <p>Join, Developer Academy'deki web geliştirme bootcamp'leri kapsamında, adanmış bir öğrenci grubu tarafından tasarlanmış ve geliştirilmiş Kanban tabanlı bir proje yönetim aracıdır.</p>
-        <p>Kanban, "ilan tahtası" anlamına gelen Japonca bir terimdir ve işi görselleştirmek, devam eden işleri sınırlamak ve verimliliği (veya akışı) en üst düzeye çıkarmak için son derece etkili bir yöntemdir. Join, kullanıcıların görevlerini ve projelerini sezgisel, görsel bir arayüzde yönetmelerine yardımcı olmak için Kanban prensiplerini kullanır.</p>
-        <p>Join'in eğitim amaçlı bir egzersiz olarak tasarlandığını ve geniş ticari uygulamalar için amaçlanmadığını belirtmek önemlidir. En iyi kullanıcı deneyimini sağlamak için çaba sarf etsek de, Join ile ilgili olarak sürekli erişilebilirlik, güvenilirlik, doğruluk veya diğer kalite unsurlarını garanti edemeyiz.</p>
-    </div>
-    <div class="column gap-10">
-        <h3>Nasıl Kullanılır</h3>
-        <p>Join'i kullanmak için adım adım bir kılavuz:</p>
-        <ul class="column gap-20">
-            <li>
-                <h4>Kayıt ve Doğrulama</h4>
-                <p>Join'de yeni bir hesap kaydederken, kullanıcı adı, e-posta adresi ve şifre girdikten ve gizlilik politikasını onayladıktan sonra bir <b>doğrulama e-postası</b> gönderilir. Hesabı doğrulamak için, e-postadaki <b>bağlantıya</b> tıklayabilir veya doğrulama kodunu manuel olarak veya kopyala-yapıştır yöntemiyle doğrulama sayfasına girip gönderebilirsiniz.</p>
-            </li>
-            <li>
-                <h4>Hesap Oluşturma</h4>
-                <p>Bir profil resmi yüklemek (ve silmek) ve bir profil rengi seçmek mümkündür.</p>
-            </li>
-            <li>
-                <h4>Giriş Yapma</h4>
-                <p>Giriş yaparken oturum bilgilerini kaydetme seçeneği ile.</p>
-            </li>
-            <li>
-                <h4>Şifre Sıfırlama</h4>
-                <p>Şifre sıfırlama, <b>e-posta</b> ile doğrulama gibi çalışır.</p>
-            </li>
-            <li>
-                <h4>Otomatik Oturum Kapatma</h4>
-                <p>5 dakika hareketsizlikten sonra otomatik oturum kapatma.</p>
-            </li>
-            <li>
-                <h4>Bildirimler ve Websocket Sunucusu</h4>
-                <p>Bir iletişim isteği, işbirlikçi daveti veya bir işin bir işbirlikçiye atanması gönderildiğinde, alıcı çevrimiçi ise canlı bildirim alır. Bu amaçla bir <b>Websocket sunucusu</b> uygulanmıştır.</p>
-            </li>
-            <li>
-                <h4>Hesap Ayarları</h4>
-                <p>Sağ üst köşedeki profilinize tıklayarak hesap ayarları açılır. Burada <b>bildirimleri görebilir</b>, <b>iletişim taleplerini</b> ve <b>tahta davetlerini</b> kabul edebilir veya reddedebilir, <b>şifrenizi sıfırlayabilir</b> veya <b>hesabınızı silebilirsiniz</b>. Ayrıca buradan <b>oturumu kapatabilirsiniz</b>.</p>
-            </li>
-            <li>
-                <h4>Diller</h4>
-                <p>Tarayıcıda ayarlanan varsayılan dile göre dil yüklenir. Dil ayarları giriş sırasında ve hesap ayarlarında da bulunabilir.</p>
-            </li>
-            <li>
-                <h4>Tahta Oluşturma</h4>
-                <p>Varsayılan bir tahta yoktur, önce bir tane <b>oluşturmanız</b> veya başka birine <b>davet edilmeniz</b> gerekir (yeni oluşturulan hesaplar için). Bir isim belirleyebilir, kategoriler tanımlayabilir ve işbirlikçileri davet edebilirsiniz.</p>
-            </li>
-            <li>
-                <h4>Tahtayı Düzenleme</h4>
-                <p>Oluşturduktan sonra tahta (sadece oluşturucu tarafından) düzenlenebilir, işbirlikçileri davet yoluyla eklenebilir (ancak çıkarılamaz) ve kategoriler eklenebilir veya silinebilir.</p>
-            </li>
-            <li>
-                <h4>Tahtayı Silme</h4>
-                <p>Tüm tahtalar da silinebilir (onayla).</p>
-            </li>
-            <li>
-                <h4>Tahtayı Seçme</h4>
-                <p><b>Aktif tahtayı</b> seçmek için önce "Genel Bakış"/"Summary" üzerine tıklamanız ve ardından gerekirse "Tahta Seç"/"Select Board" üzerine tıklamanız gerekir. Ardından listeden istenen tahtayı seçin.</p>
-            </li>
-            <li>
-                <h4>Görev Oluşturma</h4>
-                <p>Bireysel görevler (dahil <b>alt görevler</b>) oluşturulabilir ve ilgili tahtadaki işbirlikçilerine atanabilir.</p>
-            </li>
-            <li>
-                <h4>Görevleri Düzenleme/Silme</h4>
-                <p>Görevler düzenlenebilir ve silinebilir.</p>
-            </li>
-            <li>
-                <h4>Görevleri Taşıma</h4>
-                <p>Görevler, tahta görünümünde dört tür arasında <b>yapılacaklar</b>, <b>devam edenler</b>, <b>geri bildirim bekleyenler</b> ve <b>tamamlananlar</b> arasında <b>sürükle ve bırak</b> yöntemiyle taşınabilir.</p>
-            </li>
-            <li>
-                <h4>İletişim ve İşbirlikçi İstekleri</h4>
-                <p>Bir iletişim veya işbirlikçi eklerken, alıcının onaylaması gereken bir <b>istek gönderilir</b> ve bu istek onaylanmadan iletişim/tahta kaydedilmez.</p>
-            </li>
-            <li>
-                <h4>İletişim Ekleme</h4>
-                <p>Yeni bir iletişim eklemek için, bir adın <b>en az bir kısmı</b> arama alanına girilmelidir, ardından arama sonuçları görüntülenir. İletişim eklendiğinde, bir <b>iletişim isteği</b> gönderilir ve bu istek <b>onaylanmalı</b> veya <b>reddedilmelidir</b>.</p>
-            </li>
-        </ul>
-        <p>Join'i etkili bir şekilde kullanmak, tahtanın projenizin mevcut durumunu yansıtmasını sağlamak için siz ve ekibiniz tarafından düzenli güncellemeler gerektirir. Join hakkında başka sorularınız mı var? 
-            <a href="mailto:musician.tarik@gmx.de">musician.tarik@gmx.de</a> veya 
-            <a href="mailto:lukas.busch1996@gmx.at">lukas.busch1996@gmx.at</a> adreslerinden bizimle iletişime geçmekten çekinmeyin. 
-        Yardım etmek için buradayız!</p>
-    </div>
+  <div class="column gap-10">
+    <h2>Yardım</h2>
+    <p>Join yardım sayfasına hoş geldiniz. Burada sistem, amacı, temel özellikleri ve platform içinde sunulan farklı araçların nasıl kullanılacağı hakkında daha fazla bilgi bulabilirsiniz.</p>
+  </div>
+
+  <div class="column gap-10">
+    <h3>Join nedir?</h3>
+
+    <p>Join, <b>Servicios Web Mérida</b> tarafından özel bir dahili verimlilik aracı ve web tabanlı iş sistemi örneği olarak geliştirilen Kanban tabanlı bir proje yönetim sistemidir.</p>
+
+    <p>
+      Proje, özel olarak geliştirilen bir web uygulamasının ekiplerin çalışmalarını düzenlemesine, projeleri yönetmesine, diğer kullanıcılarla iş birliği yapmasına, sorumlulukları atamasına ve görevleri farklı ilerleme aşamaları boyunca takip
+      etmesine nasıl yardımcı olabileceğini göstermektedir.
+    </p>
+
+    <p>
+      Join, iş akışlarını düzenlemek ve görevlerin mevcut durumunu kolayca anlaşılır hale getirmek için kullanılan görsel bir proje yönetim yöntemi olan Kanban prensiplerine dayanır. Görevler
+      <b>Yapılacak</b>, <b>Devam ediyor</b>, <b>Geri bildirim bekleniyor</b> ve <b>Tamamlandı</b> aşamaları arasında taşınabilir ve böylece ekipler çalışmalarının ilerleyişini net bir şekilde görebilir.
+    </p>
+
+    <p>
+      Görev ve pano yönetiminin yanı sıra Join; kullanıcı hesapları, e-posta doğrulaması, kişi ve ekip üyesi yönetimi, gerçek zamanlı bildirimler, pano davetleri, alt görevler, drag & drop etkileşimleri ve çoklu dil desteği gibi özellikler de içerir.
+    </p>
+
+    <p>
+      Join öncelikli olarak özel web sistemleri geliştirmeye yönelik bir demo projesi ve portföy örneği olarak kullanılmaktadır. Ticari bir proje yönetim hizmeti olarak işletilmediği için sürekli erişilebilirlik veya üretim ortamındaki sistemlere
+      özgü hizmet seviyesi garantileri sunulmamaktadır.
+    </p>
+  </div>
+
+  <div class="column gap-10">
+    <h3>Join Nasıl Kullanılır?</h3>
+    <p>Aşağıda Join kullanımı için adım adım bir rehber bulabilirsiniz:</p>
+
+    <ul class="column gap-20">
+      <li>
+        <h4>Kayıt ve Doğrulama</h4>
+        <p>
+          Join'de yeni bir hesap oluştururken kullanıcı adı, e-posta adresi ve parola girdikten ve gizlilik politikasını kabul ettikten sonra bir <b>doğrulama e-postası</b> gönderilir. Hesabı doğrulamak için <b>e-postadaki bağlantıya</b> tıklayabilir
+          veya doğrulama kodunu doğrulama sayfasına manuel olarak ya da kopyala-yapıştır yöntemiyle girip gönderebilirsiniz.
+        </p>
+      </li>
+
+      <li>
+        <h4>Profil Özelleştirme</h4>
+        <p>Profil fotoğrafı yüklemek veya silmek ve profil için bir renk seçmek mümkündür.</p>
+      </li>
+
+      <li>
+        <h4>Giriş</h4>
+        <p>Kullanıcılar, giriş bilgilerini kaydetme seçeneğiyle hesaplarına giriş yapabilir.</p>
+      </li>
+
+      <li>
+        <h4>Parola Sıfırlama</h4>
+        <p>Parola sıfırlama işlemi, yeni hesap doğrulama sürecine benzer şekilde <b>e-posta doğrulaması</b> yoluyla gerçekleştirilir.</p>
+      </li>
+
+      <li>
+        <h4>Otomatik Çıkış</h4>
+        <p>Kullanıcıların oturumu 5 dakika boyunca işlem yapılmadığında otomatik olarak kapatılır.</p>
+      </li>
+
+      <li>
+        <h4>Bildirimler ve WebSocket Sunucusu</h4>
+        <p>Bir kişi isteği, ekip üyesi daveti gönderildiğinde veya bir görev bir ekip üyesine atandığında, alıcı çevrimiçiyse gerçek zamanlı bir bildirim alır. Bu işlev için bir <b>WebSocket sunucusu</b> uygulanmıştır.</p>
+      </li>
+
+      <li>
+        <h4>Hesap Ayarları</h4>
+        <p>
+          Sağ üst köşedeki profilinize tıkladığınızda hesap ayarları açılır. Buradan <b>bildirimleri görüntüleyebilir</b>, <b>kişi isteklerini</b> ve <b>pano davetlerini</b> kabul veya reddedebilir, <b>parolanızı sıfırlayabilir</b> veya
+          <b>hesabınızı silebilirsiniz</b>. Ayrıca bu bölümden <b>çıkış yapabilirsiniz</b>.
+        </p>
+      </li>
+
+      <li>
+        <h4>Diller</h4>
+        <p>Dil başlangıçta tarayıcıda ayarlanan varsayılan dile göre yüklenir. Dil ayrıca giriş sırasında ve hesap ayarlarından değiştirilebilir.</p>
+      </li>
+
+      <li>
+        <h4>Pano Oluşturma</h4>
+        <p>
+          Yeni oluşturulan hesaplarda varsayılan bir pano bulunmaz. Öncelikle bir pano <b>oluşturmanız</b> veya mevcut bir panoya <b>davet edilmeniz</b> gerekir. Pano oluştururken bir ad belirleyebilir, kategoriler tanımlayabilir ve ekip üyelerini
+          davet edebilirsiniz.
+        </p>
+      </li>
+
+      <li>
+        <h4>Pano Düzenleme</h4>
+        <p>Bir pano oluşturulduktan sonra yalnızca oluşturucusu tarafından düzenlenebilir. Davet yoluyla ekip üyeleri eklenebilir ve kategoriler eklenip silinebilir. Şu anda daha önce eklenmiş ekip üyeleri sonradan kaldırılamamaktadır.</p>
+      </li>
+
+      <li>
+        <h4>Pano Silme</h4>
+        <p>Tüm panolar, silme işlemi onaylandıktan sonra tamamen silinebilir.</p>
+      </li>
+
+      <li>
+        <h4>Pano Seçme</h4>
+        <p><b>Aktif panoyu</b> seçmek için önce "Genel Bakış"/"Özet" bölümüne tıklayın ve ardından gerekirse "Pano Seç" seçeneğini kullanın. Daha sonra listeden istediğiniz panoyu seçebilirsiniz.</p>
+      </li>
+
+      <li>
+        <h4>Görev Oluşturma</h4>
+        <p><b>Alt görevler</b> dahil olmak üzere bireysel görevler oluşturulabilir ve ilgili panodaki ekip üyelerine atanabilir.</p>
+      </li>
+
+      <li>
+        <h4>Görevleri Düzenleme/Silme</h4>
+        <p>Mevcut görevler düzenlenebilir veya silinebilir.</p>
+      </li>
+
+      <li>
+        <h4>Görevleri Taşıma</h4>
+        <p>Görevler pano görünümünde <b>drag & drop</b> kullanılarak dört iş akışı aşaması arasında taşınabilir: <b>Yapılacak</b>, <b>Devam ediyor</b>, <b>Geri bildirim bekleniyor</b> ve <b>Tamamlandı</b>.</p>
+      </li>
+
+      <li>
+        <h4>Kişi ve İş Birliği İstekleri</h4>
+        <p>Bir kişi eklediğinizde veya bir ekip üyesi davet ettiğinizde ilgili kullanıcıya bir <b>istek gönderilir</b>. Kullanıcının kişi listesine veya panoya eklenebilmesi için bu isteğin alıcı tarafından kabul edilmesi gerekir.</p>
+      </li>
+
+      <li>
+        <h4>Kişi Ekleme</h4>
+        <p>
+          Yeni bir kişi eklemek için arama sonuçları görüntülenmeden önce arama alanına kullanıcının adının <b>en az bir kısmını</b> girmeniz gerekir. Bir kişi eklediğinizde kullanıcıya bir <b>kişi isteği</b> gönderilir ve bu isteğin
+          <b>kabul edilmesi</b> veya <b>reddedilmesi</b> gerekir.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      Join'i etkili bir şekilde kullanmak için sizin ve ekibinizin görevleri düzenli olarak güncellemesi gerekir; böylece pano her zaman projenin güncel durumunu yansıtır. Join hakkında başka sorularınız varsa
+      <a href="mailto:contacto@servicioswebmerida.com">contacto@servicioswebmerida.com</a> adresinden bizimle iletişime geçebilirsiniz. Size yardımcı olmaktan memnuniyet duyarız.
+    </p>
+  </div>
 </div>

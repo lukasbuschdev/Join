@@ -1,90 +1,152 @@
 <div class="column help-container gap-30">
-    <div class="column gap-10">
-        <h2>Hilfe</h2>
-        <p>Willkommen auf der Hilfe-Seite für Join, Ihre Anleitung zur Verwendung unseres Kanban-Projektmanagement-Tools. Hier bieten wir einen Überblick darüber, was Join ist, wie es Ihnen nutzen kann und wie Sie es verwenden können.</p>
-    </div>
-    <div class="column gap-10">
-        <h3>Was ist Join?</h3>
-        <p>Join ist ein auf Kanban basierendes Projektmanagement-Tool, das von einer Gruppe engagierter Studenten im Rahmen ihres Webentwicklungsbootcamps an der Developer Akademie entworfen und entwickelt wurde.</p>
-        <p>Kanban, ein japanischer Begriff, der "Plakatwand" bedeutet, ist eine äußerst effektive Methode zur Visualisierung von Arbeit, zur Begrenzung von Arbeiten im Gange und zur Maximierung der Effizienz (oder des Flusses). Join nutzt die Prinzipien von Kanban, um Benutzern bei der Verwaltung ihrer Aufgaben und Projekte in einer intuitiven, visuellen Oberfläche zu helfen.</p>
-        <p>Es ist wichtig zu beachten, dass Join als Übung im Bildungsbereich konzipiert ist und nicht für umfangreiche geschäftliche Anwendungen vorgesehen ist. Obwohl wir uns bemühen, das bestmögliche Benutzererlebnis sicherzustellen, können wir keine gleichbleibende Verfügbarkeit, Zuverlässigkeit, Genauigkeit oder andere Qualitätsaspekte in Bezug auf Join garantieren.</p>
-    </div>
-    <div class="column gap-10">
-        <h3>Wie man es verwendet</h3>
-        <p>Hier ist eine Schritt-für-Schritt-Anleitung zur Verwendung von Join:</p>
-        <ul class="column gap-20">
-            <li>
-                <h4>Registrierung & Verifizierung</h4>
-                <p>Bei der Registrierung eines neuen Kontos bei Join wird nach der Eingabe von Nutzername, Mailadresse und Passwort und dem Bestätigen der Datenschutzbestimmungen eine <b>E-Mail zur Verifizierung</b> verschickt. Um das Konto zu bestätigen, kann auf den <b>Link in der E-Mail</b> geklickt oder der Verifizierungscode händisch oder per Copy & Paste auf der Verifizierungsseite eingegeben und abgeschickt werden.</p>
-            </li>
-            <li>
-                <h4>Konto erstellen</h4>
-                <p>Es ist möglich, ein Profilbild hochzuladen (und auch wieder zu löschen) und eine Profilfarbe auszuwählen.</p>
-            </li>
-            <li>
-                <h4>Login</h4>
-                <p>Login mit optionaler Speicherung der Anmeldedaten.</p>
-            </li>
-            <li>
-                <h4>Passwort zurücksetzen</h4>
-                <p>Das Zurücksetzen des Passworts funktioniert wie die Verifizierung auch <b>per E-Mail</b>.</p>
-            </li>
-            <li>
-                <h4>Automatischer Logout</h4>
-                <p>Automatischer Logout nach 5 Minuten Inaktivität.</p>
-            </li>
-            <li>
-                <h4>Benachrichtigungen & Websocket Server</h4>
-                <p>Beim Senden einer Kontaktanfrage, Mitwirkenden-Einladung oder bei der Zuweisung einer Aufgabe an einen Mitwirkenden erhält dieser - falls online - eine Live-Benachrichtigung. Dafür wurde ein <b>Websocket Server</b> implementiert.</p>
-            </li>
-            <li>
-                <h4>Kontoeinstellungen</h4>
-                <p>Beim Klicken auf das eigene Profil rechts oben öffnen sich die Kontoeinstellungen. Hier lassen sich <b>Benachrichtigungen einsehen</b>, <b>Kontaktanfragen</b> und <b>Tafeleinladungen</b> ablehnen oder akzeptieren, das <b>Passwort zurücksetzen</b> oder das <b>Konto löschen</b>. Außerdem kann sich der Nutzer hier <b>abmelden</b>.</p>
-            </li>
-            <li>
-                <h4>Sprachen</h4>
-                <p>Je nach eingestellter Standardsprache im Browser wird die Sprache geladen. Außerdem sind Spracheinstellungen beim Login und in den Kontoeinstellungen zu finden.</p>
-            </li>
-            <li>
-                <h4>Tafel erstellen</h4>
-                <p>Es gibt nicht nur keine Standard-Tafel, man muss sogar erst eine <b>erstellen</b> oder zu einer anderen <b>eingeladen werden</b> (bei neu erstelltem Account). Es kann ein Name bestimmt, Kategorien festgelegt und Mitwirkende eingeladen werden.</p>
-            </li>
-            <li>
-                <h4>Tafel bearbeiten</h4>
-                <p>Nach der Erstellung lässt sich (nur vom Ersteller) die Tafel bearbeiten, es können Mitwirkende per Einladung hinzugefügt (aber nicht wieder entfernt!) werden, Kategorien können hinzugefügt oder gelöscht werden.</p>
-            </li>
-            <li>
-                <h4>Tafel löschen</h4>
-                <p>Ganze Boards können auch gelöscht werden (mit Bestätigung).</p>
-            </li>
-            <li>
-                <h4>Tafel auswählen</h4>
-                <p>Um die <b>aktive Tafel</b> auszuwählen, muss zuerst auf "Übersicht"/"Summary" und dann ggf. auf "Tafel auswählen"/"Select Board" geklickt werden. Dann in der Auswahl auf die gewünschte Tafel klicken.</p>
-            </li>
-            <li>
-                <h4>Aufgaben erstellen</h4>
-                <p>Einzelne Aufgaben (mitsamt <b>Unteraufgaben</b>) können erstellt werden und Mitwirkende der entsprechenden Tafel können Aufgaben zugewiesen werden.</p>
-            </li>
-            <li>
-                <h4>Aufgaben bearbeiten/löschen</h4>
-                <p>Aufgaben können bearbeitet und gelöscht werden.</p>
-            </li>
-            <li>
-                <h4>Verschieben der Aufgaben</h4>
-                <p>Aufgaben können in der Board-Ansicht zwischen den 4 Typen <b>to do</b>, <b>in progress</b>, <b>awaiting feedback</b> und <b>done</b> per <b>Drag & Drop</b> verschoben werden.</p>
-            </li>
-            <li>
-                <h4>Kontakt- & Mitwirkendenanfrage</h4>
-                <p>Beim Hinzufügen eines Kontaktes oder dem eines Mitwirkenden wird eine <b>Anfrage gesendet</b>, die erst vom Empfänger bestätigt werden muss, bevor dieser in den Kontakten / der Tafel gespeichert ist.</p>
-            </li>
-            <li>
-                <h4>Kontakte hinzufügen</h4>
-                <p>Um einen neuen Kontakt hinzuzufügen, muss <b>zumindest ein Teil</b> eines Namens in das Suchfeld eingegeben werden, bevor Suchergebnisse angezeigt werden. Bei Hinzufügen des Kontakts wird an diesen lediglich eine <b>Kontaktanfrage</b> gesendet, welche erst <b>bestätigt</b> oder <b>abgelehnt</b> werden muss.</p>
-            </li>
-        </ul>
-        <p>Denken Sie daran, dass die effektive Nutzung von Join regelmäßige Updates von Ihnen und Ihrem Team erfordert, um sicherzustellen, dass das Board den aktuellen Stand Ihres Projekts widerspiegelt. Haben Sie weitere Fragen zu Join? Kontaktieren Sie uns gerne unter 
-            <a href="mailto:musician.tarik@gmx.de" >musician.tarik@gmx.de</a> oder 
-            <a href="mailto:lukas.busch1996@gmx.at" >lukas.busch1996@gmx.at</a>. 
-        Wir sind hier, um Ihnen zu helfen!</p>
-    </div>
+  <div class="column gap-10">
+    <h2>Hilfe</h2>
+    <p>Willkommen auf der Hilfeseite von Join. Hier erfährst du mehr über das System, seinen Zweck, seine wichtigsten Funktionen und die Verwendung der verschiedenen innerhalb der Plattform verfügbaren Werkzeuge.</p>
+  </div>
+
+  <div class="column gap-10">
+    <h3>Was ist Join?</h3>
+
+    <p>
+      Join ist ein Kanban-basiertes Projektmanagementsystem, das von
+      <b>Servicios Web Mérida</b> als Beispiel für ein individuelles internes Produktivitätstool und webbasiertes Unternehmenssystem entwickelt wurde.
+    </p>
+
+    <p>
+      Das Projekt zeigt, wie eine individuell entwickelte Webanwendung Teams dabei unterstützen kann, ihre Arbeit zu organisieren, Projekte zu verwalten, mit anderen Benutzern zusammenzuarbeiten, Verantwortlichkeiten zuzuweisen und Aufgaben über
+      verschiedene Bearbeitungsphasen hinweg zu verfolgen.
+    </p>
+
+    <p>
+      Join basiert auf den Prinzipien von Kanban, einer visuellen Projektmanagementmethode zur Organisation von Arbeitsabläufen und zur übersichtlichen Darstellung des aktuellen Status von Aufgaben. Aufgaben können zwischen den Bereichen
+      <b>Zu erledigen</b>, <b>In Bearbeitung</b>, <b>Feedback ausstehend</b> und <b>Erledigt</b> verschoben werden und bieten Teams dadurch einen klaren Überblick über ihre Arbeit.
+    </p>
+
+    <p>
+      Zusätzlich zur Aufgaben- und Boardverwaltung bietet Join Funktionen wie Benutzerkonten, E-Mail-Verifizierung, Kontakt- und Mitarbeiterverwaltung, Live-Benachrichtigungen, Board-Einladungen, Unteraufgaben, Drag-&-Drop-Interaktionen und
+      mehrsprachige Unterstützung.
+    </p>
+
+    <p>
+      Join dient in erster Linie als Demonstrationsprojekt und Portfolio-Beispiel für die Entwicklung individueller Websysteme. Es wird nicht als kommerzieller Projektmanagementdienst betrieben, weshalb eine kontinuierliche Verfügbarkeit oder
+      Servicegarantien auf Produktionsniveau nicht gewährleistet werden.
+    </p>
+  </div>
+
+  <div class="column gap-10">
+    <h3>So funktioniert Join</h3>
+    <p>Hier findest du eine Schritt-für-Schritt-Anleitung zur Verwendung von Join:</p>
+
+    <ul class="column gap-20">
+      <li>
+        <h4>Registrierung & Verifizierung</h4>
+        <p>
+          Nach der Registrierung eines neuen Kontos bei Join mit Benutzername, E-Mail-Adresse und Passwort sowie der Bestätigung der Datenschutzerklärung wird eine <b>Verifizierungs-E-Mail</b> versendet. Um das Konto zu bestätigen, kannst du auf den
+          <b>Link in der E-Mail</b> klicken oder den Verifizierungscode manuell beziehungsweise per Copy & Paste auf der Verifizierungsseite eingeben und absenden.
+        </p>
+      </li>
+
+      <li>
+        <h4>Profilanpassung</h4>
+        <p>Es ist möglich, ein Profilbild hochzuladen oder zu löschen und eine Profilfarbe auszuwählen.</p>
+      </li>
+
+      <li>
+        <h4>Login</h4>
+        <p>Benutzer können sich in ihr Konto einloggen und optional ihre Anmeldedaten speichern.</p>
+      </li>
+
+      <li>
+        <h4>Passwort zurücksetzen</h4>
+        <p>Das Zurücksetzen des Passworts erfolgt über eine <b>E-Mail-Verifizierung</b>, ähnlich wie bei der Verifizierung eines neuen Benutzerkontos.</p>
+      </li>
+
+      <li>
+        <h4>Automatischer Logout</h4>
+        <p>Benutzer werden nach 5 Minuten Inaktivität automatisch ausgeloggt.</p>
+      </li>
+
+      <li>
+        <h4>Benachrichtigungen & WebSocket-Server</h4>
+        <p>
+          Beim Senden einer Kontaktanfrage, einer Einladung zur Zusammenarbeit oder beim Zuweisen einer Aufgabe an einen Mitarbeiter erhält der Empfänger eine Live-Benachrichtigung, sofern er gerade online ist. Für diese Funktion wurde ein
+          <b>WebSocket-Server</b> implementiert.
+        </p>
+      </li>
+
+      <li>
+        <h4>Kontoeinstellungen</h4>
+        <p>
+          Durch einen Klick auf dein Profil oben rechts werden die Kontoeinstellungen geöffnet. Hier kannst du <b>Benachrichtigungen anzeigen</b>, <b>Kontaktanfragen</b> und <b>Board-Einladungen</b> annehmen oder ablehnen, dein
+          <b>Passwort zurücksetzen</b> oder dein <b>Konto löschen</b>. Außerdem kannst du dich hier <b>ausloggen</b>.
+        </p>
+      </li>
+
+      <li>
+        <h4>Sprachen</h4>
+        <p>Die Sprache wird zunächst entsprechend der im Browser eingestellten Standardsprache geladen. Die Sprache kann außerdem beim Login sowie in den Kontoeinstellungen geändert werden.</p>
+      </li>
+
+      <li>
+        <h4>Board erstellen</h4>
+        <p>
+          Neu erstellte Benutzerkonten besitzen kein Standard-Board. Du musst zunächst ein Board <b>erstellen</b> oder zu einem bestehenden Board <b>eingeladen</b> werden. Beim Erstellen eines Boards kannst du einen Namen festlegen, Kategorien
+          definieren und Mitarbeiter einladen.
+        </p>
+      </li>
+
+      <li>
+        <h4>Board bearbeiten</h4>
+        <p>
+          Nach der Erstellung kann ein Board von seinem Ersteller bearbeitet werden. Mitarbeiter können über Einladungen hinzugefügt und Kategorien können hinzugefügt oder gelöscht werden. Bereits hinzugefügte Mitarbeiter können derzeit nicht wieder
+          entfernt werden.
+        </p>
+      </li>
+
+      <li>
+        <h4>Board löschen</h4>
+        <p>Komplette Boards können nach einer entsprechenden Bestätigung ebenfalls gelöscht werden.</p>
+      </li>
+
+      <li>
+        <h4>Board auswählen</h4>
+        <p>
+          Um das <b>aktive Board</b> auszuwählen, musst du zunächst auf „Übersicht“ beziehungsweise „Zusammenfassung“ und anschließend, falls erforderlich, auf „Board auswählen“ klicken. Danach kannst du das gewünschte Board aus der Liste auswählen.
+        </p>
+      </li>
+
+      <li>
+        <h4>Aufgaben erstellen</h4>
+        <p>Einzelne Aufgaben einschließlich <b>Unteraufgaben</b> können erstellt und Mitarbeitern des entsprechenden Boards zugewiesen werden.</p>
+      </li>
+
+      <li>
+        <h4>Aufgaben bearbeiten/löschen</h4>
+        <p>Bestehende Aufgaben können bearbeitet oder gelöscht werden.</p>
+      </li>
+
+      <li>
+        <h4>Aufgaben verschieben</h4>
+        <p>Aufgaben können in der Board-Ansicht per <b>Drag & Drop</b> zwischen den vier Arbeitsphasen <b>Zu erledigen</b>, <b>In Bearbeitung</b>, <b>Feedback ausstehend</b> und <b>Erledigt</b> verschoben werden.</p>
+      </li>
+
+      <li>
+        <h4>Kontakt- & Mitarbeiteranfragen</h4>
+        <p>Beim Hinzufügen eines Kontakts oder Einladen eines Mitarbeiters wird eine <b>Anfrage gesendet</b>. Diese muss vom Empfänger bestätigt werden, bevor der Benutzer zur Kontaktliste beziehungsweise zum Board hinzugefügt wird.</p>
+      </li>
+
+      <li>
+        <h4>Kontakte hinzufügen</h4>
+        <p>
+          Um einen neuen Kontakt hinzuzufügen, muss <b>mindestens ein Teil</b> des Namens eines Benutzers in das Suchfeld eingegeben werden, bevor Suchergebnisse angezeigt werden. Beim Hinzufügen eines Kontakts wird eine <b>Kontaktanfrage</b> an den
+          Benutzer gesendet, die <b>bestätigt</b> oder <b>abgelehnt</b> werden muss.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      Für eine effektive Nutzung von Join sollten du und dein Team die Aufgaben regelmäßig aktualisieren, damit das Board jederzeit den aktuellen Stand des Projekts widerspiegelt. Wenn du weitere Fragen zu Join hast, kannst du uns jederzeit unter
+      <a href="mailto:contacto@servicioswebmerida.com">contacto@servicioswebmerida.com</a> kontaktieren. Wir helfen dir gerne weiter.
+    </p>
+  </div>
 </div>

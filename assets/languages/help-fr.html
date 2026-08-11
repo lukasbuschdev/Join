@@ -1,90 +1,157 @@
 <div class="column help-container gap-30">
-    <div class="column gap-10">
-        <h2>Aide</h2>
-        <p>Bienvenue sur la page d'aide de Join, votre guide pour utiliser notre outil de gestion de projet Kanban. Ici, nous offrons une vue d'ensemble de ce qu'est Join, comment il peut vous être utile et comment l'utiliser.</p>
-    </div>
-    <div class="column gap-10">
-        <h3>Qu'est-ce que Join?</h3>
-        <p>Join est un outil de gestion de projet basé sur Kanban, conçu et développé par un groupe d'étudiants dévoués dans le cadre de leur bootcamp de développement web à la Developer Academy.</p>
-        <p>Kanban, un terme japonais signifiant "panneau d'affichage", est une méthode extrêmement efficace pour visualiser le travail, limiter le travail en cours et maximiser l'efficacité (ou le flux). Join utilise les principes de Kanban pour aider les utilisateurs à gérer leurs tâches et projets dans une interface intuitive et visuelle.</p>
-        <p>Il est important de noter que Join est conçu comme un exercice éducatif et n'est pas destiné à des applications commerciales étendues. Bien que nous nous efforcions de garantir la meilleure expérience utilisateur possible, nous ne pouvons garantir une disponibilité, une fiabilité, une précision ou d'autres aspects de qualité constants en ce qui concerne Join.</p>
-    </div>
-    <div class="column gap-10">
-        <h3>Comment l'utiliser</h3>
-        <p>Voici un guide étape par étape pour utiliser Join :</p>
-        <ul class="column gap-20">
-            <li>
-                <h4>Inscription et Vérification</h4>
-                <p>Lors de l'inscription d'un nouveau compte sur Join, après avoir entré un nom d'utilisateur, une adresse e-mail et un mot de passe, et confirmé la politique de confidentialité, un <b>e-mail de vérification</b> est envoyé. Pour confirmer le compte, vous pouvez cliquer sur le <b>lien dans l'e-mail</b> ou entrer et soumettre le code de vérification manuellement ou via copier-coller sur la page de vérification.</p>
-            </li>
-            <li>
-                <h4>Créer un Compte</h4>
-                <p>Il est possible de télécharger (et de supprimer) une photo de profil et de choisir une couleur de profil.</p>
-            </li>
-            <li>
-                <h4>Connexion</h4>
-                <p>Connexion avec l'option de sauvegarder les données de connexion.</p>
-            </li>
-            <li>
-                <h4>Réinitialiser le Mot de Passe</h4>
-                <p>Réinitialiser le mot de passe fonctionne comme la vérification via <b>e-mail</b>.</p>
-            </li>
-            <li>
-                <h4>Déconnexion Automatique</h4>
-                <p>Déconnexion automatique après 5 minutes d'inactivité.</p>
-            </li>
-            <li>
-                <h4>Notifications et Serveur Websocket</h4>
-                <p>Lors de l'envoi d'une demande de contact, d'une invitation de collaborateur ou de l'attribution d'une tâche à un collaborateur, le destinataire reçoit une notification en direct s'il est en ligne. Un <b>serveur Websocket</b> a été mis en place pour cela.</p>
-            </li>
-            <li>
-                <h4>Paramètres du Compte</h4>
-                <p>En cliquant sur votre profil en haut à droite, les paramètres du compte s'ouvrent. Ici, vous pouvez <b>voir les notifications</b>, accepter ou refuser les <b>demandes de contact</b> et les <b>invitations au tableau</b>, <b>réinitialiser votre mot de passe</b> ou <b>supprimer votre compte</b>. De plus, vous pouvez <b>vous déconnecter</b> ici.</p>
-            </li>
-            <li>
-                <h4>Langues</h4>
-                <p>La langue est chargée en fonction de la langue par défaut configurée dans le navigateur. Les paramètres de langue sont également disponibles lors de la connexion et dans les paramètres du compte.</p>
-            </li>
-            <li>
-                <h4>Créer un Tableau</h4>
-                <p>Il n'y a pas de tableau par défaut, vous devez d'abord en <b>créer</b> un ou être <b>invité</b> à un autre (pour les comptes nouvellement créés). Vous pouvez définir un nom, définir des catégories et inviter des collaborateurs.</p>
-            </li>
-            <li>
-                <h4>Modifier un Tableau</h4>
-                <p>Après la création, le tableau peut être modifié (seulement par le créateur), des collaborateurs peuvent être ajoutés par invitation (mais non supprimés), et des catégories peuvent être ajoutées ou supprimées.</p>
-            </li>
-            <li>
-                <h4>Supprimer un Tableau</h4>
-                <p>Des tableaux entiers peuvent également être supprimés (avec confirmation).</p>
-            </li>
-            <li>
-                <h4>Sélectionner un Tableau</h4>
-                <p>Pour sélectionner le <b>tableau actif</b>, vous devez d'abord cliquer sur "Vue d'ensemble"/"Summary" puis, si nécessaire, sur "Sélectionner le Tableau"/"Select Board". Ensuite, sélectionnez le tableau souhaité dans la liste.</p>
-            </li>
-            <li>
-                <h4>Créer des Tâches</h4>
-                <p>Des tâches individuelles (y compris les <b>sous-tâches</b>) peuvent être créées et attribuées aux collaborateurs du tableau correspondant.</p>
-            </li>
-            <li>
-                <h4>Modifier/Supprimer des Tâches</h4>
-                <p>Les tâches peuvent être modifiées et supprimées.</p>
-            </li>
-            <li>
-                <h4>Déplacer des Tâches</h4>
-                <p>Les tâches peuvent être déplacées entre les quatre types <b>à faire</b>, <b>en cours</b>, <b>en attente de retour</b> et <b>terminé</b> via <b>glisser-déposer</b> dans la vue du tableau.</p>
-            </li>
-            <li>
-                <h4>Demande de Contact et de Collaborateur</h4>
-                <p>Lors de l'ajout d'un contact ou d'un collaborateur, une <b>demande est envoyée</b> et doit être confirmée par le destinataire avant d'être enregistrée dans les contacts/tableau.</p>
-            </li>
-            <li>
-                <h4>Ajouter des Contacts</h4>
-                <p>Pour ajouter un nouveau contact, <b>au moins une partie</b> d'un nom doit être entrée dans le champ de recherche avant que les résultats de la recherche soient affichés. Lors de l'ajout du contact, une <b>demande de contact</b> est envoyée, qui doit être <b>confirmée</b> ou <b>refusée</b>.</p>
-            </li>
-        </ul>
-        <p>Rappelez-vous que l'utilisation efficace de Join nécessite des mises à jour régulières de votre part et de votre équipe pour garantir que le tableau reflète l'état actuel de votre projet. Vous avez d'autres questions sur Join? N'hésitez pas à nous contacter à 
-            <a href="mailto:musician.tarik@gmx.de" >musician.tarik@gmx.de</a> ou 
-            <a href="mailto:lukas.busch1996@gmx.at" >lukas.busch1996@gmx.at</a>. 
-        Nous sommes là pour vous aider!</p>
-    </div>
+  <div class="column gap-10">
+    <h2>Aide</h2>
+    <p>Bienvenue sur la page d’aide de Join. Vous trouverez ici des informations sur le système, son objectif, ses principales fonctionnalités ainsi que sur l’utilisation des différents outils disponibles sur la plateforme.</p>
+  </div>
+
+  <div class="column gap-10">
+    <h3>Qu’est-ce que Join&nbsp;?</h3>
+
+    <p>
+      Join est un système de gestion de projet basé sur la méthode Kanban, développé par
+      <b>Servicios Web Mérida</b> comme exemple d’outil interne de productivité et de système web professionnel personnalisé.
+    </p>
+
+    <p>
+      Le projet montre comment une application web développée sur mesure peut aider les équipes à organiser leur travail, gérer leurs projets, collaborer avec d’autres utilisateurs, attribuer des responsabilités et suivre les tâches à travers
+      différentes étapes de traitement.
+    </p>
+
+    <p>
+      Join repose sur les principes de Kanban, une méthode visuelle de gestion de projet permettant d’organiser les flux de travail et de visualiser facilement l’état actuel des tâches. Les tâches peuvent être déplacées entre les étapes
+      <b>À faire</b>, <b>En cours</b>, <b>En attente de retour</b> et <b>Terminé</b>, offrant ainsi aux équipes une vue claire de l’avancement de leur travail.
+    </p>
+
+    <p>
+      En plus de la gestion des tâches et des tableaux, Join comprend des fonctionnalités telles que les comptes utilisateurs, la vérification par e-mail, la gestion des contacts et des collaborateurs, les notifications en temps réel, les invitations
+      aux tableaux, les sous-tâches, les interactions par glisser-déposer et la prise en charge de plusieurs langues.
+    </p>
+
+    <p>
+      Join sert principalement de projet de démonstration et d’exemple de portfolio pour le développement de systèmes web personnalisés. Il n’est pas exploité comme un service commercial de gestion de projet et ne bénéficie donc pas de garanties de
+      disponibilité continue ni de niveaux de service propres à une solution utilisée en production.
+    </p>
+  </div>
+
+  <div class="column gap-10">
+    <h3>Comment utiliser Join</h3>
+    <p>Voici un guide étape par étape pour utiliser Join&nbsp;:</p>
+
+    <ul class="column gap-20">
+      <li>
+        <h4>Inscription et vérification</h4>
+        <p>
+          Lors de la création d’un nouveau compte Join, après avoir saisi un nom d’utilisateur, une adresse e-mail et un mot de passe, puis accepté la politique de confidentialité, un <b>e-mail de vérification</b> est envoyé. Pour confirmer le
+          compte, vous pouvez cliquer sur le <b>lien contenu dans l’e-mail</b> ou saisir et envoyer manuellement le code de vérification, notamment à l’aide d’un copier-coller sur la page de vérification.
+        </p>
+      </li>
+
+      <li>
+        <h4>Personnalisation du profil</h4>
+        <p>Il est possible de télécharger ou de supprimer une photo de profil et de choisir une couleur de profil.</p>
+      </li>
+
+      <li>
+        <h4>Connexion</h4>
+        <p>Les utilisateurs peuvent se connecter à leur compte avec la possibilité d’enregistrer leurs informations de connexion.</p>
+      </li>
+
+      <li>
+        <h4>Réinitialisation du mot de passe</h4>
+        <p>La réinitialisation du mot de passe est effectuée à l’aide d’une <b>vérification par e-mail</b>, de manière similaire au processus de vérification d’un nouveau compte.</p>
+      </li>
+
+      <li>
+        <h4>Déconnexion automatique</h4>
+        <p>Les utilisateurs sont automatiquement déconnectés après 5 minutes d’inactivité.</p>
+      </li>
+
+      <li>
+        <h4>Notifications et serveur WebSocket</h4>
+        <p>
+          Lorsqu’une demande de contact, une invitation à collaborer ou une attribution de tâche à un collaborateur est envoyée, le destinataire reçoit une notification en temps réel s’il est connecté. Un <b>serveur WebSocket</b> a été mis en place
+          pour assurer cette fonctionnalité.
+        </p>
+      </li>
+
+      <li>
+        <h4>Paramètres du compte</h4>
+        <p>
+          En cliquant sur votre profil en haut à droite, vous ouvrez les paramètres du compte. Vous pouvez y <b>consulter les notifications</b>, accepter ou refuser des <b>demandes de contact</b> et des <b>invitations à des tableaux</b>,
+          <b>réinitialiser votre mot de passe</b> ou <b>supprimer votre compte</b>. Vous pouvez également vous <b>déconnecter</b> depuis cette section.
+        </p>
+      </li>
+
+      <li>
+        <h4>Langues</h4>
+        <p>La langue est initialement chargée en fonction de la langue par défaut configurée dans le navigateur. Il est également possible de modifier la langue lors de la connexion ainsi que dans les paramètres du compte.</p>
+      </li>
+
+      <li>
+        <h4>Créer un tableau</h4>
+        <p>
+          Les nouveaux comptes ne disposent pas de tableau par défaut. Vous devez d’abord <b>créer</b> un tableau ou être <b>invité</b> à rejoindre un tableau existant. Lors de la création d’un tableau, vous pouvez définir un nom, créer des
+          catégories et inviter des collaborateurs.
+        </p>
+      </li>
+
+      <li>
+        <h4>Modifier un tableau</h4>
+        <p>
+          Après sa création, un tableau peut être modifié par son créateur. Des collaborateurs peuvent être ajoutés au moyen d’invitations et des catégories peuvent être ajoutées ou supprimées. Actuellement, les collaborateurs déjà ajoutés ne peuvent
+          pas être supprimés par la suite.
+        </p>
+      </li>
+
+      <li>
+        <h4>Supprimer un tableau</h4>
+        <p>Il est également possible de supprimer des tableaux complets après confirmation de la suppression.</p>
+      </li>
+
+      <li>
+        <h4>Sélectionner un tableau</h4>
+        <p>
+          Pour sélectionner le <b>tableau actif</b>, cliquez d’abord sur «&nbsp;Vue d’ensemble&nbsp;» / «&nbsp;Résumé&nbsp;», puis, si nécessaire, sur «&nbsp;Sélectionner un tableau&nbsp;». Vous pouvez ensuite choisir le tableau souhaité dans la
+          liste.
+        </p>
+      </li>
+
+      <li>
+        <h4>Créer des tâches</h4>
+        <p>Des tâches individuelles, y compris des <b>sous-tâches</b>, peuvent être créées et attribuées aux collaborateurs du tableau correspondant.</p>
+      </li>
+
+      <li>
+        <h4>Modifier/supprimer des tâches</h4>
+        <p>Les tâches existantes peuvent être modifiées ou supprimées.</p>
+      </li>
+
+      <li>
+        <h4>Déplacer des tâches</h4>
+        <p>Les tâches peuvent être déplacées par <b>glisser-déposer</b> dans la vue du tableau entre les quatre étapes du flux de travail&nbsp;: <b>À faire</b>, <b>En cours</b>, <b>En attente de retour</b> et <b>Terminé</b>.</p>
+      </li>
+
+      <li>
+        <h4>Demandes de contact et de collaboration</h4>
+        <p>
+          Lors de l’ajout d’un contact ou de l’invitation d’un collaborateur, une <b>demande est envoyée</b> à l’utilisateur concerné. La demande doit être acceptée par le destinataire avant que l’utilisateur ne soit ajouté à la liste de contacts ou
+          au tableau.
+        </p>
+      </li>
+
+      <li>
+        <h4>Ajouter des contacts</h4>
+        <p>
+          Pour ajouter un nouveau contact, vous devez saisir <b>au moins une partie</b> du nom de l’utilisateur dans le champ de recherche avant que les résultats ne s’affichent. Lors de l’ajout d’un contact, une <b>demande de contact</b> lui est
+          envoyée et doit être <b>acceptée</b> ou <b>refusée</b>.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      Pour utiliser Join efficacement, vous et votre équipe devez mettre régulièrement les tâches à jour afin que le tableau reflète à tout moment l’état actuel du projet. Si vous avez d’autres questions au sujet de Join, vous pouvez nous contacter à
+      l’adresse
+      <a href="mailto:contacto@servicioswebmerida.com">contacto@servicioswebmerida.com</a>. Nous serons ravis de vous aider.
+    </p>
+  </div>
 </div>

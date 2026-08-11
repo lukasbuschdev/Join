@@ -1,90 +1,150 @@
 <div class="column help-container gap-30">
-    <div class="column gap-10">
-        <h2>Ajuda</h2>
-        <p>Bem-vindo à página de ajuda do Join, seu guia para usar nossa ferramenta de gerenciamento de projetos Kanban. Aqui oferecemos uma visão geral do que é o Join, como ele pode beneficiá-lo e como usá-lo.</p>
-    </div>
-    <div class="column gap-10">
-        <h3>O que é o Join?</h3>
-        <p>O Join é uma ferramenta de gerenciamento de projetos baseada em Kanban, projetada e desenvolvida por um grupo de estudantes dedicados como parte de seu bootcamp de desenvolvimento web na Developer Academy.</p>
-        <p>Kanban, um termo japonês que significa "quadro de avisos", é um método extremamente eficaz para visualizar o trabalho, limitar o trabalho em andamento e maximizar a eficiência (ou fluxo). O Join usa os princípios do Kanban para ajudar os usuários a gerenciar suas tarefas e projetos em uma interface intuitiva e visual.</p>
-        <p>É importante notar que o Join é projetado como um exercício educacional e não é destinado para aplicações comerciais extensas. Embora nos esforcemos para garantir a melhor experiência de usuário possível, não podemos garantir disponibilidade, confiabilidade, precisão ou outros aspectos de qualidade consistentes em relação ao Join.</p>
-    </div>
-    <div class="column gap-10">
-        <h3>Como usar</h3>
-        <p>Aqui está um guia passo a passo para usar o Join:</p>
-        <ul class="column gap-20">
-            <li>
-                <h4>Registro e Verificação</h4>
-                <p>Ao registrar uma nova conta no Join, após inserir um nome de usuário, endereço de e-mail e senha, e confirmar a política de privacidade, um <b>e-mail de verificação</b> é enviado. Para confirmar a conta, você pode clicar no <b>link no e-mail</b> ou inserir e enviar o código de verificação manualmente ou via copiar e colar na página de verificação.</p>
-            </li>
-            <li>
-                <h4>Criar uma Conta</h4>
-                <p>É possível fazer upload (e excluir) uma foto de perfil e escolher uma cor de perfil.</p>
-            </li>
-            <li>
-                <h4>Login</h4>
-                <p>Login com a opção de salvar os dados de login.</p>
-            </li>
-            <li>
-                <h4>Redefinir Senha</h4>
-                <p>Redefinir a senha funciona como a verificação via <b>e-mail</b>.</p>
-            </li>
-            <li>
-                <h4>Logout Automático</h4>
-                <p>Logout automático após 5 minutos de inatividade.</p>
-            </li>
-            <li>
-                <h4>Notificações e Servidor Websocket</h4>
-                <p>Ao enviar uma solicitação de contato, convite de colaborador ou atribuir uma tarefa a um colaborador, o destinatário recebe uma notificação ao vivo se estiver online. Um <b>servidor Websocket</b> foi implementado para isso.</p>
-            </li>
-            <li>
-                <h4>Configurações da Conta</h4>
-                <p>Ao clicar no seu perfil no canto superior direito, abrem-se as configurações da conta. Aqui você pode <b>ver notificações</b>, aceitar ou recusar <b>solicitações de contato</b> e <b>convites de quadro</b>, <b>redefinir sua senha</b> ou <b>excluir sua conta</b>. Além disso, você pode <b>fazer logout</b> aqui.</p>
-            </li>
-            <li>
-                <h4>Idiomas</h4>
-                <p>O idioma é carregado de acordo com o idioma padrão configurado no navegador. As configurações de idioma também estão disponíveis durante o login e nas configurações da conta.</p>
-            </li>
-            <li>
-                <h4>Criar um Quadro</h4>
-                <p>Não só não há um quadro padrão, mas você deve primeiro <b>criar</b> um ou ser <b>convidado</b> para outro (para contas recém-criadas). Você pode definir um nome, definir categorias e convidar colaboradores.</p>
-            </li>
-            <li>
-                <h4>Editar um Quadro</h4>
-                <p>Após a criação, o quadro pode ser editado (somente pelo criador), colaboradores podem ser adicionados por convite (mas não removidos), e categorias podem ser adicionadas ou excluídas.</p>
-            </li>
-            <li>
-                <h4>Excluir um Quadro</h4>
-                <p>Quadros inteiros também podem ser excluídos (com confirmação).</p>
-            </li>
-            <li>
-                <h4>Selecionar um Quadro</h4>
-                <p>Para selecionar o <b>quadro ativo</b>, você deve primeiro clicar em "Visão Geral"/"Summary" e depois, se necessário, em "Selecionar Quadro"/"Select Board". Em seguida, selecione o quadro desejado na lista.</p>
-            </li>
-            <li>
-                <h4>Criar Tarefas</h4>
-                <p>Tarefas individuais (incluindo <b>subtarefas</b>) podem ser criadas e atribuídas a colaboradores do quadro correspondente.</p>
-            </li>
-            <li>
-                <h4>Editar/Excluir Tarefas</h4>
-                <p>As tarefas podem ser editadas e excluídas.</p>
-            </li>
-            <li>
-                <h4>Mover Tarefas</h4>
-                <p>As tarefas podem ser movidas entre os quatro tipos <b>a fazer</b>, <b>em andamento</b>, <b>aguardando feedback</b> e <b>concluído</b> via <b>arrastar e soltar</b> na visualização do quadro.</p>
-            </li>
-            <li>
-                <h4>Solicitação de Contato e Colaborador</h4>
-                <p>Ao adicionar um contato ou colaborador, uma <b>solicitação</b> é enviada e deve ser confirmada pelo destinatário antes de ser salva nos contatos/quadro.</p>
-            </li>
-            <li>
-                <h4>Adicionar Contatos</h4>
-                <p>Para adicionar um novo contato, <b>pelo menos uma parte</b> de um nome deve ser inserida no campo de pesquisa antes que os resultados da pesquisa sejam exibidos. Ao adicionar o contato, uma <b>solicitação de contato</b> é enviada, que deve ser <b>confirmada</b> ou <b>rejeitada</b>.</p>
-            </li>
-        </ul>
-        <p>Lembre-se de que o uso eficaz do Join requer atualizações regulares de você e de sua equipe para garantir que o quadro reflita o estado atual do seu projeto. Tem mais perguntas sobre o Join? Sinta-se à vontade para nos contatar em 
-            <a href="mailto:musician.tarik@gmx.de" >musician.tarik@gmx.de</a> ou 
-            <a href="mailto:lukas.busch1996@gmx.at" >lukas.busch1996@gmx.at</a>. 
-        Estamos aqui para ajudar!</p>
-    </div>
+  <div class="column gap-10">
+    <h2>Ajuda</h2>
+    <p>Bem-vindo à página de ajuda do Join. Aqui você pode conhecer melhor o sistema, seu objetivo, suas principais funcionalidades e como utilizar as diferentes ferramentas disponíveis na plataforma.</p>
+  </div>
+
+  <div class="column gap-10">
+    <h3>O que é o Join?</h3>
+
+    <p>
+      Join é um sistema de gerenciamento de projetos baseado em Kanban, desenvolvido pela
+      <b>Servicios Web Mérida</b> como exemplo de uma ferramenta interna de produtividade e de um sistema web empresarial personalizado.
+    </p>
+
+    <p>
+      O projeto demonstra como uma aplicação web desenvolvida sob medida pode ajudar equipes a organizar seu trabalho, gerenciar projetos, colaborar com outros usuários, atribuir responsabilidades e acompanhar tarefas ao longo de diferentes etapas de
+      execução.
+    </p>
+
+    <p>
+      Join é baseado nos princípios do Kanban, um método visual de gerenciamento de projetos utilizado para organizar fluxos de trabalho e facilitar a compreensão do estado atual das tarefas. As tarefas podem ser movimentadas entre as etapas
+      <b>A fazer</b>, <b>Em andamento</b>, <b>Aguardando feedback</b> e <b>Concluído</b>, proporcionando às equipes uma visão clara do andamento do trabalho.
+    </p>
+
+    <p>
+      Além do gerenciamento de tarefas e quadros, Join inclui funcionalidades como contas de usuário, verificação por e-mail, gerenciamento de contatos e colaboradores, notificações em tempo real, convites para quadros, subtarefas, interações por
+      drag & drop e suporte a vários idiomas.
+    </p>
+
+    <p>
+      Join funciona principalmente como um projeto de demonstração e como exemplo de portfólio para o desenvolvimento de sistemas web personalizados. Ele não é operado como um serviço comercial de gerenciamento de projetos e, portanto, não são
+      garantidas disponibilidade contínua nem garantias de serviço próprias de um sistema em produção.
+    </p>
+  </div>
+
+  <div class="column gap-10">
+    <h3>Como usar o Join</h3>
+    <p>A seguir, você encontra um guia passo a passo para utilizar o Join:</p>
+
+    <ul class="column gap-20">
+      <li>
+        <h4>Cadastro e verificação</h4>
+        <p>
+          Ao registrar uma nova conta no Join, depois de informar um nome de usuário, endereço de e-mail e senha e aceitar a política de privacidade, um <b>e-mail de verificação</b> é enviado. Para confirmar a conta, você pode clicar no
+          <b>link enviado por e-mail</b> ou inserir e enviar manualmente o código de verificação, inclusive por meio de copiar e colar na página de verificação.
+        </p>
+      </li>
+
+      <li>
+        <h4>Personalização do perfil</h4>
+        <p>É possível enviar ou excluir uma imagem de perfil e escolher uma cor para o perfil.</p>
+      </li>
+
+      <li>
+        <h4>Login</h4>
+        <p>Os usuários podem entrar em suas contas com a opção de salvar seus dados de acesso.</p>
+      </li>
+
+      <li>
+        <h4>Redefinição de senha</h4>
+        <p>A redefinição da senha é realizada por meio de uma <b>verificação por e-mail</b>, de maneira semelhante ao processo de verificação de uma nova conta.</p>
+      </li>
+
+      <li>
+        <h4>Logout automático</h4>
+        <p>Os usuários são desconectados automaticamente após 5 minutos de inatividade.</p>
+      </li>
+
+      <li>
+        <h4>Notificações e servidor WebSocket</h4>
+        <p>
+          Ao enviar uma solicitação de contato, um convite para colaboração ou ao atribuir uma tarefa a um colaborador, o destinatário recebe uma notificação em tempo real caso esteja online. Para essa funcionalidade, foi implementado um
+          <b>servidor WebSocket</b>.
+        </p>
+      </li>
+
+      <li>
+        <h4>Configurações da conta</h4>
+        <p>
+          Ao clicar no seu perfil no canto superior direito, as configurações da conta são abertas. Nessa área, você pode <b>visualizar notificações</b>, aceitar ou recusar <b>solicitações de contato</b> e <b>convites para quadros</b>,
+          <b>redefinir sua senha</b> ou <b>excluir sua conta</b>. Também é possível <b>sair da conta</b> por essa seção.
+        </p>
+      </li>
+
+      <li>
+        <h4>Idiomas</h4>
+        <p>Inicialmente, o idioma é carregado de acordo com o idioma padrão configurado no navegador. Também é possível alterar o idioma durante o login e nas configurações da conta.</p>
+      </li>
+
+      <li>
+        <h4>Criar um quadro</h4>
+        <p>
+          Contas recém-criadas não possuem um quadro padrão. Primeiro, você precisa <b>criar</b> um quadro ou ser <b>convidado</b> para participar de um quadro existente. Ao criar um quadro, é possível definir um nome, criar categorias e convidar
+          colaboradores.
+        </p>
+      </li>
+
+      <li>
+        <h4>Editar um quadro</h4>
+        <p>
+          Após sua criação, um quadro pode ser editado pelo seu criador. Colaboradores podem ser adicionados por meio de convites, e categorias podem ser adicionadas ou excluídas. Atualmente, colaboradores já adicionados não podem ser removidos
+          posteriormente.
+        </p>
+      </li>
+
+      <li>
+        <h4>Excluir um quadro</h4>
+        <p>Também é possível excluir quadros completos após confirmar a exclusão.</p>
+      </li>
+
+      <li>
+        <h4>Selecionar um quadro</h4>
+        <p>Para selecionar o <b>quadro ativo</b>, primeiro clique em "Visão geral"/"Resumo" e depois, se necessário, em "Selecionar quadro". Em seguida, você pode escolher o quadro desejado na lista.</p>
+      </li>
+
+      <li>
+        <h4>Criar tarefas</h4>
+        <p>Tarefas individuais, incluindo <b>subtarefas</b>, podem ser criadas e atribuídas aos colaboradores do quadro correspondente.</p>
+      </li>
+
+      <li>
+        <h4>Editar/excluir tarefas</h4>
+        <p>As tarefas existentes podem ser editadas ou excluídas.</p>
+      </li>
+
+      <li>
+        <h4>Mover tarefas</h4>
+        <p>As tarefas podem ser movidas por <b>drag & drop</b> na visualização do quadro entre as quatro etapas do fluxo de trabalho: <b>A fazer</b>, <b>Em andamento</b>, <b>Aguardando feedback</b> e <b>Concluído</b>.</p>
+      </li>
+
+      <li>
+        <h4>Solicitações de contato e colaboração</h4>
+        <p>Ao adicionar um contato ou convidar um colaborador, uma <b>solicitação é enviada</b> ao usuário correspondente. A solicitação deve ser aceita pelo destinatário antes que o usuário seja adicionado à lista de contatos ou ao quadro.</p>
+      </li>
+
+      <li>
+        <h4>Adicionar contatos</h4>
+        <p>
+          Para adicionar um novo contato, você deve inserir <b>pelo menos uma parte</b> do nome do usuário no campo de busca antes que os resultados sejam exibidos. Ao adicionar um contato, uma <b>solicitação de contato</b> é enviada ao usuário e
+          deve ser <b>aceita</b> ou <b>recusada</b>.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      Para utilizar o Join de forma eficiente, você e sua equipe devem atualizar regularmente as tarefas para que o quadro reflita sempre o estado atual do projeto. Caso tenha outras dúvidas sobre o Join, entre em contato conosco pelo e-mail
+      <a href="mailto:contacto@servicioswebmerida.com">contacto@servicioswebmerida.com</a>. Teremos prazer em ajudar.
+    </p>
+  </div>
 </div>

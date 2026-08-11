@@ -1,90 +1,152 @@
 <div class="column help-container gap-30">
-    <div class="column gap-10">
-        <h2>Aiuto</h2>
-        <p>Benvenuto nella pagina di aiuto di Join, la tua guida per utilizzare il nostro strumento di gestione dei progetti Kanban. Qui offriamo una panoramica di cos'è Join, come può esserti utile e come usarlo.</p>
-    </div>
-    <div class="column gap-10">
-        <h3>Cos'è Join?</h3>
-        <p>Join è uno strumento di gestione dei progetti basato su Kanban, progettato e sviluppato da un gruppo di studenti dedicati come parte del loro bootcamp di sviluppo web alla Developer Academy.</p>
-        <p>Kanban, un termine giapponese che significa "tabellone", è un metodo estremamente efficace per visualizzare il lavoro, limitare il lavoro in corso e massimizzare l'efficienza (o il flusso). Join utilizza i principi di Kanban per aiutare gli utenti a gestire i propri compiti e progetti in un'interfaccia intuitiva e visiva.</p>
-        <p>È importante notare che Join è progettato come un esercizio educativo e non è destinato ad applicazioni commerciali estese. Sebbene ci sforziamo di garantire la migliore esperienza utente possibile, non possiamo garantire disponibilità, affidabilità, precisione o altri aspetti di qualità costanti in relazione a Join.</p>
-    </div>
-    <div class="column gap-10">
-        <h3>Come usarlo</h3>
-        <p>Ecco una guida passo-passo per utilizzare Join:</p>
-        <ul class="column gap-20">
-            <li>
-                <h4>Registrazione e Verifica</h4>
-                <p>Durante la registrazione di un nuovo account su Join, dopo aver inserito un nome utente, un indirizzo e-mail e una password, e confermato la politica sulla privacy, viene inviato un <b>e-mail di verifica</b>. Per confermare l'account, puoi fare clic sul <b>link nell'e-mail</b> oppure inserire e inviare il codice di verifica manualmente o tramite copia e incolla nella pagina di verifica.</p>
-            </li>
-            <li>
-                <h4>Creare un Account</h4>
-                <p>È possibile caricare (e eliminare) una foto del profilo e scegliere un colore del profilo.</p>
-            </li>
-            <li>
-                <h4>Login</h4>
-                <p>Accesso con l'opzione di salvare i dati di accesso.</p>
-            </li>
-            <li>
-                <h4>Reimpostare la Password</h4>
-                <p>Reimpostare la password funziona come la verifica tramite <b>e-mail</b>.</p>
-            </li>
-            <li>
-                <h4>Logout Automatico</h4>
-                <p>Logout automatico dopo 5 minuti di inattività.</p>
-            </li>
-            <li>
-                <h4>Notifiche e Server Websocket</h4>
-                <p>Quando invii una richiesta di contatto, un invito a collaborare o assegni un compito a un collaboratore, il destinatario riceve una notifica live se è online. È stato implementato un <b>server Websocket</b> per questo.</p>
-            </li>
-            <li>
-                <h4>Impostazioni dell'Account</h4>
-                <p>Facendo clic sul tuo profilo in alto a destra, si aprono le impostazioni dell'account. Qui puoi <b>vedere le notifiche</b>, accettare o rifiutare le <b>richieste di contatto</b> e gli <b>inviti alla board</b>, <b>reimpostare la tua password</b> o <b>eliminare il tuo account</b>. Inoltre, puoi <b>disconnetterti</b> qui.</p>
-            </li>
-            <li>
-                <h4>Lingue</h4>
-                <p>La lingua viene caricata in base alla lingua predefinita configurata nel browser. Le impostazioni della lingua sono disponibili anche durante il login e nelle impostazioni dell'account.</p>
-            </li>
-            <li>
-                <h4>Creare una Board</h4>
-                <p>Non c'è solo una board predefinita, ma devi prima <b>crear</b>ne una o essere <b>invitato</b> a un'altra (per account appena creati). Puoi impostare un nome, definire categorie e invitare collaboratori.</p>
-            </li>
-            <li>
-                <h4>Modificare una Board</h4>
-                <p>Dopo la creazione, la board può essere modificata (solo dal creatore), i collaboratori possono essere aggiunti tramite invito (ma non rimossi) e le categorie possono essere aggiunte o eliminate.</p>
-            </li>
-            <li>
-                <h4>Eliminare una Board</h4>
-                <p>Intere board possono anche essere eliminate (con conferma).</p>
-            </li>
-            <li>
-                <h4>Selezionare una Board</h4>
-                <p>Per selezionare la <b>board attiva</b>, devi prima fare clic su "Panoramica"/"Summary" e poi, se necessario, su "Seleziona Board"/"Select Board". Quindi, seleziona la board desiderata dall'elenco.</p>
-            </li>
-            <li>
-                <h4>Creare Attività</h4>
-                <p>È possibile creare attività individuali (inclusi <b>sotto-attività</b>) e assegnarle ai collaboratori della board corrispondente.</p>
-            </li>
-            <li>
-                <h4>Modificare/Eliminare Attività</h4>
-                <p>Le attività possono essere modificate ed eliminate.</p>
-            </li>
-            <li>
-                <h4>Spostare Attività</h4>
-                <p>Le attività possono essere spostate tra i quattro tipi <b>da fare</b>, <b>in corso</b>, <b>in attesa di feedback</b> e <b>fatto</b> tramite <b>drag & drop</b> nella vista della board.</p>
-            </li>
-            <li>
-                <h4>Richiesta di Contatto e Collaborazione</h4>
-                <p>Quando aggiungi un contatto o un collaboratore, viene inviata una <b>richiesta</b> che deve essere confermata dal destinatario prima di essere salvata nei contatti/board.</p>
-            </li>
-            <li>
-                <h4>Aggiungere Contatti</h4>
-                <p>Per aggiungere un nuovo contatto, <b>almeno una parte</b> di un nome deve essere inserita nel campo di ricerca prima che vengano visualizzati i risultati della ricerca. Quando aggiungi il contatto, viene inviata una <b>richiesta di contatto</b>, che deve essere <b>confermata</b> o <b>rifiutata</b>.</p>
-            </li>
-        </ul>
-        <p>Ricorda che l'uso efficace di Join richiede aggiornamenti regolari da parte tua e del tuo team per garantire che la board rifletta lo stato attuale del tuo progetto. Hai altre domande su Join? Non esitare a contattarci a 
-            <a href="mailto:musician.tarik@gmx.de" >musician.tarik@gmx.de</a> o 
-            <a href="mailto:lukas.busch1996@gmx.at" >lukas.busch1996@gmx.at</a>. 
-        Siamo qui per aiutarti!</p>
-    </div>
+  <div class="column gap-10">
+    <h2>Aiuto</h2>
+    <p>Benvenuto nella pagina di aiuto di Join. Qui puoi trovare maggiori informazioni sul sistema, sul suo scopo, sulle sue principali funzionalità e su come utilizzare i diversi strumenti disponibili all’interno della piattaforma.</p>
+  </div>
+
+  <div class="column gap-10">
+    <h3>Che cos'è Join?</h3>
+
+    <p>
+      Join è un sistema di gestione dei progetti basato su Kanban, sviluppato da
+      <b>Servicios Web Mérida</b> come esempio di strumento interno per la produttività e di sistema web aziendale personalizzato.
+    </p>
+
+    <p>
+      Il progetto mostra come un'applicazione web sviluppata su misura possa aiutare i team a organizzare il proprio lavoro, gestire progetti, collaborare con altri utenti, assegnare responsabilità e monitorare le attività attraverso diverse fasi di
+      avanzamento.
+    </p>
+
+    <p>
+      Join si basa sui principi del Kanban, un metodo visivo di gestione dei progetti utilizzato per organizzare i flussi di lavoro e rendere facilmente comprensibile lo stato attuale delle attività. Le attività possono essere spostate tra le fasi
+      <b>Da fare</b>, <b>In corso</b>, <b>In attesa di feedback</b> e <b>Completato</b>, offrendo ai team una panoramica chiara dello stato del lavoro.
+    </p>
+
+    <p>
+      Oltre alla gestione delle attività e delle bacheche, Join include funzionalità come account utente, verifica tramite e-mail, gestione di contatti e collaboratori, notifiche in tempo reale, inviti alle bacheche, sotto-attività, interazioni
+      tramite drag & drop e supporto multilingue.
+    </p>
+
+    <p>
+      Join viene utilizzato principalmente come progetto dimostrativo ed esempio di portfolio per lo sviluppo di sistemi web personalizzati. Non viene gestito come un servizio commerciale di project management e, pertanto, non vengono garantiti
+      disponibilità continua o livelli di servizio propri di un sistema in produzione.
+    </p>
+  </div>
+
+  <div class="column gap-10">
+    <h3>Come utilizzare Join</h3>
+    <p>Di seguito trovi una guida passo passo all'utilizzo di Join:</p>
+
+    <ul class="column gap-20">
+      <li>
+        <h4>Registrazione e verifica</h4>
+        <p>
+          Durante la registrazione di un nuovo account su Join, dopo aver inserito nome utente, indirizzo e-mail e password e aver accettato l'informativa sulla privacy, viene inviata una <b>e-mail di verifica</b>. Per confermare l'account, puoi fare
+          clic sul <b>link contenuto nell'e-mail</b> oppure inserire e inviare manualmente il codice di verifica, anche tramite copia e incolla, nella pagina di verifica.
+        </p>
+      </li>
+
+      <li>
+        <h4>Personalizzazione del profilo</h4>
+        <p>È possibile caricare o eliminare un'immagine del profilo e scegliere un colore per il profilo.</p>
+      </li>
+
+      <li>
+        <h4>Accesso</h4>
+        <p>Gli utenti possono accedere al proprio account con la possibilità di salvare i dati di accesso.</p>
+      </li>
+
+      <li>
+        <h4>Reimpostazione della password</h4>
+        <p>La reimpostazione della password avviene tramite <b>verifica via e-mail</b>, in modo simile al processo di verifica di un nuovo account.</p>
+      </li>
+
+      <li>
+        <h4>Disconnessione automatica</h4>
+        <p>Gli utenti vengono disconnessi automaticamente dopo 5 minuti di inattività.</p>
+      </li>
+
+      <li>
+        <h4>Notifiche e server WebSocket</h4>
+        <p>
+          Quando viene inviata una richiesta di contatto, un invito a collaborare o viene assegnata un'attività a un collaboratore, il destinatario riceve una notifica in tempo reale se è online. Per questa funzionalità è stato implementato un
+          <b>server WebSocket</b>.
+        </p>
+      </li>
+
+      <li>
+        <h4>Impostazioni dell'account</h4>
+        <p>
+          Facendo clic sul profilo in alto a destra si aprono le impostazioni dell'account. Qui puoi <b>visualizzare le notifiche</b>, accettare o rifiutare <b>richieste di contatto</b> e <b>inviti alle bacheche</b>,
+          <b>reimpostare la password</b> oppure <b>eliminare l'account</b>. Da questa sezione puoi anche <b>disconnetterti</b>.
+        </p>
+      </li>
+
+      <li>
+        <h4>Lingue</h4>
+        <p>Inizialmente, la lingua viene caricata in base alla lingua predefinita configurata nel browser. È inoltre possibile modificare la lingua durante l'accesso e nelle impostazioni dell'account.</p>
+      </li>
+
+      <li>
+        <h4>Creare una bacheca</h4>
+        <p>
+          I nuovi account non dispongono di una bacheca predefinita. Devi prima <b>creare</b> una bacheca oppure essere <b>invitato</b> a una bacheca esistente. Durante la creazione puoi impostare un nome, definire le categorie e invitare
+          collaboratori.
+        </p>
+      </li>
+
+      <li>
+        <h4>Modificare una bacheca</h4>
+        <p>
+          Dopo la creazione, una bacheca può essere modificata dal suo creatore. È possibile aggiungere collaboratori tramite invito e aggiungere o eliminare categorie. Attualmente, i collaboratori già aggiunti non possono essere rimossi
+          successivamente.
+        </p>
+      </li>
+
+      <li>
+        <h4>Eliminare una bacheca</h4>
+        <p>È inoltre possibile eliminare intere bacheche dopo aver confermato l'operazione.</p>
+      </li>
+
+      <li>
+        <h4>Selezionare una bacheca</h4>
+        <p>Per selezionare la <b>bacheca attiva</b>, fai prima clic su "Panoramica"/"Riepilogo" e poi, se necessario, su "Seleziona bacheca". Successivamente puoi scegliere la bacheca desiderata dall'elenco.</p>
+      </li>
+
+      <li>
+        <h4>Creare attività</h4>
+        <p>È possibile creare singole attività, incluse le <b>sotto-attività</b>, e assegnarle ai collaboratori della bacheca corrispondente.</p>
+      </li>
+
+      <li>
+        <h4>Modificare/eliminare attività</h4>
+        <p>Le attività esistenti possono essere modificate o eliminate.</p>
+      </li>
+
+      <li>
+        <h4>Spostare attività</h4>
+        <p>Le attività possono essere spostate tramite <b>drag & drop</b> nella vista della bacheca tra le quattro fasi del flusso di lavoro: <b>Da fare</b>, <b>In corso</b>, <b>In attesa di feedback</b> e <b>Completato</b>.</p>
+      </li>
+
+      <li>
+        <h4>Richieste di contatto e collaborazione</h4>
+        <p>
+          Quando aggiungi un contatto o inviti un collaboratore, viene inviata una <b>richiesta</b> all'utente interessato. La richiesta deve essere accettata dal destinatario prima che l'utente venga aggiunto all'elenco dei contatti o alla bacheca.
+        </p>
+      </li>
+
+      <li>
+        <h4>Aggiungere contatti</h4>
+        <p>
+          Per aggiungere un nuovo contatto, devi inserire <b>almeno una parte</b> del nome dell'utente nel campo di ricerca prima che vengano visualizzati i risultati. Quando aggiungi un contatto, viene inviata una
+          <b>richiesta di contatto</b> all'utente, che deve essere <b>accettata</b> o <b>rifiutata</b>.
+        </p>
+      </li>
+    </ul>
+
+    <p>
+      Per utilizzare Join in modo efficace, tu e il tuo team dovreste aggiornare regolarmente le attività affinché la bacheca rifletta sempre lo stato attuale del progetto. Se hai altre domande su Join, puoi contattarci all'indirizzo
+      <a href="mailto:contacto@servicioswebmerida.com">contacto@servicioswebmerida.com</a>. Saremo lieti di aiutarti.
+    </p>
+  </div>
 </div>
